@@ -1,14 +1,5 @@
 import { Head } from '@inertiajs/react';
-import {
-    ArrowRight,
-    CheckCircle2,
-    Clock,
-    FileText,
-    Plus,
-    Shield,
-    ShieldAlert,
-    UserCheck,
-} from 'lucide-react';
+import { CheckCircle2, Plus, ShieldAlert } from 'lucide-react';
 import React, { useState } from 'react';
 import { toast } from 'sonner';
 import { useActionModals } from '@/components/action-modals';
@@ -23,7 +14,6 @@ interface ManajemenKasusProps {
 
 export default function ManajemenKasus({
     cases: initialCases = [],
-    stats: initialStats,
 }: ManajemenKasusProps) {
     const [cases, setCases] = useState<CaseItem[]>(initialCases);
     const { openNewCaseModal } = useActionModals();
@@ -84,7 +74,7 @@ export default function ManajemenKasus({
                 <div className="flex flex-col justify-between gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs sm:flex-row sm:items-center sm:p-6 dark:border-slate-800 dark:bg-[#0f172a]">
                     <div className="space-y-1">
                         <div className="flex items-center gap-2">
-                            <div className="rounded-lg bg-amber-100 p-1.5 text-amber-600 dark:bg-amber-950/60 dark:text-amber-400">
+                            <div className="rounded-lg bg-blue-50 p-1.5 text-blue-700 dark:bg-blue-950/60 dark:text-blue-300">
                                 <ShieldAlert className="size-5" />
                             </div>
                             <h1 className="text-xl font-bold tracking-tight text-slate-900 sm:text-2xl dark:text-white">
@@ -101,7 +91,7 @@ export default function ManajemenKasus({
                     <button
                         type="button"
                         onClick={() => openNewCaseModal()}
-                        className="inline-flex shrink-0 items-center gap-1.5 self-start rounded-lg bg-blue-700 px-4 py-2 text-xs font-semibold text-white shadow-sm transition-colors hover:bg-blue-800 active:scale-95 sm:self-center"
+                        className="inline-flex shrink-0 items-center gap-1.5 self-start rounded-lg bg-blue-700 px-4 py-2 text-xs font-semibold text-white shadow-2xs transition-colors hover:bg-blue-800 active:scale-95 sm:self-center"
                     >
                         <Plus className="size-4" />
                         <span>Daftarkan Kasus Baru</span>
@@ -143,8 +133,8 @@ export default function ManajemenKasus({
                                                 className={cn(
                                                     'rounded px-1.5 py-0.5 text-[10px] font-bold',
                                                     c.priority === 'Tinggi'
-                                                        ? 'bg-red-100 text-red-700 dark:bg-red-950 dark:text-red-300'
-                                                        : 'bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300',
+                                                        ? 'border border-blue-200 bg-blue-50 text-blue-700 dark:border-blue-900 dark:bg-blue-950 dark:text-blue-300'
+                                                        : 'border border-slate-200 bg-slate-100 text-slate-700 dark:border-slate-800 dark:bg-slate-800 dark:text-slate-300',
                                                 )}
                                             >
                                                 {c.priority}
@@ -176,10 +166,10 @@ export default function ManajemenKasus({
                     <div className="flex flex-col space-y-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
                         <div className="flex items-center justify-between border-b border-slate-200 pb-2 font-bold text-slate-900 dark:border-slate-800 dark:text-white">
                             <span className="flex items-center gap-1.5">
-                                <span className="size-2 rounded-full bg-amber-500" />
+                                <span className="size-2 rounded-full bg-blue-600" />
                                 2. Ditugaskan
                             </span>
-                            <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-bold text-amber-700 dark:bg-amber-950 dark:text-amber-300">
+                            <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-bold text-slate-700 dark:bg-slate-800 dark:text-slate-300">
                                 {
                                     cases.filter((c) => c.stage === 'assigned')
                                         .length
@@ -193,7 +183,7 @@ export default function ManajemenKasus({
                                 .map((c) => (
                                     <div
                                         key={c.id}
-                                        className="space-y-2 rounded-xl border border-slate-200 bg-slate-50 p-3.5 shadow-2xs transition-colors hover:border-amber-300 dark:border-slate-800 dark:bg-[#111c30]"
+                                        className="space-y-2 rounded-xl border border-slate-200 bg-slate-50 p-3.5 shadow-2xs transition-colors hover:border-blue-300 dark:border-slate-800 dark:bg-[#111c30]"
                                     >
                                         <div className="flex items-start justify-between">
                                             <div>
@@ -222,7 +212,7 @@ export default function ManajemenKasus({
                                             onClick={() =>
                                                 handleStartCounseling(c)
                                             }
-                                            className="w-full rounded-lg border border-amber-200 bg-amber-50 py-1.5 text-center text-[11px] font-semibold text-amber-700 transition-colors hover:bg-amber-100 dark:border-amber-900 dark:bg-amber-950/70 dark:text-amber-300"
+                                            className="w-full rounded-lg border border-blue-200 bg-blue-50 py-1.5 text-center text-[11px] font-semibold text-blue-700 transition-colors hover:bg-blue-100 dark:border-blue-900 dark:bg-blue-950/70 dark:text-blue-300"
                                         >
                                             Mulai Sesi Konseling →
                                         </button>
@@ -242,10 +232,10 @@ export default function ManajemenKasus({
                     <div className="flex flex-col space-y-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
                         <div className="flex items-center justify-between border-b border-slate-200 pb-2 font-bold text-slate-900 dark:border-slate-800 dark:text-white">
                             <span className="flex items-center gap-1.5">
-                                <span className="size-2 rounded-full bg-purple-600" />
+                                <span className="size-2 rounded-full bg-blue-600" />
                                 3. Sedang Ditangani
                             </span>
-                            <span className="rounded-full bg-purple-100 px-2 py-0.5 text-[10px] font-bold text-purple-700 dark:bg-purple-950 dark:text-purple-300">
+                            <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-bold text-slate-700 dark:bg-slate-800 dark:text-slate-300">
                                 {
                                     cases.filter(
                                         (c) => c.stage === 'in_progress',
@@ -260,7 +250,7 @@ export default function ManajemenKasus({
                                 .map((c) => (
                                     <div
                                         key={c.id}
-                                        className="space-y-2 rounded-xl border border-slate-200 bg-slate-50 p-3.5 shadow-2xs transition-colors hover:border-purple-300 dark:border-slate-800 dark:bg-[#111c30]"
+                                        className="space-y-2 rounded-xl border border-slate-200 bg-slate-50 p-3.5 shadow-2xs transition-colors hover:border-blue-300 dark:border-slate-800 dark:bg-[#111c30]"
                                     >
                                         <div className="flex items-start justify-between">
                                             <div>
@@ -271,7 +261,7 @@ export default function ManajemenKasus({
                                                     {c.code} • {c.class}
                                                 </span>
                                             </div>
-                                            <span className="rounded border border-purple-200 bg-purple-50 px-1.5 py-0.5 text-[10px] font-semibold text-purple-600 dark:border-purple-900 dark:bg-purple-950 dark:text-purple-400">
+                                            <span className="rounded border border-blue-200 bg-blue-50 px-1.5 py-0.5 text-[10px] font-semibold text-blue-700 dark:border-blue-900 dark:bg-blue-950 dark:text-blue-300">
                                                 Konseling Aktif
                                             </span>
                                         </div>
@@ -287,7 +277,7 @@ export default function ManajemenKasus({
                                         <button
                                             type="button"
                                             onClick={() => handleResolveCase(c)}
-                                            className="w-full rounded-lg border border-emerald-200 bg-emerald-50 py-1.5 text-center text-[11px] font-semibold text-emerald-700 transition-colors hover:bg-emerald-100 dark:border-emerald-900 dark:bg-emerald-950/70 dark:text-emerald-300"
+                                            className="w-full rounded-lg border border-blue-200 bg-blue-50 py-1.5 text-center text-[11px] font-semibold text-blue-700 transition-colors hover:bg-blue-100 dark:border-blue-900 dark:bg-blue-950/70 dark:text-blue-300"
                                         >
                                             Selesaikan & Arsipkan ✓
                                         </button>
@@ -307,17 +297,17 @@ export default function ManajemenKasus({
                     <div className="flex flex-col space-y-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
                         <div className="flex items-center justify-between border-b border-slate-200 pb-2 font-bold text-slate-900 dark:border-slate-800 dark:text-white">
                             <span className="flex items-center gap-1.5">
-                                <span className="size-2 rounded-full bg-emerald-600" />
-                                4. Selesai (Arsip Digital)
+                                <span className="size-2 rounded-full bg-blue-600" />
+                                4. Selesai — Arsip Digital
                             </span>
-                            <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-bold text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">
+                            <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-bold text-slate-700 dark:bg-slate-800 dark:text-slate-300">
                                 {cases.filter((c) => c.stage === 'resolved')
                                     .length + 18}
                             </span>
                         </div>
 
                         <div className="space-y-2 rounded-xl border border-slate-200 bg-slate-50 p-3.5 text-[11px] text-slate-600 dark:border-slate-800 dark:bg-[#111c30] dark:text-slate-400">
-                            <div className="flex items-center gap-2 font-bold text-emerald-600 dark:text-emerald-400">
+                            <div className="flex items-center gap-2 font-bold text-blue-700 dark:text-blue-400">
                                 <CheckCircle2 className="size-4" />
                                 <span>18 Kasus Selesai Bulan Ini</span>
                             </div>
@@ -337,12 +327,12 @@ export default function ManajemenKasus({
                             .map((c) => (
                                 <div
                                     key={c.id}
-                                    className="space-y-1 rounded-lg border border-emerald-200 bg-emerald-50/50 p-3 text-xs dark:border-emerald-900/60 dark:bg-emerald-950/20"
+                                    className="space-y-1 rounded-lg border border-blue-200 bg-blue-50/50 p-3 text-xs dark:border-blue-900/60 dark:bg-blue-950/20"
                                 >
                                     <div className="font-bold text-slate-900 dark:text-white">
                                         {c.studentName}
                                     </div>
-                                    <div className="text-[10px] font-medium text-emerald-700 dark:text-emerald-300">
+                                    <div className="text-[10px] font-medium text-blue-700 dark:text-blue-300">
                                         ✓ Selesai & Terdokumentasi
                                     </div>
                                 </div>

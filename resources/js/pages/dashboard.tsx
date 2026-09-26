@@ -1,4 +1,4 @@
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 import {
     AlertTriangle,
     ArrowRight,
@@ -11,7 +11,7 @@ import {
     ShieldAlert,
     Siren,
 } from 'lucide-react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useActionModals } from '@/components/action-modals';
 import FlowbiteTanggapinLayout from '@/layouts/flowbite-tanggapin-layout';
 import { ROLE_CONFIGS } from '@/lib/role-config';
@@ -50,7 +50,15 @@ export default function Dashboard({
     const dapodikList = dapodikIssues ?? [];
     const docList = documents ?? [];
 
+    const page = usePage<{
+        auth?: { user?: { name?: string; email?: string; role?: RoleType } };
+    }>();
+    const authRole = page.props.auth?.user?.role;
+
     const [currentRole, setCurrentRole] = useState<RoleType>(() => {
+        if (authRole && Object.keys(ROLE_CONFIGS).includes(authRole)) {
+            return authRole;
+        }
         if (typeof window !== 'undefined') {
             const saved = localStorage.getItem(
                 'tanggapin_current_role',
@@ -61,6 +69,15 @@ export default function Dashboard({
         }
         return 'kepala_sekolah';
     });
+
+    useEffect(() => {
+        if (authRole && Object.keys(ROLE_CONFIGS).includes(authRole)) {
+            setCurrentRole(authRole);
+            if (typeof window !== 'undefined') {
+                localStorage.setItem('tanggapin_current_role', authRole);
+            }
+        }
+    }, [authRole]);
 
     const activeRoleConfig =
         ROLE_CONFIGS[currentRole] || ROLE_CONFIGS.kepala_sekolah;
@@ -139,7 +156,7 @@ export default function Dashboard({
                                 className={cn(
                                     'rounded-lg px-2.5 py-1 text-xs font-medium transition-all',
                                     currentRole === r
-                                        ? 'bg-blue-700 font-semibold text-white shadow-xs'
+                                        ? 'bg-blue-700 font-semibold text-white shadow-2xs'
                                         : 'text-slate-600 hover:bg-slate-200/60 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-700 dark:hover:text-white',
                                 )}
                             >
@@ -495,7 +512,10 @@ export default function Dashboard({
                                                 {p.class} • {p.dueDate}
                                             </span>
                                             <span className="font-semibold text-slate-900 dark:text-white">
-                                                Rp {p.amount.toLocaleString('id-ID')}
+                                                Rp{' '}
+                                                {p.amount.toLocaleString(
+                                                    'id-ID',
+                                                )}
                                             </span>
                                         </div>
                                     </div>

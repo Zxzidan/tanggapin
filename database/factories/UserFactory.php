@@ -27,6 +27,7 @@ class UserFactory extends Factory
         return [
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
+            'role' => 'wali_kelas',
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
@@ -34,6 +35,46 @@ class UserFactory extends Factory
             'two_factor_recovery_codes' => null,
             'two_factor_confirmed_at' => null,
         ];
+    }
+
+    /**
+     * Indicate that the user is Kepala Sekolah.
+     */
+    public function kepalaSekolah(): static
+    {
+        return $this->state(fn () => ['role' => 'kepala_sekolah']);
+    }
+
+    /**
+     * Indicate that the user is Operator Dapodik.
+     */
+    public function operator(): static
+    {
+        return $this->state(fn () => ['role' => 'operator']);
+    }
+
+    /**
+     * Indicate that the user is Wali Kelas.
+     */
+    public function waliKelas(): static
+    {
+        return $this->state(fn () => ['role' => 'wali_kelas']);
+    }
+
+    /**
+     * Indicate that the user is Guru BK.
+     */
+    public function guruBk(): static
+    {
+        return $this->state(fn () => ['role' => 'guru_bk']);
+    }
+
+    /**
+     * Indicate that the user is Bendahara.
+     */
+    public function bendahara(): static
+    {
+        return $this->state(fn () => ['role' => 'bendahara']);
     }
 
     /**

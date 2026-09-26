@@ -5,7 +5,6 @@ import {
     MessageSquare,
     PhoneCall,
     Plus,
-    Send,
 } from 'lucide-react';
 import React, { useState } from 'react';
 import { useActionModals } from '@/components/action-modals';
@@ -87,11 +86,11 @@ export default function KomunikasiOrtu({
                             <span className="text-xs font-medium text-slate-500">
                                 Telah Dikonfirmasi Ortu
                             </span>
-                            <div className="mt-0.5 text-2xl font-bold text-emerald-600">
+                            <div className="mt-0.5 text-2xl font-bold text-slate-900 dark:text-white">
                                 {readCount}
                             </div>
                         </div>
-                        <div className="rounded-lg bg-emerald-50 p-2.5 text-emerald-600 dark:bg-emerald-950">
+                        <div className="rounded-lg bg-blue-50 p-2.5 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
                             <CheckCircle2 className="size-5" />
                         </div>
                     </div>
@@ -101,11 +100,11 @@ export default function KomunikasiOrtu({
                             <span className="text-xs font-medium text-slate-500">
                                 Menunggu Respon / Koordinasi
                             </span>
-                            <div className="mt-0.5 text-2xl font-bold text-amber-600">
+                            <div className="mt-0.5 text-2xl font-bold text-slate-900 dark:text-white">
                                 {pendingCount}
                             </div>
                         </div>
-                        <div className="rounded-lg bg-amber-50 p-2.5 text-amber-600 dark:bg-amber-950">
+                        <div className="rounded-lg bg-slate-100 p-2.5 text-slate-700 dark:bg-slate-800 dark:text-slate-300">
                             <Clock className="size-5" />
                         </div>
                     </div>
@@ -167,8 +166,8 @@ export default function KomunikasiOrtu({
                                             'rounded-full border px-3 py-1 text-xs font-semibold',
                                             msg.acknowledgement ===
                                                 'Sudah membaca'
-                                                ? 'border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-800 dark:bg-emerald-950 dark:text-emerald-300'
-                                                : 'border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-900 dark:bg-amber-950 dark:text-amber-300',
+                                                ? 'border-blue-200 bg-blue-50 text-blue-700 dark:border-blue-800 dark:bg-blue-950 dark:text-blue-300'
+                                                : 'border-slate-200 bg-slate-100 text-slate-700 dark:border-slate-800 dark:bg-slate-800 dark:text-slate-300',
                                         )}
                                     >
                                         {msg.acknowledgement === 'Sudah membaca'

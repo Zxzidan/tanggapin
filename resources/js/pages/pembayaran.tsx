@@ -3,8 +3,6 @@ import {
     AlertCircle,
     CheckCircle2,
     Clock,
-    CreditCard,
-    DollarSign,
     Search,
     WalletCards,
 } from 'lucide-react';
@@ -66,11 +64,11 @@ export default function Pembayaran({
                 <div className="flex flex-col justify-between gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs sm:flex-row sm:items-center sm:p-6 dark:border-slate-800 dark:bg-[#0f172a]">
                     <div className="space-y-1">
                         <div className="flex items-center gap-2">
-                            <div className="rounded-lg bg-purple-100 p-1.5 text-purple-600 dark:bg-purple-950/60 dark:text-purple-400">
+                            <div className="rounded-lg bg-blue-50 p-1.5 text-blue-700 dark:bg-blue-950/60 dark:text-blue-300">
                                 <WalletCards className="size-5" />
                             </div>
                             <h1 className="text-xl font-bold tracking-tight text-slate-900 sm:text-2xl dark:text-white">
-                                Pembayaran & SPP (Rekonsiliasi Bendahara)
+                                Pembayaran & SPP — Rekonsiliasi Bendahara
                             </h1>
                         </div>
                         <p className="text-xs text-slate-600 sm:text-sm dark:text-slate-300">
@@ -81,8 +79,8 @@ export default function Pembayaran({
                     </div>
 
                     <div className="flex shrink-0 items-center gap-2 self-start sm:self-center">
-                        <span className="flex items-center gap-1.5 rounded-full border border-purple-200 bg-purple-50 px-3 py-1.5 text-xs font-bold text-purple-700 dark:border-purple-800 dark:bg-purple-950 dark:text-purple-300">
-                            <span className="size-2 animate-pulse rounded-full bg-purple-500" />
+                        <span className="flex items-center gap-1.5 rounded-full border border-blue-200 bg-blue-50 px-3 py-1.5 text-xs font-bold text-blue-700 dark:border-blue-800 dark:bg-blue-950 dark:text-blue-300">
+                            <span className="size-2 rounded-full bg-blue-600" />
                             {totalOverdue} Tagihan Perlu Perhatian
                         </span>
                     </div>
@@ -95,11 +93,11 @@ export default function Pembayaran({
                             <span className="text-xs font-medium text-slate-500">
                                 Tagihan Jatuh Tempo / Terlambat
                             </span>
-                            <div className="mt-0.5 text-2xl font-bold text-red-600">
+                            <div className="mt-0.5 text-2xl font-bold text-slate-900 dark:text-white">
                                 {totalOverdue}
                             </div>
                         </div>
-                        <div className="rounded-lg bg-red-50 p-2.5 text-red-600 dark:bg-red-950">
+                        <div className="rounded-lg bg-slate-100 p-2.5 text-slate-700 dark:bg-slate-800 dark:text-slate-300">
                             <AlertCircle className="size-5" />
                         </div>
                     </div>
@@ -109,11 +107,11 @@ export default function Pembayaran({
                             <span className="text-xs font-medium text-slate-500">
                                 Menunggu Verifikasi Bank
                             </span>
-                            <div className="mt-0.5 text-2xl font-bold text-amber-600">
+                            <div className="mt-0.5 text-2xl font-bold text-slate-900 dark:text-white">
                                 {totalPending}
                             </div>
                         </div>
-                        <div className="rounded-lg bg-amber-50 p-2.5 text-amber-600 dark:bg-amber-950">
+                        <div className="rounded-lg bg-slate-100 p-2.5 text-slate-700 dark:bg-slate-800 dark:text-slate-300">
                             <Clock className="size-5" />
                         </div>
                     </div>
@@ -123,11 +121,11 @@ export default function Pembayaran({
                             <span className="text-xs font-medium text-slate-500">
                                 Terverifikasi Lunas
                             </span>
-                            <div className="mt-0.5 text-2xl font-bold text-emerald-600">
+                            <div className="mt-0.5 text-2xl font-bold text-blue-700 dark:text-blue-400">
                                 {totalPaid}
                             </div>
                         </div>
-                        <div className="rounded-lg bg-emerald-50 p-2.5 text-emerald-600 dark:bg-emerald-950">
+                        <div className="rounded-lg bg-blue-50 p-2.5 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
                             <CheckCircle2 className="size-5" />
                         </div>
                     </div>
@@ -155,11 +153,11 @@ export default function Pembayaran({
                                 className={cn(
                                     'rounded-lg px-3 py-1 text-xs font-medium transition-colors',
                                     statusFilter === 'all'
-                                        ? 'bg-slate-900 font-semibold text-white dark:bg-white dark:text-slate-900'
-                                        : 'text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800',
+                                        ? 'bg-blue-700 font-semibold text-white shadow-2xs'
+                                        : 'text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800',
                                 )}
                             >
-                                Semua ({payments.length})
+                                Semua: {payments.length}
                             </button>
                             <button
                                 type="button"
@@ -167,8 +165,8 @@ export default function Pembayaran({
                                 className={cn(
                                     'rounded-lg px-3 py-1 text-xs font-medium transition-colors',
                                     statusFilter === 'Terlambat'
-                                        ? 'bg-red-600 font-semibold text-white'
-                                        : 'text-slate-500 hover:bg-red-50 hover:text-red-700',
+                                        ? 'bg-blue-700 font-semibold text-white shadow-2xs'
+                                        : 'text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800',
                                 )}
                             >
                                 Terlambat
@@ -181,8 +179,8 @@ export default function Pembayaran({
                                 className={cn(
                                     'rounded-lg px-3 py-1 text-xs font-medium transition-colors',
                                     statusFilter === 'Menunggu Verifikasi'
-                                        ? 'bg-amber-600 font-semibold text-white'
-                                        : 'text-slate-500 hover:bg-amber-50 hover:text-amber-700',
+                                        ? 'bg-blue-700 font-semibold text-white shadow-2xs'
+                                        : 'text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800',
                                 )}
                             >
                                 Menunggu Verifikasi
@@ -193,8 +191,8 @@ export default function Pembayaran({
                                 className={cn(
                                     'rounded-lg px-3 py-1 text-xs font-medium transition-colors',
                                     statusFilter === 'Lunas'
-                                        ? 'bg-emerald-600 font-semibold text-white'
-                                        : 'text-slate-500 hover:bg-emerald-50 hover:text-emerald-700',
+                                        ? 'bg-blue-700 font-semibold text-white shadow-2xs'
+                                        : 'text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800',
                                 )}
                             >
                                 Lunas
@@ -233,7 +231,7 @@ export default function Pembayaran({
                                             <td className="px-4 py-3 font-bold text-slate-900 dark:text-white">
                                                 {p.studentName}{' '}
                                                 <span className="font-normal text-slate-400">
-                                                    ({p.class})
+                                                    — {p.class}
                                                 </span>
                                             </td>
                                             <td className="px-4 py-3">
@@ -253,11 +251,8 @@ export default function Pembayaran({
                                                     className={cn(
                                                         'rounded border px-2 py-0.5 text-[10px] font-bold',
                                                         p.status === 'Lunas'
-                                                            ? 'border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-800 dark:bg-emerald-950 dark:text-emerald-300'
-                                                            : p.status ===
-                                                                'Terlambat'
-                                                              ? 'border-red-200 bg-red-50 text-red-700 dark:border-red-900 dark:bg-red-950 dark:text-red-300'
-                                                              : 'border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-900 dark:bg-amber-950 dark:text-amber-300',
+                                                            ? 'border-blue-300 bg-blue-50 text-blue-700 dark:border-blue-800 dark:bg-blue-950 dark:text-blue-300'
+                                                            : 'border-slate-200 bg-slate-100 text-slate-700 dark:border-slate-800 dark:bg-slate-800 dark:text-slate-300',
                                                     )}
                                                 >
                                                     {p.status}
@@ -277,7 +272,7 @@ export default function Pembayaran({
                                                         Verifikasi Lunas
                                                     </button>
                                                 ) : (
-                                                    <span className="flex items-center justify-center gap-1 text-[11px] font-semibold text-emerald-600">
+                                                    <span className="flex items-center justify-center gap-1 text-[11px] font-semibold text-blue-700 dark:text-blue-400">
                                                         <CheckCircle2 className="size-3" />
                                                         Telah Direkonsiliasi
                                                     </span>

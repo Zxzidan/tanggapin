@@ -53,8 +53,12 @@ export default function FlowbiteTanggapinLayout({
     onRoleChange,
     onTriggerActionModal,
 }: FlowbiteLayoutProps) {
-    const page = usePage<{ auth: { user: { name: string; email: string } } }>();
+    const page = usePage<{
+        auth?: { user?: { name?: string; email?: string; role?: RoleType } };
+    }>();
     const currentPath = page.url.split('?')[0];
+    const authUser = page.props.auth?.user;
+    const authRole = authUser?.role;
 
     const { resolvedAppearance, updateAppearance } = useAppearance();
     const {
@@ -74,6 +78,9 @@ export default function FlowbiteTanggapinLayout({
 
     const [localRole, setLocalRole] = useState<RoleType>(() => {
         if (controlledRole) return controlledRole;
+        if (authRole && Object.keys(ROLE_CONFIGS).includes(authRole)) {
+            return authRole;
+        }
         if (typeof window !== 'undefined') {
             const saved = localStorage.getItem(
                 'tanggapin_current_role',
@@ -84,6 +91,19 @@ export default function FlowbiteTanggapinLayout({
         }
         return 'kepala_sekolah';
     });
+
+    useEffect(() => {
+        if (
+            authRole &&
+            Object.keys(ROLE_CONFIGS).includes(authRole) &&
+            !controlledRole
+        ) {
+            setLocalRole(authRole);
+            if (typeof window !== 'undefined') {
+                localStorage.setItem('tanggapin_current_role', authRole);
+            }
+        }
+    }, [authRole, controlledRole]);
 
     const activeRole = controlledRole || localRole;
     const activeRoleConfig =
@@ -686,7 +706,7 @@ export default function FlowbiteTanggapinLayout({
                                 aria-label="Ganti Tema Tampilan"
                             >
                                 {resolvedAppearance === 'dark' ? (
-                                    <Sun className="size-4 text-amber-400" />
+                                    <Sun className="size-4 text-slate-300" />
                                 ) : (
                                     <Moon className="size-4 text-slate-600" />
                                 )}
@@ -710,13 +730,15 @@ export default function FlowbiteTanggapinLayout({
                                 </button>
 
                                 {isUserMenuOpen && (
-                                    <div className="absolute right-0 z-50 mt-2 w-56 animate-in rounded-xl border border-slate-200 bg-white py-1.5 text-xs shadow-xl zoom-in-95 fade-in dark:border-slate-700 dark:bg-[#111c30]">
-                                        <div className="border-b border-slate-100 px-3 py-2 dark:border-slate-800">
-                                            <p className="font-bold text-slate-900 dark:text-white">
-                                                {activeRoleConfig.userName}
+                                    <div className="absolute right-0 z-50 mt-2 w-60 animate-in rounded-xl border border-slate-200 bg-white py-1.5 text-xs shadow-xl zoom-in-95 fade-in dark:border-slate-800 dark:bg-[#111c30]">
+                                        <div className="border-b border-slate-100 px-4 py-3 dark:border-slate-800">
+                                            <p className="truncate text-sm font-semibold text-slate-900 dark:text-white">
+                                                {authUser?.name ||
+                                                    activeRoleConfig.userName}
                                             </p>
-                                            <p className="truncate text-[11px] text-slate-500">
-                                                {activeRoleConfig.userEmail}
+                                            <p className="truncate text-xs text-slate-500">
+                                                {authUser?.email ||
+                                                    activeRoleConfig.userEmail}
                                             </p>
                                             <div className="mt-1.5 inline-block rounded border border-blue-200 bg-blue-50 px-2 py-0.5 text-[10px] font-semibold text-blue-700 dark:border-blue-800 dark:bg-blue-950 dark:text-blue-300">
                                                 Peran: {activeRoleConfig.title}

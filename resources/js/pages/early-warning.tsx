@@ -1,12 +1,5 @@
 import { Head } from '@inertiajs/react';
-import {
-    AlertTriangle,
-    Eye,
-    Filter,
-    PhoneCall,
-    Plus,
-    Search,
-} from 'lucide-react';
+import { AlertTriangle, Eye, PhoneCall, Plus, Search } from 'lucide-react';
 import React, { useState } from 'react';
 import { useActionModals } from '@/components/action-modals';
 import FlowbiteTanggapinLayout from '@/layouts/flowbite-tanggapin-layout';
@@ -173,7 +166,8 @@ export default function EarlyWarning({
                                                 <span
                                                     className={cn(
                                                         'rounded border px-2 py-0.5 text-[10px] font-bold',
-                                                        item.riskLevel === 'high'
+                                                        item.riskLevel ===
+                                                            'high'
                                                             ? 'border-blue-300 bg-blue-50 text-blue-700 dark:border-blue-800 dark:bg-blue-950 dark:text-blue-300'
                                                             : 'border-slate-200 bg-slate-100 text-slate-700 dark:border-slate-800 dark:bg-slate-800 dark:text-slate-300',
                                                     )}

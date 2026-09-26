@@ -5,7 +5,6 @@ import {
     Eye,
     FileCheck,
     FileText,
-    Plus,
     Search,
     UploadCloud,
 } from 'lucide-react';
@@ -103,7 +102,7 @@ export default function DokumenGuru({
                             <span className="text-xs font-medium text-slate-500">
                                 Terverifikasi Kurikulum
                             </span>
-                            <div className="mt-0.5 text-2xl font-bold text-emerald-600">
+                            <div className="mt-0.5 text-2xl font-bold text-slate-900 dark:text-white">
                                 {
                                     documents.filter(
                                         (d) =>
@@ -113,7 +112,7 @@ export default function DokumenGuru({
                                 }
                             </div>
                         </div>
-                        <div className="rounded-lg bg-emerald-50 p-2.5 text-emerald-600 dark:bg-emerald-950">
+                        <div className="rounded-lg bg-blue-50 p-2.5 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
                             <CheckCircle2 className="size-5" />
                         </div>
                     </div>
@@ -123,11 +122,11 @@ export default function DokumenGuru({
                             <span className="text-xs font-medium text-slate-500">
                                 Kategori Tersedia
                             </span>
-                            <div className="mt-0.5 text-2xl font-bold text-purple-600">
+                            <div className="mt-0.5 text-2xl font-bold text-slate-900 dark:text-white">
                                 {categories.length}
                             </div>
                         </div>
-                        <div className="rounded-lg bg-purple-50 p-2.5 text-purple-600 dark:bg-purple-950">
+                        <div className="rounded-lg bg-slate-100 p-2.5 text-slate-700 dark:bg-slate-800 dark:text-slate-300">
                             <FileCheck className="size-5" />
                         </div>
                     </div>
@@ -155,11 +154,11 @@ export default function DokumenGuru({
                                 className={cn(
                                     'shrink-0 rounded-lg px-3 py-1 text-xs font-medium transition-colors',
                                     categoryFilter === 'all'
-                                        ? 'bg-slate-900 font-semibold text-white dark:bg-white dark:text-slate-900'
-                                        : 'text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800',
+                                        ? 'bg-blue-700 font-semibold text-white shadow-2xs'
+                                        : 'text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800',
                                 )}
                             >
-                                Semua ({documents.length})
+                                Semua: {documents.length}
                             </button>
                             {categories.map((c) => (
                                 <button
@@ -169,8 +168,8 @@ export default function DokumenGuru({
                                     className={cn(
                                         'shrink-0 rounded-lg px-3 py-1 text-xs font-medium transition-colors',
                                         categoryFilter === c
-                                            ? 'bg-blue-700 font-semibold text-white'
-                                            : 'text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800',
+                                            ? 'bg-blue-700 font-semibold text-white shadow-2xs'
+                                            : 'text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800',
                                     )}
                                 >
                                     {c}
@@ -206,7 +205,7 @@ export default function DokumenGuru({
                                         >
                                             <td className="px-4 py-3.5 font-bold text-slate-900 dark:text-white">
                                                 <div className="flex items-center gap-2">
-                                                    <FileText className="size-4 shrink-0 text-blue-600" />
+                                                    <FileText className="size-4 shrink-0 text-blue-700 dark:text-blue-400" />
                                                     <span>{doc.title}</span>
                                                 </div>
                                             </td>
@@ -225,7 +224,7 @@ export default function DokumenGuru({
                                                 {doc.size}
                                             </td>
                                             <td className="px-4 py-3.5 whitespace-nowrap">
-                                                <span className="rounded-full border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-[10px] font-bold text-emerald-700 dark:border-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">
+                                                <span className="rounded-full border border-blue-200 bg-blue-50 px-2 py-0.5 text-[10px] font-bold text-blue-700 dark:border-blue-800 dark:bg-blue-950 dark:text-blue-300">
                                                     ✓ {doc.status}
                                                 </span>
                                             </td>
@@ -236,7 +235,7 @@ export default function DokumenGuru({
                                                         onClick={() =>
                                                             handlePreview(doc)
                                                         }
-                                                        className="rounded-lg p-1.5 text-slate-600 transition-colors hover:bg-slate-100 hover:text-blue-600 dark:text-slate-400 dark:hover:bg-slate-800"
+                                                        className="rounded-lg p-1.5 text-slate-600 transition-colors hover:bg-slate-100 hover:text-blue-700 dark:text-slate-400 dark:hover:bg-slate-800"
                                                         title="Pratinjau Dokumen"
                                                     >
                                                         <Eye className="size-3.5" />
@@ -246,7 +245,7 @@ export default function DokumenGuru({
                                                         onClick={() =>
                                                             handleDownload(doc)
                                                         }
-                                                        className="rounded-lg p-1.5 text-slate-600 transition-colors hover:bg-slate-100 hover:text-blue-600 dark:text-slate-400 dark:hover:bg-slate-800"
+                                                        className="rounded-lg p-1.5 text-slate-600 transition-colors hover:bg-slate-100 hover:text-blue-700 dark:text-slate-400 dark:hover:bg-slate-800"
                                                         title="Unduh Berkas"
                                                     >
                                                         <Download className="size-3.5" />

@@ -1,16 +1,5 @@
 import { Head } from '@inertiajs/react';
-import {
-    AlertTriangle,
-    Bell,
-    CheckCircle2,
-    Clock,
-    PhoneCall,
-    Radio,
-    Shield,
-    ShieldAlert,
-    Siren,
-    Users,
-} from 'lucide-react';
+import { PhoneCall, Radio, Shield, Siren, Users } from 'lucide-react';
 import React, { useState } from 'react';
 import { toast } from 'sonner';
 import FlowbiteTanggapinLayout from '@/layouts/flowbite-tanggapin-layout';
@@ -64,8 +53,8 @@ export default function ResponsInsiden({
                 <div className="flex flex-col justify-between gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs sm:flex-row sm:items-center sm:p-6 dark:border-slate-800 dark:bg-[#0f172a]">
                     <div className="space-y-1">
                         <div className="flex items-center gap-2">
-                            <div className="rounded-lg bg-red-100 p-1.5 text-red-600 dark:bg-red-950/60 dark:text-red-400">
-                                <Siren className="size-5 animate-pulse" />
+                            <div className="rounded-lg bg-blue-50 p-1.5 text-blue-700 dark:bg-blue-950/60 dark:text-blue-300">
+                                <Siren className="size-5" />
                             </div>
                             <h1 className="text-xl font-bold tracking-tight text-slate-900 sm:text-2xl dark:text-white">
                                 Respons Insiden & Kesiapsiagaan Sekolah
@@ -79,8 +68,8 @@ export default function ResponsInsiden({
                     </div>
 
                     <div className="flex shrink-0 items-center gap-2 self-start sm:self-center">
-                        <span className="flex items-center gap-1.5 rounded-full border border-red-300 bg-red-100 px-3 py-1.5 text-xs font-bold text-red-700 dark:border-red-900 dark:bg-red-950 dark:text-red-300">
-                            <span className="size-2 animate-ping rounded-full bg-red-600" />
+                        <span className="flex items-center gap-1.5 rounded-full border border-blue-200 bg-blue-50 px-3 py-1.5 text-xs font-bold text-blue-700 dark:border-blue-800 dark:bg-blue-950 dark:text-blue-300">
+                            <span className="size-2 animate-ping rounded-full bg-blue-600" />
                             Status: Siaga Kesiapsiagaan Aktif
                         </span>
                     </div>
@@ -88,19 +77,19 @@ export default function ResponsInsiden({
 
                 {/* Emergency Hotlines & Protocols Banner */}
                 <div className="grid grid-cols-1 gap-3 text-xs md:grid-cols-3">
-                    <div className="space-y-1 rounded-xl border border-red-200 bg-red-50/70 p-4 dark:border-red-900/60 dark:bg-red-950/30">
-                        <div className="flex items-center gap-1.5 font-bold text-red-700 dark:text-red-400">
+                    <div className="space-y-1 rounded-xl border border-slate-200 bg-slate-50/70 p-4 dark:border-slate-800 dark:bg-slate-900/40">
+                        <div className="flex items-center gap-1.5 font-bold text-blue-700 dark:text-blue-400">
                             <Radio className="size-4" />
                             <span>Pusat Kendali Darurat</span>
                         </div>
                         <p className="text-slate-600 dark:text-slate-300">
-                            Ruang Piket Keamanan & UKS (Ext: 101 / 102).
+                            Ruang Piket Keamanan & UKS — Ext: 101 / 102.
                             Terhubung ke BPBD & Puskesmas terdekat.
                         </p>
                     </div>
 
-                    <div className="space-y-1 rounded-xl border border-amber-200 bg-amber-50/70 p-4 dark:border-amber-900/60 dark:bg-amber-950/30">
-                        <div className="flex items-center gap-1.5 font-bold text-amber-700 dark:text-amber-400">
+                    <div className="space-y-1 rounded-xl border border-slate-200 bg-slate-50/70 p-4 dark:border-slate-800 dark:bg-slate-900/40">
+                        <div className="flex items-center gap-1.5 font-bold text-blue-700 dark:text-blue-400">
                             <Shield className="size-4" />
                             <span>Satgas Anti-Kekerasan & TPPK</span>
                         </div>
@@ -110,7 +99,7 @@ export default function ResponsInsiden({
                         </p>
                     </div>
 
-                    <div className="space-y-1 rounded-xl border border-blue-200 bg-blue-50/70 p-4 dark:border-blue-900/60 dark:bg-blue-950/30">
+                    <div className="space-y-1 rounded-xl border border-slate-200 bg-slate-50/70 p-4 dark:border-slate-800 dark:bg-slate-900/40">
                         <div className="flex items-center gap-1.5 font-bold text-blue-700 dark:text-blue-400">
                             <Users className="size-4" />
                             <span>Titik Kumpul Evakuasi</span>
@@ -127,7 +116,7 @@ export default function ResponsInsiden({
                     {incidents.map((inc) => (
                         <div
                             key={inc.id}
-                            className="space-y-4 rounded-2xl border border-red-200 bg-white p-5 text-xs shadow-xs dark:border-red-900/60 dark:bg-[#0f172a]"
+                            className="space-y-4 rounded-2xl border border-slate-200 bg-white p-5 text-xs shadow-xs dark:border-slate-800 dark:bg-[#0f172a]"
                         >
                             <div className="flex flex-col justify-between gap-3 border-b border-slate-200 pb-3 sm:flex-row sm:items-center dark:border-slate-800">
                                 <div className="space-y-1">
@@ -135,7 +124,7 @@ export default function ResponsInsiden({
                                         <h2 className="text-base font-bold text-slate-900 dark:text-white">
                                             {inc.title}
                                         </h2>
-                                        <span className="rounded-full border border-red-200 bg-red-100 px-2 py-0.5 text-[10px] font-bold text-red-700 dark:bg-red-950 dark:text-red-300">
+                                        <span className="rounded-full border border-blue-200 bg-blue-50 px-2 py-0.5 text-[10px] font-bold text-blue-700 dark:border-blue-800 dark:bg-blue-950 dark:text-blue-300">
                                             Level: {inc.level}
                                         </span>
                                     </div>
@@ -145,7 +134,7 @@ export default function ResponsInsiden({
                                             {inc.leadOfficer}
                                         </strong>{' '}
                                         • Status:{' '}
-                                        <span className="font-semibold text-amber-600">
+                                        <span className="font-semibold text-blue-700 dark:text-blue-400">
                                             {inc.status}
                                         </span>
                                     </div>
@@ -154,7 +143,7 @@ export default function ResponsInsiden({
                                 <button
                                     type="button"
                                     onClick={() => handleBroadcast(inc.title)}
-                                    className="inline-flex shrink-0 items-center gap-1.5 self-start rounded-lg bg-red-600 px-4 py-2 text-xs font-semibold text-white shadow-sm transition-colors hover:bg-red-700 active:scale-95 sm:self-center"
+                                    className="inline-flex shrink-0 items-center gap-1.5 self-start rounded-lg bg-blue-700 px-4 py-2 text-xs font-semibold text-white shadow-2xs transition-colors hover:bg-blue-800 active:scale-95 sm:self-center"
                                 >
                                     <PhoneCall className="size-3.5" />
                                     <span>Broadcast Peringatan Darurat</span>
