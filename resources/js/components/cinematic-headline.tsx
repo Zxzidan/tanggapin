@@ -46,7 +46,7 @@ export default function CinematicHeadline({
       transition: {
         duration: 0.8,
         // Power4.out ease (easeOutQuart/Expo): rapid initial movement with smooth, refined deceleration
-        ease: [0.16, 1, 0.3, 1],
+        ease: [0.16, 1, 0.3, 1] as const,
       },
     },
   };
