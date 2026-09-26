@@ -14,6 +14,7 @@ import {
     Moon,
     PhoneCall,
     Plus,
+    RefreshCw,
     Search,
     Settings,
     Shield,
@@ -27,6 +28,7 @@ import {
 } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
 import { useAppearance } from '@/hooks/use-appearance';
+import { ROLE_CONFIGS } from '@/lib/role-config';
 import { cn } from '@/lib/utils';
 import type { RoleType } from '@/types/tanggapin';
 
@@ -83,12 +85,19 @@ export default function FlowbiteTanggapinLayout({
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
-    const roleLabels: Record<RoleType, { title: string; badge: string }> = {
-        kepala_sekolah: { title: 'Kepala Sekolah', badge: 'Decision Maker' },
-        wali_kelas: { title: 'Wali Kelas (XI RPL 2)', badge: 'Frontline' },
-        guru_bk: { title: 'Guru BK & Konseling', badge: 'Case Manager' },
-        bendahara: { title: 'Bendahara Sekolah', badge: 'Finance' },
-        operator: { title: 'Operator Dapodik', badge: 'Data Verifier' },
+    const activeRoleConfig = ROLE_CONFIGS[currentRole] || ROLE_CONFIGS.kepala_sekolah;
+
+    const handleRoleSelect = (r: RoleType) => {
+        if (onRoleChange) {
+            onRoleChange(r);
+        }
+        const targetConfig = ROLE_CONFIGS[r];
+        if (targetConfig && !targetConfig.allowedTabs.includes(activeTab)) {
+            if (onTabChange) {
+                onTabChange('overview');
+            }
+        }
+        setIsRoleDropdownOpen(false);
     };
 
     const handleNavClick = (tab: string) => {
@@ -98,13 +107,20 @@ export default function FlowbiteTanggapinLayout({
         setIsSidebarOpen(false);
     };
 
-    const navItems = [
+    const allNavItems = [
         {
             id: 'overview',
             title: 'Ikhtisar & Tindakan',
             icon: Home,
             badge: null,
             badgeColor: '',
+        },
+        {
+            id: 'data-check',
+            title: 'Cek Data Dapodik',
+            icon: CheckCircle2,
+            badge: '7',
+            badgeColor: 'text-orange-700 bg-orange-50 dark:text-orange-300 dark:bg-orange-950/70 border border-orange-200 dark:border-orange-800',
         },
         {
             id: 'early-warning',
@@ -163,13 +179,6 @@ export default function FlowbiteTanggapinLayout({
             badgeColor: '',
         },
         {
-            id: 'data-check',
-            title: 'Cek Data Dapodik',
-            icon: CheckCircle2,
-            badge: '7',
-            badgeColor: 'text-orange-700 bg-orange-50 dark:text-orange-300 dark:bg-orange-950/70 border border-orange-200 dark:border-orange-800',
-        },
-        {
             id: 'incidents',
             title: 'Respons Insiden',
             icon: Siren,
@@ -177,6 +186,18 @@ export default function FlowbiteTanggapinLayout({
             badgeColor: 'text-red-700 bg-red-100 dark:text-red-300 dark:bg-red-950 border border-red-300 dark:border-red-800 animate-pulse',
         },
     ];
+
+    // Filter strictly by allowedTabs for the currentRole, applying title and badge overrides
+    const navItems = allNavItems
+        .filter((item) => activeRoleConfig.allowedTabs.includes(item.id))
+        .map((item) => {
+            const override = activeRoleConfig.tabOverrides?.[item.id];
+            return {
+                ...item,
+                title: override?.title || item.title,
+                badge: override?.badge !== undefined ? override.badge : item.badge,
+            };
+        });
 
     const searchResults = [
         { type: 'Siswa Berisiko', title: 'Brian Aditya (XI RPL 2)', desc: 'Kehadiran turun 28% dalam 14 hari', tab: 'early-warning' },
@@ -319,44 +340,66 @@ export default function FlowbiteTanggapinLayout({
                                     type="button"
                                     onClick={() => setIsRoleDropdownOpen(!isRoleDropdownOpen)}
                                     className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium text-heading bg-neutral-secondary-medium hover:bg-neutral-tertiary border border-default rounded-base transition-colors"
-                                    title="Ganti Tampilan Peran (Simulator PRD)"
+                                    title="Ganti Tampilan Peran"
                                 >
                                     <Users className="w-3.5 h-3.5 text-fg-brand" />
                                     <span className="hidden md:inline-block font-semibold">
-                                        {roleLabels[currentRole]?.title}
+                                        {activeRoleConfig.title}
                                     </span>
                                     <span className="md:hidden font-semibold">
-                                        {currentRole === 'kepala_sekolah' ? 'Kepsek' : currentRole.replace('_', ' ')}
+                                        {activeRoleConfig.shortTitle}
+                                    </span>
+                                    <span className={cn(
+                                        'text-[9px] px-1 py-0.2 rounded font-semibold hidden lg:inline-block',
+                                        activeRoleConfig.allowedTabs.length >= 10
+                                            ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300'
+                                            : 'bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300'
+                                    )}>
+                                        {activeRoleConfig.scopeBadge}
                                     </span>
                                     <ChevronDown className="w-3 h-3 text-fg-disabled" />
                                 </button>
 
                                 {isRoleDropdownOpen && (
-                                    <div className="absolute right-0 mt-1.5 w-60 bg-neutral-primary-medium border border-default-medium rounded-base shadow-xl z-50 py-1.5">
-                                        <div className="px-3 py-1.5 border-b border-default text-[11px] font-semibold text-fg-disabled uppercase tracking-wider">
-                                            Lihat Sebagai Peran (PRD)
+                                    <div className="absolute right-0 mt-1.5 w-72 bg-neutral-primary-medium border border-default-medium rounded-base shadow-xl z-50 py-1.5">
+                                        <div className="px-3 py-1.5 border-b border-default">
+                                            <span className="text-[11px] font-bold text-fg-disabled uppercase tracking-wider block">
+                                                Simulasi Peran Pengguna
+                                            </span>
+                                            <p className="text-[10px] text-fg-disabled leading-tight">
+                                                Kepala Sekolah & Operator dapat melihat semua fitur. Peran lain menyesuaikan.
+                                            </p>
                                         </div>
-                                        {(Object.keys(roleLabels) as RoleType[]).map((r) => (
-                                            <button
-                                                key={r}
-                                                type="button"
-                                                onClick={() => {
-                                                    if (onRoleChange) {
-                                                        onRoleChange(r);
-                                                    }
-                                                    setIsRoleDropdownOpen(false);
-                                                }}
-                                                className={cn(
-                                                    'w-full text-left px-3 py-2 text-xs flex items-center justify-between hover:bg-neutral-tertiary transition-colors',
-                                                    currentRole === r && 'bg-blue-50 dark:bg-blue-950/50 text-fg-brand font-semibold'
-                                                )}
-                                            >
-                                                <span>{roleLabels[r].title}</span>
-                                                <span className="text-[10px] text-fg-disabled bg-neutral-secondary-soft px-1.5 py-0.5 rounded border border-default">
-                                                    {roleLabels[r].badge}
-                                                </span>
-                                            </button>
-                                        ))}
+                                        {(Object.keys(ROLE_CONFIGS) as RoleType[]).map((r) => {
+                                            const cfg = ROLE_CONFIGS[r];
+                                            const isFull = cfg.allowedTabs.length >= 10;
+                                            return (
+                                                <button
+                                                    key={r}
+                                                    type="button"
+                                                    onClick={() => handleRoleSelect(r)}
+                                                    className={cn(
+                                                        'w-full text-left px-3 py-2 text-xs flex flex-col gap-0.5 hover:bg-neutral-tertiary transition-colors border-b border-default/50 last:border-b-0',
+                                                        currentRole === r && 'bg-blue-50 dark:bg-blue-950/50 text-fg-brand font-semibold'
+                                                    )}
+                                                >
+                                                    <div className="flex items-center justify-between">
+                                                        <span className="font-bold">{cfg.title}</span>
+                                                        <span className={cn(
+                                                            'text-[10px] px-1.5 py-0.2 rounded font-medium border',
+                                                            isFull
+                                                                ? 'bg-emerald-50 dark:bg-emerald-950/70 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800'
+                                                                : 'bg-blue-50 dark:bg-blue-950/70 text-blue-700 dark:text-blue-300 border-blue-200 dark:border-blue-800'
+                                                        )}>
+                                                            {cfg.scopeBadge}
+                                                        </span>
+                                                    </div>
+                                                    <span className="text-[10px] text-fg-disabled truncate">
+                                                        {cfg.userName} • {cfg.roleDesc}
+                                                    </span>
+                                                </button>
+                                            );
+                                        })}
                                     </div>
                                 )}
                             </div>
@@ -373,60 +416,260 @@ export default function FlowbiteTanggapinLayout({
                                 </button>
 
                                 {isQuickActionOpen && (
-                                    <div className="absolute right-0 mt-1.5 w-56 bg-neutral-primary-medium border border-default-medium rounded-base shadow-xl z-50 py-1">
+                                    <div className="absolute right-0 mt-1.5 w-60 bg-neutral-primary-medium border border-default-medium rounded-base shadow-xl z-50 py-1">
                                         <div className="px-3 py-1.5 border-b border-default text-[11px] font-medium text-fg-disabled">
-                                            Aksi Operasional Cepat
+                                            Aksi Cepat ({activeRoleConfig.shortTitle})
                                         </div>
-                                        <button
-                                            type="button"
-                                            onClick={() => {
-                                                setIsQuickActionOpen(false);
-                                                if (onTriggerActionModal) {
-                                                    onTriggerActionModal('followup');
-                                                }
-                                            }}
-                                            className="w-full text-left px-3 py-2 text-xs hover:bg-neutral-tertiary flex items-center gap-2 text-heading"
-                                        >
-                                            <AlertTriangle className="w-3.5 h-3.5 text-amber-500" />
-                                            <span>Buat Follow-up Siswa</span>
-                                        </button>
-                                        <button
-                                            type="button"
-                                            onClick={() => {
-                                                setIsQuickActionOpen(false);
-                                                if (onTriggerActionModal) {
-                                                    onTriggerActionModal('parent_contact');
-                                                }
-                                            }}
-                                            className="w-full text-left px-3 py-2 text-xs hover:bg-neutral-tertiary flex items-center gap-2 text-heading"
-                                        >
-                                            <PhoneCall className="w-3.5 h-3.5 text-green-500" />
-                                            <span>Hubungi Orang Tua</span>
-                                        </button>
-                                        <button
-                                            type="button"
-                                            onClick={() => {
-                                                setIsQuickActionOpen(false);
-                                                if (onTriggerActionModal) {
-                                                    onTriggerActionModal('new_case');
-                                                }
-                                            }}
-                                            className="w-full text-left px-3 py-2 text-xs hover:bg-neutral-tertiary flex items-center gap-2 text-heading"
-                                        >
-                                            <ShieldAlert className="w-3.5 h-3.5 text-blue-500" />
-                                            <span>Eskalasi ke Case BK</span>
-                                        </button>
-                                        <button
-                                            type="button"
-                                            onClick={() => {
-                                                setIsQuickActionOpen(false);
-                                                handleNavClick('incidents');
-                                            }}
-                                            className="w-full text-left px-3 py-2 text-xs hover:bg-neutral-tertiary flex items-center gap-2 text-heading border-t border-default"
-                                        >
-                                            <Siren className="w-3.5 h-3.5 text-red-500" />
-                                            <span>Laporkan Situasi Darurat</span>
-                                        </button>
+
+                                        {/* Kepala Sekolah Actions */}
+                                        {currentRole === 'kepala_sekolah' && (
+                                            <>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => {
+                                                        setIsQuickActionOpen(false);
+                                                        onTriggerActionModal?.('followup');
+                                                    }}
+                                                    className="w-full text-left px-3 py-2 text-xs hover:bg-neutral-tertiary flex items-center gap-2 text-heading"
+                                                >
+                                                    <AlertTriangle className="w-3.5 h-3.5 text-amber-500" />
+                                                    <span>Instruksi Follow-up Siswa</span>
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => {
+                                                        setIsQuickActionOpen(false);
+                                                        onTriggerActionModal?.('parent_contact');
+                                                    }}
+                                                    className="w-full text-left px-3 py-2 text-xs hover:bg-neutral-tertiary flex items-center gap-2 text-heading"
+                                                >
+                                                    <PhoneCall className="w-3.5 h-3.5 text-green-500" />
+                                                    <span>Hubungi Orang Tua Siswa</span>
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => {
+                                                        setIsQuickActionOpen(false);
+                                                        onTriggerActionModal?.('new_case');
+                                                    }}
+                                                    className="w-full text-left px-3 py-2 text-xs hover:bg-neutral-tertiary flex items-center gap-2 text-heading"
+                                                >
+                                                    <ShieldAlert className="w-3.5 h-3.5 text-blue-500" />
+                                                    <span>Eskalasi Kasus ke BK</span>
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => {
+                                                        setIsQuickActionOpen(false);
+                                                        handleNavClick('incidents');
+                                                    }}
+                                                    className="w-full text-left px-3 py-2 text-xs hover:bg-neutral-tertiary flex items-center gap-2 text-heading border-t border-default"
+                                                >
+                                                    <Siren className="w-3.5 h-3.5 text-red-500" />
+                                                    <span>Deklarasikan Kedaruratan</span>
+                                                </button>
+                                            </>
+                                        )}
+
+                                        {/* Operator Actions */}
+                                        {currentRole === 'operator' && (
+                                            <>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => {
+                                                        setIsQuickActionOpen(false);
+                                                        handleNavClick('data-check');
+                                                    }}
+                                                    className="w-full text-left px-3 py-2 text-xs hover:bg-neutral-tertiary flex items-center gap-2 text-heading"
+                                                >
+                                                    <CheckCircle2 className="w-3.5 h-3.5 text-orange-500" />
+                                                    <span>Audit Validasi Dapodik</span>
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => {
+                                                        setIsQuickActionOpen(false);
+                                                        handleNavClick('documents');
+                                                    }}
+                                                    className="w-full text-left px-3 py-2 text-xs hover:bg-neutral-tertiary flex items-center gap-2 text-heading"
+                                                >
+                                                    <FileText className="w-3.5 h-3.5 text-blue-500" />
+                                                    <span>Verifikasi SK & Berkas Guru</span>
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => {
+                                                        setIsQuickActionOpen(false);
+                                                        onTriggerActionModal?.('parent_contact');
+                                                    }}
+                                                    className="w-full text-left px-3 py-2 text-xs hover:bg-neutral-tertiary flex items-center gap-2 text-heading"
+                                                >
+                                                    <PhoneCall className="w-3.5 h-3.5 text-green-500" />
+                                                    <span>Reminder Residu NIK ke Ortu</span>
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => {
+                                                        setIsQuickActionOpen(false);
+                                                        handleNavClick('class-monitoring');
+                                                    }}
+                                                    className="w-full text-left px-3 py-2 text-xs hover:bg-neutral-tertiary flex items-center gap-2 text-heading border-t border-default"
+                                                >
+                                                    <Layers className="w-3.5 h-3.5 text-purple-500" />
+                                                    <span>Petakan Pengampu Rombel</span>
+                                                </button>
+                                            </>
+                                        )}
+
+                                        {/* Wali Kelas Actions */}
+                                        {currentRole === 'wali_kelas' && (
+                                            <>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => {
+                                                        setIsQuickActionOpen(false);
+                                                        onTriggerActionModal?.('discipline');
+                                                    }}
+                                                    className="w-full text-left px-3 py-2 text-xs hover:bg-neutral-tertiary flex items-center gap-2 text-heading"
+                                                >
+                                                    <Shield className="w-3.5 h-3.5 text-indigo-500" />
+                                                    <span>Catat Pelanggaran Kelas</span>
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => {
+                                                        setIsQuickActionOpen(false);
+                                                        onTriggerActionModal?.('parent_contact');
+                                                    }}
+                                                    className="w-full text-left px-3 py-2 text-xs hover:bg-neutral-tertiary flex items-center gap-2 text-heading"
+                                                >
+                                                    <PhoneCall className="w-3.5 h-3.5 text-green-500" />
+                                                    <span>Hubungi Wali Murid (WA)</span>
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => {
+                                                        setIsQuickActionOpen(false);
+                                                        onTriggerActionModal?.('followup');
+                                                    }}
+                                                    className="w-full text-left px-3 py-2 text-xs hover:bg-neutral-tertiary flex items-center gap-2 text-heading"
+                                                >
+                                                    <AlertTriangle className="w-3.5 h-3.5 text-amber-500" />
+                                                    <span>Buat Follow-up Siswa</span>
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => {
+                                                        setIsQuickActionOpen(false);
+                                                        onTriggerActionModal?.('new_case');
+                                                    }}
+                                                    className="w-full text-left px-3 py-2 text-xs hover:bg-neutral-tertiary flex items-center gap-2 text-heading border-t border-default"
+                                                >
+                                                    <ShieldAlert className="w-3.5 h-3.5 text-blue-500" />
+                                                    <span>Rujuk Kasus Siswa ke BK</span>
+                                                </button>
+                                            </>
+                                        )}
+
+                                        {/* Bendahara Actions */}
+                                        {currentRole === 'bendahara' && (
+                                            <>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => {
+                                                        setIsQuickActionOpen(false);
+                                                        handleNavClick('payments');
+                                                    }}
+                                                    className="w-full text-left px-3 py-2 text-xs hover:bg-neutral-tertiary flex items-center gap-2 text-heading"
+                                                >
+                                                    <WalletCards className="w-3.5 h-3.5 text-purple-500" />
+                                                    <span>Catat Pembayaran Masuk</span>
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => {
+                                                        setIsQuickActionOpen(false);
+                                                        handleNavClick('payments');
+                                                    }}
+                                                    className="w-full text-left px-3 py-2 text-xs hover:bg-neutral-tertiary flex items-center gap-2 text-heading"
+                                                >
+                                                    <CheckCircle2 className="w-3.5 h-3.5 text-green-500" />
+                                                    <span>Verifikasi Bukti Transfer</span>
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => {
+                                                        setIsQuickActionOpen(false);
+                                                        onTriggerActionModal?.('parent_contact');
+                                                    }}
+                                                    className="w-full text-left px-3 py-2 text-xs hover:bg-neutral-tertiary flex items-center gap-2 text-heading"
+                                                >
+                                                    <PhoneCall className="w-3.5 h-3.5 text-blue-500" />
+                                                    <span>Kirim Pengingat Tagihan (WA)</span>
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => {
+                                                        setIsQuickActionOpen(false);
+                                                        handleNavClick('payments');
+                                                    }}
+                                                    className="w-full text-left px-3 py-2 text-xs hover:bg-neutral-tertiary flex items-center gap-2 text-heading border-t border-default"
+                                                >
+                                                    <FileText className="w-3.5 h-3.5 text-emerald-500" />
+                                                    <span>Unduh Rekap Kas Masuk</span>
+                                                </button>
+                                            </>
+                                        )}
+
+                                        {/* Guru BK Actions */}
+                                        {currentRole === 'guru_bk' && (
+                                            <>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => {
+                                                        setIsQuickActionOpen(false);
+                                                        onTriggerActionModal?.('new_case');
+                                                    }}
+                                                    className="w-full text-left px-3 py-2 text-xs hover:bg-neutral-tertiary flex items-center gap-2 text-heading"
+                                                >
+                                                    <ShieldAlert className="w-3.5 h-3.5 text-blue-500" />
+                                                    <span>Buat Kasus Konseling Baru</span>
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => {
+                                                        setIsQuickActionOpen(false);
+                                                        onTriggerActionModal?.('parent_contact');
+                                                    }}
+                                                    className="w-full text-left px-3 py-2 text-xs hover:bg-neutral-tertiary flex items-center gap-2 text-heading"
+                                                >
+                                                    <PhoneCall className="w-3.5 h-3.5 text-green-500" />
+                                                    <span>Panggil Orang Tua ke BK</span>
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => {
+                                                        setIsQuickActionOpen(false);
+                                                        onTriggerActionModal?.('discipline');
+                                                    }}
+                                                    className="w-full text-left px-3 py-2 text-xs hover:bg-neutral-tertiary flex items-center gap-2 text-heading"
+                                                >
+                                                    <Shield className="w-3.5 h-3.5 text-amber-500" />
+                                                    <span>Catat Pembinaan Karakter</span>
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => {
+                                                        setIsQuickActionOpen(false);
+                                                        handleNavClick('ats');
+                                                    }}
+                                                    className="w-full text-left px-3 py-2 text-xs hover:bg-neutral-tertiary flex items-center gap-2 text-heading border-t border-default"
+                                                >
+                                                    <UserCheck className="w-3.5 h-3.5 text-indigo-500" />
+                                                    <span>Jadwalkan Kunjungan ATS</span>
+                                                </button>
+                                            </>
+                                        )}
                                     </div>
                                 )}
                             </div>
@@ -538,27 +781,32 @@ export default function FlowbiteTanggapinLayout({
                                         <span className="sr-only">Open user menu</span>
                                         <img
                                             className="w-8 h-8 rounded-full object-cover ring-2 ring-blue-500/30"
-                                            src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-                                            alt="user photo"
+                                            src={activeRoleConfig.avatar}
+                                            alt={activeRoleConfig.userName}
                                         />
                                     </button>
                                 </div>
                                 <div
                                     className={cn(
-                                        'z-50 absolute right-0 top-11 bg-neutral-primary-medium border border-default-medium rounded-base shadow-xl w-56 transition-all',
+                                        'z-50 absolute right-0 top-11 bg-neutral-primary-medium border border-default-medium rounded-base shadow-xl w-60 transition-all',
                                         isUserMenuOpen ? 'block' : 'hidden'
                                     )}
                                     id="dropdown-user"
                                 >
                                     <div className="px-4 py-3 border-b border-default-medium" role="none">
                                         <p className="text-sm font-semibold text-heading truncate" role="none">
-                                            {auth?.user?.name || 'Neil Sims'}
+                                            {activeRoleConfig.userName}
                                         </p>
                                         <p className="text-xs text-body truncate" role="none">
-                                            {auth?.user?.email || 'neil.sims@flowbite.com'}
+                                            {activeRoleConfig.userEmail}
                                         </p>
-                                        <div className="mt-1.5 inline-block text-[10px] font-medium px-2 py-0.5 rounded bg-blue-100 dark:bg-blue-900/60 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
-                                            Peran: {roleLabels[currentRole]?.title}
+                                        <div className="mt-2 flex items-center justify-between">
+                                            <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-blue-100 dark:bg-blue-900/60 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
+                                                {activeRoleConfig.title}
+                                            </span>
+                                            <span className="text-[10px] text-fg-disabled">
+                                                {activeRoleConfig.scopeBadge}
+                                            </span>
                                         </div>
                                     </div>
                                     <ul className="p-2 text-sm text-body font-medium space-y-0.5" role="none">
@@ -656,10 +904,16 @@ export default function FlowbiteTanggapinLayout({
                                 <div className="size-7 rounded bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 flex items-center justify-center text-blue-600 font-bold text-xs">
                                     SMK
                                 </div>
-                                <div className="leading-tight">
-                                    <div className="font-semibold text-xs text-heading">SMK Negeri 1 Harapan</div>
+                                <div className="leading-tight flex-1 min-w-0">
+                                    <div className="font-semibold text-xs text-heading truncate">SMK Negeri 1 Harapan</div>
                                     <div className="text-[10px] text-fg-disabled">T.A. 2025/2026 • Ganjil</div>
                                 </div>
+                            </div>
+                            <div className="mt-2 pt-2 border-t border-default/60 flex items-center justify-between">
+                                <span className="text-[10px] text-fg-disabled">Ruang Akses:</span>
+                                <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-blue-50 dark:bg-blue-950 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
+                                    {activeRoleConfig.shortTitle} ({activeRoleConfig.scopeBadge})
+                                </span>
                             </div>
                         </div>
 
@@ -715,9 +969,12 @@ export default function FlowbiteTanggapinLayout({
                             </span>
                         </div>
                         <div className="p-2.5 rounded-base bg-neutral-secondary-soft border border-default text-[11px] leading-relaxed">
-                            <span className="font-semibold text-heading block mb-0.5">Tanggapin Core:</span>
-                            <p className="text-[10px] text-body">
-                                <em>"Temukan masalah → tentukan PIC → lakukan tindakan → catat hasil."</em>
+                            <div className="flex items-center justify-between mb-0.5">
+                                <span className="font-semibold text-heading">{activeRoleConfig.title}</span>
+                                <span className="text-[9px] text-blue-600 dark:text-blue-400 font-bold">{activeRoleConfig.scopeBadge}</span>
+                            </div>
+                            <p className="text-[10px] text-body leading-tight">
+                                {activeRoleConfig.roleDesc}
                             </p>
                         </div>
                     </div>
