@@ -10,8 +10,12 @@ Route::inertia('/', 'welcome')->name('home');
 Route::get('/demo-login', function () {
     $user = User::first() ?? User::factory()->create([
         'name' => 'Neil Sims (Kepala Sekolah)',
-        'email' => 'neil.sims@flowbite.com',
+        'email' => 'neil.sims@tanggapin.sch.id',
     ]);
+    if (! $user->email_verified_at) {
+        $user->email_verified_at = now();
+        $user->save();
+    }
     Auth::login($user);
 
     return redirect()->route('dashboard');

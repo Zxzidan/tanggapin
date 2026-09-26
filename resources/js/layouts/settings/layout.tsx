@@ -1,4 +1,5 @@
 import { Link } from '@inertiajs/react';
+import { Palette, Shield, User } from 'lucide-react';
 import type { PropsWithChildren } from 'react';
 import Heading from '@/components/heading';
 import { Button } from '@/components/ui/button';
@@ -12,19 +13,19 @@ import type { NavItem } from '@/types';
 
 const sidebarNavItems: NavItem[] = [
     {
-        title: 'Profile',
+        title: 'Profil Pengguna',
         href: edit(),
-        icon: null,
+        icon: User,
     },
     {
-        title: 'Security',
+        title: 'Keamanan Akun',
         href: editSecurity(),
-        icon: null,
+        icon: Shield,
     },
     {
-        title: 'Appearance',
+        title: 'Tampilan (Tema)',
         href: editAppearance(),
-        icon: null,
+        icon: Palette,
     },
 ];
 
