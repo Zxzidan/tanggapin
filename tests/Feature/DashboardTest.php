@@ -1,8 +1,10 @@
 <?php
 
+use App\Models\DisciplineRecord;
 use App\Models\SchoolClass;
 use App\Models\SchoolSetting;
 use App\Models\Student;
+use App\Models\StudentCase;
 use App\Models\StudentReport;
 use App\Models\User;
 use Database\Seeders\TanggapinSeeder;
@@ -285,4 +287,309 @@ test('class limit is enforced on paket unggulan and unlimited on yayasan', funct
     $setting->update(['subscription_plan' => 'yayasan', 'max_classes' => null]);
     expect($setting->getClassLimit())->toBeNull();
     expect($setting->isClassLimitReached())->toBeFalse();
+});
+
+test('operator is redirected away from clinical modules to manage users', function () {
+    $this->seed(TanggapinSeeder::class);
+
+    $operator = User::where('role', 'operator')->first();
+
+    $this->actingAs($operator)->get(route('early-warning'))
+        ->assertRedirect(route('users.index'))
+        ->assertSessionHas('status');
+
+    $this->actingAs($operator)->get(route('kondisi-kelas'))
+        ->assertRedirect(route('users.index'))
+        ->assertSessionHas('status');
+});
+
+test('guru bk can view all classes and homeroom teachers and add a new student', function () {
+    $this->seed(TanggapinSeeder::class);
+
+    $guruBk = User::where('role', 'guru_bk')->first();
+    $class = SchoolClass::first();
+    $initialTotal = $class->total_students;
+
+    // BK visits kondisi-kelas
+    $response = $this->actingAs($guruBk)->get(route('kondisi-kelas'));
+    $response->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->component('kondisi-kelas')
+            ->has('allClasses')
+            ->has('students')
+            ->has('disciplineList')
+        );
+
+    // BK adds a student
+    $postResponse = $this->actingAs($guruBk)->post(route('students.store'), [
+        'name' => 'Ahmad Santoso',
+        'nisn' => '0098765432',
+        'school_class_id' => $class->id,
+        'gender' => 'L',
+        'parent_name' => 'Bapak Santoso',
+        'parent_phone' => '081234567890',
+    ]);
+
+    $postResponse->assertSessionHas('success');
+    $this->assertDatabaseHas('students', [
+        'name' => 'Ahmad Santoso',
+        'nisn' => '0098765432',
+        'school_class_id' => $class->id,
+    ]);
+    expect($class->fresh()->total_students)->toBe($initialTotal + 1);
+});
+
+test('guru bk can add discipline points which alert the wali kelas', function () {
+    $this->seed(TanggapinSeeder::class);
+
+    $guruBk = User::where('role', 'guru_bk')->first();
+    $student = Student::first();
+
+    $response = $this->actingAs($guruBk)->post(route('discipline-records.store'), [
+        'student_id' => $student->id,
+        'infraction' => 'Meninggalkan Kelas Tanpa Izin',
+        'points' => 15,
+        'pattern_notes' => 'Terjadi pada jam pelajaran ke-5',
+    ]);
+
+    $response->assertSessionHas('success');
+    $this->assertDatabaseHas('discipline_records', [
+        'student_id' => $student->id,
+        'infraction' => 'Meninggalkan Kelas Tanpa Izin',
+        'points' => 15,
+        'action_status' => 'Menunggu Tindak Lanjut Wali Kelas',
+    ]);
+    $this->assertDatabaseHas('risk_alerts', [
+        'student_id' => $student->id,
+        'trigger_type' => 'Poin Pelanggaran Guru BK',
+    ]);
+});
+
+test('wali kelas can view student points and report obstacles to guru bk', function () {
+    $this->seed(TanggapinSeeder::class);
+
+    $waliRpl = User::where('email', 'walikelas@sekolah.sch.id')->first();
+    $student = Student::where('school_class_id', $waliRpl->school_class_id)->first();
+
+    // Wali Kelas reports obstacle to Guru BK
+    $referralResponse = $this->actingAs($waliRpl)->post(route('student-referrals.store'), [
+        'student_id' => $student->id,
+        'category' => 'Motivasi Belajar',
+        'priority' => 'Tinggi',
+        'notes' => 'Siswa sering terlihat lesu dan tugas produktif belum terselesaikan 2 minggu berturut-turut.',
+    ]);
+
+    $referralResponse->assertSessionHas('success');
+    $this->assertDatabaseHas('student_cases', [
+        'student_id' => $student->id,
+        'category' => 'Motivasi Belajar',
+        'priority' => 'Tinggi',
+        'assignee_name' => 'Koordinator Guru BK',
+    ]);
+});
+
+test('wali kelas can follow up discipline record logged by guru bk', function () {
+    $this->seed(TanggapinSeeder::class);
+
+    $waliRpl = User::where('email', 'walikelas@sekolah.sch.id')->first();
+    $student = Student::where('school_class_id', $waliRpl->school_class_id)->first();
+
+    $record = DisciplineRecord::create([
+        'student_id' => $student->id,
+        'infraction' => 'Keterlambatan Berulang',
+        'points' => 10,
+        'action_status' => 'Menunggu Tindak Lanjut Wali Kelas',
+        'pattern_notes' => 'Dicatat oleh Guru BK',
+    ]);
+
+    $followupResponse = $this->actingAs($waliRpl)->post(route('discipline-records.followup', $record), [
+        'followup_notes' => 'Konseling kelas dan perjanjian tertulis didampingi wali kelas.',
+    ]);
+
+    $followupResponse->assertSessionHas('success');
+    expect($record->fresh()->action_status)->toBe('Selesai Ditindaklanjuti Wali Kelas');
+    expect($record->fresh()->pattern_notes)->toContain('Konseling kelas dan perjanjian');
+});
+
+test('authenticated user can switch role to operator and gets redirected to kelola pengguna', function () {
+    $this->seed(TanggapinSeeder::class);
+
+    $guruBk = User::where('role', 'guru_bk')->first();
+
+    $response = $this->actingAs($guruBk)->post(route('role.switch'), [
+        'role' => 'operator',
+    ]);
+
+    $response->assertRedirect(route('users.index'));
+    $response->assertSessionHas('success');
+    expect(auth()->user()->role)->toBe('operator');
+});
+
+test('authenticated user can switch role to guru bk and gets redirected to kondisi kelas', function () {
+    $this->seed(TanggapinSeeder::class);
+
+    $operator = User::where('role', 'operator')->first();
+
+    $response = $this->actingAs($operator)->post(route('role.switch'), [
+        'role' => 'guru_bk',
+    ]);
+
+    $response->assertRedirect(route('kondisi-kelas'));
+    $response->assertSessionHas('success');
+    expect(auth()->user()->role)->toBe('guru_bk');
+});
+
+test('authenticated user can switch to specific wali kelas persona with email', function () {
+    $this->seed(TanggapinSeeder::class);
+
+    $operator = User::where('role', 'operator')->first();
+
+    $response = $this->actingAs($operator)->post(route('role.switch'), [
+        'email' => 'budi@sekolah.sch.id',
+    ]);
+
+    $response->assertRedirect(route('kondisi-kelas'));
+    $response->assertSessionHas('success');
+    expect(auth()->user()->email)->toBe('budi@sekolah.sch.id');
+    expect(auth()->user()->role)->toBe('wali_kelas');
+});
+
+test('demo-login route switches role and directs to tailored landing page', function () {
+    $this->seed(TanggapinSeeder::class);
+
+    $response = $this->get(route('demo-login', ['role' => 'operator']));
+    $response->assertRedirect(route('users.index'));
+    expect(auth()->user()->role)->toBe('operator');
+
+    $responseBk = $this->get(route('demo-login', ['role' => 'guru_bk']));
+    $responseBk->assertRedirect(route('kondisi-kelas'));
+    expect(auth()->user()->role)->toBe('guru_bk');
+});
+
+test('direct role urls allow opening any role in 1 chrome browser without logging out first', function () {
+    $this->seed(TanggapinSeeder::class);
+
+    $guruBk = User::where('role', 'guru_bk')->first();
+    $this->actingAs($guruBk);
+    expect(auth()->user()->role)->toBe('guru_bk');
+
+    // Open operator link while currently logged in as guru bk
+    $resOperator = $this->get(route('role.operator'));
+    $resOperator->assertRedirect(route('users.index'));
+    expect(auth()->user()->role)->toBe('operator');
+
+    // Open guru-bk link without logging out of operator
+    $resBk = $this->get(route('role.guru-bk'));
+    $resBk->assertRedirect(route('kondisi-kelas'));
+    expect(auth()->user()->role)->toBe('guru_bk');
+
+    // Open wali-kelas link
+    $resWali = $this->get(route('role.wali-kelas'));
+    $resWali->assertRedirect(route('kondisi-kelas'));
+    expect(auth()->user()->role)->toBe('wali_kelas');
+    expect(auth()->user()->email)->toBe('walikelas@sekolah.sch.id');
+
+    // Open specific wali-kelas tkj link
+    $resTkj = $this->get(route('role.wali-kelas-tkj'));
+    $resTkj->assertRedirect(route('kondisi-kelas'));
+    expect(auth()->user()->role)->toBe('wali_kelas');
+    expect(auth()->user()->email)->toBe('budi@sekolah.sch.id');
+
+    // Open kepala-sekolah link
+    $resKepsek = $this->get(route('role.kepala-sekolah'));
+    $resKepsek->assertRedirect(route('dashboard'));
+    expect(auth()->user()->role)->toBe('kepala_sekolah');
+
+    // Open bendahara link
+    $resBendahara = $this->get(route('role.bendahara'));
+    $resBendahara->assertRedirect(route('payments'));
+    expect(auth()->user()->role)->toBe('bendahara');
+});
+
+test('query parameter ?as= or ?role= seamlessly auto-authenticates target role without logout', function () {
+    $this->seed(TanggapinSeeder::class);
+
+    $operator = User::where('role', 'operator')->first();
+    $this->actingAs($operator);
+    expect(auth()->user()->role)->toBe('operator');
+
+    // Visit kondisi-kelas with ?as=guru_bk
+    $response = $this->get(route('kondisi-kelas', ['as' => 'guru_bk']));
+    $response->assertOk();
+    expect(auth()->user()->role)->toBe('guru_bk');
+
+    // Visit kondisi-kelas with ?as=wali_kelas
+    $responseWali = $this->get(route('kondisi-kelas', ['as' => 'wali_kelas']));
+    $responseWali->assertOk();
+    expect(auth()->user()->role)->toBe('wali_kelas');
+});
+
+test('guru bk cannot create manual cases from scratch', function () {
+    $this->seed(TanggapinSeeder::class);
+
+    $guruBk = User::where('role', 'guru_bk')->first();
+    $student = Student::first();
+
+    $response = $this->actingAs($guruBk)->post(route('cases.store'), [
+        'student_id' => $student->id,
+        'category' => 'Kedisiplinan',
+        'priority' => 'Tinggi',
+        'last_activity' => 'Mencoba membuat kasus baru manual',
+    ]);
+
+    $response->assertSessionHasErrors('forbidden');
+});
+
+test('guru bk can handle referral reported by wali kelas and wali kelas dashboard tracks handled status', function () {
+    $this->seed(TanggapinSeeder::class);
+
+    $waliRpl = User::where('email', 'walikelas@sekolah.sch.id')->first();
+    $guruBk = User::where('role', 'guru_bk')->first();
+    $student = Student::where('school_class_id', $waliRpl->school_class_id)->first();
+
+    // 1. Wali Kelas reports referral to Guru BK
+    $referralResponse = $this->actingAs($waliRpl)->post(route('student-referrals.store'), [
+        'student_id' => $student->id,
+        'category' => 'Kedisiplinan & Perilaku',
+        'priority' => 'Tinggi',
+        'notes' => 'Siswa sering membolos pada jam produktif dan menolak kerja kelompok.',
+    ]);
+    $referralResponse->assertSessionHas('success');
+
+    $case = StudentCase::where('student_id', $student->id)
+        ->where('category', 'Kedisiplinan & Perilaku')
+        ->first();
+    expect($case)->not->toBeNull();
+    expect($case->stage)->toBe('new');
+    expect($case->stage_label)->toBe('Rujukan Masuk dari Wali Kelas');
+
+    // 2. Guru BK handles the referral
+    $handlingResponse = $this->actingAs($guruBk)->post(route('cases.handle-bk', $case), [
+        'action_type' => 'Konseling Individu & Pemanggilan Orang Tua',
+        'handling_notes' => 'Telah dilakukan konseling individu dan komitmen perbaikan kehadiran disepakati siswa bersama orang tua.',
+    ]);
+    $handlingResponse->assertSessionHas('success');
+
+    $case->refresh();
+    expect($case->stage)->toBe('handled_by_bk');
+    expect($case->stage_label)->toBe('Sudah Ditangani oleh Guru BK');
+    expect($case->handled_by_bk_name)->toBe($guruBk->name);
+    expect($case->bk_action_type)->toBe('Konseling Individu & Pemanggilan Orang Tua');
+    expect($case->bk_handling_notes)->toContain('Telah dilakukan konseling individu');
+    expect($case->handled_at)->not->toBeNull();
+
+    // 3. Wali Kelas dashboard tracks that it has been handled by Guru BK
+    $dashboardResponse = $this->actingAs($waliRpl)->get(route('dashboard'));
+    $dashboardResponse->assertOk();
+    $dashboardResponse->assertInertia(fn ($page) => $page
+        ->component('dashboard')
+        ->has('cases')
+        ->where('cases', fn ($cases) => collect($cases)->contains(function ($item) use ($case, $guruBk) {
+            return $item['code'] === $case->code
+                && $item['isHandledByBk'] === true
+                && $item['stageLabel'] === 'Sudah Ditangani oleh Guru BK'
+                && $item['handledByBkName'] === $guruBk->name
+                && str_contains($item['bkHandlingNotes'], 'Telah dilakukan konseling individu');
+        }))
+    );
 });

@@ -1,7 +1,8 @@
-import { Link, usePage } from '@inertiajs/react';
+import { Link, router, usePage } from '@inertiajs/react';
 import {
     AlertTriangle,
     Bell,
+    Check,
     CheckCircle2,
     ChevronDown,
     FileText,
@@ -13,6 +14,7 @@ import {
     Moon,
     PhoneCall,
     Plus,
+    RefreshCw,
     Scale,
     Search,
     Settings,
@@ -28,10 +30,15 @@ import {
     X,
 } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
+import { toast } from 'sonner';
 import { useActionModals } from '@/components/action-modals';
 import TanggapinLogo from '@/components/tanggapin-logo';
 import { useAppearance } from '@/hooks/use-appearance';
-import { ROLE_CONFIGS } from '@/lib/role-config';
+import {
+    ROLE_CONFIGS,
+    ROLE_SWITCHER_OPTIONS,
+    type RoleSwitcherOption,
+} from '@/lib/role-config';
 import { cn } from '@/lib/utils';
 import type { RoleType } from '@/types/tanggapin';
 
@@ -421,8 +428,8 @@ export default function FlowbiteTanggapinLayout({
                             )}
                         </div>
 
-                        {/* Right: Quick Actions, Appearance & User */}
-                        <div className="flex shrink-0 items-center gap-2.5 sm:gap-3.5">
+                        {/* Right: Quick Actions, Appearance & User Profile */}
+                        <div className="flex shrink-0 items-center gap-2 sm:gap-3">
                             {/* Role-tailored Quick Actions Button */}
                             <div className="relative" ref={quickActionRef}>
                                 <button
@@ -671,6 +678,8 @@ export default function FlowbiteTanggapinLayout({
                                                 Peran: {activeRoleConfig.title}
                                             </div>
                                         </div>
+
+
                                         <ul className="space-y-0.5 p-1.5 text-xs font-medium text-slate-700 dark:text-slate-300">
                                             <li>
                                                 <Link

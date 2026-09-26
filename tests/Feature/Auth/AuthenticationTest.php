@@ -75,3 +75,28 @@ test('users are rate limited', function () {
 
     $response->assertTooManyRequests();
 });
+
+test('already authenticated users can still open login screen in a new tab to switch role', function () {
+    $user = User::factory()->create(['role' => 'guru_bk']);
+
+    $response = $this->actingAs($user)->get(route('login'));
+
+    $response->assertOk();
+});
+
+test('already authenticated users can log in as another role without prior logout', function () {
+    $guruBk = User::factory()->create(['role' => 'guru_bk', 'email' => 'bk_test@sekolah.sch.id']);
+    $operator = User::factory()->create(['role' => 'operator', 'email' => 'operator_test@sekolah.sch.id']);
+
+    $this->actingAs($guruBk);
+    expect(auth()->user()->email)->toBe('bk_test@sekolah.sch.id');
+
+    $response = $this->post(route('login.store'), [
+        'email' => $operator->email,
+        'password' => 'password',
+    ]);
+
+    $this->assertAuthenticated();
+    expect(auth()->user()->email)->toBe('operator_test@sekolah.sch.id');
+    expect(auth()->user()->role)->toBe('operator');
+});

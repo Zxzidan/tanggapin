@@ -2,11 +2,8 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserManagementController;
-use App\Models\SchoolClass;
-use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 
 Route::inertia('/', 'welcome')->name('home');
 
@@ -18,73 +15,32 @@ Route::post('/register', function () {
     return redirect()->route('login')->with('status', 'Pendaftaran mandiri dinonaktifkan. Seluruh akun guru dan staf sekolah dibuat & dikontrol secara terpusat oleh Operator Sekolah.');
 })->name('register.store');
 
-Route::get('/demo-login', function (Request $request) {
-    $role = $request->query('role', 'kepala_sekolah');
-    $validRoles = ['kepala_sekolah', 'operator', 'wali_kelas', 'guru_bk', 'bendahara'];
-    if (! in_array($role, $validRoles, true)) {
-        $role = 'kepala_sekolah';
-    }
+// Accessible Login Routes: Allows login even if another tab in Chrome has an active session
+Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
+$loginLimiter = config('fortify.limiters.login');
+Route::post('/login', [AuthenticatedSessionController::class, 'store'])
+    ->middleware(array_filter([
+        $loginLimiter ? 'throttle:'.$loginLimiter : null,
+    ]))
+    ->name('login.store');
 
-    $roleEmails = [
-        'kepala_sekolah' => 'kepsek@sekolah.sch.id',
-        'operator' => 'operator@sekolah.sch.id',
-        'wali_kelas' => 'walikelas@sekolah.sch.id',
-        'guru_bk' => 'gurubk@sekolah.sch.id',
-        'bendahara' => 'bendahara@sekolah.sch.id',
-    ];
+Route::get('/demo-login', [DashboardController::class, 'switchRole'])->name('demo-login');
 
-    $roleNames = [
-        'kepala_sekolah' => 'Drs. H. Mulyadi, M.Pd',
-        'operator' => 'Operator Sekolah',
-        'wali_kelas' => 'Ratna Dewi, S.Pd',
-        'guru_bk' => 'Dra. Hj. Nurjanah, M.Pd',
-        'bendahara' => 'Ahmad Suhendra, S.E.',
-    ];
-
-    $email = $roleEmails[$role] ?? 'kepsek@sekolah.sch.id';
-    $name = $roleNames[$role] ?? 'Kepala Sekolah';
-
-    $user = User::where('role', $role)->first()
-        ?? User::where('email', $email)->first()
-        ?? User::create([
-            'name' => $name,
-            'email' => $email,
-            'role' => $role,
-            'password' => bcrypt('password'),
-            'raw_password' => 'password',
-            'email_verified_at' => now(),
-        ]);
-
-    if (! $user->raw_password) {
-        $user->raw_password = 'password';
-        $user->save();
-    }
-
-    if ($role === 'wali_kelas' && ! $user->school_class_id) {
-        $firstClass = SchoolClass::first();
-        if ($firstClass) {
-            $user->school_class_id = $firstClass->id;
-            $user->save();
-        }
-    }
-
-    if ($user->name !== $name || $user->email !== $email) {
-        $user->name = $name;
-        $user->email = $email;
-        $user->save();
-    }
-
-    if (! $user->email_verified_at) {
-        $user->email_verified_at = now();
-        $user->save();
-    }
-
-    Auth::login($user);
-
-    return redirect()->route('dashboard');
-})->name('demo-login');
+// Direct Application Role URLs (Instant access in 1 Chrome browser without logging out)
+Route::get('/operator', [DashboardController::class, 'openOperator'])->name('role.operator');
+Route::get('/guru-bk', [DashboardController::class, 'openGuruBk'])->name('role.guru-bk');
+Route::get('/gurubk', fn () => redirect()->route('role.guru-bk'));
+Route::get('/bk', fn () => redirect()->route('role.guru-bk'));
+Route::get('/wali-kelas', [DashboardController::class, 'openWaliKelas'])->name('role.wali-kelas');
+Route::get('/walikelas', fn () => redirect()->route('role.wali-kelas'));
+Route::get('/wali-kelas/tkj', [DashboardController::class, 'openWaliKelasTkj'])->name('role.wali-kelas-tkj');
+Route::get('/kepala-sekolah', [DashboardController::class, 'openKepalaSekolah'])->name('role.kepala-sekolah');
+Route::get('/kepsek', fn () => redirect()->route('role.kepala-sekolah'));
+Route::get('/bendahara', [DashboardController::class, 'openBendahara'])->name('role.bendahara');
 
 Route::middleware(['auth', 'verified'])->group(function () {
+    Route::post('switch-role', [DashboardController::class, 'switchRole'])->name('role.switch');
+
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('early-warning', [DashboardController::class, 'earlyWarning'])->name('early-warning');
     Route::get('kondisi-kelas', [DashboardController::class, 'kondisiKelas'])->name('kondisi-kelas');
@@ -110,6 +66,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('cases', [DashboardController::class, 'storeCase'])->name('cases.store');
     Route::post('parent-communications', [DashboardController::class, 'storeParentCommunication'])->name('parent-communications.store');
     Route::post('discipline-records', [DashboardController::class, 'storeDisciplineRecord'])->name('discipline-records.store');
+    Route::post('discipline-records/{record}/followup', [DashboardController::class, 'followUpDisciplineRecord'])->name('discipline-records.followup');
+    Route::post('students', [DashboardController::class, 'storeStudent'])->name('students.store');
+    Route::post('student-referrals', [DashboardController::class, 'storeReferralToBk'])->name('student-referrals.store');
+    Route::post('cases/{studentCase}/handle-bk', [DashboardController::class, 'handleReferralByBk'])->name('cases.handle-bk');
     Route::post('student-reports/generate', [DashboardController::class, 'generateAiReport'])->name('student-reports.generate');
     Route::post('student-reports/{report}/send', [DashboardController::class, 'sendReportToParent'])->name('student-reports.send');
 });

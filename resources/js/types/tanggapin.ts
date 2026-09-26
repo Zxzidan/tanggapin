@@ -52,6 +52,7 @@ export interface CaseTimelineItem {
 export interface CaseItem {
     id: string;
     code: string;
+    studentId?: string;
     studentName: string;
     class: string;
     category:
@@ -62,11 +63,19 @@ export interface CaseItem {
         | 'Sosial & Perlindungan'
         | (string & {});
     priority: 'Tinggi' | 'Sedang' | 'Rendah';
-    stage: 'new' | 'assigned' | 'in_progress' | 'follow_up' | 'resolved';
+    stage: 'new' | 'assigned' | 'in_progress' | 'handled_by_bk' | 'follow_up' | 'resolved' | (string & {});
     stageLabel: string;
     assignee: string;
+    referredByName?: string;
+    referralNotes?: string;
+    handledByBkName?: string | null;
+    bkActionType?: string | null;
+    bkHandlingNotes?: string | null;
+    handledAt?: string | null;
+    isHandledByBk?: boolean;
     lastActivity: string;
     lastUpdate: string;
+    createdAt?: string;
     timeline: CaseTimelineItem[];
 }
 
@@ -149,6 +158,41 @@ export interface DisciplineRecordItem {
     actionStatus: string;
     patternNotes: string;
     recordedAt: string;
+}
+
+export interface StudentDisciplineDetail {
+    id: string;
+    infraction: string;
+    points: number;
+    actionStatus: string;
+    patternNotes: string | null;
+    recordedAt: string;
+}
+
+export interface StudentWithDisciplineItem {
+    id: string;
+    name: string;
+    nisn: string;
+    gender: 'L' | 'P';
+    classId: string;
+    className: string;
+    homeroomTeacher: string;
+    attendanceRate: number;
+    riskLevel: 'high' | 'medium' | 'low';
+    parentName: string;
+    parentPhone: string;
+    address: string | null;
+    totalPoints: number;
+    pendingFollowups: number;
+    disciplineRecords: StudentDisciplineDetail[];
+}
+
+export interface ClassOptionItem {
+    id: string;
+    name: string;
+    major: string;
+    homeroomTeacher: string;
+    totalStudents: number;
 }
 
 export interface DashboardPageProps {

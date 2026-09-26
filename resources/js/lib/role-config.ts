@@ -53,40 +53,37 @@ export const ROLE_CONFIGS: Record<RoleType, RoleConfig> = {
         id: 'operator',
         title: 'Operator Sekolah',
         shortTitle: 'Operator',
-        badge: 'Verifikasi Data & Admin',
-        scopeBadge: 'Semua Fitur — 11 Modul',
+        badge: 'Administrasi & Operasional',
+        scopeBadge: 'Administrasi & Operasional Sekolah',
         userName: 'Operator Sekolah',
         userEmail: 'operator@sekolah.sch.id',
         avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80',
         roleDesc:
-            'Akses penuh ke seluruh sistem dengan prioritas verifikasi residu Dapodik, rombel, dokumen guru & sinkronisasi.',
+            'Akses khusus bagian administrasi dan operasional: kelola akun guru & staf, kuota rombel, data Dapodik, keuangan SPP, dokumen guru, dan kesiapsiagaan sekolah.',
         allowedTabs: [
             'overview',
             'manage-users',
             'data-check',
-            'early-warning',
-            'class-monitoring',
-            'cases',
-            'reports',
-            'communication',
-            'ats',
             'payments',
             'documents',
             'incidents',
         ],
-        overviewTitle: 'Pusat Integritas Data, Arsip Dokumen & Pemetaan Rombel',
+        overviewTitle: 'Pusat Administrasi & Operasional Sekolah Terpadu',
         overviewSubtitle:
-            'Verifikasi residu NISN/NIK, kelengkapan SK guru, rombel pembelajaran, dan sinkronisasi server terpadu.',
+            'Kelola akun staf, pantau kuota rombel, verifikasi residu Dapodik, rekonsiliasi SPP, dan dokumen kepegawaian guru.',
         overviewPrinciple:
-            'Prinsip Operator: Deteksi Anomali → Tindak Lanjut Residu → Validasi Berkas → Sinkronisasi Server.',
+            'Prinsip Operator: Tata Kelola Akun → Validasi Residu Dapodik → Rekonsiliasi SPP → Kepatuhan Dokumen GTK.',
         tabOverrides: {
+            overview: { title: 'Ikhtisar Operasional' },
             'manage-users': {
-                title: 'Kelola Akun Guru',
+                title: 'Kelola Akun Guru & Staf',
             },
             'data-check': {
                 title: 'Data Dapodik',
             },
+            payments: { title: 'Keuangan SPP' },
             documents: { title: 'Dokumen Guru' },
+            incidents: { title: 'Tanggap Darurat' },
         },
     },
     wali_kelas: {
@@ -99,29 +96,29 @@ export const ROLE_CONFIGS: Record<RoleType, RoleConfig> = {
         userEmail: 'walikelas@sekolah.sch.id',
         avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&q=80',
         roleDesc:
-            'Tampilan disesuaikan khusus rombongan belajar: absensi harian, pembinaan kedisiplinan, dan kontak orang tua siswa.',
+            'Tampilan khusus rombongan belajar: pantau data siswa, pantau poin pelanggaran dari Guru BK, pembinaan kelas, dan laporkan rujukan kendala ke Guru BK.',
         allowedTabs: [
             'overview',
-            'early-warning',
             'class-monitoring',
+            'early-warning',
             'reports',
             'communication',
             'cases',
             'documents',
         ],
         overviewTitle:
-            'Pantau absensi dan dampingi perkembangan siswa di kelas',
+            'Pantau absensi, tindak lanjuti poin dari Guru BK, dan dampingi siswa',
         overviewSubtitle:
             'Wali Kelas • Pemantauan Rombongan Belajar • Semester Ganjil 2025/2026.',
         overviewPrinciple:
-            'Prinsip Wali Kelas: Deteksi Absensi Menurun → Kontak Wali Murid → Pembinaan Disiplin → Koordinasi BK.',
+            'Prinsip Wali Kelas: Pantau Siswa & Poin BK → Pembinaan Disiplin Kelas → Teruskan Kendala ke Guru BK → Dampingi Sampai Tuntas.',
         tabOverrides: {
             overview: { title: 'Ikhtisar Kelas' },
+            'class-monitoring': { title: 'Data Siswa & Poin BK' },
             'early-warning': { title: 'Early Warning' },
-            'class-monitoring': { title: 'Kondisi Kelas' },
             reports: { title: 'Rapor Kelas' },
             communication: { title: 'Kontak Ortu' },
-            cases: { title: 'Rujukan Kasus BK' },
+            cases: { title: 'Rujukan Kendala ke BK' },
             documents: { title: 'Perangkat Ajar' },
         },
     },
@@ -159,14 +156,15 @@ export const ROLE_CONFIGS: Record<RoleType, RoleConfig> = {
         title: 'Guru BK',
         shortTitle: 'Guru BK',
         badge: 'Layanan Bimbingan Konseling',
-        scopeBadge: 'Disesuaikan — Konseling & Kasus',
+        scopeBadge: 'Pemantauan Rombel & Konseling Kasus',
         userName: 'Guru BK',
         userEmail: 'gurubk@sekolah.sch.id',
         avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&q=80',
         roleDesc:
-            'Tampilan disesuaikan khusus penanganan kasus bimbingan, konseling mediasi, mitigasi ATS, dan pembinaan karakter.',
+            'Akses memantau seluruh rombel yang ditambahkan Operator, menambahkan data siswa, memberikan poin pelanggaran ke wali kelas, serta menindaklanjuti rujukan kendala.',
         allowedTabs: [
             'overview',
+            'class-monitoring',
             'cases',
             'reports',
             'early-warning',
@@ -174,14 +172,15 @@ export const ROLE_CONFIGS: Record<RoleType, RoleConfig> = {
             'ats',
         ],
         overviewTitle:
-            'Layanan konseling, penanganan kasus dan pendampingan siswa',
+            'Layanan konseling, pemantauan rombel lintas kelas & rujukan kendala siswa',
         overviewSubtitle:
-            'Guru BK • Pendampingan Kasus Konseling dan Pemantauan Siswa.',
+            'Guru BK • Pemantauan Rombel Lintas Kelas, Pencatatan Poin Kedisiplinan & Tindak Lanjut Rujukan.',
         overviewPrinciple:
-            'Prinsip BK: Asesmen Kebutuhan Siswa → Konseling Empatik → Kolaborasi Wali & Ortu → Pemulihan Solutif.',
+            'Prinsip BK: Pantau Rombel → Input Data Siswa & Poin Kedisiplinan → Koordinasi Wali Kelas → Intervensi Solutif.',
         tabOverrides: {
             overview: { title: 'Ikhtisar Konseling' },
-            cases: { title: 'Kasus Siswa' },
+            'class-monitoring': { title: 'Kondisi Kelas & Siswa' },
+            cases: { title: 'Kasus & Rujukan BK' },
             reports: { title: 'Rapor Bimbingan' },
             'early-warning': {
                 title: 'Early Warning',
@@ -192,3 +191,77 @@ export const ROLE_CONFIGS: Record<RoleType, RoleConfig> = {
         },
     },
 };
+
+export interface RoleSwitcherOption {
+    role: RoleType;
+    email: string;
+    title: string;
+    personName: string;
+    scope: string;
+    description: string;
+    badge: string;
+    directUrl: string;
+}
+
+export const ROLE_SWITCHER_OPTIONS: RoleSwitcherOption[] = [
+    {
+        role: 'operator',
+        email: 'operator@sekolah.sch.id',
+        title: 'Operator Sekolah',
+        personName: 'Operator Sekolah',
+        scope: 'Administrasi & Operasional',
+        description: 'Kelola akun GTK, kuota rombel, Dapodik, SPP & dokumen guru.',
+        badge: 'Admin & Ops',
+        directUrl: '/operator',
+    },
+    {
+        role: 'guru_bk',
+        email: 'gurubk@sekolah.sch.id',
+        title: 'Guru BK',
+        personName: 'Dra. Hj. Nurjanah, M.Pd',
+        scope: 'Konseling & Kedisiplinan',
+        description: 'Lihat semua kelas & walikelas, input siswa, catat poin & kasus BK.',
+        badge: 'BK & Kasus',
+        directUrl: '/guru-bk',
+    },
+    {
+        role: 'wali_kelas',
+        email: 'walikelas@sekolah.sch.id',
+        title: 'Wali Kelas (XI RPL 2)',
+        personName: 'Ratna Dewi, S.Pd',
+        scope: 'Rombel XI RPL 2',
+        description: 'Data siswa kelas XI RPL 2, poin pelanggaran dari BK & rujuk kendala.',
+        badge: 'XI RPL 2',
+        directUrl: '/wali-kelas',
+    },
+    {
+        role: 'wali_kelas',
+        email: 'budi@sekolah.sch.id',
+        title: 'Wali Kelas (X TKJ 1)',
+        personName: 'Budi Santoso, S.Kom',
+        scope: 'Rombel X TKJ 1',
+        description: 'Data siswa kelas X TKJ 1, poin pelanggaran & pembinaan kelas.',
+        badge: 'X TKJ 1',
+        directUrl: '/wali-kelas/tkj',
+    },
+    {
+        role: 'kepala_sekolah',
+        email: 'kepsek@sekolah.sch.id',
+        title: 'Kepala Sekolah',
+        personName: 'Drs. H. Mulyadi, M.Pd',
+        scope: 'Akses Penuh 11 Modul',
+        description: 'Supervisi kepemimpinan, monitoring kesehatan operasional sekolah.',
+        badge: 'Eksekutif',
+        directUrl: '/kepala-sekolah',
+    },
+    {
+        role: 'bendahara',
+        email: 'bendahara@sekolah.sch.id',
+        title: 'Bendahara Sekolah',
+        personName: 'Ahmad Suhendra, S.E.',
+        scope: 'Keuangan & SPP',
+        description: 'Monitoring tagihan SPP, verifikasi bukti transfer & koordinasi dispensasi.',
+        badge: 'Keuangan',
+        directUrl: '/bendahara',
+    },
+];
