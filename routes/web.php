@@ -88,6 +88,11 @@ Route::get('/diagnostics', function () {
         'app_key_set' => ! empty(config('app.key')),
         'app_env' => config('app.env'),
         'app_debug' => config('app.debug'),
+        'app_name' => config('app.name'),
+        'session_cookie' => config('session.cookie'),
+        'session_lifetime' => config('session.lifetime'),
+        'session_driver' => config('session.driver'),
+        'session_expire_on_close' => config('session.expire_on_close'),
         'db_connection' => 'UNTESTED',
         'vite_manifest' => file_exists(public_path('build/manifest.json')),
     ];

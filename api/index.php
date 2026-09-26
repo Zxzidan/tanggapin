@@ -17,6 +17,28 @@ foreach ($storageDirs as $dir) {
     }
 }
 
+// Set safe defaults for serverless environment
+if (empty($_ENV['APP_NAME']) && empty(getenv('APP_NAME'))) {
+    putenv('APP_NAME=Tanggapin');
+    $_ENV['APP_NAME'] = 'Tanggapin';
+}
+if (empty($_ENV['SESSION_LIFETIME']) && empty(getenv('SESSION_LIFETIME'))) {
+    putenv('SESSION_LIFETIME=120');
+    $_ENV['SESSION_LIFETIME'] = '120';
+}
+if (empty($_ENV['SESSION_COOKIE']) && empty(getenv('SESSION_COOKIE'))) {
+    putenv('SESSION_COOKIE=tanggapin-session');
+    $_ENV['SESSION_COOKIE'] = 'tanggapin-session';
+}
+if (empty($_ENV['APP_MAINTENANCE_DRIVER']) && empty(getenv('APP_MAINTENANCE_DRIVER'))) {
+    putenv('APP_MAINTENANCE_DRIVER=array');
+    $_ENV['APP_MAINTENANCE_DRIVER'] = 'array';
+}
+if (empty($_ENV['BCRYPT_ROUNDS']) || (int) $_ENV['BCRYPT_ROUNDS'] < 4 || (int) $_ENV['BCRYPT_ROUNDS'] > 31) {
+    putenv('BCRYPT_ROUNDS=12');
+    $_ENV['BCRYPT_ROUNDS'] = '12';
+}
+
 // Redirect storage and bootstrap caches to writable /tmp
 putenv('APP_STORAGE_PATH='.$storagePath);
 $_ENV['APP_STORAGE_PATH'] = $storagePath;
