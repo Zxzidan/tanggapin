@@ -23,6 +23,17 @@ Route::get('/demo-login', function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('early-warning', [DashboardController::class, 'earlyWarning'])->name('early-warning');
+    Route::get('kondisi-kelas', [DashboardController::class, 'kondisiKelas'])->name('kondisi-kelas');
+    Route::get('alur-ats', [DashboardController::class, 'alurAts'])->name('ats');
+    Route::get('ats', fn () => redirect()->route('ats'));
+    Route::get('manajemen-kasus', [DashboardController::class, 'manajemenKasus'])->name('cases');
+    Route::get('komunikasi-ortu', [DashboardController::class, 'komunikasiOrtu'])->name('communication');
+    Route::get('dapodik', [DashboardController::class, 'dapodik'])->name('dapodik');
+    Route::get('pembayaran', [DashboardController::class, 'pembayaran'])->name('payments');
+    Route::get('dokumen-guru', [DashboardController::class, 'dokumenGuru'])->name('documents');
+    Route::get('respons-insiden', [DashboardController::class, 'responsInsiden'])->name('incidents');
+
     Route::post('followups', [DashboardController::class, 'storeFollowup'])->name('followups.store');
     Route::post('cases', [DashboardController::class, 'storeCase'])->name('cases.store');
     Route::post('parent-communications', [DashboardController::class, 'storeParentCommunication'])->name('parent-communications.store');
