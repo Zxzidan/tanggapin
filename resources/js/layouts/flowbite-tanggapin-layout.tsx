@@ -50,7 +50,7 @@ export default function FlowbiteTanggapinLayout({
     onTriggerActionModal,
 }: FlowbiteLayoutProps) {
     const { auth } = usePage<{ auth: { user: { name: string; email: string } } }>().props;
-    const { appearance, updateAppearance } = useAppearance();
+    const { appearance, resolvedAppearance, updateAppearance } = useAppearance();
 
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
@@ -497,14 +497,20 @@ export default function FlowbiteTanggapinLayout({
                             {/* Appearance Toggle */}
                             <button
                                 type="button"
-                                onClick={() => updateAppearance(appearance === 'dark' ? 'light' : 'dark')}
-                                className="p-2 text-body hover:bg-neutral-secondary-medium hover:text-heading rounded-lg transition-colors"
-                                title={appearance === 'dark' ? 'Ganti ke Mode Terang' : 'Ganti ke Mode Gelap'}
+                                onClick={() => updateAppearance(resolvedAppearance === 'dark' ? 'light' : 'dark')}
+                                className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-semibold rounded-base transition-colors border bg-neutral-secondary-soft hover:bg-neutral-secondary-medium text-heading border-default shadow-2xs"
+                                title={resolvedAppearance === 'dark' ? 'Beralih ke Mode Terang' : 'Beralih ke Mode Gelap'}
                             >
-                                {appearance === 'dark' ? (
-                                    <Sun className="w-4 h-4 text-amber-400" />
+                                {resolvedAppearance === 'dark' ? (
+                                    <>
+                                        <Sun className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                                        <span className="hidden sm:inline">Terang</span>
+                                    </>
                                 ) : (
-                                    <Moon className="w-4 h-4 text-slate-600" />
+                                    <>
+                                        <Moon className="w-3.5 h-3.5 text-slate-700 dark:text-slate-300 shrink-0" />
+                                        <span className="hidden sm:inline">Gelap</span>
+                                    </>
                                 )}
                             </button>
 

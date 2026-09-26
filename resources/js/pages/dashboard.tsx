@@ -1,4 +1,4 @@
-import { Head } from '@inertiajs/react';
+import { Head, router } from '@inertiajs/react';
 import {
     AlertCircle,
     AlertTriangle,
@@ -26,6 +26,7 @@ import {
     PhoneCall,
     Plus,
     RefreshCw,
+    Scale,
     Search,
     Send,
     Shield,
@@ -51,6 +52,7 @@ import type {
     ClassMonitoringItem,
     DapodikIssue,
     DashboardPageProps,
+    DisciplineRecordItem,
     IncidentItem,
     ParentUpdate,
     PaymentItem,
@@ -70,6 +72,7 @@ export default function Dashboard({
     documents: initialDocuments,
     incidents: initialIncidents,
     parentUpdates: initialParentUpdates,
+    disciplineList: initialDisciplineList,
 }: DashboardPageProps) {
     const [currentRole, setCurrentRole] = useState<RoleType>('kepala_sekolah');
     const [activeTab, setActiveTab] = useState<string>('overview');
@@ -95,6 +98,7 @@ export default function Dashboard({
     const [paymentList, setPaymentList] = useState<PaymentItem[]>(initialPaymentList || []);
     const [dapodikIssues, setDapodikIssues] = useState<DapodikIssue[]>(initialDapodikIssues || []);
     const [documents] = useState<TeacherDocument[]>(initialDocuments || []);
+    const [disciplineList, setDisciplineList] = useState<DisciplineRecordItem[]>(initialDisciplineList || []);
 
     // Filter states
     const [feedRiskFilter, setFeedRiskFilter] = useState<'all' | 'high' | 'medium'>('all');
@@ -103,9 +107,11 @@ export default function Dashboard({
     const [isFollowupModalOpen, setIsFollowupModalOpen] = useState(false);
     const [isParentContactModalOpen, setIsParentContactModalOpen] = useState(false);
     const [isNewCaseModalOpen, setIsNewCaseModalOpen] = useState(false);
+    const [isDisciplineModalOpen, setIsDisciplineModalOpen] = useState(false);
     const [isStudent360Open, setIsStudent360Open] = useState(false);
 
     // Selected items for modal
+    const [selectedStudentId, setSelectedStudentId] = useState<string>('1');
     const [selectedStudentName, setSelectedStudentName] = useState('Brian Aditya (XI RPL 2)');
     const [selectedStudentPhone, setSelectedStudentPhone] = useState('+62 812-3456-7890');
     const [selectedAlertId, setSelectedAlertId] = useState<string | null>(null);
@@ -127,6 +133,11 @@ export default function Dashboard({
     const [newCasePriority, setNewCasePriority] = useState<'Tinggi' | 'Sedang' | 'Rendah'>('Tinggi');
     const [newCaseDesc, setNewCaseDesc] = useState('');
 
+    // New discipline form
+    const [newInfraction, setNewInfraction] = useState('Terlambat Masuk Sekolah');
+    const [newPoints, setNewPoints] = useState(10);
+    const [newDisciplineNotes, setNewDisciplineNotes] = useState('');
+
     // Contextual greetings per role (Section 9 Header)
     const roleContexts: Record<RoleType, { name: string; position: string }> = {
         kepala_sekolah: { name: 'Bpk. Neil Sims', position: 'Kepala Sekolah' },
@@ -143,9 +154,12 @@ export default function Dashboard({
     };
 
     // Trigger action from topbar or buttons
-    const handleTriggerActionModal = (actionType: string, studentName?: string) => {
+    const handleTriggerActionModal = (actionType: string, studentName?: string, studentId?: string) => {
         if (studentName) {
             setSelectedStudentName(studentName);
+        }
+        if (studentId) {
+            setSelectedStudentId(studentId);
         }
         if (actionType === 'followup') {
             setIsFollowupModalOpen(true);
@@ -153,69 +167,147 @@ export default function Dashboard({
             setIsParentContactModalOpen(true);
         } else if (actionType === 'new_case') {
             setIsNewCaseModalOpen(true);
+        } else if (actionType === 'discipline') {
+            setIsDisciplineModalOpen(true);
         }
     };
 
-    // Submit Follow-up
+    // Submit Follow-up to database
     const handleSaveFollowup = (e: React.FormEvent) => {
         e.preventDefault();
-        toast.success(`Follow-up untuk ${selectedStudentName} berhasil dibuat!`, {
-            description: `Tindakan: ${followupType} | PIC: ${followupAssignee}`,
-        });
-        if (selectedAlertId) {
-            setPriorityFeed((prev) =>
-                prev.map((item) => (item.id === selectedAlertId ? { ...item, actionTaken: true } : item))
-            );
-        }
-        setStats((prev) => ({
-            ...prev,
-            studentsNeedingAttention: Math.max(0, prev.studentsNeedingAttention - 1),
-            resolvedThisMonth: prev.resolvedThisMonth + 1,
-        }));
-        setIsFollowupModalOpen(false);
-        setFollowupNote('');
+        router.post(
+            '/followups',
+            {
+                student_id: selectedStudentId || '1',
+                type: followupType,
+                assignee_name: followupAssignee,
+                note: followupNote || 'Follow-up tindakan operasional sekolah',
+            },
+            {
+                preserveScroll: true,
+                onSuccess: () => {
+                    toast.success(`Follow-up untuk ${selectedStudentName} berhasil disimpan di database!`, {
+                        description: `Tindakan: ${followupType} | PIC: ${followupAssignee}`,
+                    });
+                    if (selectedAlertId) {
+                        setPriorityFeed((prev) =>
+                            prev.map((item) => (item.id === selectedAlertId ? { ...item, actionTaken: true } : item))
+                        );
+                    }
+                    setStats((prev) => ({
+                        ...prev,
+                        studentsNeedingAttention: Math.max(0, prev.studentsNeedingAttention - 1),
+                        resolvedThisMonth: prev.resolvedThisMonth + 1,
+                    }));
+                    setIsFollowupModalOpen(false);
+                    setFollowupNote('');
+                },
+                onError: () => {
+                    toast.error('Gagal menyimpan follow-up ke database.');
+                },
+            }
+        );
     };
 
-    // Submit Parent Contact
+    // Submit Parent Contact to database
     const handleSendParentMessage = (e: React.FormEvent) => {
         e.preventDefault();
-        const newMsg: ParentUpdate = {
-            id: `msg-${Date.now()}`,
-            studentName: selectedStudentName,
-            parentName: 'Orang Tua Siswa',
-            category: parentCategory,
-            message: parentCustomMessage,
-            date: 'Baru saja',
-            status: 'Terkirim via WhatsApp & Tanggapin App',
-            acknowledgement: 'Perlu ditindaklanjuti',
-        };
-        setParentUpdates([newMsg, ...parentUpdates]);
-        toast.success(`Pesan resmi berhasil dikirim ke orang tua ${selectedStudentName}!`);
-        setIsParentContactModalOpen(false);
+        router.post(
+            '/parent-communications',
+            {
+                student_id: selectedStudentId || '1',
+                category: parentCategory,
+                message: parentCustomMessage,
+            },
+            {
+                preserveScroll: true,
+                onSuccess: () => {
+                    toast.success(`Pesan resmi berhasil dikirim dan tersimpan di database!`);
+                    setIsParentContactModalOpen(false);
+                    setParentUpdates((prev) => [
+                        {
+                            id: String(Date.now()),
+                            studentName: selectedStudentName,
+                            parentName: 'Wali Murid',
+                            category: parentCategory,
+                            message: parentCustomMessage,
+                            date: 'Baru saja',
+                            status: 'Terkirim via WhatsApp & Tanggapin App',
+                            acknowledgement: 'Perlu ditindaklanjuti',
+                        },
+                        ...prev,
+                    ]);
+                },
+                onError: () => {
+                    toast.error('Gagal mengirim pesan ke orang tua.');
+                },
+            }
+        );
     };
 
-    // Submit New Case
+    // Submit New Case to database
     const handleCreateCase = (e: React.FormEvent) => {
         e.preventDefault();
-        const newCaseItem: CaseItem = {
-            id: `case-${Date.now()}`,
-            code: `CS-2025-${Math.floor(100 + Math.random() * 900)}`,
-            studentName: selectedStudentName,
-            class: 'XI RPL 2',
-            category: newCaseCategory,
-            priority: newCasePriority,
-            stage: 'new',
-            stageLabel: 'Baru Masuk',
-            assignee: 'Koordinator BK',
-            lastActivity: newCaseDesc || 'Kasus baru didaftarkan dan menunggu verifikasi BK.',
-            lastUpdate: 'Baru saja',
-            timeline: [{ time: 'Hari ini', title: 'Kasus dibuat', actor: 'Petugas Sekolah' }],
-        };
-        setCases([newCaseItem, ...cases]);
-        setStats((prev) => ({ ...prev, activeCases: prev.activeCases + 1 }));
-        toast.success(`Kasus ${newCaseItem.code} untuk ${selectedStudentName} berhasil didaftarkan!`);
-        setIsNewCaseModalOpen(false);
-        setNewCaseDesc('');
+        router.post(
+            '/cases',
+            {
+                student_id: selectedStudentId || '1',
+                category: newCaseCategory,
+                priority: newCasePriority,
+                last_activity: newCaseDesc || 'Kasus baru didaftarkan dan menunggu verifikasi BK.',
+            },
+            {
+                preserveScroll: true,
+                onSuccess: () => {
+                    toast.success(`Kasus baru untuk ${selectedStudentName} berhasil didaftarkan di database!`);
+                    setIsNewCaseModalOpen(false);
+                    setNewCaseDesc('');
+                    setStats((prev) => ({ ...prev, activeCases: prev.activeCases + 1 }));
+                },
+                onError: () => {
+                    toast.error('Gagal mendaftarkan kasus ke database.');
+                },
+            }
+        );
+    };
+
+    // Submit Discipline Record to database
+    const handleCreateDiscipline = (e: React.FormEvent) => {
+        e.preventDefault();
+        router.post(
+            '/discipline-records',
+            {
+                student_id: selectedStudentId || '1',
+                infraction: newInfraction,
+                points: newPoints,
+                pattern_notes: newDisciplineNotes || 'Pencatatan pembinaan kedisiplinan',
+            },
+            {
+                preserveScroll: true,
+                onSuccess: () => {
+                    toast.success(`Catatan kedisiplinan untuk ${selectedStudentName} berhasil disimpan!`);
+                    setIsDisciplineModalOpen(false);
+                    setNewDisciplineNotes('');
+                    setDisciplineList((prev) => [
+                        {
+                            id: String(Date.now()),
+                            studentId: selectedStudentId || '1',
+                            studentName: selectedStudentName,
+                            class: 'Kelas Terdaftar',
+                            infraction: newInfraction,
+                            points: newPoints,
+                            actionStatus: 'Menunggu Pembinaan',
+                            patternNotes: newDisciplineNotes || 'Dicatat dari modul kedisiplinan',
+                            recordedAt: 'Hari ini',
+                        },
+                        ...prev,
+                    ]);
+                },
+                onError: () => {
+                    toast.error('Gagal menyimpan catatan kedisiplinan.');
+                },
+            }
+        );
     };
 
     // Toggle Incident Checklist item
@@ -533,6 +625,7 @@ export default function Dashboard({
                                             disabled={alert.actionTaken}
                                             onClick={() => {
                                                 setSelectedAlertId(alert.id);
+                                                setSelectedStudentId(alert.studentId || alert.id);
                                                 setSelectedStudentName(`${alert.studentName} (${alert.class})`);
                                                 setSelectedStudentPhone(alert.parentPhone);
                                                 setFollowupNote(`Tindak lanjut pemicu risiko: ${alert.summary}`);
@@ -548,6 +641,8 @@ export default function Dashboard({
                                         <button
                                             type="button"
                                             onClick={() => {
+                                                setSelectedAlertId(alert.id);
+                                                setSelectedStudentId(alert.studentId || alert.id);
                                                 setSelectedStudentName(`${alert.studentName} (${alert.class})`);
                                                 setSelectedStudentPhone(alert.parentPhone);
                                                 setParentCustomMessage(
@@ -566,6 +661,8 @@ export default function Dashboard({
                                         <button
                                             type="button"
                                             onClick={() => {
+                                                setSelectedAlertId(alert.id);
+                                                setSelectedStudentId(alert.studentId || alert.id);
                                                 setSelectedStudentName(`${alert.studentName} (${alert.class})`);
                                                 setNewCaseDesc(`Eskalasi dari Early Warning: ${alert.summary}`);
                                                 setIsNewCaseModalOpen(true);
@@ -1889,6 +1986,107 @@ export default function Dashboard({
                                     className="px-4 py-1.5 text-xs font-semibold text-white bg-blue-700 hover:bg-blue-800 rounded-lg shadow-sm"
                                 >
                                     Daftarkan Kasus Baru
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
+            {/* Modal 4: Catat Pelanggaran / Poin Kedisiplinan */}
+            {isDisciplineModalOpen && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in">
+                    <div className="bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl w-full max-w-lg p-5 space-y-4 text-xs">
+                        <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
+                            <div className="flex items-center gap-2">
+                                <Scale className="size-4 text-blue-600" />
+                                <h3 className="font-bold text-slate-900 dark:text-white text-sm">
+                                    Catat Pelanggaran & Pembinaan (Modul 05)
+                                </h3>
+                            </div>
+                            <button
+                                type="button"
+                                onClick={() => setIsDisciplineModalOpen(false)}
+                                className="text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"
+                            >
+                                <X className="size-4" />
+                            </button>
+                        </div>
+
+                        <form onSubmit={handleCreateDiscipline} className="space-y-3">
+                            <div>
+                                <label className="block text-[11px] font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                                    Target Siswa
+                                </label>
+                                <input
+                                    type="text"
+                                    value={selectedStudentName}
+                                    onChange={(e) => setSelectedStudentName(e.target.value)}
+                                    className="w-full p-2 text-xs border border-slate-300 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-[#070b14] text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-blue-600/30"
+                                    required
+                                />
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label className="block text-[11px] font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                                        Jenis Pelanggaran
+                                    </label>
+                                    <select
+                                        value={newInfraction}
+                                        onChange={(e) => setNewInfraction(e.target.value)}
+                                        className="w-full p-2 text-xs border border-slate-300 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-[#070b14] text-slate-900 dark:text-white outline-none"
+                                    >
+                                        <option value="Terlambat Masuk Sekolah">Terlambat Masuk Sekolah (&gt;15 menit)</option>
+                                        <option value="Atribut Seragam Tidak Lengkap">Atribut Seragam Tidak Lengkap</option>
+                                        <option value="Keluar Sekolah Tanpa Surat Izin">Keluar Sekolah Tanpa Surat Izin</option>
+                                        <option value="Menggunakan HP di Jam Belajar">Menggunakan HP di Jam Belajar</option>
+                                        <option value="Konflik Antar Siswa / Perilaku Tidak Sopan">Konflik Antar Siswa / Perilaku</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label className="block text-[11px] font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                                        Poin Pelanggaran
+                                    </label>
+                                    <select
+                                        value={newPoints}
+                                        onChange={(e) => setNewPoints(Number(e.target.value))}
+                                        className="w-full p-2 text-xs border border-slate-300 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-[#070b14] text-slate-900 dark:text-white outline-none"
+                                    >
+                                        <option value={5}>5 Poin (Ringan)</option>
+                                        <option value={10}>10 Poin (Sedang)</option>
+                                        <option value={15}>15 Poin (Perhatian Khusus)</option>
+                                        <option value={25}>25 Poin (Berat / Konseling BK)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label className="block text-[11px] font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                                    Catatan Pola & Rencana Tindakan Restoratif
+                                </label>
+                                <textarea
+                                    rows={3}
+                                    value={newDisciplineNotes}
+                                    onChange={(e) => setNewDisciplineNotes(e.target.value)}
+                                    placeholder="Jelaskan tindakan pembinaan karakter yang disepakati bersama siswa..."
+                                    className="w-full p-2 text-xs border border-slate-300 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-[#070b14] text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-blue-600/30"
+                                    required
+                                />
+                            </div>
+
+                            <div className="flex items-center justify-end gap-2 pt-2 border-t border-slate-200 dark:border-slate-800">
+                                <button
+                                    type="button"
+                                    onClick={() => setIsDisciplineModalOpen(false)}
+                                    className="px-3 py-1.5 text-xs text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg"
+                                >
+                                    Batal
+                                </button>
+                                <button
+                                    type="submit"
+                                    className="px-4 py-1.5 text-xs font-semibold text-white bg-blue-700 hover:bg-blue-800 rounded-lg shadow-sm"
+                                >
+                                    Simpan Catatan
                                 </button>
                             </div>
                         </form>

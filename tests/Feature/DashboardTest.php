@@ -1,6 +1,8 @@
 <?php
 
+use App\Models\Student;
 use App\Models\User;
+use Database\Seeders\TanggapinSeeder;
 use Inertia\Testing\AssertableInertia as Assert;
 
 test('guests are redirected to the login page', function () {
@@ -9,6 +11,8 @@ test('guests are redirected to the login page', function () {
 });
 
 test('authenticated users can visit the dashboard with tanggapin operational data', function () {
+    $this->seed(TanggapinSeeder::class);
+
     $user = User::factory()->create();
     $this->actingAs($user);
 
@@ -24,6 +28,67 @@ test('authenticated users can visit the dashboard with tanggapin operational dat
             ->has('paymentList')
             ->has('dapodikIssues')
             ->has('incidents')
-            ->where('stats.studentsNeedingAttention', 12)
+            ->has('parentUpdates')
         );
+});
+
+test('authenticated users can store followups', function () {
+    $this->seed(TanggapinSeeder::class);
+
+    $user = User::factory()->create();
+    $student = Student::first();
+
+    $response = $this->actingAs($user)->post(route('followups.store'), [
+        'student_id' => $student->id,
+        'type' => 'Panggilan Orang Tua',
+        'assignee_name' => 'Wali Kelas',
+        'note' => 'Koordinasi perkembangan belajar.',
+    ]);
+
+    $response->assertSessionHas('success');
+    $this->assertDatabaseHas('followups', [
+        'student_id' => $student->id,
+        'type' => 'Panggilan Orang Tua',
+    ]);
+});
+
+test('authenticated users can create a new student case', function () {
+    $this->seed(TanggapinSeeder::class);
+
+    $user = User::factory()->create();
+    $student = Student::first();
+
+    $response = $this->actingAs($user)->post(route('cases.store'), [
+        'student_id' => $student->id,
+        'category' => 'Kedisiplinan',
+        'priority' => 'Tinggi',
+        'last_activity' => 'Laporan masuk dari wali kelas.',
+    ]);
+
+    $response->assertSessionHas('success');
+    $this->assertDatabaseHas('student_cases', [
+        'student_id' => $student->id,
+        'category' => 'Kedisiplinan',
+    ]);
+});
+
+test('authenticated users can store a new discipline record', function () {
+    $this->seed(TanggapinSeeder::class);
+
+    $user = User::factory()->create();
+    $student = Student::first();
+
+    $response = $this->actingAs($user)->post(route('discipline-records.store'), [
+        'student_id' => $student->id,
+        'infraction' => 'Terlambat Masuk Sekolah',
+        'points' => 10,
+        'pattern_notes' => 'Terjadi saat apel pagi',
+    ]);
+
+    $response->assertSessionHas('success');
+    $this->assertDatabaseHas('discipline_records', [
+        'student_id' => $student->id,
+        'infraction' => 'Terlambat Masuk Sekolah',
+        'points' => 10,
+    ]);
 });

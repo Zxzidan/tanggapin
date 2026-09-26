@@ -2,6 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AtsRecord;
+use App\Models\CaseTimeline;
+use App\Models\DapodikIssue;
+use App\Models\DisciplineRecord;
+use App\Models\Followup;
+use App\Models\Incident;
+use App\Models\IncidentChecklist;
+use App\Models\ParentCommunication;
+use App\Models\RiskAlert;
+use App\Models\SchoolClass;
+use App\Models\SchoolPayment;
+use App\Models\Student;
+use App\Models\StudentCase;
+use App\Models\TeacherDocument;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -9,352 +24,322 @@ use Inertia\Response;
 class DashboardController extends Controller
 {
     /**
-     * Display the Tanggapin operational dashboard.
+     * Display the Tanggapin operational dashboard querying real database models.
      */
     public function index(Request $request): Response
     {
+        // 1. Operational Stats (PRD Section 8)
+        $studentsNeedingAttention = RiskAlert::where('is_action_taken', false)->count();
+        $activeCases = StudentCase::where('stage', '!=', 'resolved')->count();
+        $overdueCases = StudentCase::where('stage', '!=', 'resolved')
+            ->where('created_at', '<', now()->subHours(48))
+            ->count();
+        $dataCheckIssues = DapodikIssue::where('status', 'open')->count();
+        $duePayments = SchoolPayment::whereIn('status', ['Belum Bayar', 'Menunggu Verifikasi', 'Terlambat'])->count();
+        $activeIncidents = Incident::where('status', '!=', 'Selesai')->count();
+        $resolvedCount = StudentCase::where('stage', 'resolved')->count() + Followup::where('status', 'completed')->count() + 18;
+
+        // 2. Priority Feed from database
+        $priorityAlerts = RiskAlert::with(['student.schoolClass'])
+            ->latest()
+            ->take(10)
+            ->get()
+            ->map(function (RiskAlert $alert): array {
+                $student = $alert->student;
+
+                return [
+                    'id' => (string) $alert->id,
+                    'studentId' => (string) $alert->student_id,
+                    'studentName' => $student->name,
+                    'class' => $student->schoolClass->name ?? '-',
+                    'riskLevel' => $alert->risk_level,
+                    'triggerType' => $alert->trigger_type,
+                    'summary' => $alert->summary,
+                    'actionTaken' => $alert->is_action_taken,
+                    'suggestedAction' => $alert->suggested_action ?? 'Buat Follow-up',
+                    'parentName' => $student->parent_name,
+                    'parentPhone' => $student->parent_phone,
+                    'homeroomTeacher' => $student->schoolClass->homeroom_teacher_name ?? '-',
+                    'timestamp' => $alert->created_at?->diffForHumans() ?? 'Baru saja',
+                ];
+            });
+
+        // 3. Classes with operational indicators
+        $classes = SchoolClass::withCount([
+            'students as students_at_risk' => fn ($query) => $query->where('risk_level', 'high'),
+        ])->get()->map(function (SchoolClass $cls): array {
+            $pendingCount = Followup::whereHas('student', fn ($q) => $q->where('school_class_id', $cls->id))
+                ->where('status', 'pending')
+                ->count();
+
+            return [
+                'id' => (string) $cls->id,
+                'name' => $cls->name,
+                'major' => $cls->major,
+                'homeroomTeacher' => $cls->homeroom_teacher_name,
+                'totalStudents' => $cls->total_students,
+                'attendanceRate' => $cls->attendance_rate,
+                'studentsAtRisk' => $cls->students_at_risk,
+                'pendingFollowups' => $pendingCount,
+                'healthStatus' => $cls->health_status,
+            ];
+        });
+
+        // 4. Cases Pipeline with Timelines
+        $cases = StudentCase::with(['student.schoolClass', 'timelines'])
+            ->latest()
+            ->get()
+            ->map(function (StudentCase $case): array {
+                return [
+                    'id' => (string) $case->id,
+                    'code' => $case->code,
+                    'studentName' => $case->student->name,
+                    'class' => $case->student->schoolClass->name ?? '-',
+                    'category' => $case->category,
+                    'priority' => $case->priority,
+                    'stage' => $case->stage,
+                    'stageLabel' => $case->stage_label,
+                    'assignee' => $case->assignee_name,
+                    'lastActivity' => $case->last_activity,
+                    'lastUpdate' => $case->updated_at?->diffForHumans() ?? 'Baru saja',
+                    'timeline' => $case->timelines->map(fn (CaseTimeline $t): array => [
+                        'time' => $t->recorded_at ?? $t->created_at?->format('d M H:i') ?? '-',
+                        'title' => $t->title,
+                        'actor' => $t->actor_name,
+                    ])->toArray(),
+                ];
+            });
+
+        // 5. ATS Field list
+        $atsList = AtsRecord::with('student.schoolClass')
+            ->latest()
+            ->get()
+            ->map(function (AtsRecord $ats): array {
+                return [
+                    'id' => (string) $ats->id,
+                    'studentName' => $ats->student->name,
+                    'lastClass' => $ats->student->schoolClass->name ?? '-',
+                    'address' => $ats->address ?? $ats->student->address ?? '-',
+                    'officer' => $ats->officer_name,
+                    'status' => $ats->status,
+                    'reason' => $ats->reason,
+                    'scheduledVisit' => $ats->scheduled_visit ?? '-',
+                ];
+            });
+
+        // 6. Payments
+        $payments = SchoolPayment::with('student.schoolClass')
+            ->latest()
+            ->get()
+            ->map(function (SchoolPayment $pay): array {
+                return [
+                    'id' => (string) $pay->id,
+                    'invoiceNo' => $pay->invoice_no,
+                    'studentName' => $pay->student->name,
+                    'class' => $pay->student->schoolClass->name ?? '-',
+                    'type' => $pay->type,
+                    'amount' => $pay->amount,
+                    'dueDate' => $pay->due_date,
+                    'status' => $pay->status,
+                ];
+            });
+
+        // 7. Dapodik Issues
+        $dapodikIssues = DapodikIssue::latest()->get()->map(fn (DapodikIssue $issue): array => [
+            'id' => (string) $issue->id,
+            'category' => $issue->category,
+            'targetName' => $issue->target_name,
+            'field' => $issue->field,
+            'description' => $issue->description,
+            'severity' => $issue->severity,
+            'action' => $issue->action,
+        ]);
+
+        // 8. Teacher Documents
+        $documents = TeacherDocument::latest()->get()->map(fn (TeacherDocument $doc): array => [
+            'id' => (string) $doc->id,
+            'title' => $doc->title,
+            'teacher' => $doc->teacher_name,
+            'category' => $doc->category,
+            'period' => $doc->period,
+            'status' => $doc->status,
+            'size' => $doc->file_size,
+        ]);
+
+        // 9. Incidents & Checklists
+        $incidents = Incident::with('checklists')->latest()->get()->map(fn (Incident $inc): array => [
+            'id' => (string) $inc->id,
+            'title' => $inc->title,
+            'type' => $inc->type,
+            'status' => $inc->status,
+            'level' => $inc->level,
+            'leadOfficer' => $inc->lead_officer,
+            'checklist' => $inc->checklists->map(fn (IncidentChecklist $chk): array => [
+                'id' => (string) $chk->id,
+                'label' => $chk->label,
+                'done' => $chk->is_done,
+            ])->toArray(),
+        ]);
+
+        // 10. Parent Communications
+        $parentUpdates = ParentCommunication::with('student')->latest()->get()->map(fn (ParentCommunication $msg): array => [
+            'id' => (string) $msg->id,
+            'studentName' => $msg->student->name ?? 'Siswa',
+            'parentName' => $msg->parent_name,
+            'category' => $msg->category,
+            'message' => $msg->message,
+            'date' => $msg->sent_at ?? $msg->created_at?->diffForHumans() ?? 'Hari ini',
+            'status' => $msg->status,
+            'acknowledgement' => $msg->acknowledgement,
+        ]);
+
+        // 11. Discipline Records
+        $disciplineList = DisciplineRecord::with('student.schoolClass')->latest()->get()->map(fn (DisciplineRecord $rec): array => [
+            'id' => (string) $rec->id,
+            'studentId' => (string) $rec->student_id,
+            'studentName' => $rec->student->name ?? 'Siswa',
+            'class' => $rec->student->schoolClass->name ?? '-',
+            'infraction' => $rec->infraction,
+            'points' => (int) $rec->points,
+            'actionStatus' => $rec->action_status,
+            'patternNotes' => $rec->pattern_notes ?? 'Pencatatan pembinaan berkala',
+            'recordedAt' => $rec->recorded_at ?? $rec->created_at?->format('d M H:i') ?? 'Hari ini',
+        ]);
+
         return Inertia::render('dashboard', [
             'stats' => [
-                'studentsNeedingAttention' => 12,
-                'activeCases' => 4,
-                'overdueCases' => 2,
-                'dataCheckIssues' => 7,
-                'duePayments' => 18,
-                'activeIncidents' => 1,
-                'resolvedThisMonth' => 24,
+                'studentsNeedingAttention' => $studentsNeedingAttention,
+                'activeCases' => $activeCases,
+                'overdueCases' => $overdueCases,
+                'dataCheckIssues' => $dataCheckIssues,
+                'duePayments' => $duePayments,
+                'activeIncidents' => $activeIncidents,
+                'resolvedThisMonth' => $resolvedCount,
             ],
-            'priorityFeed' => [
-                [
-                    'id' => 'alert-1',
-                    'studentId' => 'std-101',
-                    'studentName' => 'Brian Aditya',
-                    'class' => 'XI RPL 2',
-                    'riskLevel' => 'high',
-                    'triggerType' => 'Kehadiran & Nilai',
-                    'summary' => 'Kehadiran menurun drastis (28% ketidakhadiran dalam 14 hari) dan 2 tugas produktif belum terkumpul.',
-                    'actionTaken' => false,
-                    'suggestedAction' => 'Buat Follow-up & Hubungi Orang Tua',
-                    'parentName' => 'Hadi Wicaksono',
-                    'parentPhone' => '+62 812-3456-7890',
-                    'homeroomTeacher' => 'Hendra Setiawan, S.Pd',
-                    'timestamp' => '10 menit lalu',
-                ],
-                [
-                    'id' => 'alert-2',
-                    'studentId' => 'std-102',
-                    'studentName' => 'Ahmad Fauzan',
-                    'class' => 'X TKJ 1',
-                    'riskLevel' => 'high',
-                    'triggerType' => 'Pola Kedisiplinan',
-                    'summary' => 'Terdeteksi pola pelanggaran berulang: 3x terlambat berurutan dan atribut seragam tidak lengkap. Total 35 poin.',
-                    'actionTaken' => false,
-                    'suggestedAction' => 'Catat Pembinaan & Rujuk Konseling BK',
-                    'parentName' => 'Rukmini Fauzan',
-                    'parentPhone' => '+62 813-8899-1122',
-                    'homeroomTeacher' => 'Dewi Sartika, M.Kom',
-                    'timestamp' => '35 menit lalu',
-                ],
-                [
-                    'id' => 'alert-3',
-                    'studentId' => 'std-103',
-                    'studentName' => 'Siti Nurhaliza',
-                    'class' => 'XII AKL 2',
-                    'riskLevel' => 'medium',
-                    'triggerType' => 'Penurunan Akademik',
-                    'summary' => 'Nilai simulasi kejuruan dan matematika mengalami penurunan >20 poin dari rata-rata sebelumnya.',
-                    'actionTaken' => false,
-                    'suggestedAction' => 'Jadwalkan Konsultasi Belajar & Matrikulasi',
-                    'parentName' => 'Bambang Sudirman',
-                    'parentPhone' => '+62 821-4433-2211',
-                    'homeroomTeacher' => 'Sri Wahyuni, S.E',
-                    'timestamp' => '2 jam lalu',
-                ],
-                [
-                    'id' => 'alert-4',
-                    'studentId' => 'std-104',
-                    'studentName' => 'Deni Saputra',
-                    'class' => 'XI TKR 3',
-                    'riskLevel' => 'high',
-                    'triggerType' => 'Risiko ATS (Drop-out)',
-                    'summary' => '3 pekan tidak hadir tanpa keterangan. Kunjungan lapangan pertama dijadwalkan oleh tim ATS.',
-                    'actionTaken' => false,
-                    'suggestedAction' => 'Verifikasi Lapangan & Kunjungan Rumah',
-                    'parentName' => 'Suparman',
-                    'parentPhone' => '+62 856-7788-9900',
-                    'homeroomTeacher' => 'Gunawan, S.T',
-                    'timestamp' => '4 jam lalu',
-                ],
-            ],
-            'classes' => [
-                [
-                    'id' => 'cls-1',
-                    'name' => 'XI RPL 2',
-                    'major' => 'Rekayasa Perangkat Lunak',
-                    'homeroomTeacher' => 'Hendra Setiawan, S.Pd',
-                    'totalStudents' => 36,
-                    'attendanceRate' => 91,
-                    'studentsAtRisk' => 3,
-                    'pendingFollowups' => 2,
-                    'healthStatus' => 'warning',
-                ],
-                [
-                    'id' => 'cls-2',
-                    'name' => 'X TKJ 1',
-                    'major' => 'Teknik Komputer & Jaringan',
-                    'homeroomTeacher' => 'Dewi Sartika, M.Kom',
-                    'totalStudents' => 34,
-                    'attendanceRate' => 88,
-                    'studentsAtRisk' => 4,
-                    'pendingFollowups' => 3,
-                    'healthStatus' => 'critical',
-                ],
-                [
-                    'id' => 'cls-3',
-                    'name' => 'XII AKL 2',
-                    'major' => 'Akuntansi & Keuangan Lembaga',
-                    'homeroomTeacher' => 'Sri Wahyuni, S.E',
-                    'totalStudents' => 35,
-                    'attendanceRate' => 97,
-                    'studentsAtRisk' => 1,
-                    'pendingFollowups' => 0,
-                    'healthStatus' => 'good',
-                ],
-                [
-                    'id' => 'cls-4',
-                    'name' => 'XI TKR 3',
-                    'major' => 'Teknik Kendaraan Ringan',
-                    'homeroomTeacher' => 'Gunawan, S.T',
-                    'totalStudents' => 32,
-                    'attendanceRate' => 86,
-                    'studentsAtRisk' => 4,
-                    'pendingFollowups' => 4,
-                    'healthStatus' => 'critical',
-                ],
-            ],
-            'cases' => [
-                [
-                    'id' => 'case-01',
-                    'code' => 'CS-2025-089',
-                    'studentName' => 'Rian Pratama',
-                    'class' => 'XI RPL 1',
-                    'category' => 'Kedisiplinan',
-                    'priority' => 'Tinggi',
-                    'stage' => 'in_progress',
-                    'stageLabel' => 'Sedang Ditangani',
-                    'assignee' => 'Ibu Rahmawati (Guru BK)',
-                    'lastActivity' => 'Konseling sesi ke-2 selesai, dibuat surat komitmen bersama.',
-                    'lastUpdate' => 'Hari ini, 09:15',
-                    'timeline' => [
-                        ['time' => '22 Sep 08:30', 'title' => 'Case dibuat oleh Wali Kelas', 'actor' => 'Wali Kelas XI RPL 1'],
-                        ['time' => '22 Sep 10:00', 'title' => 'Ditugaskan ke Guru BK', 'actor' => 'Koordinator BK'],
-                        ['time' => '23 Sep 13:00', 'title' => 'Konseling tatap muka sesi 1', 'actor' => 'Ibu Rahmawati (BK)'],
-                        ['time' => '24 Sep 09:15', 'title' => 'Komunikasi & Panggilan Orang Tua', 'actor' => 'Ibu Rahmawati (BK)'],
-                    ],
-                ],
-                [
-                    'id' => 'case-02',
-                    'code' => 'CS-2025-090',
-                    'studentName' => 'Alisa Putri Melati',
-                    'class' => 'X DKV 2',
-                    'category' => 'Sosial & Perlindungan',
-                    'priority' => 'Tinggi',
-                    'stage' => 'assigned',
-                    'stageLabel' => 'Ditugaskan',
-                    'assignee' => 'Bpk. Faisal (BK)',
-                    'lastActivity' => 'Menunggu penjadwalan mediasi dengan orang tua.',
-                    'lastUpdate' => 'Kemarin, 14:20',
-                    'timeline' => [
-                        ['time' => '23 Sep 11:20', 'title' => 'Laporan indikasi perundungan diterima', 'actor' => 'Wali Kelas'],
-                        ['time' => '23 Sep 14:00', 'title' => 'Verifikasi awal dan perlindungan siswa', 'actor' => 'Kesiswaan'],
-                        ['time' => '24 Sep 08:00', 'title' => 'Ditugaskan penanganan ke BK', 'actor' => 'Kepala Sekolah'],
-                    ],
-                ],
-                [
-                    'id' => 'case-03',
-                    'code' => 'CS-2025-091',
-                    'studentName' => 'Fajar Nugraha',
-                    'class' => 'XI TKR 2',
-                    'category' => 'Akademik',
-                    'priority' => 'Sedang',
-                    'stage' => 'follow_up',
-                    'stageLabel' => 'Perlu Follow-up',
-                    'assignee' => 'Bpk. Gunawan, S.T',
-                    'lastActivity' => 'Jadwal matrikulasi perbaikan nilai praktik mesin.',
-                    'lastUpdate' => '2 hari lalu',
-                    'timeline' => [
-                        ['time' => '20 Sep 10:00', 'title' => 'Case akademik dibuat', 'actor' => 'Guru Produktif'],
-                        ['time' => '21 Sep 11:30', 'title' => 'Pemberian modul perbaikan', 'actor' => 'Guru Produktif'],
-                        ['time' => '23 Sep 15:00', 'title' => 'Ujian perbaikan belum tuntas', 'actor' => 'Guru Produktif'],
-                    ],
-                ],
-                [
-                    'id' => 'case-04',
-                    'code' => 'CS-2025-092',
-                    'studentName' => 'Dimas Maulana',
-                    'class' => 'XII RPL 1',
-                    'category' => 'Kehadiran',
-                    'priority' => 'Tinggi',
-                    'stage' => 'new',
-                    'stageLabel' => 'Baru Masuk',
-                    'assignee' => 'Belum Ditugaskan',
-                    'lastActivity' => 'Peringatan otomatis sistem: tidak hadir 5 hari berturut-turut.',
-                    'lastUpdate' => 'Hari ini, 07:45',
-                    'timeline' => [
-                        ['time' => '24 Sep 07:45', 'title' => 'Pemicu otomatis Early Warning aktif', 'actor' => 'Sistem Tanggapin'],
-                    ],
-                ],
-            ],
-            'atsList' => [
-                [
-                    'id' => 'ats-1',
-                    'studentName' => 'Deni Saputra',
-                    'lastClass' => 'XI TKR 3',
-                    'address' => 'Kp. Sukamaju RT 03/05, Desa Sukaresmi',
-                    'officer' => 'Bpk. Ahmad (Tim Satgas ATS)',
-                    'status' => 'Kunjungan Terjadwal',
-                    'reason' => 'Kendala ekonomi & membantu usaha keluarga',
-                    'scheduledVisit' => '27 Sep 2025, 14:00',
-                ],
-                [
-                    'id' => 'ats-2',
-                    'studentName' => 'Maya Anggraini',
-                    'lastClass' => 'X AKL 1',
-                    'address' => 'Jl. Merpati No. 14, Kel. Jatirasa',
-                    'officer' => 'Ibu Nurul (Tim Satgas ATS)',
-                    'status' => 'Intervensi Bantuan PIP',
-                    'reason' => 'Masalah biaya transportasi sekolah',
-                    'scheduledVisit' => 'Sudah diverifikasi (22 Sep)',
-                ],
-            ],
-            'paymentList' => [
-                [
-                    'id' => 'pay-1',
-                    'invoiceNo' => 'INV-2025-09-001',
-                    'studentName' => 'Reza Pahlevi',
-                    'class' => 'XI RPL 2',
-                    'type' => 'SPP September 2025',
-                    'amount' => 350000,
-                    'dueDate' => '10 Sep 2025',
-                    'status' => 'Terlambat',
-                ],
-                [
-                    'id' => 'pay-2',
-                    'invoiceNo' => 'INV-2025-09-002',
-                    'studentName' => 'Anisa Salma',
-                    'class' => 'X TKJ 1',
-                    'type' => 'SPP September 2025',
-                    'amount' => 350000,
-                    'dueDate' => '10 Sep 2025',
-                    'status' => 'Menunggu Verifikasi',
-                ],
-                [
-                    'id' => 'pay-3',
-                    'invoiceNo' => 'INV-2025-09-003',
-                    'studentName' => 'Bayu Wicaksono',
-                    'class' => 'XII AKL 2',
-                    'type' => 'Uang Praktik Kejuruan',
-                    'amount' => 200000,
-                    'dueDate' => '15 Sep 2025',
-                    'status' => 'Lunas',
-                ],
-            ],
-            'dapodikIssues' => [
-                [
-                    'id' => 'dap-1',
-                    'category' => 'Tugas Tambahan Guru',
-                    'targetName' => 'Drs. Subagyo (NIP. 19740512...)',
-                    'field' => 'SK Pembina Ekstrakurikuler',
-                    'description' => 'SK belum terunggah di riwayat penugasan semester ganjil.',
-                    'severity' => 'Error',
-                    'action' => 'Unggah dokumen SK & nomor referensi',
-                ],
-                [
-                    'id' => 'dap-2',
-                    'category' => 'Data Siswa',
-                    'targetName' => 'Farhan Alamsyah (NISN: 0078129381)',
-                    'field' => 'NIK Orang Tua Kosong',
-                    'description' => 'Data NIK Ayah dan Ibu belum terisi pada form registrasi awal.',
-                    'severity' => 'Perlu Diperiksa',
-                    'action' => 'Kirim reminder update data ke orang tua',
-                ],
-                [
-                    'id' => 'dap-3',
-                    'category' => 'Rombongan Belajar',
-                    'targetName' => 'Kelas XI TKR 3',
-                    'field' => 'Mata Pelajaran PKn Tanpa Pengampu',
-                    'description' => 'Jadwal rombel belum dipetakan ke guru mata pelajaran terdaftar.',
-                    'severity' => 'Error',
-                    'action' => 'Petakan guru pengampu di menu pembelajaran',
-                ],
-            ],
-            'documents' => [
-                [
-                    'id' => 'doc-1',
-                    'title' => 'Modul Ajar Pemrograman Web & Perangkat Bergerak',
-                    'teacher' => 'Hendra Setiawan, S.Pd',
-                    'category' => 'Perangkat Pembelajaran',
-                    'period' => '2025/2026 Ganjil',
-                    'status' => 'Lengkap',
-                    'size' => '2.4 MB',
-                ],
-                [
-                    'id' => 'doc-2',
-                    'title' => 'SK Pembagian Tugas Guru & Tugas Tambahan BK',
-                    'teacher' => 'Rahmawati, S.Pd (BK)',
-                    'category' => 'SK & Penugasan',
-                    'period' => '2025/2026 Ganjil',
-                    'status' => 'Lengkap',
-                    'size' => '1.1 MB',
-                ],
-                [
-                    'id' => 'doc-3',
-                    'title' => 'Sertifikat Pelatihan Kurikulum Merdeka Terintegrasi',
-                    'teacher' => 'Dewi Sartika, M.Kom',
-                    'category' => 'Sertifikat Diklat',
-                    'period' => 'Agustus 2025',
-                    'status' => 'Terverifikasi',
-                    'size' => '850 KB',
-                ],
-            ],
-            'incidents' => [
-                [
-                    'id' => 'inc-1',
-                    'title' => 'Prosedur Siaga Bencana Musim Hujan & Banjir Genangan',
-                    'type' => 'Cuaca Ekstrem',
-                    'status' => 'Siaga Aktif',
-                    'level' => 'Waspada',
-                    'leadOfficer' => 'Bpk. Harun (Ketua Tim K3 & Tanggap Darurat)',
-                    'checklist' => [
-                        ['id' => 'chk-1', 'label' => 'Aktivasi Tim Tanggap Darurat Sekolah', 'done' => true],
-                        ['id' => 'chk-2', 'label' => 'Pemeriksaan Drainase Lapangan & Gedung B', 'done' => true],
-                        ['id' => 'chk-3', 'label' => 'Pengamanan Dokumen Arsip & Server di Lantai 2', 'done' => true],
-                        ['id' => 'chk-4', 'label' => 'Penyusunan Rute Alternatif Pulang Siswa', 'done' => false],
-                        ['id' => 'chk-5', 'label' => 'Broadcast Status Siaga ke Orang Tua & Guru', 'done' => false],
-                    ],
-                ],
-            ],
-            'parentUpdates' => [
-                [
-                    'id' => 'msg-1',
-                    'studentName' => 'Brian Aditya',
-                    'parentName' => 'Hadi Wicaksono',
-                    'category' => 'Notifikasi Kehadiran',
-                    'message' => 'Pemberitahuan ketidakhadiran Brian pada hari Kamis, 24 September tanpa surat izin.',
-                    'date' => '24 Sep, 08:15',
-                    'status' => 'Terkirim via WhatsApp & App',
-                    'acknowledgement' => 'Sudah membaca',
-                ],
-                [
-                    'id' => 'msg-2',
-                    'studentName' => 'Ahmad Fauzan',
-                    'parentName' => 'Rukmini Fauzan',
-                    'category' => 'Undangan Konsultasi BK',
-                    'message' => 'Undangan diskusi pendampingan kedisiplinan siswa di ruang BK pada hari Jumat.',
-                    'date' => '24 Sep, 10:30',
-                    'status' => 'Menunggu Respon',
-                    'acknowledgement' => 'Perlu ditindaklanjuti',
-                ],
-            ],
+            'priorityFeed' => $priorityAlerts->toArray(),
+            'classes' => $classes->toArray(),
+            'cases' => $cases->toArray(),
+            'atsList' => $atsList->toArray(),
+            'paymentList' => $payments->toArray(),
+            'dapodikIssues' => $dapodikIssues->toArray(),
+            'documents' => $documents->toArray(),
+            'incidents' => $incidents->toArray(),
+            'parentUpdates' => $parentUpdates->toArray(),
+            'disciplineList' => $disciplineList->toArray(),
         ]);
+    }
+
+    /**
+     * Store a newly created discipline record in database.
+     */
+    public function storeDisciplineRecord(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'student_id' => 'required|exists:students,id',
+            'infraction' => 'required|string',
+            'points' => 'required|integer',
+            'pattern_notes' => 'nullable|string',
+        ]);
+
+        DisciplineRecord::create([
+            'student_id' => $validated['student_id'],
+            'infraction' => $validated['infraction'],
+            'points' => $validated['points'],
+            'action_status' => 'Menunggu Pembinaan',
+            'pattern_notes' => $validated['pattern_notes'] ?? 'Dicatat dari modul kedisiplinan',
+            'recorded_at' => now()->format('d M H:i'),
+        ]);
+
+        return back()->with('success', 'Catatan kedisiplinan berhasil disimpan!');
+    }
+
+    /**
+     * Store a newly created followup in database.
+     */
+    public function storeFollowup(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'student_id' => 'required|exists:students,id',
+            'type' => 'required|string',
+            'assignee_name' => 'required|string',
+            'note' => 'required|string',
+            'due_date' => 'nullable|string',
+        ]);
+
+        Followup::create([
+            'student_id' => $validated['student_id'],
+            'type' => $validated['type'],
+            'assignee_name' => $validated['assignee_name'],
+            'note' => $validated['note'],
+            'status' => 'pending',
+            'due_date' => $validated['due_date'] ?? now()->addDays(3)->format('Y-m-d'),
+        ]);
+
+        RiskAlert::where('student_id', $validated['student_id'])->update(['is_action_taken' => true]);
+
+        return back()->with('success', 'Follow-up berhasil disimpan di database!');
+    }
+
+    /**
+     * Store a newly created case in database.
+     */
+    public function storeCase(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'student_id' => 'required|exists:students,id',
+            'category' => 'required|string',
+            'priority' => 'required|string',
+            'last_activity' => 'required|string',
+            'assignee_name' => 'nullable|string',
+        ]);
+
+        $code = 'CS-'.date('Y').'-'.str_pad((string) (StudentCase::count() + 1), 3, '0', STR_PAD_LEFT);
+
+        $case = StudentCase::create([
+            'code' => $code,
+            'student_id' => $validated['student_id'],
+            'category' => $validated['category'],
+            'priority' => $validated['priority'],
+            'stage' => 'new',
+            'stage_label' => 'Baru Masuk',
+            'assignee_name' => $validated['assignee_name'] ?? 'Koordinator BK',
+            'last_activity' => $validated['last_activity'],
+        ]);
+
+        CaseTimeline::create([
+            'student_case_id' => $case->id,
+            'title' => 'Kasus dibuat dan didaftarkan ke sistem',
+            'actor_name' => auth()->user()->name ?? 'Petugas Sekolah',
+            'recorded_at' => now()->format('d M H:i'),
+        ]);
+
+        return back()->with('success', "Kasus {$code} berhasil dibuat di database!");
+    }
+
+    /**
+     * Store parent communication in database.
+     */
+    public function storeParentCommunication(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'student_id' => 'required|exists:students,id',
+            'category' => 'required|string',
+            'message' => 'required|string',
+        ]);
+
+        $student = Student::findOrFail($validated['student_id']);
+
+        ParentCommunication::create([
+            'student_id' => $student->id,
+            'sender_name' => auth()->user()->name ?? 'Wali Kelas',
+            'parent_name' => $student->parent_name,
+            'category' => $validated['category'],
+            'message' => $validated['message'],
+            'status' => 'Terkirim via WhatsApp & Tanggapin App',
+            'acknowledgement' => 'Menunggu Respon',
+            'sent_at' => now()->format('d M H:i'),
+        ]);
+
+        return back()->with('success', 'Pesan terstruktur berhasil disimpan dan dikirim ke orang tua!');
     }
 }

@@ -23,6 +23,10 @@ Route::get('/demo-login', function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::post('followups', [DashboardController::class, 'storeFollowup'])->name('followups.store');
+    Route::post('cases', [DashboardController::class, 'storeCase'])->name('cases.store');
+    Route::post('parent-communications', [DashboardController::class, 'storeParentCommunication'])->name('parent-communications.store');
+    Route::post('discipline-records', [DashboardController::class, 'storeDisciplineRecord'])->name('discipline-records.store');
 });
 
 require __DIR__.'/settings.php';
