@@ -62,7 +62,7 @@ class DatabaseSeeder extends Seeder
 
         foreach ($defaultUsers as $userData) {
             User::updateOrCreate(
-                ['role' => $userData['role']],
+                ['email' => $userData['email']],
                 $userData
             );
         }
