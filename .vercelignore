@@ -1,3 +1,4 @@
+/vendor
 /node_modules
 /.git
 /.github
@@ -11,3 +12,6 @@
 /storage/framework/views/*
 .env
 .env.*
+.vscode
+.idea
+PRD_Tanggapin.md

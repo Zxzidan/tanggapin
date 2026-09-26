@@ -16,6 +16,8 @@ $app = Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        $middleware->trustProxies(at: '*');
+
         $middleware->encryptCookies(except: ['appearance', 'sidebar_state']);
 
         $middleware->web(append: [
@@ -31,7 +33,8 @@ $app = Application::configure(basePath: dirname(__DIR__))
         );
     })->create();
 
-if ($storagePath = env('APP_STORAGE_PATH')) {
+$storagePath = env('APP_STORAGE_PATH', $_ENV['APP_STORAGE_PATH'] ?? $_SERVER['APP_STORAGE_PATH'] ?? null);
+if ($storagePath) {
     $app->useStoragePath($storagePath);
 }
 
