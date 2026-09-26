@@ -1772,7 +1772,7 @@ storeDisciplineRecord.post = (options?: RouteQueryOptions): RouteDefinition<'pos
  * @see app/Http/Controllers/DashboardController.php:1015
  * @route '/discipline-records/{record}/followup'
  */
-export const followUpDisciplineRecord = (args: { record: string | number | { id: string | number } } | [record: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+export const followUpDisciplineRecord = (args: { record: number | { id: number } } | [record: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: followUpDisciplineRecord.url(args, options),
     method: 'post',
 })
@@ -1787,7 +1787,7 @@ followUpDisciplineRecord.definition = {
  * @see app/Http/Controllers/DashboardController.php:1015
  * @route '/discipline-records/{record}/followup'
  */
-followUpDisciplineRecord.url = (args: { record: string | number | { id: string | number } } | [record: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+followUpDisciplineRecord.url = (args: { record: number | { id: number } } | [record: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { record: args }
     }
@@ -1820,7 +1820,7 @@ followUpDisciplineRecord.url = (args: { record: string | number | { id: string |
  * @see app/Http/Controllers/DashboardController.php:1015
  * @route '/discipline-records/{record}/followup'
  */
-followUpDisciplineRecord.post = (args: { record: string | number | { id: string | number } } | [record: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+followUpDisciplineRecord.post = (args: { record: number | { id: number } } | [record: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: followUpDisciplineRecord.url(args, options),
     method: 'post',
 })
@@ -1830,7 +1830,7 @@ followUpDisciplineRecord.post = (args: { record: string | number | { id: string 
  * @see app/Http/Controllers/DashboardController.php:1015
  * @route '/discipline-records/{record}/followup'
  */
-    const followUpDisciplineRecordForm = (args: { record: string | number | { id: string | number } } | [record: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const followUpDisciplineRecordForm = (args: { record: number | { id: number } } | [record: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: followUpDisciplineRecord.url(args, options),
         method: 'post',
     })
@@ -1840,7 +1840,7 @@ followUpDisciplineRecord.post = (args: { record: string | number | { id: string 
  * @see app/Http/Controllers/DashboardController.php:1015
  * @route '/discipline-records/{record}/followup'
  */
-        followUpDisciplineRecordForm.post = (args: { record: string | number | { id: string | number } } | [record: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        followUpDisciplineRecordForm.post = (args: { record: number | { id: number } } | [record: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: followUpDisciplineRecord.url(args, options),
             method: 'post',
         })
@@ -1961,7 +1961,7 @@ storeReferralToBk.post = (options?: RouteQueryOptions): RouteDefinition<'post'> 
  * @see app/Http/Controllers/DashboardController.php:969
  * @route '/cases/{studentCase}/handle-bk'
  */
-export const handleReferralByBk = (args: { studentCase: string | number | { id: string | number } } | [studentCase: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+export const handleReferralByBk = (args: { studentCase: number | { id: number } } | [studentCase: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: handleReferralByBk.url(args, options),
     method: 'post',
 })
@@ -1976,7 +1976,7 @@ handleReferralByBk.definition = {
  * @see app/Http/Controllers/DashboardController.php:969
  * @route '/cases/{studentCase}/handle-bk'
  */
-handleReferralByBk.url = (args: { studentCase: string | number | { id: string | number } } | [studentCase: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+handleReferralByBk.url = (args: { studentCase: number | { id: number } } | [studentCase: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { studentCase: args }
     }
@@ -2009,7 +2009,7 @@ handleReferralByBk.url = (args: { studentCase: string | number | { id: string | 
  * @see app/Http/Controllers/DashboardController.php:969
  * @route '/cases/{studentCase}/handle-bk'
  */
-handleReferralByBk.post = (args: { studentCase: string | number | { id: string | number } } | [studentCase: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+handleReferralByBk.post = (args: { studentCase: number | { id: number } } | [studentCase: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: handleReferralByBk.url(args, options),
     method: 'post',
 })
@@ -2019,7 +2019,7 @@ handleReferralByBk.post = (args: { studentCase: string | number | { id: string |
  * @see app/Http/Controllers/DashboardController.php:969
  * @route '/cases/{studentCase}/handle-bk'
  */
-    const handleReferralByBkForm = (args: { studentCase: string | number | { id: string | number } } | [studentCase: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const handleReferralByBkForm = (args: { studentCase: number | { id: number } } | [studentCase: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: handleReferralByBk.url(args, options),
         method: 'post',
     })
@@ -2029,7 +2029,7 @@ handleReferralByBk.post = (args: { studentCase: string | number | { id: string |
  * @see app/Http/Controllers/DashboardController.php:969
  * @route '/cases/{studentCase}/handle-bk'
  */
-        handleReferralByBkForm.post = (args: { studentCase: string | number | { id: string | number } } | [studentCase: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        handleReferralByBkForm.post = (args: { studentCase: number | { id: number } } | [studentCase: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: handleReferralByBk.url(args, options),
             method: 'post',
         })
@@ -2095,7 +2095,7 @@ generateAiReport.post = (options?: RouteQueryOptions): RouteDefinition<'post'> =
  * @see app/Http/Controllers/DashboardController.php:1222
  * @route '/student-reports/{report}/send'
  */
-export const sendReportToParent = (args: { report: string | number | { id: string | number } } | [report: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+export const sendReportToParent = (args: { report: number | { id: number } } | [report: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: sendReportToParent.url(args, options),
     method: 'post',
 })
@@ -2110,7 +2110,7 @@ sendReportToParent.definition = {
  * @see app/Http/Controllers/DashboardController.php:1222
  * @route '/student-reports/{report}/send'
  */
-sendReportToParent.url = (args: { report: string | number | { id: string | number } } | [report: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+sendReportToParent.url = (args: { report: number | { id: number } } | [report: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { report: args }
     }
@@ -2143,7 +2143,7 @@ sendReportToParent.url = (args: { report: string | number | { id: string | numbe
  * @see app/Http/Controllers/DashboardController.php:1222
  * @route '/student-reports/{report}/send'
  */
-sendReportToParent.post = (args: { report: string | number | { id: string | number } } | [report: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+sendReportToParent.post = (args: { report: number | { id: number } } | [report: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: sendReportToParent.url(args, options),
     method: 'post',
 })
@@ -2153,7 +2153,7 @@ sendReportToParent.post = (args: { report: string | number | { id: string | numb
  * @see app/Http/Controllers/DashboardController.php:1222
  * @route '/student-reports/{report}/send'
  */
-    const sendReportToParentForm = (args: { report: string | number | { id: string | number } } | [report: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const sendReportToParentForm = (args: { report: number | { id: number } } | [report: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: sendReportToParent.url(args, options),
         method: 'post',
     })
@@ -2163,7 +2163,7 @@ sendReportToParent.post = (args: { report: string | number | { id: string | numb
  * @see app/Http/Controllers/DashboardController.php:1222
  * @route '/student-reports/{report}/send'
  */
-        sendReportToParentForm.post = (args: { report: string | number | { id: string | number } } | [report: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        sendReportToParentForm.post = (args: { report: number | { id: number } } | [report: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: sendReportToParent.url(args, options),
             method: 'post',
         })

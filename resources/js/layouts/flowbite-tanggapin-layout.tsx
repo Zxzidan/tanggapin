@@ -347,27 +347,27 @@ export default function FlowbiteTanggapinLayout({
     return (
         <div className="min-h-screen bg-slate-50/50 text-slate-900 transition-colors duration-200 dark:bg-[#070b14] dark:text-slate-100">
             {/* Top Navigation Bar */}
-            <nav className="fixed top-0 z-50 w-full border-b border-slate-200/80 bg-white/95 shadow-2xs backdrop-blur-md dark:border-slate-800/80 dark:bg-[#0f172a]/95">
-                <div className="px-4 py-3 sm:px-6 lg:px-8">
+            <nav className="fixed top-0 z-50 w-full border-b border-slate-200/80 bg-white/95 backdrop-blur-md dark:border-slate-800/80 dark:bg-[#0b1120]/95">
+                <div className="px-4 py-2.5 sm:px-6 lg:px-8">
                     <div className="flex items-center justify-between gap-4">
                         {/* Left: Mobile Toggle & Brand Logo */}
                         <div className="flex items-center justify-start gap-2">
                             <button
                                 type="button"
                                 onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                                className="flex size-10 items-center justify-center rounded-xl border border-slate-200 bg-slate-50/90 text-slate-700 shadow-2xs transition-all hover:bg-slate-100 active:scale-95 sm:hidden dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+                                className="flex size-9 items-center justify-center rounded-lg border border-slate-200 bg-slate-50/80 text-slate-700 transition-all hover:bg-slate-100 active:scale-95 sm:hidden dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
                                 aria-label="Toggle sidebar menu"
                             >
                                 {isSidebarOpen ? (
-                                    <X className="size-5" />
+                                    <X className="size-4" />
                                 ) : (
-                                    <Menu className="size-5" />
+                                    <Menu className="size-4" />
                                 )}
                             </button>
 
                             <Link
                                 href="/dashboard"
-                                className="ms-1 flex items-center md:me-12"
+                                className="ms-1 flex items-center md:me-10"
                             >
                                 <TanggapinLogo />
                             </Link>
@@ -377,7 +377,7 @@ export default function FlowbiteTanggapinLayout({
                         <div className="relative mx-4 hidden max-w-md flex-1 md:block">
                             <div className="relative">
                                 <div className="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3 text-slate-400">
-                                    <Search className="size-4" />
+                                    <Search className="size-3.5" />
                                 </div>
                                 <input
                                     type="text"
@@ -392,7 +392,7 @@ export default function FlowbiteTanggapinLayout({
                                             200,
                                         )
                                     }
-                                    className="block w-full rounded-xl border border-slate-200 bg-slate-100/70 p-2 ps-9 text-xs text-slate-900 placeholder:text-slate-400 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                                    className="block w-full rounded-lg border border-slate-200 bg-slate-50/80 p-2 ps-9 text-xs text-slate-900 placeholder:text-slate-400 transition-colors focus:border-blue-600 focus:bg-white focus:ring-2 focus:ring-blue-600/15 focus:outline-hidden dark:border-slate-700/80 dark:bg-slate-800/60 dark:text-white dark:focus:bg-slate-800"
                                     placeholder="Cari siswa, kasus, kelas, tagihan SPP, NISN..."
                                 />
                                 {searchQuery && (
@@ -408,12 +408,12 @@ export default function FlowbiteTanggapinLayout({
 
                             {/* Search Results Dropdown */}
                             {isSearchFocused && searchQuery && (
-                                <div className="absolute top-full left-0 z-50 mt-1.5 w-full animate-in rounded-xl border border-slate-200 bg-white p-2 shadow-xl zoom-in-95 fade-in dark:border-slate-700 dark:bg-[#111c30]">
+                                <div className="absolute top-full left-0 z-50 mt-1.5 w-full animate-in rounded-xl border border-slate-200/90 bg-white p-2 shadow-lg zoom-in-95 fade-in dark:border-slate-800 dark:bg-[#0f172a]">
                                     <div className="mb-1 border-b border-slate-100 px-2 py-1 text-[11px] font-semibold text-slate-400 dark:border-slate-800">
                                         Hasil Pencarian Cepat
                                     </div>
                                     {searchResults.length > 0 ? (
-                                        <div className="space-y-1">
+                                        <div className="space-y-0.5">
                                             {searchResults.map((item, idx) => (
                                                 <Link
                                                     key={idx}
@@ -426,7 +426,7 @@ export default function FlowbiteTanggapinLayout({
                                                     }}
                                                     className="flex w-full items-start gap-2.5 rounded-lg p-2 text-left transition-colors hover:bg-slate-50 dark:hover:bg-slate-800/60"
                                                 >
-                                                    <span className="mt-0.5 rounded bg-blue-50 px-1.5 py-0.5 text-[10px] font-semibold text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+                                                    <span className="mt-0.5 rounded border border-blue-200 bg-blue-50 px-1.5 py-0.5 text-[10px] font-semibold text-blue-700 dark:border-blue-900/60 dark:bg-blue-950 dark:text-blue-300">
                                                         {item.type}
                                                     </span>
                                                     <div className="min-w-0 flex-1">
@@ -451,7 +451,7 @@ export default function FlowbiteTanggapinLayout({
                         </div>
 
                         {/* Right: Quick Actions, Appearance & User Profile */}
-                        <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+                        <div className="flex shrink-0 items-center gap-2 sm:gap-2.5">
                             {/* Role-tailored Quick Actions Button */}
                             <div className="relative" ref={quickActionRef}>
                                 <button
@@ -459,11 +459,11 @@ export default function FlowbiteTanggapinLayout({
                                     onClick={() =>
                                         setIsQuickActionOpen(!isQuickActionOpen)
                                     }
-                                    className="hidden items-center gap-2 rounded-xl bg-blue-700 px-3.5 py-2 text-xs font-semibold text-white shadow-2xs transition-all hover:bg-blue-800 active:scale-95 sm:inline-flex"
+                                    className="hidden items-center gap-1.5 rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-medium text-white shadow-xs transition-colors hover:bg-blue-700 active:scale-95 sm:inline-flex"
                                 >
                                     <Plus className="size-3.5" />
                                     <span>Tindakan</span>
-                                    <ChevronDown className="size-3 opacity-80" />
+                                    <ChevronDown className="size-3 opacity-75" />
                                 </button>
 
                                 {isQuickActionOpen && (
@@ -563,24 +563,24 @@ export default function FlowbiteTanggapinLayout({
                                             !isNotificationOpen,
                                         )
                                     }
-                                    className="relative rounded-lg p-2 text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
+                                    className="relative rounded-lg p-2 text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-700 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-200"
                                     aria-label="Pemberitahuan"
                                 >
                                     <Bell className="size-4" />
-                                    <span className="absolute end-1.5 top-1.5 size-2 rounded-full bg-blue-700 ring-2 ring-white dark:bg-blue-400 dark:ring-slate-900" />
+                                    <span className="absolute end-1.5 top-1.5 size-2 rounded-full bg-blue-600 ring-2 ring-white dark:bg-blue-400 dark:ring-[#0b1120]" />
                                 </button>
 
                                 {isNotificationOpen && (
-                                    <div className="absolute right-0 z-50 mt-2 w-80 animate-in rounded-xl border border-slate-200 bg-white p-3 text-xs shadow-xl zoom-in-95 fade-in dark:border-slate-700 dark:bg-[#111c30]">
+                                    <div className="absolute right-0 z-50 mt-1.5 w-80 animate-in rounded-xl border border-slate-200/90 bg-white p-3 text-xs shadow-lg zoom-in-95 fade-in dark:border-slate-800 dark:bg-[#0f172a]">
                                         <div className="mb-2 flex items-center justify-between border-b border-slate-100 pb-2 dark:border-slate-800">
-                                            <span className="font-bold text-slate-900 dark:text-white">
+                                            <span className="font-semibold text-slate-900 dark:text-white">
                                                 Pemberitahuan Sistem
                                             </span>
-                                            <span className="rounded bg-blue-50 px-1.5 py-0.5 text-[10px] font-semibold text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+                                            <span className="rounded border border-blue-200 bg-blue-50 px-1.5 py-0.5 text-[10px] font-semibold text-blue-700 dark:border-blue-900/60 dark:bg-blue-950 dark:text-blue-300">
                                                 3 Baru
                                             </span>
                                         </div>
-                                        <div className="space-y-1.5">
+                                        <div className="space-y-1">
                                             <Link
                                                 href="/early-warning"
                                                 onClick={() =>
@@ -589,7 +589,7 @@ export default function FlowbiteTanggapinLayout({
                                                 className="block cursor-pointer rounded-lg border border-transparent p-2 transition-colors hover:bg-slate-50 dark:hover:bg-slate-800/60"
                                             >
                                                 <div className="flex items-center gap-1.5 text-[11px] font-semibold text-slate-900 dark:text-white">
-                                                    <AlertTriangle className="size-3 text-blue-700 dark:text-blue-400" />
+                                                    <AlertTriangle className="size-3 text-blue-600 dark:text-blue-400" />
                                                     <span>
                                                         Sinyal Absensi Kritis
                                                     </span>
@@ -611,7 +611,7 @@ export default function FlowbiteTanggapinLayout({
                                                 className="block cursor-pointer rounded-lg border border-transparent p-2 transition-colors hover:bg-slate-50 dark:hover:bg-slate-800/60"
                                             >
                                                 <div className="flex items-center gap-1.5 text-[11px] font-semibold text-slate-900 dark:text-white">
-                                                    <ShieldAlert className="size-3 text-blue-700 dark:text-blue-400" />
+                                                    <ShieldAlert className="size-3 text-blue-600 dark:text-blue-400" />
                                                     <span>Kasus Selesai</span>
                                                     <span className="ms-auto text-[10px] text-slate-400">
                                                         1j lalu
@@ -631,7 +631,7 @@ export default function FlowbiteTanggapinLayout({
                                                 className="block cursor-pointer rounded-lg border border-transparent p-2 transition-colors hover:bg-slate-50 dark:hover:bg-slate-800/60"
                                             >
                                                 <div className="flex items-center gap-1.5 text-[11px] font-semibold text-slate-900 dark:text-white">
-                                                    <CheckCircle2 className="size-3 text-blue-700 dark:text-blue-400" />
+                                                    <CheckCircle2 className="size-3 text-blue-600 dark:text-blue-400" />
                                                     <span>Residu Dapodik</span>
                                                     <span className="ms-auto text-[10px] text-slate-400">
                                                         3j lalu
@@ -655,10 +655,10 @@ export default function FlowbiteTanggapinLayout({
                                     updateAppearance(
                                         resolvedAppearance === 'dark'
                                             ? 'light'
-                                            : 'dark',
+                                             : 'dark',
                                     )
                                 }
-                                className="rounded-lg p-2 text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
+                                className="rounded-lg p-2 text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-700 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-200"
                                 aria-label="Ganti Tema Tampilan"
                             >
                                 {resolvedAppearance === 'dark' ? (
@@ -675,7 +675,7 @@ export default function FlowbiteTanggapinLayout({
                                     onClick={() =>
                                         setIsUserMenuOpen(!isUserMenuOpen)
                                     }
-                                    className="flex items-center gap-2 rounded-full ring-2 ring-slate-200 transition-all hover:ring-blue-600 dark:ring-slate-700"
+                                    className="flex items-center gap-2 rounded-full ring-1.5 ring-slate-200 transition-all hover:ring-blue-600 focus:outline-hidden dark:ring-slate-700"
                                     aria-label="Menu Pengguna"
                                 >
                                     <img
@@ -686,7 +686,7 @@ export default function FlowbiteTanggapinLayout({
                                 </button>
 
                                 {isUserMenuOpen && (
-                                    <div className="absolute right-0 z-50 mt-2 w-60 animate-in rounded-xl border border-slate-200 bg-white py-1.5 text-xs shadow-xl zoom-in-95 fade-in dark:border-slate-800 dark:bg-[#111c30]">
+                                    <div className="absolute right-0 z-50 mt-1.5 w-60 animate-in rounded-xl border border-slate-200/90 bg-white py-1.5 text-xs shadow-lg zoom-in-95 fade-in dark:border-slate-800 dark:bg-[#0f172a]">
                                         <div className="border-b border-slate-100 px-4 py-3 dark:border-slate-800">
                                             <p className="truncate text-sm font-semibold text-slate-900 dark:text-white">
                                                 {authUser?.name ||
@@ -696,11 +696,10 @@ export default function FlowbiteTanggapinLayout({
                                                 {authUser?.email ||
                                                     activeRoleConfig.userEmail}
                                             </p>
-                                            <div className="mt-1.5 inline-block rounded border border-blue-200 bg-blue-50 px-2 py-0.5 text-[10px] font-semibold text-blue-700 dark:border-blue-800 dark:bg-blue-950 dark:text-blue-300">
+                                            <div className="mt-1.5 inline-block rounded border border-blue-200 bg-blue-50 px-2 py-0.5 text-[10px] font-semibold text-blue-700 dark:border-blue-900/60 dark:bg-blue-950 dark:text-blue-300">
                                                 Peran: {activeRoleConfig.title}
                                             </div>
                                         </div>
-
 
                                         <ul className="space-y-0.5 p-1.5 text-xs font-medium text-slate-700 dark:text-slate-300">
                                             <li>
@@ -765,43 +764,43 @@ export default function FlowbiteTanggapinLayout({
             {isSidebarOpen && (
                 <div
                     onClick={() => setIsSidebarOpen(false)}
-                    className="fixed inset-0 z-30 bg-slate-900/50 backdrop-blur-xs sm:hidden"
+                    className="fixed inset-0 z-30 bg-slate-900/40 backdrop-blur-xs sm:hidden"
                 />
             )}
 
             {/* Sidebar Navigation */}
             <aside
                 className={cn(
-                    'fixed top-0 left-0 z-40 h-full w-64 border-e border-slate-200 bg-white pt-16 transition-transform sm:translate-x-0 dark:border-slate-800 dark:bg-[#0b1120]',
+                    'fixed top-0 left-0 z-40 h-full w-64 border-e border-slate-200/90 bg-white pt-15 transition-transform sm:translate-x-0 dark:border-slate-800 dark:bg-[#0b1120]',
                     isSidebarOpen ? 'translate-x-0' : '-translate-x-full',
                 )}
                 aria-label="Sidemenu"
             >
-                <div className="flex h-full flex-col justify-between overflow-y-auto px-3 py-4">
+                <div className="flex h-full flex-col justify-between overflow-y-auto px-3.5 py-4">
                     <div className="space-y-4">
                         {/* Mobile Header Bar inside Drawer */}
                         <div className="flex items-center justify-between border-b border-slate-200/80 pb-3 sm:hidden dark:border-slate-800">
-                            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                            <span className="text-[11px] font-semibold tracking-wider text-slate-500 uppercase">
                                 Menu Navigasi
                             </span>
                             <button
                                 type="button"
                                 onClick={() => setIsSidebarOpen(false)}
-                                className="flex size-8 items-center justify-center rounded-lg border border-slate-200 bg-slate-50 text-slate-600 transition-colors hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700"
+                                className="flex size-7.5 items-center justify-center rounded-lg border border-slate-200 bg-slate-50 text-slate-600 transition-colors hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700"
                                 aria-label="Tutup menu sidebar"
                             >
-                                <X className="size-4" />
+                                <X className="size-3.5" />
                             </button>
                         </div>
 
-                        {/* School Identity Card */}
-                        <div className="rounded-xl border border-slate-200 bg-slate-50/80 p-3 dark:border-slate-800 dark:bg-[#111c30]">
+                        {/* School Identity Block - Streamlined & Elegant */}
+                        <div className="rounded-lg border border-slate-200/90 bg-slate-50/70 p-3 dark:border-slate-800 dark:bg-[#0f172a]">
                             <div className="flex items-center gap-2.5">
-                                <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-blue-700 text-xs font-bold text-white shadow-2xs">
+                                <div className="flex size-7.5 shrink-0 items-center justify-center rounded-md bg-blue-600 text-[11px] font-bold text-white">
                                     SMK
                                 </div>
                                 <div className="min-w-0 flex-1">
-                                    <div className="truncate text-xs font-bold text-slate-900 dark:text-white">
+                                    <div className="truncate text-xs font-semibold text-slate-900 dark:text-white">
                                         SMK Negeri 1 Harapan
                                     </div>
                                     <div className="truncate text-[10px] text-slate-500">
@@ -809,11 +808,11 @@ export default function FlowbiteTanggapinLayout({
                                     </div>
                                 </div>
                             </div>
-                            <div className="mt-2 flex items-center justify-between border-t border-slate-200/60 pt-2 dark:border-slate-800">
+                            <div className="mt-2.5 flex items-center justify-between border-t border-slate-200/70 pt-2 dark:border-slate-800">
                                 <span className="text-[10px] text-slate-500">
                                     Peran:
                                 </span>
-                                <span className="rounded border border-blue-200 bg-blue-50 px-2 py-0.5 text-[10px] font-semibold text-blue-700 dark:border-blue-800 dark:bg-blue-950 dark:text-blue-300">
+                                <span className="rounded border border-blue-200 bg-blue-50 px-1.5 py-0.5 text-[10px] font-medium text-blue-700 dark:border-blue-900/60 dark:bg-blue-950 dark:text-blue-300">
                                     {activeRoleConfig.title}
                                 </span>
                             </div>
@@ -823,7 +822,7 @@ export default function FlowbiteTanggapinLayout({
                         <ul className="space-y-4 font-medium">
                             {visibleNavSections.map((sec) => (
                                 <div key={sec.section}>
-                                    <div className="px-2.5 pb-1 text-[10px] font-bold tracking-wider text-slate-400 uppercase">
+                                    <div className="px-2 pb-1 text-[10px] font-semibold tracking-wider text-slate-400 uppercase dark:text-slate-500">
                                         {sec.section}
                                     </div>
                                     <div className="space-y-0.5">
@@ -846,10 +845,10 @@ export default function FlowbiteTanggapinLayout({
                                                             );
                                                         }}
                                                         className={cn(
-                                                            'flex w-full items-center rounded-lg px-2.5 py-1.5 text-left text-xs font-medium transition-all',
+                                                            'flex w-full items-center rounded-lg px-2.5 py-1.5 text-left text-xs transition-colors',
                                                             isActive
-                                                                ? 'bg-blue-700 font-semibold text-white shadow-2xs'
-                                                                : 'text-slate-700 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white',
+                                                                ? 'bg-blue-600 font-semibold text-white shadow-xs'
+                                                                : 'font-medium text-slate-700 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800/70 dark:hover:text-white',
                                                         )}
                                                     >
                                                         <IconComponent
@@ -857,10 +856,10 @@ export default function FlowbiteTanggapinLayout({
                                                                 'size-4 shrink-0 transition-colors',
                                                                 isActive
                                                                     ? 'text-white'
-                                                                    : 'text-slate-500 dark:text-slate-400',
+                                                                    : 'text-slate-400 group-hover:text-slate-600 dark:text-slate-400',
                                                             )}
                                                         />
-                                                        <span className="ms-2.5 flex-1 font-medium whitespace-nowrap">
+                                                        <span className="ms-2.5 flex-1 whitespace-nowrap">
                                                             {item.title}
                                                         </span>
                                                     </Link>
@@ -873,13 +872,13 @@ export default function FlowbiteTanggapinLayout({
                         </ul>
                     </div>
 
-                    {/* Sidebar Footer Support Card */}
-                    <div className="mt-4 rounded-xl border border-slate-200 bg-slate-50/60 p-3 text-xs dark:border-slate-800 dark:bg-[#111c30]">
-                        <div className="flex items-center gap-2 font-bold text-slate-900 dark:text-white">
-                            <Shield className="size-3.5 text-blue-700 dark:text-blue-400" />
+                    {/* Sidebar Footer Support Block */}
+                    <div className="mt-4 border-t border-slate-200/80 pt-3 text-xs dark:border-slate-800">
+                        <div className="flex items-center gap-1.5 text-[11px] font-semibold text-slate-700 dark:text-slate-300">
+                            <Shield className="size-3.5 text-blue-600 dark:text-blue-400" />
                             <span>TANGGAPIN Core</span>
                         </div>
-                        <p className="mt-1 text-[11px] text-slate-500">
+                        <p className="mt-0.5 text-[10px] text-slate-400 dark:text-slate-500">
                             Sistem Informasi Terpadu Respons Cepat & Bimbingan
                             Sekolah.
                         </p>

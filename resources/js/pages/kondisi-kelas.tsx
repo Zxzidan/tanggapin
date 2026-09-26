@@ -351,7 +351,7 @@ export default function KondisiKelas({
                 )}
 
                 {/* Hero Header */}
-                <div className="relative overflow-hidden rounded-2xl border border-blue-100 bg-gradient-to-br from-white via-blue-50/30 to-blue-100/10 p-6 shadow-xs dark:border-slate-800 dark:from-[#0f172a] dark:via-blue-950/20 dark:to-slate-900">
+                <div className="relative overflow-hidden rounded-xl border border-blue-100 bg-gradient-to-br from-white via-blue-50/30 to-blue-100/10 p-6 shadow-xs dark:border-slate-800 dark:from-[#0f172a] dark:via-blue-950/20 dark:to-slate-900">
                     <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-center">
                         <div className="space-y-2">
                             <div className="flex flex-wrap items-center gap-2">
@@ -551,7 +551,7 @@ export default function KondisiKelas({
                         )}
 
                         {/* Students Table */}
-                        <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
+                        <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
                             <div className="overflow-x-auto">
                                 <table className="w-full text-left text-xs">
                                     <thead className="border-b border-slate-200 bg-slate-50/75 text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:border-slate-800 dark:bg-slate-800/50 dark:text-slate-400">
@@ -767,7 +767,7 @@ export default function KondisiKelas({
                                 return (
                                     <div
                                         key={cls.id}
-                                        className="space-y-3 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs transition-all hover:border-blue-400 dark:border-slate-800 dark:bg-[#0f172a]"
+                                        className="space-y-3 rounded-xl border border-slate-200 bg-white p-5 shadow-xs transition-all hover:border-blue-400 dark:border-slate-800 dark:bg-[#0f172a]"
                                     >
                                         <div className="flex items-start justify-between">
                                             <div>
@@ -846,7 +846,7 @@ export default function KondisiKelas({
                 {/* TAB 3: RIWAYAT PELANGGARAN & TINDAK LANJUT                       */}
                 {/* ============================================================== */}
                 {activeSubTab === 'discipline' && (
-                    <div className="space-y-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
+                    <div className="space-y-4 rounded-xl border border-slate-200 bg-white p-5 shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
                         <div className="flex flex-col justify-between gap-3 border-b border-slate-200 pb-3 sm:flex-row sm:items-center dark:border-slate-800">
                             <div>
                                 <div className="flex items-center gap-2">
@@ -962,7 +962,7 @@ export default function KondisiKelas({
                 {/* ============================================================== */}
                 {activeSubTab === 'referrals' && (
                     <div className="space-y-4">
-                        <div className="flex flex-col justify-between gap-3 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs sm:flex-row sm:items-center dark:border-slate-800 dark:bg-slate-900">
+                        <div className="flex flex-col justify-between gap-3 rounded-xl border border-slate-200 bg-white p-5 shadow-xs sm:flex-row sm:items-center dark:border-slate-800 dark:bg-slate-900">
                             <div>
                                 <h2 className="text-base font-bold text-slate-900 dark:text-white">
                                     Tracking Status Rujukan Kendala Siswa ke Guru BK
@@ -988,7 +988,7 @@ export default function KondisiKelas({
                         {/* Rujukan Cards / Tracking List */}
                         <div className="space-y-3">
                             {cases.length === 0 ? (
-                                <div className="rounded-2xl border border-dashed border-slate-300 bg-white py-12 text-center text-xs text-slate-500 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-400">
+                                <div className="rounded-xl border border-dashed border-slate-300 bg-white py-12 text-center text-xs text-slate-500 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-400">
                                     Belum ada rujukan kendala siswa yang dikirimkan ke Guru BK untuk kelas ini.
                                 </div>
                             ) : (
@@ -1003,7 +1003,7 @@ export default function KondisiKelas({
                                         <div
                                             key={c.id}
                                             className={cn(
-                                                'space-y-3 rounded-2xl border p-4.5 text-xs transition-colors shadow-xs',
+                                                'space-y-3 rounded-xl border p-4.5 text-xs transition-colors shadow-xs',
                                                 isHandled
                                                     ? 'border-blue-200/90 bg-blue-50/20 dark:border-blue-900/60 dark:bg-blue-950/20'
                                                     : 'border-slate-200 bg-slate-50/30 dark:border-slate-800 dark:bg-slate-900/20',
@@ -1092,7 +1092,7 @@ export default function KondisiKelas({
             {/* ============================================================== */}
             {isAddStudentModalOpen && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-4 backdrop-blur-xs">
-                    <div className="relative w-full max-w-lg rounded-2xl bg-white p-6 shadow-xl dark:bg-slate-900">
+                    <div className="relative w-full max-w-lg rounded-xl bg-white p-6 shadow-xl dark:bg-slate-900">
                         <div className="flex items-center justify-between border-b border-slate-200 pb-3 dark:border-slate-800">
                             <div className="flex items-center gap-2">
                                 <UserPlus className="size-5 text-blue-600" />
@@ -1240,7 +1240,7 @@ export default function KondisiKelas({
             {/* ============================================================== */}
             {isAddDisciplineModalOpen && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-4 backdrop-blur-xs">
-                    <div className="relative w-full max-w-lg rounded-2xl bg-white p-6 shadow-xl dark:bg-slate-900">
+                    <div className="relative w-full max-w-lg rounded-xl bg-white p-6 shadow-xl dark:bg-slate-900">
                         <div className="flex items-center justify-between border-b border-slate-200 pb-3 dark:border-slate-800">
                             <div className="flex items-center gap-2">
                                 <Scale className="size-5 text-blue-600" />
@@ -1369,7 +1369,7 @@ export default function KondisiKelas({
             {/* ============================================================== */}
             {isReferralModalOpen && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-4 backdrop-blur-xs">
-                    <div className="relative w-full max-w-lg rounded-2xl bg-white p-6 shadow-xl dark:bg-slate-900">
+                    <div className="relative w-full max-w-lg rounded-xl bg-white p-6 shadow-xl dark:bg-slate-900">
                         <div className="flex items-center justify-between border-b border-slate-200 pb-3 dark:border-slate-800">
                             <div className="flex items-center gap-2">
                                 <Send className="size-5 text-blue-600" />
@@ -1497,7 +1497,7 @@ export default function KondisiKelas({
             {/* ============================================================== */}
             {isFollowupModalOpen && selectedRecordForFollowup && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-4 backdrop-blur-xs">
-                    <div className="relative w-full max-w-lg rounded-2xl bg-white p-6 shadow-xl dark:bg-slate-900">
+                    <div className="relative w-full max-w-lg rounded-xl bg-white p-6 shadow-xl dark:bg-slate-900">
                         <div className="flex items-center justify-between border-b border-slate-200 pb-3 dark:border-slate-800">
                             <div className="flex items-center gap-2">
                                 <CheckCircle2 className="size-5 text-blue-600" />
@@ -1575,7 +1575,7 @@ export default function KondisiKelas({
             {/* ============================================================== */}
             {selectedStudentForDetail && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-4 backdrop-blur-xs">
-                    <div className="relative w-full max-w-lg rounded-2xl bg-white p-6 shadow-xl dark:bg-slate-900">
+                    <div className="relative w-full max-w-lg rounded-xl bg-white p-6 shadow-xl dark:bg-slate-900">
                         <div className="flex items-center justify-between border-b border-slate-200 pb-3 dark:border-slate-800">
                             <div>
                                 <h3 className="text-base font-bold text-slate-900 dark:text-white">

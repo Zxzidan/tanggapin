@@ -663,7 +663,7 @@ export default function PemantauAtribut({
 
             <div className="space-y-6">
                 {/* Mobile Quick Navigation Strip */}
-                <div className="flex sm:hidden items-center justify-between rounded-2xl border border-slate-200 bg-white p-3.5 shadow-2xs dark:border-slate-800 dark:bg-[#0f172a]">
+                <div className="flex sm:hidden items-center justify-between rounded-xl border border-slate-200 bg-white p-3.5 shadow-2xs dark:border-slate-800 dark:bg-[#0f172a]">
                     <div className="flex items-center gap-2.5">
                         <button
                             type="button"
@@ -734,7 +734,7 @@ export default function PemantauAtribut({
 
                 {/* Top Metrics Cards */}
                 <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
-                    <div className="rounded-2xl border border-slate-200/80 bg-white p-4 shadow-2xs dark:border-slate-800 dark:bg-[#0f172a]">
+                    <div className="rounded-xl border border-slate-200/80 bg-white p-4 shadow-2xs dark:border-slate-800 dark:bg-[#0f172a]">
                         <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
                             <span>Total Terpindai</span>
                             <UserCheck className="size-4 text-blue-600" />
@@ -752,7 +752,7 @@ export default function PemantauAtribut({
                         </span>
                     </div>
 
-                    <div className="rounded-2xl border border-slate-200/80 bg-white p-4 shadow-2xs dark:border-slate-800 dark:bg-[#0f172a]">
+                    <div className="rounded-xl border border-slate-200/80 bg-white p-4 shadow-2xs dark:border-slate-800 dark:bg-[#0f172a]">
                         <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
                             <span>Presensi Otomatis</span>
                             <CheckCircle2 className="size-4 text-blue-600" />
@@ -770,7 +770,7 @@ export default function PemantauAtribut({
                         </span>
                     </div>
 
-                    <div className="rounded-2xl border border-slate-200/80 bg-white p-4 shadow-2xs dark:border-slate-800 dark:bg-[#0f172a]">
+                    <div className="rounded-xl border border-slate-200/80 bg-white p-4 shadow-2xs dark:border-slate-800 dark:bg-[#0f172a]">
                         <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
                             <span>Atribut Lengkap</span>
                             <ShieldCheck className="size-4 text-blue-600" />
@@ -790,7 +790,7 @@ export default function PemantauAtribut({
                         </span>
                     </div>
 
-                    <div className="rounded-2xl border border-slate-200/80 bg-white p-4 shadow-2xs dark:border-slate-800 dark:bg-[#0f172a]">
+                    <div className="rounded-xl border border-slate-200/80 bg-white p-4 shadow-2xs dark:border-slate-800 dark:bg-[#0f172a]">
                         <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
                             <span>Catatan Atribut</span>
                             <Scale className="size-4 text-blue-700 dark:text-blue-400" />
@@ -832,7 +832,7 @@ export default function PemantauAtribut({
                 <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
                     {/* Left Column: Live Biometric Camera Viewport (7 cols) */}
                     <div className="space-y-4 lg:col-span-7">
-                        <div className="overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
+                        <div className="overflow-hidden rounded-xl border border-slate-200/90 bg-white shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
                             {/* Viewport Top Controls Bar */}
                             <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 bg-slate-50/70 px-4 py-3 dark:border-slate-800/80 dark:bg-slate-900/50">
                                 <div className="flex items-center gap-2">
@@ -934,7 +934,7 @@ export default function PemantauAtribut({
                                 {/* Placeholder when no camera & no image */}
                                 {!isCameraActive && !capturedImage && (
                                     <div className="relative z-10 flex flex-col items-center justify-center p-6 text-center text-slate-400">
-                                        <div className="mb-3 flex size-16 items-center justify-center rounded-2xl border border-slate-800 bg-slate-900 shadow-inner">
+                                        <div className="mb-3 flex size-16 items-center justify-center rounded-xl border border-slate-800 bg-slate-900 shadow-inner">
                                             <Camera className="size-8 text-blue-400" />
                                         </div>
                                         <p className="text-sm font-semibold text-slate-200">
@@ -1145,7 +1145,7 @@ export default function PemantauAtribut({
                         </div>
 
                         {/* Recent Attendance & Infractions Log Card (Tabs) */}
-                        <div className="rounded-2xl border border-slate-200/90 bg-white p-5 shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
+                        <div className="rounded-xl border border-slate-200/90 bg-white p-5 shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
                             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between border-b border-slate-100 pb-3 dark:border-slate-800">
                                 <div className="flex items-center gap-2">
                                     <button
@@ -1309,7 +1309,7 @@ export default function PemantauAtribut({
                     {/* Right Column: Active Face Recognition & Auto Attendance Verification Card (5 cols) */}
                     <div className="space-y-4 lg:col-span-5">
                         {/* 1. Face Recognition Identity & Auto-Attendance Card */}
-                        <div className="rounded-2xl border border-slate-200/90 bg-white p-5 shadow-xs dark:border-slate-800 dark:bg-[#0f172a] space-y-4">
+                        <div className="rounded-xl border border-slate-200/90 bg-white p-5 shadow-xs dark:border-slate-800 dark:bg-[#0f172a] space-y-4">
                             <div className="flex items-center justify-between border-b border-slate-100 pb-3 dark:border-slate-800">
                                 <h3 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
                                     <ScanFace className="size-4 text-blue-600" />
@@ -1453,7 +1453,7 @@ export default function PemantauAtribut({
                         </div>
 
                         {/* 2. Detected Attributes Checklist & Manual Overrides */}
-                        <div className="space-y-3 rounded-2xl border border-slate-200/90 bg-white p-5 shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
+                        <div className="space-y-3 rounded-xl border border-slate-200/90 bg-white p-5 shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
                             <div className="flex items-center justify-between">
                                 <h3 className="flex items-center gap-2 text-sm font-bold text-slate-900 dark:text-white">
                                     <Scan className="size-4 text-blue-600" />
@@ -1582,7 +1582,7 @@ export default function PemantauAtribut({
                         </div>
 
                         {/* Standard Rules Reference Card */}
-                        <div className="space-y-2 rounded-2xl border border-slate-200/90 bg-white p-4 text-xs text-slate-600 dark:border-slate-800 dark:bg-[#0f172a] dark:text-slate-400">
+                        <div className="space-y-2 rounded-xl border border-slate-200/90 bg-white p-4 text-xs text-slate-600 dark:border-slate-800 dark:bg-[#0f172a] dark:text-slate-400">
                             <span className="flex items-center gap-1.5 text-xs font-bold text-slate-900 dark:text-white">
                                 <Info className="size-3.5 text-blue-600" />
                                 Standar Aturan Atribut & Presensi:

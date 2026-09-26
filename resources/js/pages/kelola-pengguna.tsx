@@ -390,7 +390,7 @@ export default function KelolaPengguna({
                 )}
 
                 {/* Hero Header */}
-                <div className="relative overflow-hidden rounded-2xl border border-blue-100 bg-gradient-to-br from-white via-blue-50/30 to-blue-100/10 p-6 shadow-xs dark:border-slate-800 dark:from-[#0f172a] dark:via-blue-950/20 dark:to-slate-900">
+                <div className="relative overflow-hidden rounded-xl border border-blue-100 bg-gradient-to-br from-white via-blue-50/30 to-blue-100/10 p-6 shadow-xs dark:border-slate-800 dark:from-[#0f172a] dark:via-blue-950/20 dark:to-slate-900">
                     <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-center">
                         <div className="space-y-2">
                             <div className="flex flex-wrap items-center gap-2">
@@ -575,7 +575,7 @@ export default function KelolaPengguna({
                 </div>
 
                 {/* Staff User Accounts Table */}
-                <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
+                <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
                     <div className="overflow-x-auto">
                         <table className="w-full text-left text-xs">
                             <thead className="border-b border-slate-200 bg-slate-50/75 text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:border-slate-800 dark:bg-slate-800/50 dark:text-slate-400">
@@ -768,7 +768,7 @@ export default function KelolaPengguna({
             {/* Create Staff Account Modal */}
             {isCreateModalOpen && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-4 backdrop-blur-xs">
-                    <div className="relative w-full max-w-lg rounded-2xl bg-white p-6 shadow-xl dark:bg-slate-900">
+                    <div className="relative w-full max-w-lg rounded-xl bg-white p-6 shadow-xl dark:bg-slate-900">
                         <div className="flex items-center justify-between border-b border-slate-200 pb-3 dark:border-slate-800">
                             <div className="flex items-center gap-2">
                                 <UserCheck className="size-5 text-blue-600" />
@@ -916,7 +916,7 @@ export default function KelolaPengguna({
             {/* Edit Staff Account Modal */}
             {editingUser && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-4 backdrop-blur-xs">
-                    <div className="relative w-full max-w-lg rounded-2xl bg-white p-6 shadow-xl dark:bg-slate-900">
+                    <div className="relative w-full max-w-lg rounded-xl bg-white p-6 shadow-xl dark:bg-slate-900">
                         <div className="flex items-center justify-between border-b border-slate-200 pb-3 dark:border-slate-800">
                             <div className="flex items-center gap-2">
                                 <Edit3 className="size-5 text-blue-600" />
@@ -1127,7 +1127,7 @@ export default function KelolaPengguna({
             {/* Add School Class Modal */}
             {isAddClassModalOpen && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-4 backdrop-blur-xs">
-                    <div className="relative w-full max-w-md rounded-2xl bg-white p-6 shadow-xl dark:bg-slate-900">
+                    <div className="relative w-full max-w-md rounded-xl bg-white p-6 shadow-xl dark:bg-slate-900">
                         <div className="flex items-center justify-between border-b border-slate-200 pb-3 dark:border-slate-800">
                             <div className="flex items-center gap-2">
                                 <GraduationCap className="size-5 text-blue-600" />
@@ -1219,7 +1219,7 @@ export default function KelolaPengguna({
             {/* Plan Switcher Modal */}
             {isPlanModalOpen && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-4 backdrop-blur-xs">
-                    <div className="relative w-full max-w-lg rounded-2xl bg-white p-6 shadow-xl dark:bg-slate-900">
+                    <div className="relative w-full max-w-lg rounded-xl bg-white p-6 shadow-xl dark:bg-slate-900">
                         <div className="flex items-center justify-between border-b border-slate-200 pb-3 dark:border-slate-800">
                             <div className="flex items-center gap-2">
                                 <Layers className="size-5 text-blue-600" />

@@ -38,7 +38,7 @@ export default function Dapodik({
 
             <div className="mx-auto max-w-7xl space-y-6">
                 {/* Header Module */}
-                <div className="flex flex-col justify-between gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs sm:flex-row sm:items-center sm:p-6 dark:border-slate-800 dark:bg-[#0f172a]">
+                <div className="flex flex-col justify-between gap-4 rounded-xl border border-slate-200 bg-white p-5 shadow-xs sm:flex-row sm:items-center sm:p-6 dark:border-slate-800 dark:bg-[#0f172a]">
                     <div className="space-y-1">
                         <div className="flex items-center gap-2">
                             <div className="rounded-lg bg-blue-50 p-1.5 text-blue-700 dark:bg-blue-950/60 dark:text-blue-300">
@@ -140,7 +140,7 @@ export default function Dapodik({
                 </div>
 
                 {/* Issue Cards */}
-                <div className="space-y-3 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
+                <div className="space-y-3 rounded-xl border border-slate-200 bg-white p-5 shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
                     <div className="flex items-center justify-between border-b border-slate-200 pb-3 dark:border-slate-800">
                         <div>
                             <h2 className="text-base font-bold text-slate-900 dark:text-white">

@@ -708,11 +708,11 @@ Hotline Layanan BOS: +62 812-9988-7766
                                     <p className="mb-4">
                                         Algoritma cerdas Tanggapin menganalisis data presensi harian, grafik nilai produktif, dan pola ketertiban siswa tanpa rekapitulasi manual yang membebani guru.
                                     </p>
-                                    <div className="rounded-2xl border border-blue-200/70 bg-blue-50/50 p-5 dark:border-blue-900/50 dark:bg-blue-950/20">
+                                    <div className="rounded-xl border border-blue-200/70 bg-blue-50/40 p-4 sm:p-5 dark:border-blue-900/50 dark:bg-blue-950/20">
                                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                                             <div className="flex items-center gap-3">
-                                                <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">
-                                                    <ShieldAlert className="size-5" />
+                                                <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">
+                                                    <ShieldAlert className="size-4.5" />
                                                 </div>
                                                 <div>
                                                     <div className="text-xs font-bold text-slate-900 dark:text-white">
@@ -723,7 +723,7 @@ Hotline Layanan BOS: +62 812-9988-7766
                                                     </div>
                                                 </div>
                                             </div>
-                                            <span className="self-start sm:self-auto rounded-full bg-blue-900 text-white dark:bg-blue-600 px-3 py-1 text-[10px] font-bold">
+                                            <span className="self-start sm:self-auto rounded-md bg-blue-900 text-white dark:bg-blue-600 px-2.5 py-1 text-[10px] font-bold">
                                                 Prioritas Tinggi
                                             </span>
                                         </div>
@@ -734,17 +734,17 @@ Hotline Layanan BOS: +62 812-9988-7766
                                     <p className="mb-4">
                                         Wali kelas dan Guru BK meninjau profil lengkap siswa sebelum mengambil keputusan: riwayat pembinaan, catatan keluarga, dan linimasa konseling berprivasi tinggi.
                                     </p>
-                                    <div className="rounded-2xl border border-slate-200 bg-slate-50/70 p-5 dark:border-slate-800 dark:bg-slate-900/50">
+                                    <div className="rounded-xl border border-slate-200/80 bg-slate-50/60 p-4 sm:p-5 dark:border-slate-800 dark:bg-slate-900/40">
                                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-center">
-                                            <div className="rounded-xl bg-white p-3 shadow-xs dark:bg-slate-800">
+                                            <div className="rounded-lg border border-slate-200/60 bg-white p-3 shadow-2xs dark:border-slate-700/60 dark:bg-slate-800">
                                                 <div className="text-base font-bold text-blue-700 dark:text-blue-400">92.4%</div>
                                                 <div className="text-[11px] text-slate-500">Tingkat Kehadiran</div>
                                             </div>
-                                            <div className="rounded-xl bg-white p-3 shadow-xs dark:bg-slate-800">
+                                            <div className="rounded-lg border border-slate-200/60 bg-white p-3 shadow-2xs dark:border-slate-700/60 dark:bg-slate-800">
                                                 <div className="text-base font-bold text-slate-900 dark:text-slate-100">2 Sesi</div>
                                                 <div className="text-[11px] text-slate-500">Konseling BK</div>
                                             </div>
-                                            <div className="rounded-xl bg-white p-3 shadow-xs dark:bg-slate-800">
+                                            <div className="rounded-lg border border-slate-200/60 bg-white p-3 shadow-2xs dark:border-slate-700/60 dark:bg-slate-800">
                                                 <div className="text-base font-bold text-blue-700 dark:text-blue-400">Terkendali</div>
                                                 <div className="text-[11px] text-slate-500">Status Pembinaan</div>
                                             </div>
@@ -756,15 +756,15 @@ Hotline Layanan BOS: +62 812-9988-7766
                                     <p className="mb-4">
                                         Langkah intervensi didelegasikan dengan PIC terukur: konseling individual, bimbingan remedial, kunjungan rumah (home visit), atau pelibatan Tim TPPK.
                                     </p>
-                                    <div className="space-y-2 rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
-                                        <div className="flex items-center justify-between text-xs p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/60">
+                                    <div className="space-y-2 rounded-xl border border-slate-200/80 bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
+                                        <div className="flex items-center justify-between text-xs p-2.5 rounded-lg border border-slate-100 bg-slate-50/80 dark:border-slate-800/80 dark:bg-slate-800/50">
                                             <span className="flex items-center gap-2 font-medium">
                                                 <CheckCircle2 className="size-4 text-blue-700 dark:text-blue-400" />
                                                 Home visit bersama Tim Kesiswaan & Satgas ATS
                                             </span>
                                             <span className="text-[10px] font-semibold text-slate-400">PIC: Guru BK</span>
                                         </div>
-                                        <div className="flex items-center justify-between text-xs p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/60">
+                                        <div className="flex items-center justify-between text-xs p-2.5 rounded-lg border border-slate-100 bg-slate-50/80 dark:border-slate-800/80 dark:bg-slate-800/50">
                                             <span className="flex items-center gap-2 font-medium">
                                                 <CheckCircle2 className="size-4 text-blue-700 dark:text-blue-400" />
                                                 Penyusunan komitmen kehadiran & target kelas
@@ -778,12 +778,12 @@ Hotline Layanan BOS: +62 812-9988-7766
                                     <p className="mb-4">
                                         Asisten AI menyusun evaluasi perkembangan karakter secara objektif, lalu mendistribusikannya otomatis ke WhatsApp orang tua dengan tanda terima digital resmi.
                                     </p>
-                                    <div className="rounded-2xl border border-blue-200/80 bg-blue-50/40 p-5 dark:border-blue-900/50 dark:bg-blue-950/20">
+                                    <div className="rounded-xl border border-blue-200/70 bg-blue-50/40 p-4 sm:p-5 dark:border-blue-900/50 dark:bg-blue-950/20">
                                         <div className="flex items-center justify-between mb-2">
                                             <span className="text-xs font-bold text-blue-950 dark:text-blue-300">
                                                 Notifikasi WhatsApp Resmi Terverifikasi
                                             </span>
-                                            <span className="rounded-full bg-blue-700 px-2.5 py-0.5 text-[9px] font-extrabold text-white">
+                                            <span className="rounded-md bg-blue-700 px-2 py-0.5 text-[9px] font-bold text-white">
                                                 Tanda Terima Sah
                                             </span>
                                         </div>
@@ -830,16 +830,16 @@ Hotline Layanan BOS: +62 812-9988-7766
                             </p>
                         </div>
 
-                        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
                             {roles.map((r) => {
                                 const IconComponent = r.icon;
                                 return (
                                     <div
                                         key={r.title}
-                                        className="space-y-3 rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-[#0f172a]"
+                                        className="space-y-3 rounded-xl border border-slate-200/80 bg-white p-5 transition-colors hover:border-slate-300 dark:border-slate-800 dark:bg-[#0f172a]"
                                     >
-                                        <div className="flex size-10 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-slate-800 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200">
-                                            <IconComponent className="size-5" />
+                                        <div className="flex size-9 items-center justify-center rounded-lg border border-slate-200/80 bg-slate-50 text-slate-800 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200">
+                                            <IconComponent className="size-4.5" />
                                         </div>
                                         <h3 className="font-bold text-slate-900 dark:text-white">
                                             {r.title}
@@ -881,7 +881,7 @@ Hotline Layanan BOS: +62 812-9988-7766
 
                             <div className="mx-auto grid max-w-5xl grid-cols-1 gap-6 md:grid-cols-2">
                                 {/* Cara Lama */}
-                                <div className="space-y-5 rounded-2xl border border-slate-200 bg-white p-8 dark:border-slate-800 dark:bg-[#0f172a]">
+                                <div className="space-y-5 rounded-xl border border-slate-200/80 bg-white p-6 sm:p-7 dark:border-slate-800 dark:bg-[#0f172a]">
                                     <div className="text-sm font-bold text-slate-900 dark:text-white">
                                         Cara Lama di Sekolah
                                     </div>
@@ -930,7 +930,7 @@ Hotline Layanan BOS: +62 812-9988-7766
                                 </div>
 
                                 {/* Solusi Tanggapin */}
-                                <div className="space-y-5 rounded-2xl border border-blue-200 bg-white p-8 dark:border-blue-900/60 dark:bg-[#111c30]">
+                                <div className="space-y-5 rounded-xl border border-blue-200/80 bg-white p-6 sm:p-7 dark:border-blue-900/60 dark:bg-[#111c30]">
                                     <div className="text-sm font-bold text-blue-700 dark:text-blue-400">
                                         Solusi Terpadu Tanggapin
                                     </div>
@@ -1024,7 +1024,7 @@ Hotline Layanan BOS: +62 812-9988-7766
                                     return (
                                         <div
                                             key={index}
-                                            className="overflow-hidden rounded-2xl border border-slate-200 bg-white transition-colors dark:border-slate-800 dark:bg-[#0f172a]"
+                                            className="overflow-hidden rounded-xl border border-slate-200/80 bg-white transition-colors hover:border-slate-300 dark:border-slate-800 dark:bg-[#0f172a]"
                                         >
                                             <button
                                                 type="button"
@@ -1180,7 +1180,7 @@ Hotline Layanan BOS: +62 812-9988-7766
                         onClick={() => setIsDemoRoleModalOpen(false)}
                     >
                         <div
-                            className="relative w-full max-w-2xl overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl dark:border-slate-800 dark:bg-slate-900"
+                            className="relative w-full max-w-2xl overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xl dark:border-slate-800 dark:bg-slate-900"
                             onClick={(e) => e.stopPropagation()}
                         >
                             <div className="flex items-center justify-between border-b border-slate-200 px-6 py-4 dark:border-slate-800">
@@ -1206,7 +1206,7 @@ Hotline Layanan BOS: +62 812-9988-7766
                                 </button>
                             </div>
 
-                            <div className="max-h-[70vh] space-y-2.5 overflow-y-auto p-6">
+                            <div className="max-h-[70vh] space-y-2 overflow-y-auto p-5 sm:p-6">
                                 {DEMO_ROLES.map((role) => {
                                     const IconComp = role.icon;
                                     return (
@@ -1216,10 +1216,10 @@ Hotline Layanan BOS: +62 812-9988-7766
                                             onClick={() =>
                                                 handleSelectDemoRole(role.id)
                                             }
-                                            className="group flex w-full items-start gap-4 rounded-xl border border-slate-200 p-4 text-left transition-all hover:border-blue-700 hover:bg-blue-50/40 hover:shadow-xs dark:border-slate-800 dark:hover:border-blue-700 dark:hover:bg-blue-950/20"
+                                            className="group flex w-full items-start gap-3.5 rounded-lg border border-slate-200/80 p-3.5 text-left transition-all hover:border-blue-700 hover:bg-blue-50/40 hover:shadow-2xs dark:border-slate-800 dark:hover:border-blue-700 dark:hover:bg-blue-950/20"
                                         >
-                                            <div className="flex size-11 shrink-0 items-center justify-center rounded-xl border border-blue-200 bg-blue-50 text-blue-700 transition-colors group-hover:border-blue-700 group-hover:bg-blue-700 group-hover:text-white dark:border-blue-900 dark:bg-blue-950/40 dark:text-blue-400">
-                                                <IconComp className="size-5" />
+                                            <div className="flex size-10 shrink-0 items-center justify-center rounded-lg border border-blue-200/80 bg-blue-50 text-blue-700 transition-colors group-hover:border-blue-700 group-hover:bg-blue-700 group-hover:text-white dark:border-blue-900 dark:bg-blue-950/40 dark:text-blue-400">
+                                                <IconComp className="size-4.5" />
                                             </div>
                                             <div className="min-w-0 flex-1">
                                                 <div className="flex flex-wrap items-center justify-between gap-1.5">
@@ -1230,7 +1230,7 @@ Hotline Layanan BOS: +62 812-9988-7766
                                                         {role.badge}
                                                     </span>
                                                 </div>
-                                                <p className="mt-1 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
+                                                <p className="mt-0.5 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
                                                     {role.desc}
                                                 </p>
                                             </div>
@@ -1264,13 +1264,13 @@ Hotline Layanan BOS: +62 812-9988-7766
                         onClick={() => setIsProposalModalOpen(false)}
                     >
                         <div
-                            className="relative flex max-h-[90vh] w-full max-w-4xl flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl dark:border-slate-800 dark:bg-slate-900"
+                            className="relative flex max-h-[90vh] w-full max-w-4xl flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xl dark:border-slate-800 dark:bg-slate-900"
                             onClick={(e) => e.stopPropagation()}
                         >
                             {/* Modal Header */}
                             <div className="flex items-center justify-between border-b border-slate-200 px-6 py-4 dark:border-slate-800">
                                 <div className="flex items-center gap-3">
-                                    <div className="flex size-10 items-center justify-center rounded-xl bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-400">
+                                    <div className="flex size-10 items-center justify-center rounded-lg bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-400">
                                         <FileSpreadsheet className="size-5" />
                                     </div>
                                     <div>
@@ -1309,7 +1309,7 @@ Hotline Layanan BOS: +62 812-9988-7766
                                             value={proposalSchoolName}
                                             onChange={(e) => setProposalSchoolName(e.target.value)}
                                             placeholder="Contoh: SMA Negeri 1 Harapan"
-                                            className="mt-1.5 w-full rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-2 text-xs text-slate-900 focus:border-blue-700 focus:bg-white focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                                            className="mt-1.5 w-full rounded-lg border border-slate-200 bg-slate-50 px-3.5 py-2 text-xs text-slate-900 focus:border-blue-700 focus:bg-white focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
                                         />
                                     </div>
 
@@ -1321,7 +1321,7 @@ Hotline Layanan BOS: +62 812-9988-7766
                                             <select
                                                 value={proposalLevel}
                                                 onChange={(e) => setProposalLevel(e.target.value)}
-                                                className="mt-1.5 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-900 focus:border-blue-700 focus:bg-white focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                                                className="mt-1.5 w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-900 focus:border-blue-700 focus:bg-white focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
                                             >
                                                 <option value="SD">SD / MI</option>
                                                 <option value="SMP">SMP / MTs</option>
@@ -1338,7 +1338,7 @@ Hotline Layanan BOS: +62 812-9988-7766
                                                 type="number"
                                                 value={proposalStudentCount}
                                                 onChange={(e) => setProposalStudentCount(Math.max(10, Number(e.target.value)))}
-                                                className="mt-1.5 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-900 focus:border-blue-700 focus:bg-white focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                                                className="mt-1.5 w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-900 focus:border-blue-700 focus:bg-white focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
                                             />
                                         </div>
                                     </div>
@@ -1353,10 +1353,10 @@ Hotline Layanan BOS: +62 812-9988-7766
                                                     key={plan.id}
                                                     onClick={() => setProposalPlan(plan.id as any)}
                                                     className={cn(
-                                                        'flex cursor-pointer items-center justify-between rounded-xl border p-3 text-xs transition-all',
+                                                        'flex cursor-pointer items-center justify-between rounded-lg border p-3 text-xs transition-all',
                                                         proposalPlan === plan.id
                                                             ? 'border-blue-700 bg-blue-50/50 dark:border-blue-500 dark:bg-blue-950/30'
-                                                            : 'border-slate-200 hover:bg-slate-50 dark:border-slate-800 dark:hover:bg-slate-800'
+                                                            : 'border-slate-200/80 hover:bg-slate-50 dark:border-slate-800 dark:hover:bg-slate-800'
                                                     )}
                                                 >
                                                     <div className="flex items-center gap-2.5">
@@ -1384,7 +1384,7 @@ Hotline Layanan BOS: +62 812-9988-7766
                                         </div>
                                     </div>
 
-                                    <div className="rounded-xl border border-blue-200 bg-blue-50/60 p-3.5 text-[11px] text-blue-900 dark:border-blue-900 dark:bg-blue-950/40 dark:text-blue-300">
+                                    <div className="rounded-lg border border-blue-200/80 bg-blue-50/60 p-3 text-[11px] text-blue-900 dark:border-blue-900/60 dark:bg-blue-950/40 dark:text-blue-300">
                                         <p className="font-semibold">Kode Rekening RKAS Dana BOS:</p>
                                         <p className="mt-0.5 text-blue-800 dark:text-blue-300/80">
                                             Komponen Pemeliharaan Sarana / Sistem Informasi Manajemen Sekolah Digital (Permendikbud 63/2023).
@@ -1403,7 +1403,7 @@ Hotline Layanan BOS: +62 812-9988-7766
                                                 Format Teks Resmi
                                             </span>
                                         </div>
-                                        <pre className="max-h-[360px] overflow-auto rounded-xl border border-slate-200 bg-white p-4 font-mono text-[11px] leading-relaxed text-slate-800 shadow-inner select-all dark:border-slate-800 dark:bg-[#0b1120] dark:text-slate-200">
+                                        <pre className="max-h-[360px] overflow-auto rounded-lg border border-slate-200 bg-white p-4 font-mono text-[11px] leading-relaxed text-slate-800 shadow-inner select-all dark:border-slate-800 dark:bg-[#0b1120] dark:text-slate-200">
                                             {generateProposalText()}
                                         </pre>
                                     </div>
@@ -1412,7 +1412,7 @@ Hotline Layanan BOS: +62 812-9988-7766
                                         <button
                                             type="button"
                                             onClick={handleCopyProposal}
-                                            className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-xs font-semibold text-slate-700 shadow-xs transition-colors hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+                                            className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3.5 py-2 text-xs font-semibold text-slate-700 shadow-2xs transition-colors hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
                                         >
                                             {proposalCopied ? (
                                                 <>
@@ -1429,7 +1429,7 @@ Hotline Layanan BOS: +62 812-9988-7766
                                         <button
                                             type="button"
                                             onClick={handleDownloadProposal}
-                                            className="inline-flex items-center gap-1.5 rounded-xl bg-blue-700 px-4 py-2.5 text-xs font-bold text-white shadow-xs transition-all hover:bg-blue-800 active:scale-98"
+                                            className="inline-flex items-center gap-1.5 rounded-lg bg-blue-700 px-3.5 py-2 text-xs font-bold text-white shadow-2xs transition-all hover:bg-blue-800 active:scale-98"
                                         >
                                             <Download className="size-3.5" />
                                             <span>Unduh File (.txt)</span>

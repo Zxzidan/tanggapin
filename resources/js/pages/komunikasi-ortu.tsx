@@ -35,7 +35,7 @@ export default function KomunikasiOrtu({
 
             <div className="mx-auto max-w-7xl space-y-6">
                 {/* Header Module */}
-                <div className="flex flex-col justify-between gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs sm:flex-row sm:items-center sm:p-6 dark:border-slate-800 dark:bg-[#0f172a]">
+                <div className="flex flex-col justify-between gap-4 rounded-xl border border-slate-200 bg-white p-5 shadow-xs sm:flex-row sm:items-center sm:p-6 dark:border-slate-800 dark:bg-[#0f172a]">
                     <div className="space-y-1">
                         <div className="flex items-center gap-2">
                             <div className="rounded-lg bg-blue-100 p-1.5 text-blue-600 dark:bg-blue-950/60 dark:text-blue-400">
@@ -111,7 +111,7 @@ export default function KomunikasiOrtu({
                 </div>
 
                 {/* List of Messages */}
-                <div className="space-y-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
+                <div className="space-y-4 rounded-xl border border-slate-200 bg-white p-5 shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
                     <div className="border-b border-slate-200 pb-3 dark:border-slate-800">
                         <h2 className="text-base font-bold text-slate-900 dark:text-white">
                             Riwayat Notifikasi & Percakapan Resmi

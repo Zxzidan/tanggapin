@@ -223,7 +223,7 @@ export default function ManajemenKasus({
 
             <div className="mx-auto max-w-7xl space-y-6">
                 {/* Header Module */}
-                <div className="flex flex-col justify-between gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs sm:flex-row sm:items-center sm:p-6 dark:border-slate-800 dark:bg-[#0f172a]">
+                <div className="flex flex-col justify-between gap-4 rounded-xl border border-slate-200 bg-white p-5 shadow-xs sm:flex-row sm:items-center sm:p-6 dark:border-slate-800 dark:bg-[#0f172a]">
                     <div className="space-y-1">
                         <div className="flex items-center gap-2">
                             <div className="rounded-lg bg-blue-50 p-1.5 text-blue-700 dark:bg-blue-950/60 dark:text-blue-300">
@@ -262,7 +262,7 @@ export default function ManajemenKasus({
 
                 {/* Tracking Stat Cards */}
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-                    <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
+                    <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
                         <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
                             <span>Total Rujukan ke Guru BK</span>
                             <Inbox className="size-4 text-blue-600" />
@@ -277,7 +277,7 @@ export default function ManajemenKasus({
                         </p>
                     </div>
 
-                    <div className="rounded-2xl border border-slate-200 bg-slate-50/60 p-4 shadow-xs dark:border-slate-800 dark:bg-slate-900/40">
+                    <div className="rounded-xl border border-slate-200 bg-slate-50/60 p-4 shadow-xs dark:border-slate-800 dark:bg-slate-900/40">
                         <div className="flex items-center justify-between text-xs text-slate-800 dark:text-slate-300">
                             <span className="font-semibold">Menunggu Penanganan BK</span>
                             <Clock className="size-4 text-slate-600 dark:text-slate-400" />
@@ -290,7 +290,7 @@ export default function ManajemenKasus({
                         </p>
                     </div>
 
-                    <div className="rounded-2xl border border-blue-200 bg-blue-50/40 p-4 shadow-xs dark:border-blue-950/60 dark:bg-blue-950/20">
+                    <div className="rounded-xl border border-blue-200 bg-blue-50/40 p-4 shadow-xs dark:border-blue-950/60 dark:bg-blue-950/20">
                         <div className="flex items-center justify-between text-xs text-blue-800 dark:text-blue-300">
                             <span className="font-semibold">Sudah Ditangani Guru BK</span>
                             <CheckCircle2 className="size-4 text-blue-600 dark:text-blue-400" />
@@ -305,7 +305,7 @@ export default function ManajemenKasus({
                 </div>
 
                 {/* Filter and Search Bar */}
-                <div className="flex flex-col gap-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-xs sm:flex-row sm:items-center sm:justify-between dark:border-slate-800 dark:bg-[#0f172a]">
+                <div className="flex flex-col gap-3 rounded-xl border border-slate-200 bg-white p-4 shadow-xs sm:flex-row sm:items-center sm:justify-between dark:border-slate-800 dark:bg-[#0f172a]">
                     <div className="relative flex-1">
                         <Search className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-slate-400" />
                         <input
@@ -373,7 +373,7 @@ export default function ManajemenKasus({
                         </div>
 
                         {filteredCases.length === 0 ? (
-                            <div className="flex flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-slate-300 bg-white py-16 text-center dark:border-slate-700 dark:bg-[#0f172a]">
+                            <div className="flex flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-slate-300 bg-white py-16 text-center dark:border-slate-700 dark:bg-[#0f172a]">
                                 <FileText className="size-10 text-slate-300 dark:text-slate-600" />
                                 <div>
                                     <p className="font-semibold text-slate-600 dark:text-slate-400">
@@ -393,7 +393,7 @@ export default function ManajemenKasus({
                                         <div
                                             key={c.id}
                                             className={cn(
-                                                'space-y-3 rounded-2xl border p-4 text-xs shadow-xs',
+                                                'space-y-3 rounded-xl border p-4 text-xs shadow-xs',
                                                 isHandled
                                                     ? 'border-blue-200 bg-blue-50/20 dark:border-blue-900/60 dark:bg-blue-950/10'
                                                     : 'border-slate-200 bg-slate-50/30 dark:border-slate-800 dark:bg-slate-900/10',
@@ -519,7 +519,7 @@ export default function ManajemenKasus({
                     ═══════════════════════════════════════════════════════════ */}
                 {isGuruBk && <div className="grid grid-cols-1 gap-4 text-xs md:grid-cols-4">
                     {/* Column 1: Baru Masuk dari Wali Kelas */}
-                    <div className="flex flex-col space-y-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
+                    <div className="flex flex-col space-y-3 rounded-xl border border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
                         <div className="flex items-center justify-between border-b border-slate-200 pb-2 font-bold text-slate-900 dark:border-slate-800 dark:text-white">
                             <span className="flex items-center gap-1.5">
                                 <span className="size-2 rounded-full bg-blue-600" />
@@ -592,7 +592,7 @@ export default function ManajemenKasus({
                     </div>
 
                     {/* Column 2: Dalam Penugasan */}
-                    <div className="flex flex-col space-y-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
+                    <div className="flex flex-col space-y-3 rounded-xl border border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
                         <div className="flex items-center justify-between border-b border-slate-200 pb-2 font-bold text-slate-900 dark:border-slate-800 dark:text-white">
                             <span className="flex items-center gap-1.5">
                                 <span className="size-2 rounded-full bg-blue-600" />
@@ -662,7 +662,7 @@ export default function ManajemenKasus({
                     </div>
 
                     {/* Column 3: Sedang Ditangani / Sesi Aktif */}
-                    <div className="flex flex-col space-y-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
+                    <div className="flex flex-col space-y-3 rounded-xl border border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
                         <div className="flex items-center justify-between border-b border-slate-200 pb-2 font-bold text-slate-900 dark:border-slate-800 dark:text-white">
                             <span className="flex items-center gap-1.5">
                                 <span className="size-2 rounded-full bg-blue-600" />
@@ -732,7 +732,7 @@ export default function ManajemenKasus({
                     </div>
 
                     {/* Column 4: Sudah Ditangani oleh Guru BK & Terdokumentasi */}
-                    <div className="flex flex-col space-y-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
+                    <div className="flex flex-col space-y-3 rounded-xl border border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
                         <div className="flex items-center justify-between border-b border-slate-200 pb-2 font-bold text-slate-900 dark:border-slate-800 dark:text-white">
                             <span className="flex items-center gap-1.5">
                                 <span className="size-2 rounded-full bg-blue-600" />
@@ -805,7 +805,7 @@ export default function ManajemenKasus({
             {/* Modal: Wali Kelas — Laporkan Kendala Siswa ke Guru BK */}
             {isWaliKelas && isReferralModalOpen && (
                 <div className="fixed inset-0 z-50 flex animate-in items-center justify-center bg-slate-900/60 p-4 backdrop-blur-xs fade-in">
-                    <div className="w-full max-w-lg space-y-4 rounded-2xl border border-slate-200 bg-white p-6 text-xs shadow-2xl dark:border-slate-800 dark:bg-[#0f172a]">
+                    <div className="w-full max-w-lg space-y-4 rounded-xl border border-slate-200 bg-white p-6 text-xs shadow-2xl dark:border-slate-800 dark:bg-[#0f172a]">
                         <div className="flex items-center justify-between border-b border-slate-200 pb-3 dark:border-slate-800">
                             <div className="flex items-center gap-2">
                                 <div className="rounded-lg bg-blue-50 p-1.5 text-blue-700 dark:bg-blue-950/60 dark:text-blue-300">
@@ -932,7 +932,7 @@ export default function ManajemenKasus({
             {/* Modal: Guru BK — Form Penanganan Rujukan */}
             {isGuruBk && selectedCaseForHandling && (
                 <div className="fixed inset-0 z-50 flex animate-in items-center justify-center bg-slate-900/60 p-4 backdrop-blur-xs fade-in">
-                    <div className="w-full max-w-lg space-y-4 rounded-2xl border border-slate-200 bg-white p-6 text-xs shadow-2xl dark:border-slate-800 dark:bg-[#0f172a]">
+                    <div className="w-full max-w-lg space-y-4 rounded-xl border border-slate-200 bg-white p-6 text-xs shadow-2xl dark:border-slate-800 dark:bg-[#0f172a]">
                         <div className="flex items-center justify-between border-b border-slate-200 pb-3 dark:border-slate-800">
                             <div className="flex items-center gap-2">
                                 <div className="rounded-lg bg-blue-50 p-1.5 text-blue-700 dark:bg-blue-950/60 dark:text-blue-300">
