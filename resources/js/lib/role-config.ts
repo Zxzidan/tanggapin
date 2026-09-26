@@ -33,6 +33,7 @@ export const ROLE_CONFIGS: Record<RoleType, RoleConfig> = {
             'overview',
             'early-warning',
             'class-monitoring',
+            'attribute-scanner',
             'cases',
             'reports',
             'communication',
@@ -165,6 +166,7 @@ export const ROLE_CONFIGS: Record<RoleType, RoleConfig> = {
         allowedTabs: [
             'overview',
             'class-monitoring',
+            'attribute-scanner',
             'cases',
             'reports',
             'early-warning',
@@ -180,6 +182,7 @@ export const ROLE_CONFIGS: Record<RoleType, RoleConfig> = {
         tabOverrides: {
             overview: { title: 'Ikhtisar Konseling' },
             'class-monitoring': { title: 'Kondisi Kelas & Siswa' },
+            'attribute-scanner': { title: 'Kamera Atribut Siswa', badge: 'AI Vision' },
             cases: { title: 'Kasus & Rujukan BK' },
             reports: { title: 'Rapor Bimbingan' },
             'early-warning': {

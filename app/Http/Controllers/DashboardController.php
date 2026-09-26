@@ -225,6 +225,133 @@ class DashboardController extends Controller
     }
 
     /**
+     * Modul BK: Kamera Pemantau Atribut Siswa (Deteksi Kelengkapan Seragam & Poin Otomatis)
+     */
+    public function pemantauAtribut(): Response|RedirectResponse
+    {
+        $user = auth()->user();
+        if ($user && $user->role === 'operator') {
+            return redirect()->route('users.index')->with('status', 'Akses khusus Guru BK, Wali Kelas & Kepala Sekolah.');
+        }
+
+        $studentQuery = Student::with(['schoolClass', 'disciplineRecords'])->orderBy('name');
+        if ($user && $user->role === 'wali_kelas' && $user->school_class_id) {
+            $studentQuery->where('school_class_id', $user->school_class_id);
+        }
+
+        $students = $studentQuery->get()->map(function (Student $s): array {
+            $totalPoints = (int) $s->disciplineRecords->sum('points');
+            return [
+                'id' => (string) $s->id,
+                'name' => $s->name,
+                'nisn' => $s->nisn,
+                'gender' => $s->gender,
+                'class' => $s->schoolClass->name ?? '-',
+                'classId' => (string) ($s->school_class_id ?? ''),
+                'currentPoints' => $totalPoints,
+                'riskLevel' => $s->risk_level,
+                'avatar' => $s->avatar_url ?? null,
+            ];
+        })->toArray();
+
+        $classes = SchoolClass::orderBy('name')->get(['id', 'name', 'major'])->map(fn ($c) => [
+            'id' => (string) $c->id,
+            'name' => $c->name,
+            'major' => $c->major,
+        ])->toArray();
+
+        $recentScans = DisciplineRecord::with('student.schoolClass')
+            ->where(function ($q) {
+                $q->where('infraction', 'like', '%Atribut%')
+                    ->orWhere('infraction', 'like', '%Seragam%')
+                    ->orWhere('infraction', 'like', '%Dasi%')
+                    ->orWhere('pattern_notes', 'like', '%Kamera%')
+                    ->orWhere('pattern_notes', 'like', '%kamera%');
+            })
+            ->latest()
+            ->take(15)
+            ->get()
+            ->map(fn (DisciplineRecord $rec): array => [
+                'id' => (string) $rec->id,
+                'studentId' => (string) $rec->student_id,
+                'studentName' => $rec->student->name ?? '-',
+                'studentNisn' => $rec->student->nisn ?? '-',
+                'className' => $rec->student->schoolClass->name ?? '-',
+                'infraction' => $rec->infraction,
+                'points' => (int) $rec->points,
+                'status' => $rec->action_status,
+                'notes' => $rec->pattern_notes,
+                'recordedAt' => $rec->recorded_at ?? $rec->created_at->format('d M H:i'),
+            ])->toArray();
+
+        $attributeRules = [
+            [
+                'id' => 'dasi',
+                'name' => 'Dasi Sekolah',
+                'category' => 'Kelengkapan Kerah',
+                'requiredDays' => 'Senin - Kamis',
+                'points' => 5,
+                'description' => 'Dasi resmi berlogo sekolah terpasang rapi di kerah kemeja.',
+            ],
+            [
+                'id' => 'topi',
+                'name' => 'Topi / Peci Upacara',
+                'category' => 'Kelengkapan Kepala',
+                'requiredDays' => 'Senin (Upacara Bendera)',
+                'points' => 5,
+                'description' => 'Topi sekolah berlogo OSIS atau peci hitam nasional saat upacara.',
+            ],
+            [
+                'id' => 'sabuk',
+                'name' => 'Sabuk / Ikat Pinggang Hitam',
+                'category' => 'Kelengkapan Pinggang',
+                'requiredDays' => 'Setiap Hari',
+                'points' => 5,
+                'description' => 'Sabuk standar hitam berlogo sekolah tidak berkepala besar.',
+            ],
+            [
+                'id' => 'kaos_kaki',
+                'name' => 'Kaos Kaki Standar (Min. 15cm)',
+                'category' => 'Kelengkapan Kaki',
+                'requiredDays' => 'Putih (Senin-Kamis), Hitam (Jumat)',
+                'points' => 5,
+                'description' => 'Kaos kaki polos standar sekolah minimal 15 cm di atas mata kaki.',
+            ],
+            [
+                'id' => 'sepatu',
+                'name' => 'Sepatu Hitam Bertali (Min. 80% Hitam)',
+                'category' => 'Kelengkapan Alas Kaki',
+                'requiredDays' => 'Setiap Hari',
+                'points' => 10,
+                'description' => 'Sepatu dominan hitam bertali, tidak bergaris warna terang mencolok.',
+            ],
+            [
+                'id' => 'badge',
+                'name' => 'Badge Nama & Lokasi Sekolah',
+                'category' => 'Atribut Kemeja',
+                'requiredDays' => 'Setiap Hari',
+                'points' => 5,
+                'description' => 'Badge lokasi sekolah di lengan kanan dan papan nama bordir di dada kanan.',
+            ],
+            [
+                'id' => 'kerapian_baju',
+                'name' => 'Kerapian Seragam (Baju Dimasukkan)',
+                'category' => 'Kerapian Berpakaian',
+                'requiredDays' => 'Setiap Hari',
+                'points' => 5,
+                'description' => 'Kemeja seragam dimasukkan ke dalam celana/rok dengan rapi.',
+            ],
+        ];
+
+        return Inertia::render('pemantau-atribut', [
+            'students' => $students,
+            'classes' => $classes,
+            'recentScans' => $recentScans,
+            'rules' => $attributeRules,
+        ]);
+    }
+
+    /**
      * Modul 06: Alur Lapangan ATS (Anak Tidak Sekolah)
      */
     public function alurAts(): Response|RedirectResponse

@@ -2,6 +2,7 @@ import { Link, router, usePage } from '@inertiajs/react';
 import {
     AlertTriangle,
     Bell,
+    Camera,
     Check,
     CheckCircle2,
     ChevronDown,
@@ -176,6 +177,12 @@ export default function FlowbiteTanggapinLayout({
                     title: 'Kondisi Kelas',
                     icon: GraduationCap,
                     href: '/kondisi-kelas',
+                },
+                {
+                    id: 'attribute-scanner',
+                    title: 'Kamera Atribut',
+                    icon: Camera,
+                    href: '/pemantau-atribut',
                 },
                 {
                     id: 'discipline',

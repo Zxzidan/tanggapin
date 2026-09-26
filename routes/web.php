@@ -44,6 +44,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('early-warning', [DashboardController::class, 'earlyWarning'])->name('early-warning');
     Route::get('kondisi-kelas', [DashboardController::class, 'kondisiKelas'])->name('kondisi-kelas');
+    Route::get('pemantau-atribut', [DashboardController::class, 'pemantauAtribut'])->name('attribute-scanner');
     Route::get('alur-ats', [DashboardController::class, 'alurAts'])->name('ats');
     Route::get('ats', fn () => redirect()->route('ats'));
     Route::get('manajemen-kasus', [DashboardController::class, 'manajemenKasus'])->name('cases');

@@ -4,6 +4,7 @@ import {
     AlertTriangle,
     ArrowRight,
     BookOpen,
+    Camera,
     Check,
     CheckCircle2,
     Clock,
@@ -409,6 +410,14 @@ export default function KondisiKelas({
                                         <Scale className="size-4 text-blue-600 dark:text-blue-400" />
                                         <span>Catat Poin Pelanggaran</span>
                                     </button>
+
+                                    <a
+                                        href="/pemantau-atribut"
+                                        className="inline-flex items-center gap-1.5 rounded-lg border border-blue-300 bg-blue-50/90 px-3.5 py-2 text-xs font-bold text-blue-700 shadow-xs transition-all hover:bg-blue-100 dark:border-blue-900 dark:bg-blue-950/60 dark:text-blue-300 dark:hover:bg-blue-900"
+                                    >
+                                        <Camera className="size-4 text-blue-600 dark:text-blue-400" />
+                                        <span>Kamera Atribut Siswa</span>
+                                    </a>
                                 </>
                             )}
 
