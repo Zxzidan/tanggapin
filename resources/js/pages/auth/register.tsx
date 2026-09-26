@@ -122,7 +122,7 @@ export default function Register({ passwordRules }: Props) {
                                     tabIndex={1}
                                     autoComplete="name"
                                     name="name"
-                                    placeholder="Contoh: Bpk. Hendra Setiawan, S.Pd"
+                                    placeholder="Nama lengkap pengguna"
                                     className="h-9 text-xs"
                                 />
                                 <InputError message={errors.name} />
@@ -143,7 +143,7 @@ export default function Register({ passwordRules }: Props) {
                                     tabIndex={2}
                                     autoComplete="email"
                                     name="email"
-                                    placeholder="nama@smk1harapan.sch.id"
+                                    placeholder="nama@sekolah.sch.id"
                                     className="h-9 text-xs"
                                 />
                                 <InputError message={errors.email} />

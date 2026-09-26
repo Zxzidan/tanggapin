@@ -20,41 +20,36 @@ const DEMO_ROLES = [
     {
         id: 'kepala_sekolah',
         title: 'Kepala Sekolah',
-        name: 'Drs. H. Mulyadi, M.Pd',
         desc: 'Akses penuh eksekutif 11 modul, koordinasi darurat & evaluasi sekolah.',
         badge: 'Pengambil Kebijakan',
         icon: Shield,
     },
     {
         id: 'wali_kelas',
-        title: 'Wali Kelas — XI RPL 2',
-        name: 'Hendra Setiawan, S.Pd',
+        title: 'Wali Kelas',
         desc: 'Monitoring absensi harian, pembinaan siswa & kontak wali murid rombel.',
         badge: 'Garis Depan Kelas',
         icon: GraduationCap,
     },
     {
         id: 'guru_bk',
-        title: 'Guru BK & Konseling',
-        name: 'Rahmawati, S.Pd',
+        title: 'Guru BK',
         desc: 'Layanan konseling empatik, penanganan kasus mediasi & mitigasi ATS.',
-        badge: 'Manajer Kasus',
+        badge: 'Layanan Bimbingan Konseling',
         icon: ShieldAlert,
     },
     {
         id: 'bendahara',
         title: 'Bendahara Sekolah',
-        name: 'Siti Fatimah, S.E',
         desc: 'Rekonsiliasi SPP, verifikasi bukti bayar & bantuan afirmasi siswa.',
         badge: 'Keuangan & SPP',
         icon: Users,
     },
     {
         id: 'operator',
-        title: 'Operator Dapodik',
-        name: 'Harun Ar-Rasyid',
+        title: 'Operator Sekolah',
         desc: 'Verifikasi residu data Dapodik, SK pengampu guru & sinkronisasi data.',
-        badge: 'Integritas Data',
+        badge: 'Verifikasi Data & Admin',
         icon: CheckCircle2,
     },
 ];
@@ -386,14 +381,14 @@ export default function Welcome() {
                                                 </span>
                                             </div>
 
-                                            {/* Student Card Brian */}
+                                            {/* Student Card 1 Dummy */}
                                             <div className="space-y-3 rounded-xl border border-slate-200 bg-white p-5 text-xs shadow-xs dark:border-slate-800 dark:bg-[#111c30]">
                                                 <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
                                                     <div className="space-y-1">
                                                         <div className="flex items-center gap-2">
                                                             <span className="font-bold text-slate-900 dark:text-white">
-                                                                Brian Aditya -
-                                                                XI RPL 2
+                                                                Siswa Contoh —
+                                                                Kelas X
                                                             </span>
                                                             <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-[10px] font-bold text-slate-700 dark:bg-slate-800 dark:text-slate-300">
                                                                 Kehadiran &
@@ -404,17 +399,15 @@ export default function Welcome() {
                                                             </span>
                                                         </div>
                                                         <p className="text-slate-600 dark:text-slate-300">
-                                                            Kehadiran turun 28%
+                                                            Kehadiran turun
                                                             dalam dua pekan
-                                                            terakhir dan 2 tugas
-                                                            produktif belum
-                                                            selesai.
+                                                            terakhir dan tugas
+                                                            belum diselesaikan.
                                                         </p>
                                                         <div className="text-[11px] text-slate-500">
-                                                            Wali: Hendra
-                                                            Setiawan, S.Pd •
-                                                            Wali Murid: Hadi
-                                                            Wicaksono
+                                                            Wali: Wali Kelas •
+                                                            Wali Murid: Orang
+                                                            Tua Siswa
                                                         </div>
                                                     </div>
 
@@ -461,47 +454,6 @@ export default function Welcome() {
                                                     </div>
                                                 )}
                                             </div>
-
-                                            {/* Student Card Fauzan */}
-                                            <div className="flex flex-col justify-between gap-3 rounded-xl border border-slate-200 bg-white p-5 text-xs shadow-xs sm:flex-row sm:items-center dark:border-slate-800 dark:bg-[#111c30]">
-                                                <div className="space-y-1">
-                                                    <div className="flex items-center gap-2">
-                                                        <span className="font-bold text-slate-900 dark:text-white">
-                                                            Ahmad Fauzan — X TKJ
-                                                            1
-                                                        </span>
-                                                        <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-[10px] font-bold text-slate-700 dark:bg-slate-800 dark:text-slate-300">
-                                                            Kedisiplinan
-                                                        </span>
-                                                        <span className="text-[10px] text-slate-400">
-                                                            35 menit lalu
-                                                        </span>
-                                                    </div>
-                                                    <p className="text-slate-600 dark:text-slate-300">
-                                                        Terlambat 3x berurutan
-                                                        pada pekan ini. Total
-                                                        akumulasi 35 poin
-                                                        pembinaan.
-                                                    </p>
-                                                    <div className="text-[11px] text-slate-500">
-                                                        Wali: Dewi Sartika,
-                                                        M.Kom • Saran: Konseling
-                                                        BK
-                                                    </div>
-                                                </div>
-                                                <button
-                                                    type="button"
-                                                    onClick={() =>
-                                                        setIsDemoRoleModalOpen(
-                                                            true,
-                                                        )
-                                                    }
-                                                    className="inline-flex items-center gap-1 text-xs font-semibold text-blue-700 hover:underline dark:text-blue-400"
-                                                >
-                                                    Tangani di Dashboard
-                                                    <ArrowRight className="size-3" />
-                                                </button>
-                                            </div>
                                         </div>
                                     )}
 
@@ -510,65 +462,35 @@ export default function Welcome() {
                                         <div className="space-y-4">
                                             <div className="flex items-center justify-between border-b border-slate-200 pb-2 text-xs dark:border-slate-800">
                                                 <span className="font-bold text-slate-900 dark:text-white">
-                                                    Kondisi Kesehatan Seluruh
-                                                    Kelas
+                                                    Kondisi Kesehatan Kelas
                                                 </span>
                                                 <span className="text-slate-500">
                                                     Semester Ganjil 2025/2026
                                                 </span>
                                             </div>
 
-                                            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                                                <div className="space-y-2 rounded-xl border border-slate-200 bg-white p-4 text-xs dark:border-slate-800 dark:bg-[#111c30]">
-                                                    <div className="flex justify-between font-bold">
-                                                        <span>XI RPL 2</span>
-                                                        <span className="text-blue-700 dark:text-blue-400">
-                                                            91% Kehadiran
-                                                        </span>
-                                                    </div>
-                                                    <p className="text-slate-500">
-                                                        Wali: Hendra Setiawan,
-                                                        S.Pd • 36 Siswa
-                                                    </p>
-                                                    <div className="h-2 w-full rounded-full bg-slate-100 dark:bg-slate-800">
-                                                        <div
-                                                            className="h-full rounded-full bg-blue-700"
-                                                            style={{
-                                                                width: '91%',
-                                                            }}
-                                                        />
-                                                    </div>
-                                                    <div className="text-[11px] text-slate-600 dark:text-slate-400">
-                                                        2 siswa terdeteksi
-                                                        membutuhkan pendampingan
-                                                        wali kelas.
-                                                    </div>
+                                            <div className="rounded-xl border border-slate-200 bg-white p-5 text-xs dark:border-slate-800 dark:bg-[#111c30]">
+                                                <div className="flex justify-between font-bold">
+                                                    <span>Kelas X</span>
+                                                    <span className="text-blue-700 dark:text-blue-400">
+                                                        91% Kehadiran
+                                                    </span>
                                                 </div>
-
-                                                <div className="space-y-2 rounded-xl border border-slate-200 bg-white p-4 text-xs dark:border-slate-800 dark:bg-[#111c30]">
-                                                    <div className="flex justify-between font-bold">
-                                                        <span>X TKJ 1</span>
-                                                        <span className="text-blue-700 dark:text-blue-400">
-                                                            88% Kehadiran
-                                                        </span>
-                                                    </div>
-                                                    <p className="text-slate-500">
-                                                        Wali: Dewi Sartika,
-                                                        M.Kom • 34 Siswa
-                                                    </p>
-                                                    <div className="h-2 w-full rounded-full bg-slate-100 dark:bg-slate-800">
-                                                        <div
-                                                            className="h-full rounded-full bg-blue-700"
-                                                            style={{
-                                                                width: '88%',
-                                                            }}
-                                                        />
-                                                    </div>
-                                                    <div className="text-[11px] text-slate-600 dark:text-slate-400">
-                                                        Perhatian khusus pada
-                                                        pola keterlambatan jam
-                                                        pertama.
-                                                    </div>
+                                                <p className="mt-1 text-slate-500">
+                                                    Wali: Wali Kelas • 36 Siswa
+                                                </p>
+                                                <div className="mt-3 h-2 w-full rounded-full bg-slate-100 dark:bg-slate-800">
+                                                    <div
+                                                        className="h-full rounded-full bg-blue-700"
+                                                        style={{
+                                                            width: '91%',
+                                                        }}
+                                                    />
+                                                </div>
+                                                <div className="mt-3 text-[11px] text-slate-600 dark:text-slate-400">
+                                                    2 siswa terdeteksi
+                                                    membutuhkan pendampingan
+                                                    wali kelas.
                                                 </div>
                                             </div>
                                         </div>
@@ -579,61 +501,33 @@ export default function Welcome() {
                                         <div className="space-y-4">
                                             <div className="flex items-center justify-between border-b border-slate-200 pb-2 text-xs dark:border-slate-800">
                                                 <span className="font-bold text-slate-900 dark:text-white">
-                                                    Alur Manajemen Kasus BK
+                                                    Alur Kasus Siswa
                                                 </span>
                                                 <span className="text-slate-500">
                                                     Linimasa penanganan objektif
                                                 </span>
                                             </div>
 
-                                            <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-                                                <div className="space-y-2 rounded-xl border border-slate-200 bg-white p-4 text-xs dark:border-slate-800 dark:bg-[#111c30]">
-                                                    <div className="font-bold text-slate-500">
-                                                        1. Kasus Baru Masuk
-                                                    </div>
-                                                    <div className="space-y-1 rounded-lg border border-slate-200 p-2.5 dark:border-slate-700">
-                                                        <div className="font-bold">
-                                                            CS-2025-091 - Deni
-                                                            Saputra
-                                                        </div>
-                                                        <div className="text-[11px] text-slate-500">
-                                                            Kategori: Kerentanan
-                                                            ATS
-                                                        </div>
-                                                    </div>
+                                            <div className="rounded-xl border border-slate-200 bg-white p-5 text-xs dark:border-slate-800 dark:bg-[#111c30]">
+                                                <div className="flex items-center justify-between">
+                                                    <span className="font-bold text-slate-900 dark:text-white">
+                                                        Kasus CS-001 — Siswa
+                                                        Contoh
+                                                    </span>
+                                                    <span className="rounded bg-blue-50 px-2 py-0.5 text-[10px] font-bold text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+                                                        Tahap 1: Konseling
+                                                        Berjalan
+                                                    </span>
                                                 </div>
-
-                                                <div className="space-y-2 rounded-xl border border-slate-200 bg-white p-4 text-xs dark:border-slate-800 dark:bg-[#111c30]">
-                                                    <div className="font-bold text-blue-700 dark:text-blue-400">
-                                                        2. Sedang Ditangani BK
-                                                    </div>
-                                                    <div className="space-y-1 rounded-lg border border-slate-200 p-2.5 dark:border-slate-700">
-                                                        <div className="font-bold">
-                                                            CS-2025-089 - Rian
-                                                            Pratama
-                                                        </div>
-                                                        <div className="text-[11px] text-slate-500">
-                                                            Konseling sesi 2
-                                                            tuntas, komitmen
-                                                            dibuat.
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div className="space-y-2 rounded-xl border border-slate-200 bg-white p-4 text-xs dark:border-slate-800 dark:bg-[#111c30]">
-                                                    <div className="font-bold text-slate-700 dark:text-slate-300">
-                                                        3. Selesai Tuntas
-                                                    </div>
-                                                    <div className="space-y-1 rounded-lg border border-slate-200 p-2.5 dark:border-slate-700">
-                                                        <div className="font-bold">
-                                                            18 Kasus Bulan Ini
-                                                        </div>
-                                                        <div className="text-[11px] text-slate-500">
-                                                            Arsip digital dan
-                                                            persetujuan wali
-                                                            murid lengkap.
-                                                        </div>
-                                                    </div>
+                                                <p className="mt-2 text-slate-600 dark:text-slate-300">
+                                                    Kategori: Kerentanan
+                                                    Belajar. Sesi konseling
+                                                    telah dijadwalkan bersama
+                                                    Guru BK dan wali kelas.
+                                                </p>
+                                                <div className="mt-3 text-[11px] text-slate-500">
+                                                    Penanggung Jawab: Guru BK •
+                                                    Evaluasi: Pekan Berjalan
                                                 </div>
                                             </div>
                                         </div>
@@ -656,8 +550,8 @@ export default function Welcome() {
                                             <div className="space-y-3 rounded-xl border border-slate-200 bg-white p-5 text-xs dark:border-slate-800 dark:bg-[#111c30]">
                                                 <div className="flex items-center justify-between">
                                                     <span className="font-bold text-slate-900 dark:text-white">
-                                                        Kepada: Hadi Wicaksono -
-                                                        Wali Brian Aditya
+                                                        Kepada: Orang Tua / Wali
+                                                        Murid
                                                     </span>
                                                     <span className="rounded-md border border-slate-200 bg-slate-50 px-2 py-0.5 text-[10px] font-bold text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
                                                         Terkonfirmasi Sudah
@@ -665,17 +559,16 @@ export default function Welcome() {
                                                     </span>
                                                 </div>
                                                 <p className="leading-relaxed text-slate-600 dark:text-slate-300">
-                                                    Yth. Bapak Hadi Wicaksono,
+                                                    Yth. Orang tua / wali murid,
                                                     kami menginformasikan
-                                                    catatan kehadiran ananda
-                                                    Brian yang memerlukan
-                                                    koordinasi bersama sekolah
-                                                    demi kelancaran belajar.
+                                                    catatan perkembangan siswa
+                                                    yang memerlukan koordinasi
+                                                    bersama sekolah demi
+                                                    kelancaran belajar.
                                                 </p>
                                                 <div className="text-[11px] text-slate-500">
-                                                    Kanal: WhatsApp Resmi
-                                                    Sekolah • Waktu: 24
-                                                    September, 08:15 WIB
+                                                    Kanal: Pesan Resmi Sekolah •
+                                                    Waktu: Hari ini, 08:15 WIB
                                                 </div>
                                             </div>
                                         </div>
@@ -996,9 +889,6 @@ export default function Welcome() {
                                                         {role.badge}
                                                     </span>
                                                 </div>
-                                                <p className="mt-0.5 text-xs font-medium text-slate-700 dark:text-slate-300">
-                                                    {role.name}
-                                                </p>
                                                 <p className="mt-1 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
                                                     {role.desc}
                                                 </p>

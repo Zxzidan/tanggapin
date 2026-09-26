@@ -302,14 +302,14 @@ export default function ManajemenKasus({
                             </span>
                             <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-bold text-slate-700 dark:bg-slate-800 dark:text-slate-300">
                                 {cases.filter((c) => c.stage === 'resolved')
-                                    .length + 18}
+                                    .length}
                             </span>
                         </div>
 
                         <div className="space-y-2 rounded-xl border border-slate-200 bg-slate-50 p-3.5 text-[11px] text-slate-600 dark:border-slate-800 dark:bg-[#111c30] dark:text-slate-400">
                             <div className="flex items-center gap-2 font-bold text-blue-700 dark:text-blue-400">
                                 <CheckCircle2 className="size-4" />
-                                <span>18 Kasus Selesai Bulan Ini</span>
+                                <span>{cases.filter((c) => c.stage === 'resolved').length} Kasus Selesai</span>
                             </div>
                             <p className="text-[11px] leading-relaxed">
                                 Seluruh berkas konseling, komitmen siswa, hasil

@@ -17,26 +17,26 @@ Route::get('/demo-login', function (Request $request) {
     }
 
     $roleEmails = [
-        'kepala_sekolah' => 'kepsek@smk1harapan.sch.id',
-        'operator' => 'operator@smk1harapan.sch.id',
-        'wali_kelas' => 'walikelas@smk1harapan.sch.id',
-        'guru_bk' => 'gurubk@smk1harapan.sch.id',
-        'bendahara' => 'bendahara@smk1harapan.sch.id',
+        'kepala_sekolah' => 'kepsek@sekolah.sch.id',
+        'operator' => 'operator@sekolah.sch.id',
+        'wali_kelas' => 'walikelas@sekolah.sch.id',
+        'guru_bk' => 'gurubk@sekolah.sch.id',
+        'bendahara' => 'bendahara@sekolah.sch.id',
     ];
 
     $roleNames = [
-        'kepala_sekolah' => 'Drs. H. Mulyadi, M.Pd',
-        'operator' => 'Harun Ar-Rasyid',
-        'wali_kelas' => 'Hendra Setiawan, S.Pd',
-        'guru_bk' => 'Rahmawati, S.Pd',
-        'bendahara' => 'Siti Fatimah, S.E',
+        'kepala_sekolah' => 'Kepala Sekolah',
+        'operator' => 'Operator Sekolah',
+        'wali_kelas' => 'Wali Kelas',
+        'guru_bk' => 'Guru BK',
+        'bendahara' => 'Bendahara Sekolah',
     ];
 
-    $email = $roleEmails[$role] ?? 'kepsek@smk1harapan.sch.id';
-    $name = $roleNames[$role] ?? 'Drs. H. Mulyadi, M.Pd';
+    $email = $roleEmails[$role] ?? 'kepsek@sekolah.sch.id';
+    $name = $roleNames[$role] ?? 'Kepala Sekolah';
 
-    $user = User::where('email', $email)->first()
-        ?? User::where('role', $role)->first()
+    $user = User::where('role', $role)->first()
+        ?? User::where('email', $email)->first()
         ?? User::create([
             'name' => $name,
             'email' => $email,
@@ -44,6 +44,12 @@ Route::get('/demo-login', function (Request $request) {
             'password' => bcrypt('password'),
             'email_verified_at' => now(),
         ]);
+
+    if ($user->name !== $name || $user->email !== $email) {
+        $user->name = $name;
+        $user->email = $email;
+        $user->save();
+    }
 
     if (! $user->email_verified_at) {
         $user->email_verified_at = now();

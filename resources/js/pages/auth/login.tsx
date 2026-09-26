@@ -34,40 +34,40 @@ const DEMO_PERSONAS: DemoPersona[] = [
     {
         role: 'kepala_sekolah',
         shortTitle: 'Kepsek',
-        label: 'Drs. H. Mulyadi, M.Pd — Kepala Sekolah',
-        email: 'kepsek@smk1harapan.sch.id',
+        label: 'Kepala Sekolah',
+        email: 'kepsek@sekolah.sch.id',
         scope: 'Akses Penuh 11 Modul',
         isFullAccess: true,
     },
     {
         role: 'operator',
         shortTitle: 'Operator',
-        label: 'Harun Ar-Rasyid — Operator Dapodik & Admin',
-        email: 'operator@smk1harapan.sch.id',
+        label: 'Operator Sekolah',
+        email: 'operator@sekolah.sch.id',
         scope: 'Akses Penuh Dapodik & Admin',
         isFullAccess: true,
     },
     {
         role: 'wali_kelas',
         shortTitle: 'Wali Kelas',
-        label: 'Hendra Setiawan, S.Pd — Wali Kelas XI RPL 2',
-        email: 'walikelas@smk1harapan.sch.id',
-        scope: 'Tupoksi Rombel XI RPL 2',
+        label: 'Wali Kelas',
+        email: 'walikelas@sekolah.sch.id',
+        scope: 'Tupoksi Rombongan Belajar',
         isFullAccess: false,
     },
     {
         role: 'bendahara',
         shortTitle: 'Bendahara',
-        label: 'Siti Fatimah, S.E — Bendahara Sekolah',
-        email: 'bendahara@smk1harapan.sch.id',
+        label: 'Bendahara Sekolah',
+        email: 'bendahara@sekolah.sch.id',
         scope: 'Tupoksi Keuangan & SPP',
         isFullAccess: false,
     },
     {
         role: 'guru_bk',
         shortTitle: 'Guru BK',
-        label: 'Rahmawati, S.Pd — Guru BK & Konseling',
-        email: 'gurubk@smk1harapan.sch.id',
+        label: 'Guru BK',
+        email: 'gurubk@sekolah.sch.id',
         scope: 'Tupoksi Kasus & Mediasi',
         isFullAccess: false,
     },
@@ -75,9 +75,7 @@ const DEMO_PERSONAS: DemoPersona[] = [
 
 export default function Login({ status, canResetPassword }: Props) {
     const [selectedRole, setSelectedRole] = useState<RoleType>('guru_bk');
-    const [selectedEmail, setSelectedEmail] = useState(
-        'gurubk@smk1harapan.sch.id',
-    );
+    const [selectedEmail, setSelectedEmail] = useState('gurubk@sekolah.sch.id');
     const [selectedPassword, setSelectedPassword] = useState('password');
     const emailInputRef = useRef<HTMLInputElement>(null);
     const passwordInputRef = useRef<HTMLInputElement>(null);
@@ -188,7 +186,7 @@ export default function Login({ status, canResetPassword }: Props) {
                                     tabIndex={1}
                                     autoComplete="email"
                                     defaultValue={selectedEmail}
-                                    placeholder="nama@smk1harapan.sch.id"
+                                    placeholder="nama@sekolah.sch.id"
                                     className="h-9 text-xs"
                                 />
                                 <InputError message={errors.email} />

@@ -17,43 +17,43 @@ class DatabaseSeeder extends Seeder
     {
         $defaultUsers = [
             [
-                'name' => 'Drs. H. Mulyadi, M.Pd',
-                'email' => 'kepsek@smk1harapan.sch.id',
+                'name' => 'Kepala Sekolah',
+                'email' => 'kepsek@sekolah.sch.id',
                 'role' => 'kepala_sekolah',
                 'password' => bcrypt('password'),
                 'email_verified_at' => now(),
             ],
             [
-                'name' => 'Harun Ar-Rasyid',
-                'email' => 'operator@smk1harapan.sch.id',
+                'name' => 'Operator Sekolah',
+                'email' => 'operator@sekolah.sch.id',
                 'role' => 'operator',
                 'password' => bcrypt('password'),
                 'email_verified_at' => now(),
             ],
             [
-                'name' => 'Hendra Setiawan, S.Pd',
-                'email' => 'walikelas@smk1harapan.sch.id',
+                'name' => 'Wali Kelas',
+                'email' => 'walikelas@sekolah.sch.id',
                 'role' => 'wali_kelas',
                 'password' => bcrypt('password'),
                 'email_verified_at' => now(),
             ],
             [
-                'name' => 'Rahmawati, S.Pd',
-                'email' => 'gurubk@smk1harapan.sch.id',
+                'name' => 'Guru BK',
+                'email' => 'gurubk@sekolah.sch.id',
                 'role' => 'guru_bk',
                 'password' => bcrypt('password'),
                 'email_verified_at' => now(),
             ],
             [
-                'name' => 'Siti Fatimah, S.E',
-                'email' => 'bendahara@smk1harapan.sch.id',
+                'name' => 'Bendahara Sekolah',
+                'email' => 'bendahara@sekolah.sch.id',
                 'role' => 'bendahara',
                 'password' => bcrypt('password'),
                 'email_verified_at' => now(),
             ],
             [
-                'name' => 'Neil Sims - Kepala Sekolah',
-                'email' => 'test@example.com',
+                'name' => 'Administrator',
+                'email' => 'admin@sekolah.sch.id',
                 'role' => 'kepala_sekolah',
                 'password' => bcrypt('password'),
                 'email_verified_at' => now(),
@@ -62,7 +62,7 @@ class DatabaseSeeder extends Seeder
 
         foreach ($defaultUsers as $userData) {
             User::updateOrCreate(
-                ['email' => $userData['email']],
+                ['role' => $userData['role']],
                 $userData
             );
         }

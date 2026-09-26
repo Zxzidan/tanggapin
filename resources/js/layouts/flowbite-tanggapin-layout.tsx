@@ -549,9 +549,9 @@ export default function FlowbiteTanggapinLayout({
                                                     </span>
                                                 </div>
                                                 <p className="mt-1 text-[11px] text-slate-600 dark:text-slate-300">
-                                                    Brian Aditya tidak hadir 4
-                                                    hari terakhir. Perlu
-                                                    follow-up wali kelas.
+                                                    Siswa tidak hadir 4 hari
+                                                    terakhir. Perlu follow-up
+                                                    wali kelas.
                                                 </p>
                                             </Link>
                                             <Link

@@ -63,16 +63,14 @@ export function ActionModalsProvider({
 
     // Selected student & inputs
     const [studentId, setStudentId] = useState('1');
-    const [studentName, setStudentName] = useState('Brian Aditya — XI RPL 2');
+    const [studentName, setStudentName] = useState('Siswa Contoh — Kelas X');
     const [_studentPhone, setStudentPhone] = useState('+62 812-3456-7890');
     const [selectedStudent360, setSelectedStudent360] =
         useState<PriorityAlert | null>(null);
 
     // Follow-up form
     const [followupType, setFollowupType] = useState('Panggilan Orang Tua');
-    const [followupAssignee, setFollowupAssignee] = useState(
-        'Wali Kelas — Hendra Setiawan, S.Pd',
-    );
+    const [followupAssignee, setFollowupAssignee] = useState('Wali Kelas');
     const [followupNote, setFollowupNote] = useState('');
 
     // Parent contact form
@@ -374,14 +372,12 @@ export function ActionModalsProvider({
                                         }
                                         className="w-full rounded-lg border border-slate-300 bg-slate-50 p-2 text-xs text-slate-900 outline-none dark:border-slate-700 dark:bg-[#070b14] dark:text-white"
                                     >
-                                        <option value="Wali Kelas (Hendra Setiawan, S.Pd)">
-                                            Wali Kelas (Hendra Setiawan, S.Pd)
+                                        <option value="Wali Kelas">
+                                            Wali Kelas
                                         </option>
-                                        <option value="Guru BK (Rahmawati, S.Pd)">
-                                            Guru BK (Rahmawati, S.Pd)
-                                        </option>
-                                        <option value="Kesiswaan (Bpk. Faisal)">
-                                            Kesiswaan (Bpk. Faisal)
+                                        <option value="Guru BK">Guru BK</option>
+                                        <option value="Tim Kesiswaan">
+                                            Tim Kesiswaan
                                         </option>
                                         <option value="Tim Satgas ATS">
                                             Tim Satgas ATS

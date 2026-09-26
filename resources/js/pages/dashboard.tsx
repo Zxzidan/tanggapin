@@ -36,13 +36,13 @@ export default function Dashboard({
     } = useActionModals();
 
     const safeStats = stats ?? {
-        studentsNeedingAttention: 12,
-        activeCases: 4,
-        overdueCases: 2,
-        dataCheckIssues: 7,
-        duePayments: 18,
+        studentsNeedingAttention: 1,
+        activeCases: 1,
+        overdueCases: 0,
+        dataCheckIssues: 1,
+        duePayments: 1,
         activeIncidents: 1,
-        resolvedThisMonth: 24,
+        resolvedThisMonth: 1,
     };
     const feed = priorityFeed ?? [];
     const classList = classes ?? [];
@@ -116,7 +116,8 @@ export default function Dashboard({
                                 TANGGAPIN
                             </span>
                             <span className="text-xs font-medium text-slate-500">
-                                SMK Negeri 1 Harapan • T.A. 2025/2026 Ganjil
+                                Sistem Operasional Sekolah • T.A. 2025/2026
+                                Ganjil
                             </span>
                             <span className="hidden text-slate-300 sm:inline dark:text-slate-700">
                                 •
@@ -298,7 +299,7 @@ export default function Dashboard({
                                         : 'text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800',
                                 )}
                             >
-                                Kritis: 3
+                                Kritis: {feed.filter(f => f.riskLevel === 'high').length}
                             </button>
                             <button
                                 type="button"
@@ -310,7 +311,7 @@ export default function Dashboard({
                                         : 'text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800',
                                 )}
                             >
-                                Perlu Diperhatikan: 1
+                                Perlu Diperhatikan: {feed.filter(f => f.riskLevel === 'medium').length}
                             </button>
                         </div>
                     </div>

@@ -22,10 +22,10 @@ export const ROLE_CONFIGS: Record<RoleType, RoleConfig> = {
         id: 'kepala_sekolah',
         title: 'Kepala Sekolah',
         shortTitle: 'Kepsek',
-        badge: 'Decision Maker',
+        badge: 'Pengambil Kebijakan',
         scopeBadge: 'Semua Fitur — 11 Modul',
-        userName: 'Drs. H. Mulyadi, M.Pd',
-        userEmail: 'kepsek@smk1harapan.sch.id',
+        userName: 'Kepala Sekolah',
+        userEmail: 'kepsek@sekolah.sch.id',
         avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80',
         roleDesc:
             'Akses eksekutif penuh ke seluruh 11 modul operasional sekolah, metrik komprehensif, dan koordinasi darurat.',
@@ -41,7 +41,7 @@ export const ROLE_CONFIGS: Record<RoleType, RoleConfig> = {
             'data-check',
             'incidents',
         ],
-        overviewTitle: '“Apa yang membutuhkan perhatian sekolah hari ini?”',
+        overviewTitle: 'Apa yang membutuhkan perhatian sekolah hari ini?',
         overviewSubtitle:
             'Pantau kesehatan operasional, penanganan kasus siswa, kepatuhan guru, dan status anggaran secara menyeluruh.',
         overviewPrinciple:
@@ -49,12 +49,12 @@ export const ROLE_CONFIGS: Record<RoleType, RoleConfig> = {
     },
     operator: {
         id: 'operator',
-        title: 'Operator Dapodik & Admin',
+        title: 'Operator Sekolah',
         shortTitle: 'Operator',
-        badge: 'Data Verifier & Admin',
+        badge: 'Verifikasi Data & Admin',
         scopeBadge: 'Semua Fitur — 11 Modul',
-        userName: 'Harun Ar-Rasyid',
-        userEmail: 'operator@smk1harapan.sch.id',
+        userName: 'Operator Sekolah',
+        userEmail: 'operator@sekolah.sch.id',
         avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80',
         roleDesc:
             'Akses penuh ke seluruh sistem dengan prioritas verifikasi residu Dapodik, rombel, dokumen guru & sinkronisasi.',
@@ -70,8 +70,7 @@ export const ROLE_CONFIGS: Record<RoleType, RoleConfig> = {
             'documents',
             'incidents',
         ],
-        overviewTitle:
-            '“Pusat Integritas Data Dapodik, Arsip Guru & Pemetaan Rombel”',
+        overviewTitle: 'Pusat Integritas Data, Arsip Dokumen & Pemetaan Rombel',
         overviewSubtitle:
             'Verifikasi residu NISN/NIK, kelengkapan SK guru, rombel pembelajaran, dan sinkronisasi server terpadu.',
         overviewPrinciple:
@@ -85,15 +84,15 @@ export const ROLE_CONFIGS: Record<RoleType, RoleConfig> = {
     },
     wali_kelas: {
         id: 'wali_kelas',
-        title: 'Wali Kelas — XI RPL 2',
+        title: 'Wali Kelas',
         shortTitle: 'Wali Kelas',
-        badge: 'Frontline XI RPL 2',
-        scopeBadge: 'Disesuaikan — Kelas XI RPL 2',
-        userName: 'Hendra Setiawan, S.Pd',
-        userEmail: 'hendra.setiawan@smk1harapan.sch.id',
+        badge: 'Garis Depan Kelas',
+        scopeBadge: 'Disesuaikan — Rombongan Belajar',
+        userName: 'Wali Kelas',
+        userEmail: 'walikelas@sekolah.sch.id',
         avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&q=80',
         roleDesc:
-            'Tampilan disesuaikan khusus rombongan belajar XI RPL 2: absensi harian, pembinaan kedisiplinan, dan kontak wali murid.',
+            'Tampilan disesuaikan khusus rombongan belajar: absensi harian, pembinaan kedisiplinan, dan kontak orang tua siswa.',
         allowedTabs: [
             'overview',
             'early-warning',
@@ -103,9 +102,9 @@ export const ROLE_CONFIGS: Record<RoleType, RoleConfig> = {
             'documents',
         ],
         overviewTitle:
-            '“Pantau absensi & dampingi perkembangan 36 siswa XI RPL 2”',
+            'Pantau absensi dan dampingi perkembangan siswa di kelas',
         overviewSubtitle:
-            'Wali Kelas: Hendra Setiawan, S.Pd • Rombel Rekayasa Perangkat Lunak 2 • Semester Ganjil 2025/2026.',
+            'Wali Kelas • Pemantauan Rombongan Belajar • Semester Ganjil 2025/2026.',
         overviewPrinciple:
             'Prinsip Wali Kelas: Deteksi Absensi Menurun → Kontak Wali Murid → Pembinaan Disiplin → Koordinasi BK.',
         tabOverrides: {
@@ -121,18 +120,18 @@ export const ROLE_CONFIGS: Record<RoleType, RoleConfig> = {
         id: 'bendahara',
         title: 'Bendahara Sekolah',
         shortTitle: 'Bendahara',
-        badge: 'Finance & SPP',
+        badge: 'Keuangan & SPP',
         scopeBadge: 'Disesuaikan — Keuangan & SPP',
-        userName: 'Siti Fatimah, S.E',
-        userEmail: 'bendahara@smk1harapan.sch.id',
+        userName: 'Bendahara Sekolah',
+        userEmail: 'bendahara@sekolah.sch.id',
         avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80',
         roleDesc:
             'Tampilan disesuaikan khusus pengelolaan kas SPP, verifikasi bukti transfer, dan reminder tagihan ortu.',
         allowedTabs: ['overview', 'payments', 'communication', 'early-warning'],
         overviewTitle:
-            '“Kelola penerimaan kas SPP, bukti transfer & dispensasi biaya”',
+            'Kelola penerimaan kas SPP, bukti transfer dan administrasi biaya',
         overviewSubtitle:
-            'Bendahara: Siti Fatimah, S.E • Rekapitulasi Pembayaran SPP & Uang Praktik Kejuruan.',
+            'Bendahara Sekolah • Rekapitulasi Pembayaran SPP dan Administrasi Sekolah.',
         overviewPrinciple:
             'Prinsip Bendahara: Pantau Jatuh Tempo → Verifikasi Bukti Bayar → Kirim Reminder WhatsApp → Catat Kas.',
         tabOverrides: {
@@ -148,12 +147,12 @@ export const ROLE_CONFIGS: Record<RoleType, RoleConfig> = {
     },
     guru_bk: {
         id: 'guru_bk',
-        title: 'Guru BK & Konseling',
+        title: 'Guru BK',
         shortTitle: 'Guru BK',
-        badge: 'Case Manager',
+        badge: 'Layanan Bimbingan Konseling',
         scopeBadge: 'Disesuaikan — Konseling & Kasus',
-        userName: 'Rahmawati, S.Pd',
-        userEmail: 'rahmawati.bk@smk1harapan.sch.id',
+        userName: 'Guru BK',
+        userEmail: 'gurubk@sekolah.sch.id',
         avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&q=80',
         roleDesc:
             'Tampilan disesuaikan khusus penanganan kasus bimbingan, konseling mediasi, mitigasi ATS, dan pembinaan karakter.',
@@ -165,9 +164,9 @@ export const ROLE_CONFIGS: Record<RoleType, RoleConfig> = {
             'ats',
         ],
         overviewTitle:
-            '“Layanan konseling, penanganan kasus & pendampingan siswa”',
+            'Layanan konseling, penanganan kasus dan pendampingan siswa',
         overviewSubtitle:
-            'Koordinator BK: Rahmawati, S.Pd • Pendampingan Kasus Konseling & Pemantauan Siswa Rawan ATS.',
+            'Guru BK • Pendampingan Kasus Konseling dan Pemantauan Siswa.',
         overviewPrinciple:
             'Prinsip BK: Asesmen Kebutuhan Siswa → Konseling Empatik → Kolaborasi Wali & Ortu → Pemulihan Solutif.',
         tabOverrides: {
