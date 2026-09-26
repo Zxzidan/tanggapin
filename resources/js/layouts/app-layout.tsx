@@ -7,9 +7,5 @@ export default function AppLayout({
     breadcrumbs?: BreadcrumbItem[];
     children: React.ReactNode;
 }) {
-    return (
-        <FlowbiteTanggapinLayout>
-            {children}
-        </FlowbiteTanggapinLayout>
-    );
+    return <FlowbiteTanggapinLayout>{children}</FlowbiteTanggapinLayout>;
 }

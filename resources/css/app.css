@@ -138,7 +138,8 @@
     }
 
     body {
-        @apply bg-background text-foreground antialiased;
+        @apply bg-background text-foreground antialiased selection:bg-blue-600 selection:text-white;
+        font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
     }
 }
 
@@ -210,19 +211,19 @@
         color: #94a3b8;
     }
     .text-fg-brand {
-        color: #2563eb;
+        color: #1d4ed8;
     }
     .dark .text-fg-brand {
         color: #38bdf8;
     }
     .hover\:text-fg-brand:hover {
-        color: #2563eb;
+        color: #1d4ed8;
     }
     .dark .hover\:text-fg-brand:hover {
         color: #38bdf8;
     }
     .group:hover .group-hover\:text-fg-brand {
-        color: #2563eb;
+        color: #1d4ed8;
     }
     .dark .group:hover .group-hover\:text-fg-brand {
         color: #38bdf8;

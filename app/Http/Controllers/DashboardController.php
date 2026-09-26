@@ -24,11 +24,119 @@ use Inertia\Response;
 class DashboardController extends Controller
 {
     /**
-     * Display the Tanggapin operational dashboard querying real database models.
+     * Display the Tanggapin operational dashboard (Ikhtisar & Tindakan).
      */
     public function index(Request $request): Response
     {
-        // 1. Operational Stats (PRD Section 8)
+        return Inertia::render('dashboard', [
+            'stats' => $this->getStats(),
+            'priorityFeed' => $this->getPriorityFeed(),
+            'classes' => $this->getClasses(),
+            'cases' => $this->getCases(),
+            'atsList' => $this->getAtsList(),
+            'paymentList' => $this->getPayments(),
+            'dapodikIssues' => $this->getDapodikIssues(),
+            'documents' => $this->getDocuments(),
+            'incidents' => $this->getIncidents(),
+            'parentUpdates' => $this->getParentUpdates(),
+        ]);
+    }
+
+    /**
+     * Modul 01: Early Warning System
+     */
+    public function earlyWarning(): Response
+    {
+        return Inertia::render('early-warning', [
+            'stats' => $this->getStats(),
+            'priorityFeed' => $this->getPriorityFeed(),
+        ]);
+    }
+
+    /**
+     * Modul 02: Kondisi Kelas & Monitoring Rombel
+     */
+    public function kondisiKelas(): Response
+    {
+        return Inertia::render('kondisi-kelas', [
+            'classes' => $this->getClasses(),
+            'disciplineList' => $this->getDisciplineList(),
+        ]);
+    }
+
+    /**
+     * Modul 06: Alur Lapangan ATS (Anak Tidak Sekolah)
+     */
+    public function alurAts(): Response
+    {
+        return Inertia::render('alur-ats', [
+            'atsList' => $this->getAtsList(),
+        ]);
+    }
+
+    /**
+     * Modul 03: Case Management (Manajemen Kasus BK)
+     */
+    public function manajemenKasus(): Response
+    {
+        return Inertia::render('manajemen-kasus', [
+            'stats' => $this->getStats(),
+            'cases' => $this->getCases(),
+        ]);
+    }
+
+    /**
+     * Modul 04: Komunikasi Orang Tua Terstruktur
+     */
+    public function komunikasiOrtu(): Response
+    {
+        return Inertia::render('komunikasi-ortu', [
+            'parentUpdates' => $this->getParentUpdates(),
+        ]);
+    }
+
+    /**
+     * Modul 09: Cek Data Dapodik (Anomali Operator)
+     */
+    public function dapodik(): Response
+    {
+        return Inertia::render('dapodik', [
+            'dapodikIssues' => $this->getDapodikIssues(),
+        ]);
+    }
+
+    /**
+     * Modul 07: Pembayaran & SPP (Rekonsiliasi Bendahara)
+     */
+    public function pembayaran(): Response
+    {
+        return Inertia::render('pembayaran', [
+            'paymentList' => $this->getPayments(),
+        ]);
+    }
+
+    /**
+     * Modul 08: Dokumen Guru (Kelengkapan Administrasi & Portofolio)
+     */
+    public function dokumenGuru(): Response
+    {
+        return Inertia::render('dokumen-guru', [
+            'documents' => $this->getDocuments(),
+        ]);
+    }
+
+    /**
+     * Modul 10: Respons Insiden & Kesiapsiagaan Sekolah
+     */
+    public function responsInsiden(): Response
+    {
+        return Inertia::render('respons-insiden', [
+            'incidents' => $this->getIncidents(),
+        ]);
+    }
+
+    private function getStats(): array
+    {
         $studentsNeedingAttention = RiskAlert::where('is_action_taken', false)->count();
         $activeCases = StudentCase::where('stage', '!=', 'resolved')->count();
         $overdueCases = StudentCase::where('stage', '!=', 'resolved')
@@ -39,8 +147,20 @@ class DashboardController extends Controller
         $activeIncidents = Incident::where('status', '!=', 'Selesai')->count();
         $resolvedCount = StudentCase::where('stage', 'resolved')->count() + Followup::where('status', 'completed')->count() + 18;
 
-        // 2. Priority Feed from database
-        $priorityAlerts = RiskAlert::with(['student.schoolClass'])
+        return [
+            'studentsNeedingAttention' => $studentsNeedingAttention,
+            'activeCases' => $activeCases,
+            'overdueCases' => $overdueCases,
+            'dataCheckIssues' => $dataCheckIssues,
+            'duePayments' => $duePayments,
+            'activeIncidents' => $activeIncidents,
+            'resolvedThisMonth' => $resolvedCount,
+        ];
+    }
+
+    private function getPriorityFeed(): array
+    {
+        return RiskAlert::with(['student.schoolClass'])
             ->latest()
             ->take(10)
             ->get()
@@ -50,22 +170,25 @@ class DashboardController extends Controller
                 return [
                     'id' => (string) $alert->id,
                     'studentId' => (string) $alert->student_id,
-                    'studentName' => $student->name,
+                    'studentName' => $student->name ?? 'Siswa',
                     'class' => $student->schoolClass->name ?? '-',
                     'riskLevel' => $alert->risk_level,
                     'triggerType' => $alert->trigger_type,
                     'summary' => $alert->summary,
                     'actionTaken' => $alert->is_action_taken,
                     'suggestedAction' => $alert->suggested_action ?? 'Buat Follow-up',
-                    'parentName' => $student->parent_name,
-                    'parentPhone' => $student->parent_phone,
+                    'parentName' => $student->parent_name ?? '-',
+                    'parentPhone' => $student->parent_phone ?? '-',
                     'homeroomTeacher' => $student->schoolClass->homeroom_teacher_name ?? '-',
                     'timestamp' => $alert->created_at?->diffForHumans() ?? 'Baru saja',
                 ];
-            });
+            })
+            ->toArray();
+    }
 
-        // 3. Classes with operational indicators
-        $classes = SchoolClass::withCount([
+    private function getClasses(): array
+    {
+        return SchoolClass::withCount([
             'students as students_at_risk' => fn ($query) => $query->where('risk_level', 'high'),
         ])->get()->map(function (SchoolClass $cls): array {
             $pendingCount = Followup::whereHas('student', fn ($q) => $q->where('school_class_id', $cls->id))
@@ -83,17 +206,19 @@ class DashboardController extends Controller
                 'pendingFollowups' => $pendingCount,
                 'healthStatus' => $cls->health_status,
             ];
-        });
+        })->toArray();
+    }
 
-        // 4. Cases Pipeline with Timelines
-        $cases = StudentCase::with(['student.schoolClass', 'timelines'])
+    private function getCases(): array
+    {
+        return StudentCase::with(['student.schoolClass', 'timelines'])
             ->latest()
             ->get()
             ->map(function (StudentCase $case): array {
                 return [
                     'id' => (string) $case->id,
                     'code' => $case->code,
-                    'studentName' => $case->student->name,
+                    'studentName' => $case->student->name ?? 'Siswa',
                     'class' => $case->student->schoolClass->name ?? '-',
                     'category' => $case->category,
                     'priority' => $case->priority,
@@ -108,16 +233,18 @@ class DashboardController extends Controller
                         'actor' => $t->actor_name,
                     ])->toArray(),
                 ];
-            });
+            })->toArray();
+    }
 
-        // 5. ATS Field list
-        $atsList = AtsRecord::with('student.schoolClass')
+    private function getAtsList(): array
+    {
+        return AtsRecord::with('student.schoolClass')
             ->latest()
             ->get()
             ->map(function (AtsRecord $ats): array {
                 return [
                     'id' => (string) $ats->id,
-                    'studentName' => $ats->student->name,
+                    'studentName' => $ats->student->name ?? 'Siswa',
                     'lastClass' => $ats->student->schoolClass->name ?? '-',
                     'address' => $ats->address ?? $ats->student->address ?? '-',
                     'officer' => $ats->officer_name,
@@ -125,27 +252,31 @@ class DashboardController extends Controller
                     'reason' => $ats->reason,
                     'scheduledVisit' => $ats->scheduled_visit ?? '-',
                 ];
-            });
+            })->toArray();
+    }
 
-        // 6. Payments
-        $payments = SchoolPayment::with('student.schoolClass')
+    private function getPayments(): array
+    {
+        return SchoolPayment::with('student.schoolClass')
             ->latest()
             ->get()
             ->map(function (SchoolPayment $pay): array {
                 return [
                     'id' => (string) $pay->id,
                     'invoiceNo' => $pay->invoice_no,
-                    'studentName' => $pay->student->name,
+                    'studentName' => $pay->student->name ?? 'Siswa',
                     'class' => $pay->student->schoolClass->name ?? '-',
                     'type' => $pay->type,
                     'amount' => $pay->amount,
                     'dueDate' => $pay->due_date,
                     'status' => $pay->status,
                 ];
-            });
+            })->toArray();
+    }
 
-        // 7. Dapodik Issues
-        $dapodikIssues = DapodikIssue::latest()->get()->map(fn (DapodikIssue $issue): array => [
+    private function getDapodikIssues(): array
+    {
+        return DapodikIssue::latest()->get()->map(fn (DapodikIssue $issue): array => [
             'id' => (string) $issue->id,
             'category' => $issue->category,
             'targetName' => $issue->target_name,
@@ -153,10 +284,12 @@ class DashboardController extends Controller
             'description' => $issue->description,
             'severity' => $issue->severity,
             'action' => $issue->action,
-        ]);
+        ])->toArray();
+    }
 
-        // 8. Teacher Documents
-        $documents = TeacherDocument::latest()->get()->map(fn (TeacherDocument $doc): array => [
+    private function getDocuments(): array
+    {
+        return TeacherDocument::latest()->get()->map(fn (TeacherDocument $doc): array => [
             'id' => (string) $doc->id,
             'title' => $doc->title,
             'teacher' => $doc->teacher_name,
@@ -164,10 +297,12 @@ class DashboardController extends Controller
             'period' => $doc->period,
             'status' => $doc->status,
             'size' => $doc->file_size,
-        ]);
+        ])->toArray();
+    }
 
-        // 9. Incidents & Checklists
-        $incidents = Incident::with('checklists')->latest()->get()->map(fn (Incident $inc): array => [
+    private function getIncidents(): array
+    {
+        return Incident::with('checklists')->latest()->get()->map(fn (Incident $inc): array => [
             'id' => (string) $inc->id,
             'title' => $inc->title,
             'type' => $inc->type,
@@ -179,10 +314,12 @@ class DashboardController extends Controller
                 'label' => $chk->label,
                 'done' => $chk->is_done,
             ])->toArray(),
-        ]);
+        ])->toArray();
+    }
 
-        // 10. Parent Communications
-        $parentUpdates = ParentCommunication::with('student')->latest()->get()->map(fn (ParentCommunication $msg): array => [
+    private function getParentUpdates(): array
+    {
+        return ParentCommunication::with('student')->latest()->get()->map(fn (ParentCommunication $msg): array => [
             'id' => (string) $msg->id,
             'studentName' => $msg->student->name ?? 'Siswa',
             'parentName' => $msg->parent_name,
@@ -191,10 +328,12 @@ class DashboardController extends Controller
             'date' => $msg->sent_at ?? $msg->created_at?->diffForHumans() ?? 'Hari ini',
             'status' => $msg->status,
             'acknowledgement' => $msg->acknowledgement,
-        ]);
+        ])->toArray();
+    }
 
-        // 11. Discipline Records
-        $disciplineList = DisciplineRecord::with('student.schoolClass')->latest()->get()->map(fn (DisciplineRecord $rec): array => [
+    private function getDisciplineList(): array
+    {
+        return DisciplineRecord::with('student.schoolClass')->latest()->get()->map(fn (DisciplineRecord $rec): array => [
             'id' => (string) $rec->id,
             'studentId' => (string) $rec->student_id,
             'studentName' => $rec->student->name ?? 'Siswa',
@@ -204,29 +343,7 @@ class DashboardController extends Controller
             'actionStatus' => $rec->action_status,
             'patternNotes' => $rec->pattern_notes ?? 'Pencatatan pembinaan berkala',
             'recordedAt' => $rec->recorded_at ?? $rec->created_at?->format('d M H:i') ?? 'Hari ini',
-        ]);
-
-        return Inertia::render('dashboard', [
-            'stats' => [
-                'studentsNeedingAttention' => $studentsNeedingAttention,
-                'activeCases' => $activeCases,
-                'overdueCases' => $overdueCases,
-                'dataCheckIssues' => $dataCheckIssues,
-                'duePayments' => $duePayments,
-                'activeIncidents' => $activeIncidents,
-                'resolvedThisMonth' => $resolvedCount,
-            ],
-            'priorityFeed' => $priorityAlerts->toArray(),
-            'classes' => $classes->toArray(),
-            'cases' => $cases->toArray(),
-            'atsList' => $atsList->toArray(),
-            'paymentList' => $payments->toArray(),
-            'dapodikIssues' => $dapodikIssues->toArray(),
-            'documents' => $documents->toArray(),
-            'incidents' => $incidents->toArray(),
-            'parentUpdates' => $parentUpdates->toArray(),
-            'disciplineList' => $disciplineList->toArray(),
-        ]);
+        ])->toArray();
     }
 
     /**

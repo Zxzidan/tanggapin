@@ -1,4 +1,5 @@
 import { createInertiaApp } from '@inertiajs/react';
+import { ActionModalsProvider } from '@/components/action-modals';
 import { Toaster } from '@/components/ui/sonner';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { initializeTheme } from '@/hooks/use-appearance';
@@ -14,22 +15,22 @@ void createInertiaApp({
         switch (true) {
             case name === 'welcome':
                 return null;
-            case name.toLowerCase() === 'dashboard':
-                return null;
             case name.startsWith('auth/'):
                 return AuthLayout;
             case name.startsWith('settings/'):
                 return [AppLayout, SettingsLayout];
             default:
-                return AppLayout;
+                return null;
         }
     },
     strictMode: true,
     withApp(app) {
         return (
             <TooltipProvider delayDuration={0}>
-                {app}
-                <Toaster />
+                <ActionModalsProvider>
+                    {app}
+                    <Toaster />
+                </ActionModalsProvider>
             </TooltipProvider>
         );
     },
