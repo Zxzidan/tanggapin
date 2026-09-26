@@ -44,18 +44,14 @@ $app = Application::configure(basePath: dirname(__DIR__))
                 return null;
             }
 
-            if ($request->query('debug') === '1') {
-                return response(
-                    '<h1>Application Error Detail</h1>'
-                    .'<p><strong>Exception:</strong> '.htmlspecialchars(get_class($e)).'</p>'
-                    .'<p><strong>Message:</strong> '.htmlspecialchars($e->getMessage()).'</p>'
-                    .'<p><strong>File:</strong> '.htmlspecialchars($e->getFile().':'.$e->getLine()).'</p>'
-                    ."<pre style='background:#f4f4f4;padding:12px;overflow:auto;'>".htmlspecialchars($e->getTraceAsString()).'</pre>',
-                    500
-                );
-            }
-
-            return null;
+            return response(
+                '<h1>Application Error Detail</h1>'
+                .'<p><strong>Exception:</strong> '.htmlspecialchars(get_class($e)).'</p>'
+                .'<p><strong>Message:</strong> '.htmlspecialchars($e->getMessage()).'</p>'
+                .'<p><strong>File:</strong> '.htmlspecialchars($e->getFile().':'.$e->getLine()).'</p>'
+                ."<pre style='background:#f4f4f4;padding:12px;overflow:auto;'>".htmlspecialchars($e->getTraceAsString()).'</pre>',
+                500
+            );
         });
     })->create();
 
