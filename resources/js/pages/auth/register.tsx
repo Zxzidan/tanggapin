@@ -1,6 +1,5 @@
 import { Form, Head } from '@inertiajs/react';
 import {
-    Check,
     CheckCircle2,
     GraduationCap,
     HeartPulse,
@@ -63,15 +62,6 @@ const ROLE_OPTIONS: RoleOption[] = [
         icon: GraduationCap,
     },
     {
-        id: 'guru_bk',
-        label: 'Guru BK & Konseling',
-        shortTitle: 'Guru BK',
-        scopeBadge: 'Tupoksi Kasus',
-        isFullAccess: false,
-        description: 'Disesuaikan untuk alur kanban kasus konseling, mediasi masalah, dan pemantauan ATS.',
-        icon: HeartPulse,
-    },
-    {
         id: 'bendahara',
         label: 'Bendahara Sekolah',
         shortTitle: 'Bendahara',
@@ -80,10 +70,21 @@ const ROLE_OPTIONS: RoleOption[] = [
         description: 'Disesuaikan untuk administrasi SPP, verifikasi bukti bayar transfer, dan rekonsiliasi kas.',
         icon: WalletCards,
     },
+    {
+        id: 'guru_bk',
+        label: 'Guru BK & Konseling',
+        shortTitle: 'Guru BK',
+        scopeBadge: 'Tupoksi Kasus',
+        isFullAccess: false,
+        description: 'Disesuaikan untuk alur kanban kasus konseling, mediasi masalah, dan pemantauan ATS.',
+        icon: HeartPulse,
+    },
 ];
 
 export default function Register({ passwordRules }: Props) {
     const [selectedRole, setSelectedRole] = useState<RoleType>('wali_kelas');
+    const activeOption = ROLE_OPTIONS.find((r) => r.id === selectedRole) || ROLE_OPTIONS[0];
+    const ActiveIcon = activeOption.icon;
 
     return (
         <>
@@ -137,7 +138,7 @@ export default function Register({ passwordRules }: Props) {
                             </div>
 
                             {/* 3. PEMILIHAN ROLE & TUPOKSI */}
-                            <div className="grid gap-2">
+                            <div className="space-y-2">
                                 <div className="flex items-center justify-between">
                                     <Label className="text-xs font-semibold text-slate-700 dark:text-slate-300">
                                         Pilih Peran & Tanggung Jawab (Tupoksi)
@@ -147,76 +148,54 @@ export default function Register({ passwordRules }: Props) {
                                     </span>
                                 </div>
 
-                                <div className="grid grid-cols-1 gap-2">
+                                {/* Role Switcher Pills Bar */}
+                                <div className="flex flex-wrap items-center gap-1.5 p-1.5 rounded-xl bg-slate-100/80 dark:bg-[#162238] border border-slate-200 dark:border-slate-700 justify-center">
+                                    <span className="text-[11px] font-semibold text-slate-500 px-2">Peran:</span>
                                     {ROLE_OPTIONS.map((role) => {
-                                        const Icon = role.icon;
                                         const isSelected = selectedRole === role.id;
-
                                         return (
-                                            <div
+                                            <button
                                                 key={role.id}
-                                                role="button"
-                                                tabIndex={0}
+                                                type="button"
                                                 onClick={() => setSelectedRole(role.id)}
-                                                onKeyDown={(e) => {
-                                                    if (e.key === 'Enter' || e.key === ' ') {
-                                                        setSelectedRole(role.id);
-                                                    }
-                                                }}
                                                 className={cn(
-                                                    'p-3 rounded-xl border text-left cursor-pointer transition-all flex items-start gap-3 select-none',
+                                                    'px-2.5 py-1 text-xs rounded-lg font-medium transition-all',
                                                     isSelected
-                                                        ? 'bg-blue-50/80 dark:bg-blue-950/40 border-blue-600 dark:border-blue-500 ring-2 ring-blue-500/20 shadow-xs'
-                                                        : 'bg-white dark:bg-[#0f172a] border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
+                                                        ? 'bg-blue-700 text-white font-semibold shadow-xs'
+                                                        : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-slate-700'
                                                 )}
                                             >
-                                                <div
-                                                    className={cn(
-                                                        'p-2 rounded-lg shrink-0 mt-0.5 transition-colors',
-                                                        isSelected
-                                                            ? 'bg-blue-600 text-white'
-                                                            : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
-                                                    )}
-                                                >
-                                                    <Icon className="size-4" />
-                                                </div>
-
-                                                <div className="space-y-0.5 flex-1 min-w-0">
-                                                    <div className="flex items-center justify-between gap-1.5">
-                                                        <span className="font-bold text-xs text-slate-900 dark:text-white">
-                                                            {role.label}
-                                                        </span>
-                                                        <span
-                                                            className={cn(
-                                                                'text-[10px] font-bold px-1.5 py-0.5 rounded border',
-                                                                role.isFullAccess
-                                                                    ? 'bg-purple-50 text-purple-700 dark:bg-purple-950 dark:text-purple-300 border-purple-200 dark:border-purple-800'
-                                                                    : 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800'
-                                                            )}
-                                                        >
-                                                            {role.scopeBadge}
-                                                        </span>
-                                                    </div>
-                                                    <p className="text-[11px] text-slate-600 dark:text-slate-400 leading-snug">
-                                                        {role.description}
-                                                    </p>
-                                                </div>
-
-                                                <div className="shrink-0 pt-1">
-                                                    <div
-                                                        className={cn(
-                                                            'size-4 rounded-full border flex items-center justify-center transition-colors',
-                                                            isSelected
-                                                                ? 'border-blue-600 bg-blue-600 text-white'
-                                                                : 'border-slate-300 dark:border-slate-700'
-                                                        )}
-                                                    >
-                                                        {isSelected && <Check className="size-2.5 stroke-[3]" />}
-                                                    </div>
-                                                </div>
-                                            </div>
+                                                {role.shortTitle}
+                                            </button>
                                         );
                                     })}
+                                </div>
+
+                                {/* Selected Role Detail Card */}
+                                <div className="px-3.5 py-2.5 rounded-xl bg-blue-50/70 dark:bg-blue-950/30 border border-blue-100 dark:border-blue-900/40 flex items-start gap-2.5 text-[11px]">
+                                    <div className="p-1.5 rounded-lg bg-blue-600 text-white shrink-0 mt-0.5">
+                                        <ActiveIcon className="size-3.5" />
+                                    </div>
+                                    <div className="flex-1 min-w-0">
+                                        <div className="flex items-center justify-between gap-1 mb-0.5">
+                                            <span className="font-bold text-slate-900 dark:text-white text-xs">
+                                                {activeOption.label}
+                                            </span>
+                                            <span
+                                                className={cn(
+                                                    'px-2 py-0.5 rounded font-bold text-[10px] shrink-0 border',
+                                                    activeOption.isFullAccess
+                                                        ? 'bg-purple-100 text-purple-700 dark:bg-purple-950 dark:text-purple-300 border-purple-200'
+                                                        : 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300 border-emerald-200'
+                                                )}
+                                            >
+                                                {activeOption.scopeBadge}
+                                            </span>
+                                        </div>
+                                        <p className="text-slate-600 dark:text-slate-400 text-[11px] leading-tight">
+                                            {activeOption.description}
+                                        </p>
+                                    </div>
                                 </div>
                                 <InputError message={errors.role} />
                             </div>

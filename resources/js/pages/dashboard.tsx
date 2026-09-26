@@ -214,28 +214,11 @@ export default function Dashboard({
                         </p>
                     </div>
 
-                    {/* Role Simulator Switcher Pills */}
-                    <div className="flex flex-wrap items-center gap-1.5 p-1.5 rounded-xl bg-slate-100/80 dark:bg-[#162238] border border-slate-200 dark:border-slate-700 self-start lg:self-center shrink-0">
-                        <span className="text-[11px] font-semibold text-slate-500 px-2">Peran:</span>
-                        {(['kepala_sekolah', 'operator', 'wali_kelas', 'bendahara', 'guru_bk'] as RoleType[]).map((r) => {
-                            const config = ROLE_CONFIGS[r];
-                            const isCurrent = currentRole === r;
-                            return (
-                                <button
-                                    key={r}
-                                    type="button"
-                                    onClick={() => handleRoleChange(r)}
-                                    className={cn(
-                                        'px-2.5 py-1 text-xs rounded-lg font-medium transition-all',
-                                        isCurrent
-                                            ? 'bg-blue-700 text-white font-semibold shadow-xs'
-                                            : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-slate-700'
-                                    )}
-                                >
-                                    {config.shortTitle}
-                                </button>
-                            );
-                        })}
+                    <div className="flex items-center gap-2 self-start lg:self-center shrink-0">
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-blue-50 text-blue-700 dark:bg-blue-950/60 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
+                            <Shield className="size-3.5" />
+                            Peran: {activeRoleConfig.title}
+                        </span>
                     </div>
                 </div>
 

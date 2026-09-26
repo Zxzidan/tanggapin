@@ -1,11 +1,6 @@
 import { Form, Head } from '@inertiajs/react';
 import {
-    CheckCircle2,
-    GraduationCap,
-    HeartPulse,
     ShieldCheck,
-    Sparkles,
-    WalletCards,
 } from 'lucide-react';
 import React, { useRef, useState } from 'react';
 import { toast } from 'sonner';
@@ -18,6 +13,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
+import { ROLE_CONFIGS } from '@/lib/role-config';
 import { cn } from '@/lib/utils';
 import { register } from '@/routes';
 import { store } from '@/routes/login';
@@ -31,82 +27,88 @@ type Props = {
 
 interface DemoPersona {
     role: RoleType;
+    shortTitle: string;
     label: string;
     email: string;
     scope: string;
     isFullAccess: boolean;
-    icon: typeof ShieldCheck;
 }
 
 const DEMO_PERSONAS: DemoPersona[] = [
     {
         role: 'kepala_sekolah',
-        label: 'Kepala Sekolah',
+        shortTitle: 'Kepsek',
+        label: 'Drs. H. Mulyadi, M.Pd (Kepala Sekolah)',
         email: 'kepsek@smk1harapan.sch.id',
-        scope: 'Semua Fitur (11 Modul)',
+        scope: 'Akses Penuh (11 Modul)',
         isFullAccess: true,
-        icon: ShieldCheck,
     },
     {
         role: 'operator',
-        label: 'Operator Dapodik',
+        shortTitle: 'Operator',
+        label: 'Harun Ar-Rasyid (Operator Dapodik & Admin)',
         email: 'operator@smk1harapan.sch.id',
-        scope: 'Semua Fitur (Dapodik & Admin)',
+        scope: 'Akses Penuh (Dapodik & Admin)',
         isFullAccess: true,
-        icon: CheckCircle2,
     },
     {
         role: 'wali_kelas',
-        label: 'Wali Kelas XI RPL 2',
+        shortTitle: 'Wali Kelas',
+        label: 'Hendra Setiawan, S.Pd (Wali Kelas XI RPL 2)',
         email: 'walikelas@smk1harapan.sch.id',
         scope: 'Tupoksi Rombel XI RPL 2',
         isFullAccess: false,
-        icon: GraduationCap,
-    },
-    {
-        role: 'guru_bk',
-        label: 'Guru BK & Konseling',
-        email: 'gurubk@smk1harapan.sch.id',
-        scope: 'Tupoksi Kasus & Mediasi',
-        isFullAccess: false,
-        icon: HeartPulse,
     },
     {
         role: 'bendahara',
-        label: 'Bendahara Sekolah',
+        shortTitle: 'Bendahara',
+        label: 'Siti Fatimah, S.E (Bendahara Sekolah)',
         email: 'bendahara@smk1harapan.sch.id',
         scope: 'Tupoksi Keuangan & SPP',
         isFullAccess: false,
-        icon: WalletCards,
+    },
+    {
+        role: 'guru_bk',
+        shortTitle: 'Guru BK',
+        label: 'Rahmawati, S.Pd (Guru BK & Konseling)',
+        email: 'gurubk@smk1harapan.sch.id',
+        scope: 'Tupoksi Kasus & Mediasi',
+        isFullAccess: false,
     },
 ];
 
 export default function Login({ status, canResetPassword }: Props) {
-    const [selectedEmail, setSelectedEmail] = useState('');
-    const [selectedPassword, setSelectedPassword] = useState('');
+    const [selectedRole, setSelectedRole] = useState<RoleType>('guru_bk');
+    const [selectedEmail, setSelectedEmail] = useState('gurubk@smk1harapan.sch.id');
+    const [selectedPassword, setSelectedPassword] = useState('password');
     const emailInputRef = useRef<HTMLInputElement>(null);
     const passwordInputRef = useRef<HTMLInputElement>(null);
 
-    const handleSelectPersona = (persona: DemoPersona) => {
-        setSelectedEmail(persona.email);
-        setSelectedPassword('password');
+    const handleSelectRole = (role: RoleType) => {
+        setSelectedRole(role);
+        const persona = DEMO_PERSONAS.find((p) => p.role === role);
+        if (persona) {
+            setSelectedEmail(persona.email);
+            setSelectedPassword('password');
 
-        if (typeof window !== 'undefined') {
-            localStorage.setItem('tanggapin_current_role', persona.role);
-        }
+            if (typeof window !== 'undefined') {
+                localStorage.setItem('tanggapin_current_role', persona.role);
+            }
 
-        toast.success(`Kredensial demo ${persona.label} berhasil diisi!`, {
-            description: `Akses: ${persona.scope}`,
-        });
+            if (emailInputRef.current) {
+                emailInputRef.current.value = persona.email;
+            }
+            if (passwordInputRef.current) {
+                passwordInputRef.current.value = 'password';
+            }
 
-        // Set native input values so form submission catches them immediately
-        if (emailInputRef.current) {
-            emailInputRef.current.value = persona.email;
-        }
-        if (passwordInputRef.current) {
-            passwordInputRef.current.value = 'password';
+            toast.success(`Kredensial ${persona.shortTitle} terisi otomatis!`, {
+                description: `Email: ${persona.email}`,
+            });
         }
     };
+
+    const activePersona = DEMO_PERSONAS.find((p) => p.role === selectedRole) || DEMO_PERSONAS[0];
 
     return (
         <>
@@ -114,74 +116,57 @@ export default function Login({ status, canResetPassword }: Props) {
 
             <PasskeyVerify />
 
-            {/* Quick Demo Role Selector */}
-            <div className="p-3.5 rounded-2xl bg-blue-50/70 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-900/60 space-y-2.5">
-                <div className="flex items-center justify-between">
-                    <span className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-900 dark:text-blue-300">
-                        <Sparkles className="size-3.5 text-blue-600" />
-                        Pintasan Masuk Demo (Pilih Peran)
-                    </span>
-                    <span className="text-[10px] text-blue-700 dark:text-blue-400 font-medium">
-                        1-Klik Isi
-                    </span>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
-                    {DEMO_PERSONAS.map((persona) => {
-                        const Icon = persona.icon;
-                        const isCurrent = selectedEmail === persona.email;
-
+            {/* Role Switcher Pills Bar */}
+            <div className="space-y-2">
+                <div className="flex flex-wrap items-center gap-1.5 p-1.5 rounded-xl bg-slate-100/80 dark:bg-[#162238] border border-slate-200 dark:border-slate-700 justify-center">
+                    <span className="text-[11px] font-semibold text-slate-500 px-2">Peran:</span>
+                    {(['kepala_sekolah', 'operator', 'wali_kelas', 'bendahara', 'guru_bk'] as RoleType[]).map((r) => {
+                        const persona = DEMO_PERSONAS.find((p) => p.role === r)!;
+                        const isCurrent = selectedRole === r;
                         return (
                             <button
-                                key={persona.role}
+                                key={r}
                                 type="button"
-                                onClick={() => handleSelectPersona(persona)}
+                                onClick={() => handleSelectRole(r)}
                                 className={cn(
-                                    'p-2 rounded-xl text-left border transition-all flex items-center gap-2 group',
+                                    'px-2.5 py-1 text-xs rounded-lg font-medium transition-all',
                                     isCurrent
-                                        ? 'bg-blue-600 text-white border-blue-600 shadow-xs'
-                                        : 'bg-white dark:bg-[#0f172a] border-slate-200 dark:border-slate-800 hover:border-blue-300 dark:hover:border-blue-700'
+                                        ? 'bg-blue-700 text-white font-semibold shadow-xs'
+                                        : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-slate-700'
                                 )}
                             >
-                                <div
-                                    className={cn(
-                                        'p-1.5 rounded-lg shrink-0 transition-colors',
-                                        isCurrent
-                                            ? 'bg-blue-700 text-white'
-                                            : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 group-hover:bg-blue-50 group-hover:text-blue-600'
-                                    )}
-                                >
-                                    <Icon className="size-3.5" />
-                                </div>
-                                <div className="min-w-0 flex-1">
-                                    <div className="flex items-center justify-between">
-                                        <span className="font-bold text-[11px] truncate">
-                                            {persona.label}
-                                        </span>
-                                    </div>
-                                    <span
-                                        className={cn(
-                                            'text-[9px] block truncate',
-                                            isCurrent ? 'text-blue-100' : 'text-slate-500'
-                                        )}
-                                    >
-                                        {persona.scope}
-                                    </span>
-                                </div>
+                                {persona.shortTitle}
                             </button>
                         );
                     })}
+                </div>
+
+                {/* Brief Persona Scope Notification */}
+                <div className="px-3 py-2 rounded-xl bg-blue-50/70 dark:bg-blue-950/30 border border-blue-100 dark:border-blue-900/40 flex items-center justify-between text-[11px]">
+                    <span className="text-slate-600 dark:text-slate-300 truncate me-2">
+                        Akun: <strong className="font-semibold text-blue-700 dark:text-blue-400">{activePersona.label}</strong>
+                    </span>
+                    <span
+                        className={cn(
+                            'px-2 py-0.5 rounded font-bold text-[10px] shrink-0 border',
+                            activePersona.isFullAccess
+                                ? 'bg-purple-100 text-purple-700 dark:bg-purple-950 dark:text-purple-300 border-purple-200'
+                                : 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300 border-emerald-200'
+                        )}
+                    >
+                        {activePersona.scope}
+                    </span>
                 </div>
             </div>
 
             <Form
                 {...store.form()}
                 resetOnSuccess={['password']}
-                className="flex flex-col gap-5"
+                className="flex flex-col gap-4 pt-1"
             >
                 {({ processing, errors }) => (
                     <>
-                        <div className="grid gap-5">
+                        <div className="grid gap-4">
                             <div className="grid gap-1.5">
                                 <Label htmlFor="email" className="text-xs font-semibold text-slate-700 dark:text-slate-300">
                                     Alamat Email
