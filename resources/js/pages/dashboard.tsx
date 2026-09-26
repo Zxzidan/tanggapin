@@ -1,4 +1,4 @@
-import { Head } from '@inertiajs/react';
+import { Head, router } from '@inertiajs/react';
 import {
     AlertCircle,
     AlertTriangle,
@@ -96,6 +96,7 @@ export default function Dashboard({
     const [isFollowupModalOpen, setIsFollowupModalOpen] = useState(false);
     const [isParentContactModalOpen, setIsParentContactModalOpen] = useState(false);
     const [isNewCaseModalOpen, setIsNewCaseModalOpen] = useState(false);
+    const [selectedStudentId, setSelectedStudentId] = useState<string>('1');
     const [selectedStudentName, setSelectedStudentName] = useState('Brian Aditya (XI RPL 2)');
     const [selectedStudentPhone, setSelectedStudentPhone] = useState('+62 812-3456-7890');
     const [selectedAlertId, setSelectedAlertId] = useState<string | null>(null);
@@ -117,9 +118,12 @@ export default function Dashboard({
     const [newCaseDesc, setNewCaseDesc] = useState('');
 
     // Trigger action from topbar or buttons
-    const handleTriggerActionModal = (actionType: string, studentName?: string) => {
+    const handleTriggerActionModal = (actionType: string, studentName?: string, studentId?: string) => {
         if (studentName) {
             setSelectedStudentName(studentName);
+        }
+        if (studentId) {
+            setSelectedStudentId(studentId);
         }
         if (actionType === 'followup') {
             setIsFollowupModalOpen(true);
@@ -130,66 +134,84 @@ export default function Dashboard({
         }
     };
 
-    // Submit Follow-up
+    // Submit Follow-up to database
     const handleSaveFollowup = (e: React.FormEvent) => {
         e.preventDefault();
-        toast.success(`Follow-up untuk ${selectedStudentName} berhasil dibuat!`, {
-            description: `Tindakan: ${followupType} | PIC: ${followupAssignee}`,
-        });
-        if (selectedAlertId) {
-            setPriorityFeed((prev) =>
-                prev.map((item) => (item.id === selectedAlertId ? { ...item, actionTaken: true } : item))
-            );
-        }
-        setStats((prev) => ({
-            ...prev,
-            studentsNeedingAttention: Math.max(0, prev.studentsNeedingAttention - 1),
-            resolvedThisMonth: prev.resolvedThisMonth + 1,
-        }));
-        setIsFollowupModalOpen(false);
-        setFollowupNote('');
+        router.post(
+            '/followups',
+            {
+                student_id: selectedStudentId || '1',
+                type: followupType,
+                assignee_name: followupAssignee,
+                note: followupNote || 'Follow-up tindakan operasional sekolah',
+            },
+            {
+                preserveScroll: true,
+                onSuccess: () => {
+                    toast.success(`Follow-up untuk ${selectedStudentName} berhasil disimpan di database!`, {
+                        description: `Tindakan: ${followupType} | PIC: ${followupAssignee}`,
+                    });
+                    if (selectedAlertId) {
+                        setPriorityFeed((prev) =>
+                            prev.map((item) => (item.id === selectedAlertId ? { ...item, actionTaken: true } : item))
+                        );
+                    }
+                    setIsFollowupModalOpen(false);
+                    setFollowupNote('');
+                },
+                onError: () => {
+                    toast.error('Gagal menyimpan follow-up ke database.');
+                },
+            }
+        );
     };
 
-    // Submit Parent Contact
+    // Submit Parent Contact to database
     const handleSendParentMessage = (e: React.FormEvent) => {
         e.preventDefault();
-        const newMsg: ParentUpdate = {
-            id: `msg-${Date.now()}`,
-            studentName: selectedStudentName,
-            parentName: 'Orang Tua Siswa',
-            category: parentCategory,
-            message: parentCustomMessage,
-            date: 'Baru saja',
-            status: 'Terkirim via WhatsApp & Tanggapin App',
-            acknowledgement: 'Perlu ditindaklanjuti',
-        };
-        setParentUpdates([newMsg, ...parentUpdates]);
-        toast.success(`Pesan terstruktur berhasil dikirim ke orang tua ${selectedStudentName}!`);
-        setIsParentContactModalOpen(false);
+        router.post(
+            '/parent-communications',
+            {
+                student_id: selectedStudentId || '1',
+                category: parentCategory,
+                message: parentCustomMessage,
+            },
+            {
+                preserveScroll: true,
+                onSuccess: () => {
+                    toast.success(`Pesan terstruktur berhasil dikirim dan tersimpan di database!`);
+                    setIsParentContactModalOpen(false);
+                },
+                onError: () => {
+                    toast.error('Gagal mengirim pesan.');
+                },
+            }
+        );
     };
 
-    // Submit New Case
+    // Submit New Case to database
     const handleCreateCase = (e: React.FormEvent) => {
         e.preventDefault();
-        const newCaseItem: CaseItem = {
-            id: `case-${Date.now()}`,
-            code: `CS-2025-${Math.floor(100 + Math.random() * 900)}`,
-            studentName: selectedStudentName,
-            class: 'XI RPL 2',
-            category: newCaseCategory,
-            priority: newCasePriority,
-            stage: 'new',
-            stageLabel: 'Baru Masuk',
-            assignee: 'Koordinator BK',
-            lastActivity: newCaseDesc || 'Kasus baru dibuat dan menunggu verifikasi BK.',
-            lastUpdate: 'Baru saja',
-            timeline: [{ time: 'Hari ini', title: 'Kasus dibuat', actor: 'Petugas Sekolah' }],
-        };
-        setCases([newCaseItem, ...cases]);
-        setStats((prev) => ({ ...prev, activeCases: prev.activeCases + 1 }));
-        toast.success(`Kasus ${newCaseItem.code} untuk ${selectedStudentName} berhasil didaftarkan!`);
-        setIsNewCaseModalOpen(false);
-        setNewCaseDesc('');
+        router.post(
+            '/cases',
+            {
+                student_id: selectedStudentId || '1',
+                category: newCaseCategory,
+                priority: newCasePriority,
+                last_activity: newCaseDesc || 'Kasus baru dibuat dan menunggu verifikasi BK.',
+            },
+            {
+                preserveScroll: true,
+                onSuccess: () => {
+                    toast.success(`Kasus baru untuk ${selectedStudentName} berhasil didaftarkan di database!`);
+                    setIsNewCaseModalOpen(false);
+                    setNewCaseDesc('');
+                },
+                onError: () => {
+                    toast.error('Gagal mendaftarkan kasus.');
+                },
+            }
+        );
     };
 
     // Toggle Incident Checklist item
