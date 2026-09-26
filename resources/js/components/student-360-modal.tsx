@@ -101,7 +101,7 @@ export default function Student360Modal({
                             <div className="flex items-center gap-2">
                                 <AlertTriangle className="size-4 shrink-0 text-red-600 dark:text-red-400" />
                                 <span className="text-xs font-bold tracking-wider text-slate-900 uppercase dark:text-white">
-                                    Pemicu Perhatian (Signal Trigger)
+                                    Pemicu Perhatian - Sinyal Terdeteksi
                                 </span>
                             </div>
                             <span className="text-[10px] font-medium text-slate-500">
@@ -131,7 +131,7 @@ export default function Student360Modal({
                         </div>
                     </div>
 
-                    {/* 2. Indikator Kondisi Siswa 360° (Kehadiran, Akademik, Kedisiplinan) */}
+                    {/* 2. Indikator Kondisi Siswa 360° */}
                     <div>
                         <h3 className="mb-2.5 text-xs font-bold tracking-wider text-slate-900 uppercase dark:text-white">
                             Kondisi Terkini Siswa
@@ -140,7 +140,7 @@ export default function Student360Modal({
                             <div className="space-y-1.5 rounded-xl border border-slate-200 bg-slate-50 p-3.5 dark:border-slate-800 dark:bg-[#111c30]">
                                 <div className="flex items-center justify-between text-slate-500">
                                     <span className="font-medium">
-                                        Kehadiran (14 Hari)
+                                        Kehadiran 14 Hari
                                     </span>
                                     <Clock className="size-3.5" />
                                 </div>
@@ -234,7 +234,7 @@ export default function Student360Modal({
                                 </span>
                                 <div className="flex items-center gap-1 font-semibold text-emerald-600 dark:text-emerald-400">
                                     <CheckCircle2 className="size-3" />
-                                    <span>Sudah Membaca (Acknowledged)</span>
+                                    <span>Sudah Membaca - Terkonfirmasi</span>
                                 </div>
                                 <div className="text-[10px] text-slate-500">
                                     Pemberitahuan absensi terkirim 24 Sep, 08:15

@@ -9,7 +9,7 @@ Route::inertia('/', 'welcome')->name('home');
 
 Route::get('/demo-login', function () {
     $user = User::first() ?? User::factory()->create([
-        'name' => 'Neil Sims (Kepala Sekolah)',
+        'name' => 'Neil Sims - Kepala Sekolah',
         'email' => 'neil.sims@tanggapin.sch.id',
     ]);
     if (! $user->email_verified_at) {

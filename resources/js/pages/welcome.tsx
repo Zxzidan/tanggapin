@@ -9,7 +9,6 @@ import {
     Search,
     Shield,
     ShieldAlert,
-    Sparkles,
     Users,
 } from 'lucide-react';
 import React, { useState } from 'react';
@@ -142,7 +141,7 @@ export default function Welcome() {
                                         href="/demo-login"
                                         className="inline-flex items-center gap-1.5 rounded-lg bg-blue-700 px-3.5 py-1.5 text-xs font-semibold text-white shadow-sm transition-all hover:bg-blue-800 active:scale-95"
                                     >
-                                        <Sparkles className="size-3.5" />
+                                        <ArrowRight className="size-3.5" />
                                         <span>Demo Interaktif</span>
                                     </a>
                                     <Link
@@ -168,7 +167,7 @@ export default function Welcome() {
                     <section className="mx-auto max-w-7xl px-4 pt-16 pb-20 text-center sm:px-6 lg:px-8">
                         <div className="mx-auto max-w-3xl space-y-5">
                             <div className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700 dark:border-blue-900/80 dark:bg-blue-950/70 dark:text-blue-300">
-                                <Sparkles className="size-3.5" />
+                                <CheckCircle2 className="size-3.5 text-blue-600 dark:text-blue-400" />
                                 <span>
                                     Platform Tindak Lanjut Siswa untuk Sekolah
                                     Indonesia
@@ -279,8 +278,7 @@ export default function Welcome() {
                                             <span>
                                                 Koordinasi penanganan tenggelam
                                                 di chat WhatsApp tanpa
-                                                penanggung jawab (PIC)
-                                                definitif.
+                                                penanggung jawab PIC definitif.
                                             </span>
                                         </li>
                                         <li className="flex items-start gap-2">
@@ -496,7 +494,7 @@ export default function Welcome() {
                                                 : 'text-slate-600 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800'
                                         }`}
                                     >
-                                        Alur Kasus BK (Kanban)
+                                        Alur Kasus BK
                                     </button>
                                     <button
                                         type="button"
@@ -545,9 +543,8 @@ export default function Welcome() {
                                                     </div>
                                                     <p className="leading-snug text-slate-600 dark:text-slate-300">
                                                         Kehadiran menurun
-                                                        drastis (28%
-                                                        ketidakhadiran dalam 14
-                                                        hari) dan 2 tugas
+                                                        drastis 28% dalam 14
+                                                        hari dan 2 tugas
                                                         produktif belum
                                                         terkumpul.
                                                     </p>
@@ -746,16 +743,16 @@ export default function Welcome() {
                                                 </div>
                                                 <div className="space-y-1 rounded-lg border border-slate-200 bg-white p-2.5 dark:border-slate-700 dark:bg-[#162238]">
                                                     <div className="font-bold text-slate-900 dark:text-white">
-                                                        Rian Pratama
-                                                        (CS-2025-089)
+                                                        Rian Pratama -
+                                                        CS-2025-089
                                                     </div>
                                                     <div className="text-[11px] text-slate-500">
                                                         Konseling sesi 2 tuntas,
                                                         surat komitmen dibuat.
                                                     </div>
                                                     <div className="text-[10px] text-slate-400">
-                                                        PIC: Ibu Rahmawati (Guru
-                                                        BK)
+                                                        PIC: Ibu Rahmawati -
+                                                        Guru BK
                                                     </div>
                                                 </div>
                                             </div>
@@ -800,8 +797,8 @@ export default function Welcome() {
                                             <div className="space-y-1.5 rounded-lg border border-slate-200 bg-slate-50 p-3 dark:border-slate-700 dark:bg-[#162238]">
                                                 <div className="flex items-center justify-between text-[11px]">
                                                     <span className="font-bold text-slate-900 dark:text-white">
-                                                        Kepada: Hadi Wicaksono
-                                                        (Wali Brian Aditya)
+                                                        Kepada: Hadi Wicaksono -
+                                                        Wali Brian Aditya
                                                     </span>
                                                     <span className="text-slate-400">
                                                         24 Sep, 08:15

@@ -107,7 +107,7 @@ export default function FlowbiteTanggapinLayout({
             desc: 'Pemantauan komprehensif sekolah',
         },
         wali_kelas: {
-            title: 'Wali Kelas (XI RPL 2)',
+            title: 'Wali Kelas XI RPL 2',
             badge: 'Garda Depan',
             desc: 'Deteksi & intervensi kelas',
         },
@@ -238,14 +238,14 @@ export default function FlowbiteTanggapinLayout({
     const searchResults = [
         {
             type: 'Siswa Berisiko',
-            title: 'Brian Aditya (XI RPL 2)',
+            title: 'Brian Aditya - XI RPL 2',
             desc: 'Kehadiran turun 28% dalam 14 hari',
             tab: 'early-warning',
         },
         {
             type: 'Kasus Aktif',
             title: 'CS-2025-089 - Rian Pratama',
-            desc: 'Kedisiplinan berulang (Tahap Konseling BK)',
+            desc: 'Kedisiplinan berulang - Tahap Konseling BK',
             tab: 'cases',
         },
         {
@@ -256,13 +256,13 @@ export default function FlowbiteTanggapinLayout({
         },
         {
             type: 'Tagihan SPP',
-            title: 'Reza Pahlevi (XI RPL 2)',
-            desc: 'Jatuh tempo 10 Sep 2025 (Rp350.000)',
+            title: 'Reza Pahlevi - XI RPL 2',
+            desc: 'Jatuh tempo 10 Sep 2025 - Rp 350.000',
             tab: 'payments',
         },
         {
             type: 'Kunjungan Lapangan',
-            title: 'Deni Saputra (XI TKR 3)',
+            title: 'Deni Saputra - XI TKR 3',
             desc: 'Verifikasi tim ATS terjadwal',
             tab: 'ats',
         },
@@ -759,7 +759,7 @@ export default function FlowbiteTanggapinLayout({
                                                     className="inline-flex w-full items-center rounded-lg p-2 text-red-600 transition-colors hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-950/50"
                                                 >
                                                     <LogOut className="me-2 h-3.5 w-3.5" />
-                                                    Sign out (Keluar)
+                                                    Keluar Akun
                                                 </Link>
                                             </li>
                                         </ul>
@@ -888,8 +888,8 @@ export default function FlowbiteTanggapinLayout({
                 </div>
             </aside>
 
-            {/* Main Content Area */}
-            <main className="mt-14 min-h-[calc(100vh-3.5rem)] p-3 sm:ml-64 sm:p-5">
+            {/* Main Content Area - Generous Breathing Spacing */}
+            <main className="mt-14 min-h-[calc(100vh-3.5rem)] p-4 sm:ml-64 sm:p-8">
                 {children}
             </main>
         </div>
