@@ -277,28 +277,28 @@ export default function ManajemenKasus({
                         </p>
                     </div>
 
-                    <div className="rounded-2xl border border-amber-200 bg-amber-50/40 p-4 shadow-xs dark:border-amber-950/60 dark:bg-amber-950/20">
-                        <div className="flex items-center justify-between text-xs text-amber-800 dark:text-amber-300">
+                    <div className="rounded-2xl border border-slate-200 bg-slate-50/60 p-4 shadow-xs dark:border-slate-800 dark:bg-slate-900/40">
+                        <div className="flex items-center justify-between text-xs text-slate-800 dark:text-slate-300">
                             <span className="font-semibold">Menunggu Penanganan BK</span>
-                            <Clock className="size-4 text-amber-600 dark:text-amber-400" />
+                            <Clock className="size-4 text-slate-600 dark:text-slate-400" />
                         </div>
-                        <div className="mt-2 text-2xl font-bold text-amber-900 dark:text-amber-200">
+                        <div className="mt-2 text-2xl font-bold text-slate-900 dark:text-white">
                             {totalPending}
                         </div>
-                        <p className="mt-1 text-[11px] text-amber-700/90 dark:text-amber-300/80">
+                        <p className="mt-1 text-[11px] text-slate-600 dark:text-slate-400">
                             Perlu segera ditindaklanjuti dengan konseling siswa
                         </p>
                     </div>
 
-                    <div className="rounded-2xl border border-emerald-200 bg-emerald-50/40 p-4 shadow-xs dark:border-emerald-950/60 dark:bg-emerald-950/20">
-                        <div className="flex items-center justify-between text-xs text-emerald-800 dark:text-emerald-300">
+                    <div className="rounded-2xl border border-blue-200 bg-blue-50/40 p-4 shadow-xs dark:border-blue-950/60 dark:bg-blue-950/20">
+                        <div className="flex items-center justify-between text-xs text-blue-800 dark:text-blue-300">
                             <span className="font-semibold">Sudah Ditangani Guru BK</span>
-                            <CheckCircle2 className="size-4 text-emerald-600 dark:text-emerald-400" />
+                            <CheckCircle2 className="size-4 text-blue-600 dark:text-blue-400" />
                         </div>
-                        <div className="mt-2 text-2xl font-bold text-emerald-900 dark:text-emerald-200">
+                        <div className="mt-2 text-2xl font-bold text-blue-900 dark:text-blue-200">
                             {totalHandled}
                         </div>
-                        <p className="mt-1 text-[11px] text-emerald-700/90 dark:text-emerald-300/80">
+                        <p className="mt-1 text-[11px] text-blue-700/90 dark:text-blue-300/80">
                             Terselesaikan & terdokumentasi di sistem
                         </p>
                     </div>
@@ -337,7 +337,7 @@ export default function ManajemenKasus({
                             className={cn(
                                 'rounded-lg px-2.5 py-1.5 text-xs font-semibold transition-colors',
                                 statusFilter === 'pending'
-                                    ? 'bg-amber-600 text-white'
+                                    ? 'bg-blue-700 text-white'
                                     : 'bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300',
                             )}
                         >
@@ -349,7 +349,7 @@ export default function ManajemenKasus({
                             className={cn(
                                 'rounded-lg px-2.5 py-1.5 text-xs font-semibold transition-colors',
                                 statusFilter === 'handled'
-                                    ? 'bg-emerald-600 text-white'
+                                    ? 'bg-blue-700 text-white'
                                     : 'bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300',
                             )}
                         >
@@ -395,8 +395,8 @@ export default function ManajemenKasus({
                                             className={cn(
                                                 'space-y-3 rounded-2xl border p-4 text-xs shadow-xs',
                                                 isHandled
-                                                    ? 'border-emerald-200 bg-emerald-50/30 dark:border-emerald-900/60 dark:bg-emerald-950/10'
-                                                    : 'border-amber-200 bg-amber-50/30 dark:border-amber-900/60 dark:bg-amber-950/10',
+                                                    ? 'border-blue-200 bg-blue-50/20 dark:border-blue-900/60 dark:bg-blue-950/10'
+                                                    : 'border-slate-200 bg-slate-50/30 dark:border-slate-800 dark:bg-slate-900/10',
                                             )}
                                         >
                                             <div className="flex items-start justify-between">
@@ -409,31 +409,31 @@ export default function ManajemenKasus({
                                                     </span>
                                                 </div>
                                                 {isHandled ? (
-                                                    <span className="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-bold text-emerald-700 dark:bg-emerald-900/60 dark:text-emerald-300">
+                                                    <span className="inline-flex items-center gap-1 rounded-full border border-blue-200 bg-blue-100 px-2 py-0.5 text-[10px] font-bold text-blue-700 dark:border-blue-900 dark:bg-blue-950 dark:text-blue-300">
                                                         <CheckCircle2 className="size-3" />
                                                         Sudah Ditangani BK
                                                     </span>
                                                 ) : (
-                                                    <span className="inline-flex items-center gap-1 rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-bold text-amber-700 dark:bg-amber-900/60 dark:text-amber-300">
+                                                    <span className="inline-flex items-center gap-1 rounded-full border border-slate-300 bg-slate-100 px-2 py-0.5 text-[10px] font-bold text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
                                                         <Clock className="size-3" />
                                                         Menunggu BK
                                                     </span>
                                                 )}
                                             </div>
 
-                                            <div className="rounded-lg border border-sky-200/80 bg-sky-50/70 p-2.5 dark:border-sky-950 dark:bg-sky-950/30">
+                                            <div className="rounded-lg border border-blue-200/80 bg-blue-50/50 p-2.5 dark:border-blue-950 dark:bg-blue-950/30">
                                                 <div className="mb-1 flex items-center justify-between">
-                                                    <span className="font-semibold text-sky-800 dark:text-sky-300">
+                                                    <span className="font-semibold text-blue-900 dark:text-blue-300">
                                                         Kendala yang Anda Laporkan:
                                                     </span>
                                                     <span
                                                         className={cn(
-                                                            'rounded px-1.5 py-0.5 text-[10px] font-bold',
+                                                            'rounded px-1.5 py-0.5 text-[10px] font-bold border',
                                                             c.priority === 'Tinggi'
-                                                                ? 'bg-red-100 text-red-700 dark:bg-red-950 dark:text-red-300'
+                                                                ? 'border-blue-300 bg-blue-100 text-blue-900 dark:border-blue-800 dark:bg-blue-950 dark:text-blue-200'
                                                                 : c.priority === 'Sedang'
-                                                                  ? 'bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300'
-                                                                  : 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300',
+                                                                  ? 'border-slate-300 bg-slate-100 text-slate-800 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200'
+                                                                  : 'border-slate-200 bg-slate-50 text-slate-700 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300',
                                                         )}
                                                     >
                                                         {c.priority}
@@ -451,8 +451,8 @@ export default function ManajemenKasus({
                                             </div>
 
                                             {isHandled && (
-                                                <div className="rounded-lg border border-emerald-200 bg-white p-2.5 shadow-2xs dark:border-emerald-900/60 dark:bg-[#070b14]">
-                                                    <div className="mb-1 flex items-center justify-between text-[10px] font-semibold text-emerald-700 dark:text-emerald-400">
+                                                <div className="rounded-lg border border-blue-200 bg-white p-2.5 shadow-2xs dark:border-blue-900/60 dark:bg-[#070b14]">
+                                                    <div className="mb-1 flex items-center justify-between text-[10px] font-semibold text-blue-700 dark:text-blue-400">
                                                         <span>✓ Hasil Penanganan Guru BK</span>
                                                         <span>{c.handledAt || c.lastUpdate}</span>
                                                     </div>
@@ -467,7 +467,7 @@ export default function ManajemenKasus({
                                                     {c.bkActionType && (
                                                         <div className="text-[10px] text-slate-500">
                                                             Tindakan:{' '}
-                                                            <span className="font-medium text-emerald-700 dark:text-emerald-400">
+                                                            <span className="font-medium text-blue-700 dark:text-blue-400">
                                                                 {c.bkActionType}
                                                             </span>
                                                         </div>
@@ -502,7 +502,7 @@ export default function ManajemenKasus({
                                             )}
 
                                             {!isHandled && (
-                                                <div className="border-t border-amber-200/60 pt-2 text-[10px] italic text-amber-700/80 dark:border-amber-900/40 dark:text-amber-400/70">
+                                                <div className="border-t border-slate-200 pt-2 text-[10px] italic text-slate-600 dark:border-slate-800 dark:text-slate-400">
                                                     ⏳ Menunggu tindak lanjut dari Guru BK…
                                                 </div>
                                             )}
@@ -547,10 +547,10 @@ export default function ManajemenKasus({
                                         </div>
                                         <span
                                             className={cn(
-                                                'rounded px-1.5 py-0.5 text-[10px] font-bold',
+                                                'rounded px-1.5 py-0.5 text-[10px] font-bold border',
                                                 c.priority === 'Tinggi'
-                                                    ? 'border border-red-200 bg-red-50 text-red-700 dark:border-red-900 dark:bg-red-950 dark:text-red-300'
-                                                    : 'border border-blue-200 bg-blue-50 text-blue-700 dark:border-blue-900 dark:bg-blue-950 dark:text-blue-300',
+                                                    ? 'border-blue-300 bg-blue-100 text-blue-900 dark:border-blue-800 dark:bg-blue-950 dark:text-blue-200'
+                                                    : 'border-slate-300 bg-slate-100 text-slate-800 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200',
                                             )}
                                         >
                                             {c.priority}
@@ -715,7 +715,7 @@ export default function ManajemenKasus({
                                     <button
                                         type="button"
                                         onClick={() => handleOpenHandlingModal(c)}
-                                        className="flex w-full items-center justify-center gap-1.5 rounded-lg bg-emerald-700 py-1.5 text-center text-[11px] font-semibold text-white shadow-2xs transition-colors hover:bg-emerald-800 active:scale-95"
+                                        className="flex w-full items-center justify-center gap-1.5 rounded-lg bg-blue-700 py-1.5 text-center text-[11px] font-semibold text-white shadow-2xs transition-colors hover:bg-blue-800 active:scale-95"
                                     >
                                         <CheckCircle2 className="size-3.5" />
                                         <span>Selesaikan & Konfirmasi Ditangani ✓</span>
@@ -735,10 +735,10 @@ export default function ManajemenKasus({
                     <div className="flex flex-col space-y-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
                         <div className="flex items-center justify-between border-b border-slate-200 pb-2 font-bold text-slate-900 dark:border-slate-800 dark:text-white">
                             <span className="flex items-center gap-1.5">
-                                <span className="size-2 rounded-full bg-emerald-600" />
+                                <span className="size-2 rounded-full bg-blue-600" />
                                 4. Sudah Ditangani Guru BK
                             </span>
-                            <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-bold text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">
+                            <span className="rounded-full bg-blue-100 px-2 py-0.5 text-[10px] font-bold text-blue-800 dark:bg-blue-950 dark:text-blue-300">
                                 {handledCases.length}
                             </span>
                         </div>
@@ -747,7 +747,7 @@ export default function ManajemenKasus({
                             {handledCases.map((c) => (
                                 <div
                                     key={c.id}
-                                    className="space-y-2 rounded-xl border border-emerald-200/80 bg-emerald-50/40 p-3 text-xs dark:border-emerald-900/60 dark:bg-emerald-950/20"
+                                    className="space-y-2 rounded-xl border border-blue-200/80 bg-blue-50/40 p-3 text-xs dark:border-blue-900/60 dark:bg-blue-950/20"
                                 >
                                     <div className="flex items-start justify-between">
                                         <div>
@@ -758,7 +758,7 @@ export default function ManajemenKasus({
                                                 {c.code} • {c.class}
                                             </span>
                                         </div>
-                                        <span className="inline-flex items-center gap-1 rounded bg-emerald-100 px-1.5 py-0.5 text-[10px] font-bold text-emerald-800 dark:bg-emerald-900/60 dark:text-emerald-300">
+                                        <span className="inline-flex items-center gap-1 rounded border border-blue-200 bg-blue-100 px-1.5 py-0.5 text-[10px] font-bold text-blue-800 dark:border-blue-900 dark:bg-blue-900/60 dark:text-blue-300">
                                             <CheckCircle2 className="size-3" />
                                             Ditangani
                                         </span>
@@ -770,8 +770,8 @@ export default function ManajemenKasus({
                                     </div>
 
                                     {/* Handling Record Box */}
-                                    <div className="rounded-lg border border-emerald-200 bg-white p-2.5 text-[11px] leading-relaxed shadow-2xs dark:border-emerald-900/60 dark:bg-[#070b14]">
-                                        <div className="flex items-center justify-between text-[10px] font-semibold text-emerald-700 dark:text-emerald-400">
+                                    <div className="rounded-lg border border-blue-200 bg-white p-2.5 text-[11px] leading-relaxed shadow-2xs dark:border-blue-900/60 dark:bg-[#070b14]">
+                                        <div className="flex items-center justify-between text-[10px] font-semibold text-blue-700 dark:text-blue-400">
                                             <span>Tindakan: {c.bkActionType || 'Konseling Siswa'}</span>
                                             <span>{c.handledAt || c.lastUpdate}</span>
                                         </div>
@@ -786,7 +786,7 @@ export default function ManajemenKasus({
                                         </p>
                                     </div>
 
-                                    <div className="flex items-center justify-between pt-0.5 text-[10px] text-emerald-700 dark:text-emerald-400">
+                                    <div className="flex items-center justify-between pt-0.5 text-[10px] text-blue-700 dark:text-blue-400">
                                         <span>✓ Status di Dashboard Wali Kelas: Sinkron</span>
                                     </div>
                                 </div>
@@ -832,10 +832,10 @@ export default function ManajemenKasus({
                         <form onSubmit={handleSubmitReferral} className="space-y-4">
                             <div>
                                 <label className="mb-1.5 block font-semibold text-slate-700 dark:text-slate-300">
-                                    Siswa yang Bermasalah <span className="text-red-500">*</span>
+                                    Siswa yang Bermasalah <span className="text-blue-600 dark:text-blue-400">*</span>
                                 </label>
                                 {students.length === 0 ? (
-                                    <div className="rounded-xl border border-amber-200 bg-amber-50/50 p-3 text-[11px] text-amber-800 dark:border-amber-900 dark:bg-amber-950/20 dark:text-amber-300">
+                                    <div className="rounded-xl border border-blue-200 bg-blue-50/50 p-3 text-[11px] text-blue-800 dark:border-blue-900 dark:bg-blue-950/20 dark:text-blue-300">
                                         Belum ada data siswa di kelas Anda. Tambahkan siswa terlebih dahulu.
                                     </div>
                                 ) : (
@@ -892,7 +892,7 @@ export default function ManajemenKasus({
 
                             <div>
                                 <label className="mb-1.5 block font-semibold text-slate-700 dark:text-slate-300">
-                                    Rincian Kendala Siswa <span className="text-red-500">*</span>
+                                    Rincian Kendala Siswa <span className="text-blue-600 dark:text-blue-400">*</span>
                                 </label>
                                 <textarea
                                     rows={4}
@@ -992,7 +992,7 @@ export default function ManajemenKasus({
 
                             <div>
                                 <label className="mb-1.5 block font-semibold text-slate-700 dark:text-slate-300">
-                                    Catatan Hasil Penanganan & Komitmen Siswa <span className="text-red-500">*</span>
+                                    Catatan Hasil Penanganan & Komitmen Siswa <span className="text-blue-600 dark:text-blue-400">*</span>
                                 </label>
                                 <textarea
                                     rows={4}
@@ -1018,7 +1018,7 @@ export default function ManajemenKasus({
                                 <button
                                     type="submit"
                                     disabled={isSubmitting}
-                                    className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-700 px-4 py-2 font-semibold text-white shadow-2xs hover:bg-emerald-800 active:scale-95 disabled:opacity-50"
+                                    className="inline-flex items-center gap-1.5 rounded-lg bg-blue-700 px-4 py-2 font-semibold text-white shadow-2xs hover:bg-blue-800 active:scale-95 disabled:opacity-50"
                                 >
                                     <CheckCircle2 className="size-4" />
                                     <span>

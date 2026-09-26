@@ -18,6 +18,7 @@ import {
     HelpCircle,
     Info,
     Layers,
+    Menu,
     MessageSquare,
     PhoneCall,
     Search,
@@ -217,6 +218,7 @@ export default function Welcome() {
     }, []);
 
     const [isDemoRoleModalOpen, setIsDemoRoleModalOpen] = useState(false);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [faqOpenIndex, setFaqOpenIndex] = useState<number | null>(0);
     const [isProposalModalOpen, setIsProposalModalOpen] = useState(false);
 
@@ -439,20 +441,20 @@ Hotline Layanan BOS: +62 812-9988-7766
                         </nav>
 
                         {/* Actions Right */}
-                        <div className="flex items-center gap-3 shrink-0">
+                        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
                             {auth?.user ? (
                                 <div className="flex items-center gap-2">
                                     <Link
                                         href="/login"
-                                        className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-xs font-semibold text-slate-700 shadow-2xs transition-all hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+                                        className="hidden sm:inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-xs font-semibold text-slate-700 shadow-2xs transition-all hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
                                     >
                                         Masuk Akun Lain
                                     </Link>
                                     <Link
                                         href={dashboard()}
-                                        className="inline-flex items-center gap-1.5 rounded-xl bg-blue-700 px-4 py-2 text-xs font-semibold text-white shadow-xs transition-all hover:bg-blue-800"
+                                        className="inline-flex items-center gap-1.5 rounded-xl bg-blue-700 px-3.5 sm:px-4 py-2 text-xs font-semibold text-white shadow-xs transition-all hover:bg-blue-800"
                                     >
-                                        Buka Dashboard
+                                        <span>Buka Dashboard</span>
                                         <ArrowRight className="size-3.5" />
                                     </Link>
                                 </div>
@@ -460,22 +462,138 @@ Hotline Layanan BOS: +62 812-9988-7766
                                 <>
                                     <Link
                                         href="/login"
-                                        className="rounded-xl px-3.5 py-2 text-xs font-semibold text-slate-700 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
+                                        className="hidden sm:inline-flex rounded-xl px-3.5 py-2 text-xs font-semibold text-slate-700 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
                                     >
                                         Masuk
                                     </Link>
                                     <button
                                         type="button"
                                         onClick={() => setIsDemoRoleModalOpen(true)}
-                                        className="inline-flex items-center gap-1.5 rounded-xl bg-blue-700 px-4 py-2 text-xs font-bold text-white shadow-xs transition-all hover:bg-blue-800 active:scale-98"
+                                        className="inline-flex items-center gap-1.5 rounded-xl bg-blue-700 px-3.5 sm:px-4 py-2 text-xs font-bold text-white shadow-xs transition-all hover:bg-blue-800 active:scale-98"
                                     >
-                                        <span>Coba Demo Langsung</span>
+                                        <span>Coba Demo</span>
                                         <ArrowRight className="size-3.5" />
                                     </button>
                                 </>
                             )}
+
+                            {/* 3-Strip Hamburger Menu Button (Mobile / Tablet < lg) */}
+                            <button
+                                type="button"
+                                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                                className="inline-flex lg:hidden items-center justify-center p-2 rounded-xl text-slate-700 hover:text-blue-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:text-blue-400 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700 transition-colors"
+                                aria-label="Toggle navigation menu"
+                            >
+                                {isMobileMenuOpen ? (
+                                    <X className="size-5" />
+                                ) : (
+                                    <Menu className="size-5" />
+                                )}
+                            </button>
                         </div>
                     </div>
+
+                    {/* Mobile Navigation Dropdown Menu with 3-strip navigation links */}
+                    {isMobileMenuOpen && (
+                        <div className="lg:hidden w-full border-t border-slate-200/90 bg-white/95 px-5 py-5 shadow-2xl backdrop-blur-2xl dark:border-slate-800 dark:bg-[#070b14]/95 animate-in fade-in slide-in-from-top-2 duration-200">
+                            <nav className="flex flex-col gap-2.5 text-sm font-medium text-slate-700 dark:text-slate-200">
+                                <a
+                                    href="#fitur"
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    className="flex items-center justify-between rounded-xl px-3.5 py-2.5 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition-colors"
+                                >
+                                    <span>Alur Fitur</span>
+                                    <ArrowRight className="size-4 text-slate-400" />
+                                </a>
+                                <a
+                                    href="#preview"
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    className="flex items-center justify-between rounded-xl px-3.5 py-2.5 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition-colors"
+                                >
+                                    <span>Simulasi Dashboard</span>
+                                    <ArrowRight className="size-4 text-slate-400" />
+                                </a>
+                                <a
+                                    href="#peran"
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    className="flex items-center justify-between rounded-xl px-3.5 py-2.5 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition-colors"
+                                >
+                                    <span>Pengguna & Peran</span>
+                                    <ArrowRight className="size-4 text-slate-400" />
+                                </a>
+                                <a
+                                    href="#perbandingan"
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    className="flex items-center justify-between rounded-xl px-3.5 py-2.5 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition-colors"
+                                >
+                                    <span>Perbandingan Tanggapin</span>
+                                    <ArrowRight className="size-4 text-slate-400" />
+                                </a>
+                                <a
+                                    href="#harga"
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    className="flex items-center justify-between rounded-xl bg-blue-50 px-3.5 py-2.5 font-bold text-blue-700 dark:bg-blue-950/60 dark:text-blue-300 transition-colors"
+                                >
+                                    <span className="flex items-center gap-2">
+                                        <Coins className="size-4" />
+                                        Biaya & Paket BOS
+                                    </span>
+                                    <ArrowRight className="size-4 text-blue-600 dark:text-blue-400" />
+                                </a>
+                                <a
+                                    href="#faq"
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    className="flex items-center justify-between rounded-xl px-3.5 py-2.5 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition-colors"
+                                >
+                                    <span>FAQ BOS Sekolah</span>
+                                    <ArrowRight className="size-4 text-slate-400" />
+                                </a>
+
+                                <div className="mt-2 pt-3 border-t border-slate-200 dark:border-slate-800 flex flex-col gap-2.5">
+                                    {auth?.user ? (
+                                        <>
+                                            <Link
+                                                href={dashboard()}
+                                                onClick={() => setIsMobileMenuOpen(false)}
+                                                className="w-full flex items-center justify-center gap-2 rounded-xl bg-blue-700 py-3 text-center text-sm font-bold text-white shadow-xs hover:bg-blue-800 transition-colors"
+                                            >
+                                                Buka Dashboard
+                                                <ArrowRight className="size-4" />
+                                            </Link>
+                                            <Link
+                                                href="/login"
+                                                onClick={() => setIsMobileMenuOpen(false)}
+                                                className="w-full flex items-center justify-center rounded-xl border border-slate-200 bg-white py-2.5 text-center text-sm font-semibold text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 transition-colors"
+                                            >
+                                                Masuk Akun Lain
+                                            </Link>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <button
+                                                type="button"
+                                                onClick={() => {
+                                                    setIsMobileMenuOpen(false);
+                                                    setIsDemoRoleModalOpen(true);
+                                                }}
+                                                className="w-full flex items-center justify-center gap-2 rounded-xl bg-blue-700 py-3 text-center text-sm font-bold text-white shadow-xs hover:bg-blue-800 transition-colors"
+                                            >
+                                                <span>Coba Demo Langsung</span>
+                                                <ArrowRight className="size-4" />
+                                            </button>
+                                            <Link
+                                                href="/login"
+                                                onClick={() => setIsMobileMenuOpen(false)}
+                                                className="w-full flex items-center justify-center rounded-xl border border-slate-200 bg-white py-2.5 text-center text-sm font-semibold text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 transition-colors"
+                                            >
+                                                Masuk Akun
+                                            </Link>
+                                        </>
+                                    )}
+                                </div>
+                            </nav>
+                        </div>
+                    )}
                 </header>
 
                 {/* 2. Hero Section - Refined Minimalist Editorial (Zero AI Slop) */}

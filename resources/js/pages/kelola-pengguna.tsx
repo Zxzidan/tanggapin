@@ -315,31 +315,31 @@ export default function KelolaPengguna({
                 return {
                     label: 'Kepala Sekolah',
                     className:
-                        'bg-purple-100 text-purple-800 dark:bg-purple-950/70 dark:text-purple-300 border-purple-200 dark:border-purple-800',
+                        'border border-blue-300 bg-blue-100 text-blue-900 dark:border-blue-800 dark:bg-blue-950 dark:text-blue-200',
                 };
             case 'operator':
                 return {
                     label: 'Operator Sekolah',
                     className:
-                        'bg-blue-100 text-blue-800 dark:bg-blue-950/70 dark:text-blue-300 border-blue-200 dark:border-blue-800',
+                        'border border-blue-200 bg-blue-50 text-blue-800 dark:border-blue-900 dark:bg-blue-950/70 dark:text-blue-300',
                 };
             case 'wali_kelas':
                 return {
                     label: 'Wali Kelas',
                     className:
-                        'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/70 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800',
+                        'border border-slate-300 bg-slate-100 text-slate-800 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200',
                 };
             case 'guru_bk':
                 return {
                     label: 'Guru BK',
                     className:
-                        'bg-amber-100 text-amber-800 dark:bg-amber-950/70 dark:text-amber-300 border-amber-200 dark:border-amber-800',
+                        'border border-blue-200 bg-blue-50/70 text-blue-800 dark:border-blue-900/60 dark:bg-blue-950/40 dark:text-blue-300',
                 };
             case 'bendahara':
                 return {
                     label: 'Bendahara Sekolah',
                     className:
-                        'bg-rose-100 text-rose-800 dark:bg-rose-950/70 dark:text-rose-300 border-rose-200 dark:border-rose-800',
+                        'border border-slate-200 bg-slate-50 text-slate-700 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300',
                 };
             default:
                 return {
@@ -356,9 +356,9 @@ export default function KelolaPengguna({
             <div className="mx-auto max-w-7xl space-y-6">
                 {/* Notification Banner */}
                 {notificationMessage && (
-                    <div className="flex items-center justify-between rounded-xl border border-emerald-300 bg-emerald-50 px-4 py-3 text-emerald-900 shadow-xs dark:border-emerald-800 dark:bg-emerald-950/70 dark:text-emerald-200">
+                    <div className="flex items-center justify-between rounded-xl border border-blue-300 bg-blue-50 px-4 py-3 text-blue-900 shadow-xs dark:border-blue-800 dark:bg-blue-950/70 dark:text-blue-200">
                         <div className="flex items-center gap-2.5">
-                            <CheckCircle2 className="size-5 text-emerald-600 dark:text-emerald-400" />
+                            <CheckCircle2 className="size-5 text-blue-600 dark:text-blue-400" />
                             <span className="text-sm font-medium">
                                 {notificationMessage}
                             </span>
@@ -366,7 +366,7 @@ export default function KelolaPengguna({
                         <button
                             type="button"
                             onClick={() => setNotificationMessage(null)}
-                            className="text-emerald-700 hover:text-emerald-900 dark:text-emerald-300"
+                            className="text-blue-700 hover:text-blue-900 dark:text-blue-300"
                         >
                             <X className="size-4" />
                         </button>
@@ -374,15 +374,15 @@ export default function KelolaPengguna({
                 )}
 
                 {errorMessage && (
-                    <div className="flex items-center justify-between rounded-xl border border-rose-300 bg-rose-50 px-4 py-3 text-rose-900 shadow-xs dark:border-rose-800 dark:bg-rose-950/70 dark:text-rose-200">
+                    <div className="flex items-center justify-between rounded-xl border border-slate-300 bg-slate-100 px-4 py-3 text-slate-900 shadow-xs dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200">
                         <div className="flex items-center gap-2.5">
-                            <AlertCircle className="size-5 text-rose-600 dark:text-rose-400" />
+                            <AlertCircle className="size-5 text-slate-700 dark:text-slate-300" />
                             <span className="text-sm font-medium">{errorMessage}</span>
                         </div>
                         <button
                             type="button"
                             onClick={() => setErrorMessage(null)}
-                            className="text-rose-700 hover:text-rose-900 dark:text-rose-300"
+                            className="text-slate-600 hover:text-slate-900 dark:text-slate-300"
                         >
                             <X className="size-4" />
                         </button>
@@ -390,7 +390,7 @@ export default function KelolaPengguna({
                 )}
 
                 {/* Hero Header */}
-                <div className="relative overflow-hidden rounded-2xl border border-blue-100 bg-gradient-to-br from-white via-blue-50/30 to-indigo-50/20 p-6 shadow-xs dark:border-slate-800 dark:from-[#0f172a] dark:via-blue-950/20 dark:to-slate-900">
+                <div className="relative overflow-hidden rounded-2xl border border-blue-100 bg-gradient-to-br from-white via-blue-50/30 to-blue-100/10 p-6 shadow-xs dark:border-slate-800 dark:from-[#0f172a] dark:via-blue-950/20 dark:to-slate-900">
                     <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-center">
                         <div className="space-y-2">
                             <div className="flex flex-wrap items-center gap-2">
@@ -398,8 +398,8 @@ export default function KelolaPengguna({
                                     <ShieldCheck className="size-3.5 text-blue-600 dark:text-blue-400" />
                                     Pusat Kontrol Akses Terpusat Operator
                                 </span>
-                                <span className="inline-flex items-center gap-1 rounded-full border border-emerald-200 bg-emerald-100/80 px-2.5 py-1 text-xs font-semibold text-emerald-800 dark:border-emerald-900 dark:bg-emerald-950 dark:text-emerald-300">
-                                    <Lock className="size-3 text-emerald-600 dark:text-emerald-400" />
+                                <span className="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-800 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300">
+                                    <Lock className="size-3 text-slate-600 dark:text-slate-400" />
                                     Pendaftaran Publik Dinonaktifkan
                                 </span>
                             </div>
@@ -448,7 +448,7 @@ export default function KelolaPengguna({
                                         className={cn(
                                             'rounded-full border px-2 py-0.5 text-[11px] font-bold',
                                             quota.plan === 'yayasan'
-                                                ? 'border-purple-300 bg-purple-100 text-purple-800 dark:border-purple-800 dark:bg-purple-950 dark:text-purple-300'
+                                                ? 'border-blue-300 bg-blue-100 text-blue-800 dark:border-blue-800 dark:bg-blue-950 dark:text-blue-300'
                                                 : quota.plan === 'unggulan'
                                                   ? 'border-blue-300 bg-blue-100 text-blue-800 dark:border-blue-800 dark:bg-blue-950 dark:text-blue-300'
                                                   : 'border-slate-300 bg-slate-100 text-slate-800 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300',
@@ -486,9 +486,9 @@ export default function KelolaPengguna({
                                         className={cn(
                                             'h-full rounded-full transition-all duration-500',
                                             quota.isLimitReached
-                                                ? 'bg-rose-500'
+                                                ? 'bg-blue-900 dark:bg-blue-400'
                                                 : quota.currentClasses / quota.maxClasses > 0.8
-                                                  ? 'bg-amber-500'
+                                                  ? 'bg-blue-500'
                                                   : 'bg-blue-600',
                                         )}
                                         style={{
@@ -516,7 +516,7 @@ export default function KelolaPengguna({
                         )}
 
                         {quota.isUnlimited && (
-                            <p className="mt-3 text-xs text-purple-700 dark:text-purple-300">
+                            <p className="mt-3 text-xs text-blue-700 dark:text-blue-300">
                                 ✨ <strong>Paket Yayasan / Cabang Dinas Aktif:</strong> Anda dapat mendaftarkan rombongan belajar tanpa batasan kuota untuk seluruh kampus dan jenjang.
                             </p>
                         )}
@@ -639,7 +639,7 @@ export default function KelolaPengguna({
                                                                 <span>Kelas {user.schoolClassName}</span>
                                                             </div>
                                                         ) : (
-                                                            <span className="inline-flex items-center gap-1 text-amber-600 dark:text-amber-400">
+                                                            <span className="inline-flex items-center gap-1 text-slate-600 dark:text-slate-400">
                                                                 <AlertCircle className="size-3.5" />
                                                                 <span>Belum Dihubungkan ke Rombel</span>
                                                             </span>
@@ -695,7 +695,7 @@ export default function KelolaPengguna({
                                                             title="Salin kata sandi ke clipboard"
                                                         >
                                                             {copiedUserId === user.id ? (
-                                                                <Check className="size-4 text-emerald-600 dark:text-emerald-400" />
+                                                                <Check className="size-4 text-blue-600 dark:text-blue-400" />
                                                             ) : (
                                                                 <Copy className="size-4 text-slate-500 hover:text-slate-800 dark:hover:text-slate-300" />
                                                             )}
@@ -725,7 +725,7 @@ export default function KelolaPengguna({
                                                             <button
                                                                 type="button"
                                                                 onClick={() => handleDeleteUser(user)}
-                                                                className="rounded-lg border border-rose-200 bg-rose-50 p-1.5 text-rose-600 hover:bg-rose-100 dark:border-rose-900 dark:bg-rose-950 dark:text-rose-400"
+                                                                className="rounded-lg border border-slate-200 bg-slate-50 p-1.5 text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-400 dark:hover:text-white"
                                                                 title="Hapus akun staf"
                                                             >
                                                                 <Trash2 className="size-3.5" />
@@ -1046,7 +1046,7 @@ export default function KelolaPengguna({
                                         >
                                             {copiedUserId === editingUser.id ? (
                                                 <>
-                                                    <Check className="size-3.5 text-emerald-600" />
+                                                    <Check className="size-3.5 text-blue-600" />
                                                     <span>Tersalin!</span>
                                                 </>
                                             ) : (
@@ -1145,7 +1145,7 @@ export default function KelolaPengguna({
                         </div>
 
                         {quota.isLimitReached ? (
-                            <div className="mt-4 rounded-xl border border-rose-200 bg-rose-50 p-4 text-xs text-rose-800 dark:border-rose-900 dark:bg-rose-950 dark:text-rose-200">
+                            <div className="mt-4 rounded-xl border border-slate-300 bg-slate-100 p-4 text-xs text-slate-800 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200">
                                 <strong>Batas Kuota Kelas Penuh!</strong>
                                 <p className="mt-1">
                                     Sekolah Anda saat ini menggunakan {quota.planName} dengan batas {quota.maxClasses} kelas.
@@ -1295,7 +1295,7 @@ export default function KelolaPengguna({
                                 className={cn(
                                     'cursor-pointer rounded-xl border p-4 transition-all',
                                     quota.plan === 'yayasan'
-                                        ? 'border-purple-600 bg-purple-50/70 dark:border-purple-500 dark:bg-purple-950/40'
+                                        ? 'border-blue-600 bg-blue-50/70 dark:border-blue-500 dark:bg-blue-950/40'
                                         : 'border-slate-200 hover:border-slate-300 dark:border-slate-800',
                                 )}
                             >
@@ -1303,7 +1303,7 @@ export default function KelolaPengguna({
                                     <span className="font-bold text-sm text-slate-900 dark:text-white">
                                         Paket Yayasan & Dinas
                                     </span>
-                                    <span className="rounded-full bg-purple-100 px-2.5 py-0.5 text-xs font-semibold text-purple-800 dark:bg-purple-950 dark:text-purple-300">
+                                    <span className="rounded-full border border-blue-300 bg-blue-100 px-2.5 py-0.5 text-xs font-semibold text-blue-800 dark:border-blue-800 dark:bg-blue-950 dark:text-blue-300">
                                         Unlimited Kelas
                                     </span>
                                 </div>

@@ -10,6 +10,7 @@ import {
     FileText,
     GraduationCap,
     Inbox,
+    Menu,
     PhoneCall,
     Plus,
     Shield,
@@ -112,7 +113,38 @@ export default function Dashboard({
         >
             <Head title="Ikhtisar & Tindakan — TANGGAPIN" />
 
-            <div className="mx-auto max-w-7xl space-y-8 sm:space-y-10">
+            <div className="mx-auto max-w-7xl space-y-6 sm:space-y-10">
+                {/* Mobile Quick Navigation Bar with Hamburger Strip */}
+                <div className="flex sm:hidden items-center justify-between rounded-2xl border border-slate-200 bg-white p-3.5 shadow-2xs dark:border-slate-800 dark:bg-[#0f172a]">
+                    <div className="flex items-center gap-2.5">
+                        <button
+                            type="button"
+                            onClick={() =>
+                                window.dispatchEvent(
+                                    new CustomEvent('toggle-tanggapin-sidebar'),
+                                )
+                            }
+                            className="flex size-9 items-center justify-center rounded-xl bg-blue-700 text-white shadow-2xs transition-all active:scale-95"
+                            aria-label="Buka Menu Sidebar"
+                        >
+                            <Menu className="size-5" />
+                        </button>
+                        <div>
+                            <span className="text-xs font-bold text-slate-900 dark:text-white block leading-tight">
+                                Navigasi Dashboard
+                            </span>
+                            <span className="text-[10px] text-slate-500">
+                                Ketuk tombol menu untuk fitur lainnya
+                            </span>
+                        </div>
+                    </div>
+
+                    <span className="inline-flex items-center gap-1 rounded-lg border border-blue-200 bg-blue-50 px-2.5 py-1 text-[11px] font-bold text-blue-700 dark:border-blue-900 dark:bg-blue-950/60 dark:text-blue-300">
+                        <Shield className="size-3" />
+                        {activeRoleConfig.shortTitle}
+                    </span>
+                </div>
+
                 {/* 1. OPERATIONAL CONTEXT HEADER */}
                 <div className="flex flex-col justify-between gap-6 rounded-2xl border border-slate-200/90 bg-white p-6 shadow-xs sm:p-8 lg:flex-row lg:items-center dark:border-slate-800 dark:bg-[#0f172a]">
                     <div className="space-y-2">
@@ -866,7 +898,7 @@ export default function Dashboard({
                             <div className="flex flex-col justify-between gap-3 border-b border-slate-200 pb-3 sm:flex-row sm:items-center dark:border-slate-800">
                                 <div>
                                     <div className="flex items-center gap-2">
-                                        <div className="rounded-lg bg-emerald-50 p-1 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300">
+                                        <div className="rounded-lg bg-blue-50 p-1 text-blue-700 dark:bg-blue-950/60 dark:text-blue-300">
                                             <ShieldAlert className="size-4" />
                                         </div>
                                         <h3 className="text-sm font-bold text-slate-900 dark:text-white">
@@ -905,8 +937,8 @@ export default function Dashboard({
                                                 className={cn(
                                                     'space-y-2.5 rounded-xl border p-4 text-xs transition-colors',
                                                     isHandled
-                                                        ? 'border-emerald-200/90 bg-emerald-50/40 dark:border-emerald-900/60 dark:bg-emerald-950/20'
-                                                        : 'border-amber-200/90 bg-amber-50/40 dark:border-amber-900/60 dark:bg-amber-950/20',
+                                                        ? 'border-blue-200/90 bg-blue-50/40 dark:border-blue-900/60 dark:bg-blue-950/20'
+                                                        : 'border-slate-200/90 bg-slate-50/40 dark:border-slate-800 dark:bg-slate-900/40',
                                                 )}
                                             >
                                                 <div className="flex flex-wrap items-center justify-between gap-2">
@@ -924,13 +956,13 @@ export default function Dashboard({
 
                                                     {/* Real-time Tracking Badge */}
                                                     {isHandled ? (
-                                                        <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-300 bg-emerald-100 px-2.5 py-0.5 text-[11px] font-bold text-emerald-800 shadow-2xs dark:border-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">
-                                                            <CheckCircle2 className="size-3.5 text-emerald-600 dark:text-emerald-400" />
+                                                        <span className="inline-flex items-center gap-1.5 rounded-full border border-blue-300 bg-blue-100 px-2.5 py-0.5 text-[11px] font-bold text-blue-800 shadow-2xs dark:border-blue-800 dark:bg-blue-950 dark:text-blue-300">
+                                                            <CheckCircle2 className="size-3.5 text-blue-700 dark:text-blue-400" />
                                                             Sudah Ditangani oleh Guru BK
                                                         </span>
                                                     ) : (
-                                                        <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-300 bg-amber-100 px-2.5 py-0.5 text-[11px] font-bold text-amber-800 shadow-2xs dark:border-amber-800 dark:bg-amber-950 dark:text-amber-300">
-                                                            <Clock className="size-3.5 text-amber-600 dark:text-amber-400" />
+                                                        <span className="inline-flex items-center gap-1.5 rounded-full border border-slate-300 bg-slate-100 px-2.5 py-0.5 text-[11px] font-bold text-slate-700 shadow-2xs dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
+                                                            <Clock className="size-3.5 text-slate-500 dark:text-slate-400" />
                                                             Menunggu Penanganan Guru BK
                                                         </span>
                                                     )}
@@ -946,8 +978,8 @@ export default function Dashboard({
 
                                                 {/* Bukti & Catatan Hasil Penanganan Guru BK */}
                                                 {isHandled ? (
-                                                    <div className="rounded-lg border border-emerald-200 bg-white p-3 leading-relaxed text-slate-700 shadow-2xs dark:border-emerald-900/60 dark:bg-[#09111e] dark:text-slate-200">
-                                                        <div className="flex flex-wrap items-center justify-between text-[11px] font-bold text-emerald-700 dark:text-emerald-400">
+                                                    <div className="rounded-lg border border-blue-200 bg-white p-3 leading-relaxed text-slate-700 shadow-2xs dark:border-blue-900/60 dark:bg-[#09111e] dark:text-slate-200">
+                                                        <div className="flex flex-wrap items-center justify-between text-[11px] font-bold text-blue-700 dark:text-blue-400">
                                                             <span>
                                                                 Tindakan Guru BK: {c.bkActionType || 'Konseling Siswa'}
                                                             </span>
@@ -973,7 +1005,7 @@ export default function Dashboard({
                                                                 {c.assignee}
                                                             </strong>
                                                         </span>
-                                                        <span className="text-[10px] text-amber-700 dark:text-amber-400">
+                                                        <span className="text-[10px] text-slate-500 dark:text-slate-400">
                                                             Dalam antrean jadwal konseling
                                                         </span>
                                                     </div>
@@ -1045,8 +1077,8 @@ export default function Dashboard({
                                                 </span>
                                             </div>
 
-                                            <div className="rounded-lg border border-sky-100 bg-sky-50/70 p-2.5 text-[11px] dark:border-sky-950 dark:bg-sky-950/30">
-                                                <div className="text-[10px] font-semibold text-sky-800 dark:text-sky-300">
+                                            <div className="rounded-lg border border-blue-100 bg-blue-50/70 p-2.5 text-[11px] dark:border-blue-950 dark:bg-blue-950/30">
+                                                <div className="text-[10px] font-semibold text-blue-800 dark:text-blue-300">
                                                     Perujuk: {c.referredByName || 'Wali Kelas'}
                                                 </div>
                                                 <p className="mt-0.5 text-slate-700 leading-relaxed dark:text-slate-300">
@@ -1057,7 +1089,7 @@ export default function Dashboard({
                                             <div className="flex items-center justify-between pt-1 text-[11px]">
                                                 <span className="text-slate-500">
                                                     Status:{' '}
-                                                    <strong className={isHandled ? 'text-emerald-600 font-bold' : 'text-amber-600 font-semibold'}>
+                                                    <strong className={isHandled ? 'text-blue-700 font-bold dark:text-blue-400' : 'text-slate-600 font-semibold dark:text-slate-400'}>
                                                         {isHandled ? '✓ Sudah Ditangani oleh Guru BK' : 'Menunggu Penanganan BK'}
                                                     </strong>
                                                 </span>

@@ -333,6 +333,17 @@ export default function FlowbiteTanggapinLayout({
                 item.type.toLowerCase().includes(searchQuery.toLowerCase())),
     );
 
+    // Listen to global toggle-tanggapin-sidebar event for mobile triggers from dashboard or subpages
+    useEffect(() => {
+        const handleToggle = () => setIsSidebarOpen((prev) => !prev);
+        window.addEventListener('toggle-tanggapin-sidebar', handleToggle);
+        return () =>
+            window.removeEventListener(
+                'toggle-tanggapin-sidebar',
+                handleToggle,
+            );
+    }, []);
+
     return (
         <div className="min-h-screen bg-slate-50/50 text-slate-900 transition-colors duration-200 dark:bg-[#070b14] dark:text-slate-100">
             {/* Top Navigation Bar */}
@@ -344,10 +355,14 @@ export default function FlowbiteTanggapinLayout({
                             <button
                                 type="button"
                                 onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                                className="rounded-lg p-2 text-slate-500 hover:bg-slate-100 sm:hidden dark:text-slate-400 dark:hover:bg-slate-800"
-                                aria-label="Toggle sidebar"
+                                className="flex size-10 items-center justify-center rounded-xl border border-slate-200 bg-slate-50/90 text-slate-700 shadow-2xs transition-all hover:bg-slate-100 active:scale-95 sm:hidden dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+                                aria-label="Toggle sidebar menu"
                             >
-                                <Menu className="size-5" />
+                                {isSidebarOpen ? (
+                                    <X className="size-5" />
+                                ) : (
+                                    <Menu className="size-5" />
+                                )}
                             </button>
 
                             <Link
@@ -764,6 +779,21 @@ export default function FlowbiteTanggapinLayout({
             >
                 <div className="flex h-full flex-col justify-between overflow-y-auto px-3 py-4">
                     <div className="space-y-4">
+                        {/* Mobile Header Bar inside Drawer */}
+                        <div className="flex items-center justify-between border-b border-slate-200/80 pb-3 sm:hidden dark:border-slate-800">
+                            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                                Menu Navigasi
+                            </span>
+                            <button
+                                type="button"
+                                onClick={() => setIsSidebarOpen(false)}
+                                className="flex size-8 items-center justify-center rounded-lg border border-slate-200 bg-slate-50 text-slate-600 transition-colors hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700"
+                                aria-label="Tutup menu sidebar"
+                            >
+                                <X className="size-4" />
+                            </button>
+                        </div>
+
                         {/* School Identity Card */}
                         <div className="rounded-xl border border-slate-200 bg-slate-50/80 p-3 dark:border-slate-800 dark:bg-[#111c30]">
                             <div className="flex items-center gap-2.5">

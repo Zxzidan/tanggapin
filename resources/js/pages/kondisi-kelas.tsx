@@ -319,15 +319,15 @@ export default function KondisiKelas({
             <div className="mx-auto max-w-7xl space-y-6">
                 {/* Notification Banners */}
                 {notificationMessage && (
-                    <div className="flex items-center justify-between rounded-xl border border-emerald-300 bg-emerald-50 px-4 py-3 text-emerald-900 shadow-xs dark:border-emerald-800 dark:bg-emerald-950/70 dark:text-emerald-200">
+                    <div className="flex items-center justify-between rounded-xl border border-blue-300 bg-blue-50 px-4 py-3 text-blue-900 shadow-xs dark:border-blue-800 dark:bg-blue-950/70 dark:text-blue-200">
                         <div className="flex items-center gap-2.5">
-                            <CheckCircle2 className="size-5 text-emerald-600 dark:text-emerald-400" />
+                            <CheckCircle2 className="size-5 text-blue-600 dark:text-blue-400" />
                             <span className="text-xs font-semibold sm:text-sm">{notificationMessage}</span>
                         </div>
                         <button
                             type="button"
                             onClick={() => setNotificationMessage(null)}
-                            className="text-emerald-700 hover:text-emerald-900 dark:text-emerald-300"
+                            className="text-blue-700 hover:text-blue-900 dark:text-blue-300"
                         >
                             <X className="size-4" />
                         </button>
@@ -335,15 +335,15 @@ export default function KondisiKelas({
                 )}
 
                 {errorMessage && (
-                    <div className="flex items-center justify-between rounded-xl border border-rose-300 bg-rose-50 px-4 py-3 text-rose-900 shadow-xs dark:border-rose-800 dark:bg-rose-950/70 dark:text-rose-200">
+                    <div className="flex items-center justify-between rounded-xl border border-slate-300 bg-slate-100 px-4 py-3 text-slate-900 shadow-xs dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200">
                         <div className="flex items-center gap-2.5">
-                            <AlertCircle className="size-5 text-rose-600 dark:text-rose-400" />
+                            <AlertCircle className="size-5 text-slate-700 dark:text-slate-300" />
                             <span className="text-xs font-semibold sm:text-sm">{errorMessage}</span>
                         </div>
                         <button
                             type="button"
                             onClick={() => setErrorMessage(null)}
-                            className="text-rose-700 hover:text-rose-900 dark:text-rose-300"
+                            className="text-slate-600 hover:text-slate-900 dark:text-slate-300"
                         >
                             <X className="size-4" />
                         </button>
@@ -351,7 +351,7 @@ export default function KondisiKelas({
                 )}
 
                 {/* Hero Header */}
-                <div className="relative overflow-hidden rounded-2xl border border-blue-100 bg-gradient-to-br from-white via-blue-50/30 to-indigo-50/20 p-6 shadow-xs dark:border-slate-800 dark:from-[#0f172a] dark:via-blue-950/20 dark:to-slate-900">
+                <div className="relative overflow-hidden rounded-2xl border border-blue-100 bg-gradient-to-br from-white via-blue-50/30 to-blue-100/10 p-6 shadow-xs dark:border-slate-800 dark:from-[#0f172a] dark:via-blue-950/20 dark:to-slate-900">
                     <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-center">
                         <div className="space-y-2">
                             <div className="flex flex-wrap items-center gap-2">
@@ -609,9 +609,9 @@ export default function KondisiKelas({
                                                                     className={cn(
                                                                         'inline-flex items-center rounded-lg px-2.5 py-1 text-xs font-bold',
                                                                         s.totalPoints >= 30
-                                                                            ? 'border border-rose-200 bg-rose-50 text-rose-700 dark:border-rose-900 dark:bg-rose-950 dark:text-rose-300'
+                                                                            ? 'border border-blue-300 bg-blue-100 text-blue-900 dark:border-blue-800 dark:bg-blue-950 dark:text-blue-200'
                                                                             : s.totalPoints >= 15
-                                                                              ? 'border border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-900 dark:bg-amber-950 dark:text-amber-300'
+                                                                              ? 'border border-slate-300 bg-slate-100 text-slate-800 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200'
                                                                               : hasPoints
                                                                                 ? 'border border-blue-200 bg-blue-50 text-blue-700 dark:border-blue-900 dark:bg-blue-950 dark:text-blue-300'
                                                                                 : 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400',
@@ -632,7 +632,7 @@ export default function KondisiKelas({
                                                             </div>
 
                                                             {s.pendingFollowups > 0 && (
-                                                                <span className="mt-1 block text-[10px] font-semibold text-amber-600 dark:text-amber-400">
+                                                                <span className="mt-1 block text-[10px] font-semibold text-slate-600 dark:text-slate-400">
                                                                     • {s.pendingFollowups} perlu pembinaan wali kelas
                                                                 </span>
                                                             )}
@@ -780,7 +780,7 @@ export default function KondisiKelas({
                                                     </span>
                                                 </div>
                                                 <div className="mt-1 flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-300">
-                                                    <UserCheck className="size-3.5 text-emerald-600" />
+                                                    <UserCheck className="size-3.5 text-blue-600" />
                                                     <span>
                                                         Wali Kelas: <strong>{cls.homeroomTeacher}</strong>
                                                     </span>
@@ -791,8 +791,8 @@ export default function KondisiKelas({
                                                 className={cn(
                                                     'rounded-full border px-2.5 py-0.5 text-[10px] font-bold',
                                                     isCritical || isWarning
-                                                        ? 'border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-800 dark:bg-amber-950 dark:text-amber-300'
-                                                        : 'border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-800 dark:bg-emerald-950 dark:text-emerald-300',
+                                                        ? 'border-slate-300 bg-slate-100 text-slate-800 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200'
+                                                        : 'border-blue-200 bg-blue-50 text-blue-700 dark:border-blue-800 dark:bg-blue-950 dark:text-blue-300',
                                                 )}
                                             >
                                                 {isCritical ? 'Perlu Intervensi' : isWarning ? 'Perlu Atensi' : 'Baik'}
@@ -814,7 +814,7 @@ export default function KondisiKelas({
                                             </div>
                                             <div>
                                                 <span className="block text-[10px] text-slate-400">Berisiko</span>
-                                                <span className="text-sm font-bold text-rose-600 dark:text-rose-400">
+                                                <span className="text-sm font-bold text-blue-700 dark:text-blue-400">
                                                     {cls.studentsAtRisk} siswa
                                                 </span>
                                             </div>
@@ -919,8 +919,8 @@ export default function KondisiKelas({
                                                             className={cn(
                                                                 'rounded-full border px-2.5 py-0.5 text-[10px] font-semibold',
                                                                 isPending
-                                                                    ? 'border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-800 dark:bg-amber-950 dark:text-amber-300'
-                                                                    : 'border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-800 dark:bg-emerald-950 dark:text-emerald-300',
+                                                                    ? 'border-slate-300 bg-slate-100 text-slate-800 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200'
+                                                                    : 'border-blue-200 bg-blue-50 text-blue-700 dark:border-blue-800 dark:bg-blue-950 dark:text-blue-300',
                                                             )}
                                                         >
                                                             {rec.actionStatus}
@@ -934,7 +934,7 @@ export default function KondisiKelas({
                                                             <button
                                                                 type="button"
                                                                 onClick={() => handleOpenFollowupModal(rec)}
-                                                                className="inline-flex items-center gap-1 rounded-lg bg-emerald-600 px-2.5 py-1 text-xs font-semibold text-white hover:bg-emerald-700 active:scale-95"
+                                                                className="inline-flex items-center gap-1 rounded-lg bg-blue-700 px-2.5 py-1 text-xs font-semibold text-white hover:bg-blue-800 active:scale-95"
                                                             >
                                                                 <Check className="size-3.5" />
                                                                 <span>Tindak Lanjut</span>
@@ -1005,8 +1005,8 @@ export default function KondisiKelas({
                                             className={cn(
                                                 'space-y-3 rounded-2xl border p-4.5 text-xs transition-colors shadow-xs',
                                                 isHandled
-                                                    ? 'border-emerald-200/90 bg-emerald-50/30 dark:border-emerald-900/60 dark:bg-emerald-950/20'
-                                                    : 'border-amber-200/90 bg-amber-50/30 dark:border-amber-900/60 dark:bg-amber-950/20',
+                                                    ? 'border-blue-200/90 bg-blue-50/20 dark:border-blue-900/60 dark:bg-blue-950/20'
+                                                    : 'border-slate-200 bg-slate-50/30 dark:border-slate-800 dark:bg-slate-900/20',
                                             )}
                                         >
                                             <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200/70 pb-2.5 dark:border-slate-800">
@@ -1024,13 +1024,13 @@ export default function KondisiKelas({
 
                                                 {/* Status Tracking Badge */}
                                                 {isHandled ? (
-                                                    <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-300 bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-800 shadow-2xs dark:border-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">
-                                                        <CheckCircle2 className="size-3.5 text-emerald-600 dark:text-emerald-400" />
+                                                    <span className="inline-flex items-center gap-1.5 rounded-full border border-blue-300 bg-blue-100 px-3 py-1 text-xs font-bold text-blue-800 shadow-2xs dark:border-blue-800 dark:bg-blue-950 dark:text-blue-300">
+                                                        <CheckCircle2 className="size-3.5 text-blue-600 dark:text-blue-400" />
                                                         Sudah Ditangani oleh Guru BK
                                                     </span>
                                                 ) : (
-                                                    <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-300 bg-amber-100 px-3 py-1 text-xs font-bold text-amber-800 shadow-2xs dark:border-amber-800 dark:bg-amber-950 dark:text-amber-300">
-                                                        <Clock className="size-3.5 text-amber-600 dark:text-amber-400" />
+                                                    <span className="inline-flex items-center gap-1.5 rounded-full border border-slate-300 bg-slate-100 px-3 py-1 text-xs font-bold text-slate-800 shadow-2xs dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
+                                                        <Clock className="size-3.5 text-slate-600 dark:text-slate-400" />
                                                         Menunggu Penanganan Guru BK
                                                     </span>
                                                 )}
@@ -1048,8 +1048,8 @@ export default function KondisiKelas({
 
                                             {/* Rincian penanganan Guru BK jika sudah ditangani */}
                                             {isHandled ? (
-                                                <div className="rounded-xl border border-emerald-200 bg-white p-3.5 leading-relaxed text-slate-700 shadow-2xs dark:border-emerald-900/60 dark:bg-[#070b14] dark:text-slate-200">
-                                                    <div className="flex flex-wrap items-center justify-between text-xs font-bold text-emerald-700 dark:text-emerald-400">
+                                                <div className="rounded-xl border border-blue-200 bg-white p-3.5 leading-relaxed text-slate-700 shadow-2xs dark:border-blue-900/60 dark:bg-[#070b14] dark:text-slate-200">
+                                                    <div className="flex flex-wrap items-center justify-between text-xs font-bold text-blue-700 dark:text-blue-400">
                                                         <span>Tindakan Guru BK: {c.bkActionType || 'Konseling Siswa'}</span>
                                                         <span className="text-[11px] font-normal text-slate-500">{c.handledAt || c.lastUpdate}</span>
                                                     </div>
@@ -1073,7 +1073,7 @@ export default function KondisiKelas({
                                                     <span>
                                                         PIC Guru BK: <strong className="font-semibold text-slate-700 dark:text-slate-300">{c.assignee}</strong>
                                                     </span>
-                                                    <span className="text-amber-700 dark:text-amber-400">
+                                                    <span className="text-slate-600 dark:text-slate-400">
                                                         ⏳ Sedang dalam antrean layanan bimbingan konseling
                                                     </span>
                                                 </div>
@@ -1500,7 +1500,7 @@ export default function KondisiKelas({
                     <div className="relative w-full max-w-lg rounded-2xl bg-white p-6 shadow-xl dark:bg-slate-900">
                         <div className="flex items-center justify-between border-b border-slate-200 pb-3 dark:border-slate-800">
                             <div className="flex items-center gap-2">
-                                <CheckCircle2 className="size-5 text-emerald-600" />
+                                <CheckCircle2 className="size-5 text-blue-600" />
                                 <h3 className="text-base font-bold text-slate-900 dark:text-white">
                                     Tindak Lanjut Pembinaan Kedisiplinan Wali Kelas
                                 </h3>
@@ -1560,7 +1560,7 @@ export default function KondisiKelas({
                                 </button>
                                 <button
                                     type="submit"
-                                    className="rounded-lg bg-emerald-600 px-4 py-2 text-xs font-semibold text-white shadow-xs hover:bg-emerald-700 active:scale-95"
+                                    className="rounded-lg bg-blue-700 px-4 py-2 text-xs font-semibold text-white shadow-xs hover:bg-blue-800 active:scale-95"
                                 >
                                     Selesaikan Pembinaan
                                 </button>
@@ -1609,7 +1609,7 @@ export default function KondisiKelas({
                                             <span className="font-bold text-slate-900 dark:text-white">
                                                 {item.infraction}
                                             </span>
-                                            <span className="rounded bg-rose-50 px-2 py-0.5 font-bold text-rose-700 dark:bg-rose-950 dark:text-rose-300">
+                                            <span className="rounded border border-blue-200 bg-blue-50 px-2 py-0.5 font-bold text-blue-700 dark:border-blue-900 dark:bg-blue-950 dark:text-blue-300">
                                                 +{item.points} Poin
                                             </span>
                                         </div>

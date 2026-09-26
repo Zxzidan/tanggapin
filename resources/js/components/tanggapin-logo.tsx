@@ -57,7 +57,7 @@ export default function TanggapinLogo({
             {/* Geometric Dignified Emblem: Compassion & Vigilance / Proactive Follow-up */}
             <div
                 className={cn(
-                    'relative flex shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-blue-700 via-blue-800 to-indigo-950 text-white shadow-sm ring-1 ring-blue-500/20',
+                    'relative flex shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-blue-700 via-blue-800 to-blue-950 text-white shadow-sm ring-1 ring-blue-500/20',
                     sizeConfig.icon,
                 )}
             >
