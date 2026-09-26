@@ -34,12 +34,14 @@ export const ROLE_CONFIGS: Record<RoleType, RoleConfig> = {
             'early-warning',
             'class-monitoring',
             'cases',
+            'reports',
             'communication',
             'ats',
             'payments',
             'documents',
             'data-check',
             'incidents',
+            'manage-users',
         ],
         overviewTitle: 'Apa yang membutuhkan perhatian sekolah hari ini?',
         overviewSubtitle:
@@ -60,10 +62,12 @@ export const ROLE_CONFIGS: Record<RoleType, RoleConfig> = {
             'Akses penuh ke seluruh sistem dengan prioritas verifikasi residu Dapodik, rombel, dokumen guru & sinkronisasi.',
         allowedTabs: [
             'overview',
+            'manage-users',
             'data-check',
             'early-warning',
             'class-monitoring',
             'cases',
+            'reports',
             'communication',
             'ats',
             'payments',
@@ -76,6 +80,9 @@ export const ROLE_CONFIGS: Record<RoleType, RoleConfig> = {
         overviewPrinciple:
             'Prinsip Operator: Deteksi Anomali → Tindak Lanjut Residu → Validasi Berkas → Sinkronisasi Server.',
         tabOverrides: {
+            'manage-users': {
+                title: 'Kelola Akun Guru',
+            },
             'data-check': {
                 title: 'Data Dapodik',
             },
@@ -97,6 +104,7 @@ export const ROLE_CONFIGS: Record<RoleType, RoleConfig> = {
             'overview',
             'early-warning',
             'class-monitoring',
+            'reports',
             'communication',
             'cases',
             'documents',
@@ -111,6 +119,7 @@ export const ROLE_CONFIGS: Record<RoleType, RoleConfig> = {
             overview: { title: 'Ikhtisar Kelas' },
             'early-warning': { title: 'Early Warning' },
             'class-monitoring': { title: 'Kondisi Kelas' },
+            reports: { title: 'Rapor Kelas' },
             communication: { title: 'Kontak Ortu' },
             cases: { title: 'Rujukan Kasus BK' },
             documents: { title: 'Perangkat Ajar' },
@@ -159,6 +168,7 @@ export const ROLE_CONFIGS: Record<RoleType, RoleConfig> = {
         allowedTabs: [
             'overview',
             'cases',
+            'reports',
             'early-warning',
             'communication',
             'ats',
@@ -172,6 +182,7 @@ export const ROLE_CONFIGS: Record<RoleType, RoleConfig> = {
         tabOverrides: {
             overview: { title: 'Ikhtisar Konseling' },
             cases: { title: 'Kasus Siswa' },
+            reports: { title: 'Rapor Bimbingan' },
             'early-warning': {
                 title: 'Early Warning',
             },

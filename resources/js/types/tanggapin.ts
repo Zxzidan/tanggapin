@@ -164,3 +164,37 @@ export interface DashboardPageProps {
     parentUpdates: ParentUpdate[];
     disciplineList?: DisciplineRecordItem[];
 }
+
+export interface StudentReportItem {
+    id: string;
+    reportCode: string;
+    period: string;
+    attendanceRate: number;
+    sickCount: number;
+    permissionCount: number;
+    unexcusedCount: number;
+    disciplinePoints: number;
+    disciplineStatus: string;
+    aiCharacterSummary: string;
+    aiAcademicNotes?: string | null;
+    parentRecommendations: string;
+    status: 'draft' | 'generated' | 'sent';
+    sentAt?: string | null;
+    acknowledgement: string;
+    homeroomTeacher: string;
+}
+
+export interface StudentForReportItem {
+    id: string;
+    name: string;
+    nisn: string;
+    class: string;
+    homeroomTeacher: string;
+    attendanceRate: number;
+    riskLevel: 'high' | 'medium' | 'low';
+    parentName: string;
+    parentPhone: string;
+    hasReport: boolean;
+    reportStatus: 'none' | 'draft' | 'generated' | 'sent';
+    latestReport: StudentReportItem | null;
+}

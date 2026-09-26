@@ -19,9 +19,11 @@ import {
     Shield,
     ShieldAlert,
     Siren,
+    Sparkles,
     Sun,
     User,
     UserCheck,
+    Users,
     WalletCards,
     X,
 } from 'lucide-react';
@@ -186,6 +188,12 @@ export default function FlowbiteTanggapinLayout({
                     href: '/manajemen-kasus',
                 },
                 {
+                    id: 'reports',
+                    title: 'Rapor Siswa (AI)',
+                    icon: Sparkles,
+                    href: '/rapor-siswa',
+                },
+                {
                     id: 'communication',
                     title: 'Kontak Ortu',
                     icon: PhoneCall,
@@ -202,6 +210,12 @@ export default function FlowbiteTanggapinLayout({
         {
             section: 'ADMINISTRASI & OPERASIONAL',
             items: [
+                {
+                    id: 'manage-users',
+                    title: 'Kelola Akun Guru & Staf',
+                    icon: Users,
+                    href: '/kelola-pengguna',
+                },
                 {
                     id: 'data-check',
                     title: 'Data Dapodik',
@@ -290,6 +304,12 @@ export default function FlowbiteTanggapinLayout({
             name: 'Eko Wahyudi — Home Visit ATS',
             desc: 'Verifikasi tim ATS terjadwal',
             href: '/alur-ats',
+        },
+        {
+            type: 'Rapor AI Siswa',
+            name: 'Rapor Perkembangan Otomatis',
+            desc: 'Generate evaluasi naratif AI & kirim WhatsApp orang tua',
+            href: '/rapor-siswa',
         },
     ].filter(
         (item) =>

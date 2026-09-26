@@ -1,13 +1,22 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UserManagementController;
+use App\Models\SchoolClass;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::inertia('/', 'welcome')->name('home');
 
-use Illuminate\Http\Request;
+// Restrict public self-registration: Accounts are strictly managed and issued by the School Operator
+Route::get('/register', function () {
+    return redirect()->route('login')->with('status', 'Pendaftaran mandiri dinonaktifkan. Seluruh akun guru dan staf sekolah dibuat & dikontrol secara terpusat oleh Operator Sekolah.');
+})->name('register');
+Route::post('/register', function () {
+    return redirect()->route('login')->with('status', 'Pendaftaran mandiri dinonaktifkan. Seluruh akun guru dan staf sekolah dibuat & dikontrol secara terpusat oleh Operator Sekolah.');
+})->name('register.store');
 
 Route::get('/demo-login', function (Request $request) {
     $role = $request->query('role', 'kepala_sekolah');
@@ -25,11 +34,11 @@ Route::get('/demo-login', function (Request $request) {
     ];
 
     $roleNames = [
-        'kepala_sekolah' => 'Kepala Sekolah',
+        'kepala_sekolah' => 'Drs. H. Mulyadi, M.Pd',
         'operator' => 'Operator Sekolah',
-        'wali_kelas' => 'Wali Kelas',
-        'guru_bk' => 'Guru BK',
-        'bendahara' => 'Bendahara Sekolah',
+        'wali_kelas' => 'Ratna Dewi, S.Pd',
+        'guru_bk' => 'Dra. Hj. Nurjanah, M.Pd',
+        'bendahara' => 'Ahmad Suhendra, S.E.',
     ];
 
     $email = $roleEmails[$role] ?? 'kepsek@sekolah.sch.id';
@@ -42,8 +51,22 @@ Route::get('/demo-login', function (Request $request) {
             'email' => $email,
             'role' => $role,
             'password' => bcrypt('password'),
+            'raw_password' => 'password',
             'email_verified_at' => now(),
         ]);
+
+    if (! $user->raw_password) {
+        $user->raw_password = 'password';
+        $user->save();
+    }
+
+    if ($role === 'wali_kelas' && ! $user->school_class_id) {
+        $firstClass = SchoolClass::first();
+        if ($firstClass) {
+            $user->school_class_id = $firstClass->id;
+            $user->save();
+        }
+    }
 
     if ($user->name !== $name || $user->email !== $email) {
         $user->name = $name;
@@ -73,11 +96,22 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('pembayaran', [DashboardController::class, 'pembayaran'])->name('payments');
     Route::get('dokumen-guru', [DashboardController::class, 'dokumenGuru'])->name('documents');
     Route::get('respons-insiden', [DashboardController::class, 'responsInsiden'])->name('incidents');
+    Route::get('rapor-siswa', [DashboardController::class, 'raporSiswa'])->name('reports');
+
+    // Operator Staff & Class Quota Management
+    Route::get('kelola-pengguna', [UserManagementController::class, 'index'])->name('users.index');
+    Route::post('kelola-pengguna', [UserManagementController::class, 'store'])->name('users.store');
+    Route::put('kelola-pengguna/{user}', [UserManagementController::class, 'update'])->name('users.update');
+    Route::delete('kelola-pengguna/{user}', [UserManagementController::class, 'destroy'])->name('users.destroy');
+    Route::post('kelola-pengguna/kelas', [UserManagementController::class, 'storeClass'])->name('users.storeClass');
+    Route::post('kelola-pengguna/paket', [UserManagementController::class, 'updatePlan'])->name('users.updatePlan');
 
     Route::post('followups', [DashboardController::class, 'storeFollowup'])->name('followups.store');
     Route::post('cases', [DashboardController::class, 'storeCase'])->name('cases.store');
     Route::post('parent-communications', [DashboardController::class, 'storeParentCommunication'])->name('parent-communications.store');
     Route::post('discipline-records', [DashboardController::class, 'storeDisciplineRecord'])->name('discipline-records.store');
+    Route::post('student-reports/generate', [DashboardController::class, 'generateAiReport'])->name('student-reports.generate');
+    Route::post('student-reports/{report}/send', [DashboardController::class, 'sendReportToParent'])->name('student-reports.send');
 });
 
 require __DIR__.'/settings.php';

@@ -1,288 +1,51 @@
-import { Form, Head } from '@inertiajs/react';
-import {
-    CheckCircle2,
-    GraduationCap,
-    HeartPulse,
-    ShieldCheck,
-    WalletCards,
-} from 'lucide-react';
-import { useState } from 'react';
-import InputError from '@/components/input-error';
-import PasswordInput from '@/components/password-input';
-import TextLink from '@/components/text-link';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Spinner } from '@/components/ui/spinner';
-import { cn } from '@/lib/utils';
+import { Head, Link } from '@inertiajs/react';
+import { ArrowLeft, Lock, ShieldCheck } from 'lucide-react';
+import React from 'react';
+import AuthLayout from '@/layouts/auth-layout';
 import { login } from '@/routes';
-import { store } from '@/routes/register';
-import type { RoleType } from '@/types/tanggapin';
 
-type Props = {
-    passwordRules: string;
-};
-
-interface RoleOption {
-    id: RoleType;
-    label: string;
-    shortTitle: string;
-    scopeBadge: string;
-    isFullAccess: boolean;
-    description: string;
-    icon: typeof ShieldCheck;
-}
-
-const ROLE_OPTIONS: RoleOption[] = [
-    {
-        id: 'kepala_sekolah',
-        label: 'Kepala Sekolah',
-        shortTitle: 'Kepsek',
-        scopeBadge: 'Akses Penuh',
-        isFullAccess: true,
-        description:
-            'Akses ke seluruh 11 modul: analitik menyeluruh, monitoring kinerja, dan keputusan.',
-        icon: ShieldCheck,
-    },
-    {
-        id: 'operator',
-        label: 'Operator Dapodik & Admin',
-        shortTitle: 'Operator',
-        scopeBadge: 'Akses Penuh',
-        isFullAccess: true,
-        description:
-            'Akses ke seluruh sistem: integritas data Dapodik, SK guru, dan sinkronisasi server.',
-        icon: CheckCircle2,
-    },
-    {
-        id: 'wali_kelas',
-        label: 'Wali Kelas Rombel',
-        shortTitle: 'Wali Kelas',
-        scopeBadge: 'Tupoksi Rombel',
-        isFullAccess: false,
-        description:
-            'Disesuaikan untuk presensi harian rombel, early warning kelas, dan komunikasi orang tua.',
-        icon: GraduationCap,
-    },
-    {
-        id: 'bendahara',
-        label: 'Bendahara Sekolah',
-        shortTitle: 'Bendahara',
-        scopeBadge: 'Tupoksi Keuangan',
-        isFullAccess: false,
-        description:
-            'Disesuaikan untuk administrasi SPP, verifikasi bukti bayar transfer, dan rekonsiliasi kas.',
-        icon: WalletCards,
-    },
-    {
-        id: 'guru_bk',
-        label: 'Guru BK & Konseling',
-        shortTitle: 'Guru BK',
-        scopeBadge: 'Tupoksi Kasus',
-        isFullAccess: false,
-        description:
-            'Disesuaikan untuk alur kanban kasus konseling, mediasi masalah, dan pemantauan ATS.',
-        icon: HeartPulse,
-    },
-];
-
-export default function Register({ passwordRules }: Props) {
-    const [selectedRole, setSelectedRole] = useState<RoleType>('wali_kelas');
-    const activeOption =
-        ROLE_OPTIONS.find((r) => r.id === selectedRole) || ROLE_OPTIONS[0];
-    const ActiveIcon = activeOption.icon;
-
+export default function Register() {
     return (
-        <>
-            <Head title="Daftar Akun — TANGGAPIN" />
-            <Form
-                {...store.form()}
-                resetOnSuccess={['password', 'password_confirmation']}
-                disableWhileProcessing
-                className="flex flex-col gap-6"
-            >
-                {({ processing, errors }) => (
-                    <>
-                        <input type="hidden" name="role" value={selectedRole} />
+        <AuthLayout
+            title="Pendaftaran Akun Terpusat"
+            description="Pusat Kontrol Akses & Keamanan Sistem Sekolah Tanggapin"
+        >
+            <Head title="Pendaftaran Akun — TANGGAPIN" />
 
-                        <div className="grid gap-5">
-                            {/* 1. NAMA LENGKAP */}
-                            <div className="grid gap-1.5">
-                                <Label
-                                    htmlFor="name"
-                                    className="text-xs font-semibold text-slate-700 dark:text-slate-300"
-                                >
-                                    Nama Lengkap & Gelar
-                                </Label>
-                                <Input
-                                    id="name"
-                                    type="text"
-                                    required
-                                    autoFocus
-                                    tabIndex={1}
-                                    autoComplete="name"
-                                    name="name"
-                                    placeholder="Nama lengkap pengguna"
-                                    className="h-9 text-xs"
-                                />
-                                <InputError message={errors.name} />
-                            </div>
-
-                            {/* 2. ALAMAT EMAIL RESMI */}
-                            <div className="grid gap-1.5">
-                                <Label
-                                    htmlFor="email"
-                                    className="text-xs font-semibold text-slate-700 dark:text-slate-300"
-                                >
-                                    Alamat Email Sekolah
-                                </Label>
-                                <Input
-                                    id="email"
-                                    type="email"
-                                    required
-                                    tabIndex={2}
-                                    autoComplete="email"
-                                    name="email"
-                                    placeholder="nama@sekolah.sch.id"
-                                    className="h-9 text-xs"
-                                />
-                                <InputError message={errors.email} />
-                            </div>
-
-                            {/* 3. PEMILIHAN ROLE & TUPOKSI */}
-                            <div className="space-y-2">
-                                <div className="flex items-center justify-between">
-                                    <Label className="text-xs font-semibold text-slate-700 dark:text-slate-300">
-                                        Pilih Peran & Tanggung Jawab Tupoksi
-                                    </Label>
-                                    <span className="text-[11px] font-medium text-blue-700 dark:text-blue-400">
-                                        5 Pilihan Peran
-                                    </span>
-                                </div>
-
-                                {/* Role Switcher Grid */}
-                                <div className="grid grid-cols-5 gap-1 rounded-xl border border-slate-200 bg-slate-100/80 p-1 dark:border-slate-700 dark:bg-slate-900/60">
-                                    {ROLE_OPTIONS.map((role) => {
-                                        const isSelected =
-                                            selectedRole === role.id;
-                                        return (
-                                            <button
-                                                key={role.id}
-                                                type="button"
-                                                onClick={() =>
-                                                    setSelectedRole(role.id)
-                                                }
-                                                className={cn(
-                                                    'truncate rounded-lg px-1 py-2 text-center text-[11px] font-medium transition-all',
-                                                    isSelected
-                                                        ? 'bg-blue-700 font-semibold text-white shadow-xs'
-                                                        : 'text-slate-600 hover:bg-slate-200/70 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white',
-                                                )}
-                                            >
-                                                {role.shortTitle}
-                                            </button>
-                                        );
-                                    })}
-                                </div>
-
-                                {/* Selected Role Detail Card */}
-                                <div className="flex items-start gap-2.5 rounded-xl border border-blue-200/70 bg-blue-50/70 px-3.5 py-2.5 text-[11px] dark:border-blue-900/40 dark:bg-blue-950/30">
-                                    <div className="mt-0.5 shrink-0 rounded-lg bg-blue-700 p-1.5 text-white">
-                                        <ActiveIcon className="size-3.5" />
-                                    </div>
-                                    <div className="min-w-0 flex-1">
-                                        <div className="mb-0.5 flex items-center justify-between gap-1">
-                                            <span className="text-xs font-bold text-slate-900 dark:text-white">
-                                                {activeOption.label}
-                                            </span>
-                                            <span className="shrink-0 rounded border border-blue-200 bg-white px-2 py-0.5 text-[10px] font-bold text-blue-700 dark:border-blue-800 dark:bg-slate-900 dark:text-blue-300">
-                                                {activeOption.scopeBadge}
-                                            </span>
-                                        </div>
-                                        <p className="text-[11px] leading-tight text-slate-600 dark:text-slate-400">
-                                            {activeOption.description}
-                                        </p>
-                                    </div>
-                                </div>
-                                <InputError message={errors.role} />
-                            </div>
-
-                            {/* 4. PASSWORD & CONFIRM PASSWORD */}
-                            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                                <div className="grid gap-1.5">
-                                    <Label
-                                        htmlFor="password"
-                                        className="text-xs font-semibold text-slate-700 dark:text-slate-300"
-                                    >
-                                        Kata Sandi
-                                    </Label>
-                                    <PasswordInput
-                                        id="password"
-                                        required
-                                        tabIndex={3}
-                                        autoComplete="new-password"
-                                        name="password"
-                                        placeholder="Minimal 8 karakter"
-                                        passwordrules={passwordRules}
-                                        className="h-9 text-xs"
-                                    />
-                                    <InputError message={errors.password} />
-                                </div>
-
-                                <div className="grid gap-1.5">
-                                    <Label
-                                        htmlFor="password_confirmation"
-                                        className="text-xs font-semibold text-slate-700 dark:text-slate-300"
-                                    >
-                                        Konfirmasi Sandi
-                                    </Label>
-                                    <PasswordInput
-                                        id="password_confirmation"
-                                        required
-                                        tabIndex={4}
-                                        autoComplete="new-password"
-                                        name="password_confirmation"
-                                        placeholder="Ulangi kata sandi"
-                                        passwordrules={passwordRules}
-                                        className="h-9 text-xs"
-                                    />
-                                    <InputError
-                                        message={errors.password_confirmation}
-                                    />
-                                </div>
-                            </div>
-
-                            <Button
-                                type="submit"
-                                className="mt-2 h-10 w-full bg-blue-700 text-xs font-bold text-white shadow-sm transition-all hover:bg-blue-800"
-                                tabIndex={5}
-                                data-test="register-user-button"
-                                disabled={processing}
-                            >
-                                {processing && <Spinner className="mr-2" />}
-                                Buat Akun & Masuk Sistem
-                            </Button>
+            <div className="space-y-4">
+                <div className="rounded-xl border border-blue-200 bg-blue-50/70 p-4 text-center dark:border-blue-900/60 dark:bg-blue-950/40">
+                    <div className="mx-auto flex size-12 items-center justify-center rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300">
+                        <Lock className="size-6" />
+                    </div>
+                    <h3 className="mt-3 text-sm font-bold text-slate-900 dark:text-white">
+                        Pendaftaran Mandiri Dinonaktifkan
+                    </h3>
+                    <p className="mt-1.5 text-xs leading-relaxed text-slate-600 dark:text-slate-300">
+                        Untuk menjaga integritas dan kerahasiaan data siswa, akun Wali Kelas, Guru BK, Bendahara, dan Kepala Sekolah tidak dapat dibuat secara mandiri.
+                    </p>
+                    <div className="mt-3 rounded-lg border border-blue-200/80 bg-white/90 p-3 text-left text-xs text-slate-700 dark:border-blue-800 dark:bg-slate-900/80 dark:text-slate-300">
+                        <div className="flex items-center gap-1.5 font-bold text-blue-800 dark:text-blue-300">
+                            <ShieldCheck className="size-4" />
+                            <span>Prosedur Mendapatkan Akun:</span>
                         </div>
+                        <ol className="mt-1.5 list-decimal pl-4 space-y-1 text-[11px] text-slate-600 dark:text-slate-400">
+                            <li>Hubungi <strong>Operator Sekolah</strong> Anda yang memegang lisensi aktif Tanggapin.</li>
+                            <li>Operator akan menerbitkan akun resmi sesuai peran dan rombel binaan Anda.</li>
+                            <li>Gunakan email dan kata sandi yang diberikan Operator untuk masuk ke sistem.</li>
+                        </ol>
+                    </div>
+                </div>
 
-                        <div className="text-center text-xs text-muted-foreground">
-                            Sudah memiliki akun terdaftar?{' '}
-                            <TextLink
-                                href={login()}
-                                tabIndex={6}
-                                className="font-semibold text-blue-700 dark:text-blue-400"
-                            >
-                                Masuk ke Tanggapin
-                            </TextLink>
-                        </div>
-                    </>
-                )}
-            </Form>
-        </>
+                <div className="pt-2">
+                    <Link
+                        href={login()}
+                        className="flex h-10 w-full items-center justify-center gap-2 rounded-lg bg-blue-700 text-xs font-bold text-white shadow-xs transition-colors hover:bg-blue-800"
+                    >
+                        <ArrowLeft className="size-4" />
+                        <span>Kembali ke Halaman Masuk</span>
+                    </Link>
+                </div>
+            </div>
+        </AuthLayout>
     );
 }
-
-Register.layout = {
-    title: 'Pendaftaran Akun Terpadu',
-    description:
-        'Pilih peran dan lengkapi data untuk mulai menggunakan sistem sekolah terintegrasi',
-};

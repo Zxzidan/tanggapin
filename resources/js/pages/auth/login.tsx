@@ -11,7 +11,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
 import { cn } from '@/lib/utils';
-import { register } from '@/routes';
 import { store } from '@/routes/login';
 import { request } from '@/routes/password';
 import type { RoleType } from '@/types/tanggapin';
@@ -250,15 +249,11 @@ export default function Login({ status, canResetPassword }: Props) {
                             </Button>
                         </div>
 
-                        <div className="text-center text-xs text-muted-foreground">
-                            Belum memiliki akun?{' '}
-                            <TextLink
-                                href={register()}
-                                tabIndex={5}
-                                className="font-semibold text-blue-700 dark:text-blue-400"
-                            >
-                                Daftarkan Akun Sekolah
-                            </TextLink>
+                        <div className="rounded-xl border border-slate-200 bg-slate-50/70 p-3 text-center text-[11px] leading-relaxed text-slate-600 dark:border-slate-800 dark:bg-slate-900/60 dark:text-slate-400">
+                            <span className="font-semibold text-slate-800 dark:text-slate-200">
+                                Akun Dikelola Terpusat:
+                            </span>{' '}
+                            Pendaftaran publik dinonaktifkan. Seluruh akun Wali Kelas, Guru BK, Bendahara, dan Kepsek diterbitkan langsung oleh Operator Sekolah.
                         </div>
                     </>
                 )}

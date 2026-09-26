@@ -13,39 +13,154 @@ use App\Models\ParentCommunication;
 use App\Models\RiskAlert;
 use App\Models\SchoolClass;
 use App\Models\SchoolPayment;
+use App\Models\SchoolSetting;
 use App\Models\Student;
 use App\Models\StudentCase;
+use App\Models\StudentReport;
 use App\Models\TeacherDocument;
+use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class TanggapinSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     * Simplified: 1 class, 1 student, 1 example per module for dashboard demo.
+     * Seed realistic school classes, students, and staff accounts for the system.
      */
     public function run(): void
     {
-        // 1. Single Class
+        // 0. School Setting (Paket Unggulan - Kuota 35 Kelas)
+        SchoolSetting::current();
+
+        // 1. Classes
         $classRpl2 = SchoolClass::updateOrCreate(['name' => 'XI RPL 2'], [
             'major' => 'Rekayasa Perangkat Lunak',
             'academic_year' => '2025/2026 Ganjil',
-            'homeroom_teacher_name' => 'Wali Kelas XI RPL 2',
+            'homeroom_teacher_name' => 'Ratna Dewi, S.Pd',
             'total_students' => 36,
             'attendance_rate' => 91,
             'health_status' => 'warning',
         ]);
 
-        // 2. Single Student
+        $classTkj1 = SchoolClass::updateOrCreate(['name' => 'X TKJ 1'], [
+            'major' => 'Teknik Komputer dan Jaringan',
+            'academic_year' => '2025/2026 Ganjil',
+            'homeroom_teacher_name' => 'Budi Santoso, S.Kom',
+            'total_students' => 34,
+            'attendance_rate' => 95,
+            'health_status' => 'good',
+        ]);
+
+        // Seed Official Staff Users managed by Operator
+        User::updateOrCreate(['email' => 'operator@sekolah.sch.id'], [
+            'name' => 'Operator Sekolah',
+            'role' => 'operator',
+            'password' => Hash::make('password'),
+            'raw_password' => 'password',
+            'email_verified_at' => now(),
+        ]);
+
+        User::updateOrCreate(['email' => 'kepsek@sekolah.sch.id'], [
+            'name' => 'Drs. H. Mulyadi, M.Pd',
+            'role' => 'kepala_sekolah',
+            'password' => Hash::make('password'),
+            'raw_password' => 'password',
+            'email_verified_at' => now(),
+        ]);
+
+        User::updateOrCreate(['email' => 'walikelas@sekolah.sch.id'], [
+            'name' => 'Ratna Dewi, S.Pd',
+            'role' => 'wali_kelas',
+            'school_class_id' => $classRpl2->id,
+            'password' => Hash::make('password'),
+            'raw_password' => 'password',
+            'email_verified_at' => now(),
+        ]);
+
+        User::updateOrCreate(['email' => 'budi@sekolah.sch.id'], [
+            'name' => 'Budi Santoso, S.Kom',
+            'role' => 'wali_kelas',
+            'school_class_id' => $classTkj1->id,
+            'password' => Hash::make('password'),
+            'raw_password' => 'password',
+            'email_verified_at' => now(),
+        ]);
+
+        User::updateOrCreate(['email' => 'gurubk@sekolah.sch.id'], [
+            'name' => 'Dra. Hj. Nurjanah, M.Pd',
+            'role' => 'guru_bk',
+            'password' => Hash::make('password'),
+            'raw_password' => 'password',
+            'email_verified_at' => now(),
+        ]);
+
+        User::updateOrCreate(['email' => 'bendahara@sekolah.sch.id'], [
+            'name' => 'Ahmad Suhendra, S.E.',
+            'role' => 'bendahara',
+            'password' => Hash::make('password'),
+            'raw_password' => 'password',
+            'email_verified_at' => now(),
+        ]);
+
+        // 2. Students
         $siswa = Student::updateOrCreate(['nisn' => '0067123001'], [
             'school_class_id' => $classRpl2->id,
             'name' => 'Siswa Contoh',
             'gender' => 'L',
             'parent_name' => 'Orang Tua Contoh',
             'parent_phone' => '+62 812-3456-7890',
-            'address' => 'Jl. Contoh No. 1',
+            'address' => 'Jl. Contoh No. 1, Kota Bandung',
             'attendance_rate' => 72,
             'risk_level' => 'high',
+            'status' => 'active',
+        ]);
+
+        $ahmad = Student::updateOrCreate(['nisn' => '0067123002'], [
+            'school_class_id' => $classRpl2->id,
+            'name' => 'Ahmad Fauzi',
+            'gender' => 'L',
+            'parent_name' => 'Bapak Fauzi',
+            'parent_phone' => '+62 813-9876-5432',
+            'address' => 'Jl. Cempaka No. 14, Kota Bandung',
+            'attendance_rate' => 88,
+            'risk_level' => 'medium',
+            'status' => 'active',
+        ]);
+
+        $nadia = Student::updateOrCreate(['nisn' => '0067123003'], [
+            'school_class_id' => $classRpl2->id,
+            'name' => 'Nadia Putri',
+            'gender' => 'P',
+            'parent_name' => 'Ibu Marlina',
+            'parent_phone' => '+62 819-1122-3344',
+            'address' => 'Jl. Pelajar Pejuang No. 88, Kota Bandung',
+            'attendance_rate' => 98,
+            'risk_level' => 'low',
+            'status' => 'active',
+        ]);
+
+        $doni = Student::updateOrCreate(['nisn' => '0067123004'], [
+            'school_class_id' => $classTkj1->id,
+            'name' => 'Doni Pratama',
+            'gender' => 'L',
+            'parent_name' => 'Bapak Pratama',
+            'parent_phone' => '+62 812-7788-9900',
+            'address' => 'Jl. Cibaduyut No. 23, Kota Bandung',
+            'attendance_rate' => 84,
+            'risk_level' => 'medium',
+            'status' => 'active',
+        ]);
+
+        $citra = Student::updateOrCreate(['nisn' => '0067123005'], [
+            'school_class_id' => $classTkj1->id,
+            'name' => 'Citra Lestari',
+            'gender' => 'P',
+            'parent_name' => 'Ibu Citra',
+            'parent_phone' => '+62 813-5566-7788',
+            'address' => 'Jl. Kopo No. 102, Kota Bandung',
+            'attendance_rate' => 96,
+            'risk_level' => 'low',
             'status' => 'active',
         ]);
 
@@ -150,6 +265,49 @@ class TanggapinSeeder extends Seeder
         ]);
         IncidentChecklist::updateOrCreate(['incident_id' => $incident->id, 'label' => 'Penyusunan Rute Alternatif Pulang Siswa'], [
             'is_done' => false,
+        ]);
+
+        // 13. Student Reports (AI Automated Report Cards)
+        StudentReport::updateOrCreate(['report_code' => 'RPR-2025-001'], [
+            'student_id' => $siswa->id,
+            'academic_period' => '2025/2026 Ganjil',
+            'attendance_rate' => 72,
+            'sick_count' => 3,
+            'permission_count' => 2,
+            'unexcused_count' => 6,
+            'discipline_points' => 15,
+            'discipline_status' => 'Dalam Pendampingan Khusus',
+            'ai_character_summary' => 'Ananda memiliki potensi logika kejuruan dan kreativitas yang baik saat hadir di kelas. Namun, pola kehadiran yang menurun pada jam pertama dan ketidakhadiran tanpa surat keterangan memerlukan perhatian bersama antara sekolah dan keluarga agar tidak tertinggal materi uji kompetensi.',
+            'ai_academic_notes' => 'Tugas produktif pemrograman web modul 1-3 diselesaikan dengan baik saat di sekolah. Perlu pendampingan untuk penyelesaian tugas mandiri di rumah.',
+            'parent_recommendations' => 'Mohon Bapak/Ibu mendampingi jadwal istirahat malam ananda dan mengingatkan persiapan sekolah sebelum pukul 06.30 WIB. Wali kelas siap memberikan bimbingan belajar tambahan di jam istirahat.',
+            'status' => 'sent',
+            'sent_to_parent_at' => now()->subDay()->format('d M H:i'),
+            'parent_phone' => $siswa->parent_phone,
+            'parent_name' => $siswa->parent_name,
+            'delivery_channel' => 'WhatsApp Official & Tanggapin App',
+            'acknowledgement_status' => 'Sudah Dibaca & Dikonfirmasi Orang Tua',
+            'homeroom_teacher_name' => 'Wali Kelas XI RPL 2',
+        ]);
+
+        StudentReport::updateOrCreate(['report_code' => 'RPR-2025-002'], [
+            'student_id' => $nadia->id,
+            'academic_period' => '2025/2026 Ganjil',
+            'attendance_rate' => 98,
+            'sick_count' => 1,
+            'permission_count' => 0,
+            'unexcused_count' => 0,
+            'discipline_points' => 0,
+            'discipline_status' => 'Sangat Tertib & Teladan',
+            'ai_character_summary' => 'Nadia menunjukkan kepemimpinan yang santun, disiplin belajar tinggi, dan aktif membantu teman sekelas dalam proyek kelompok. Menjadi teladan positif bagi rombongan belajar XI RPL 2.',
+            'ai_academic_notes' => 'Seluruh capaian pembelajaran dan tugas produktif tuntas melampaui kriteria ketuntasan minimal (KKM) dengan predikat Sangat Baik (A).',
+            'parent_recommendations' => 'Apresiasi yang tinggi kepada orang tua atas dukungan optimal di rumah. Pertahankan motivasi belajar dan dorong ananda untuk mengikuti ajang Lomba Kompetensi Siswa (LKS).',
+            'status' => 'sent',
+            'sent_to_parent_at' => now()->subDays(2)->format('d M H:i'),
+            'parent_phone' => $nadia->parent_phone,
+            'parent_name' => $nadia->parent_name,
+            'delivery_channel' => 'WhatsApp Official & Tanggapin App',
+            'acknowledgement_status' => 'Sudah Dibaca & Dikonfirmasi Orang Tua',
+            'homeroom_teacher_name' => 'Wali Kelas XI RPL 2',
         ]);
     }
 }
