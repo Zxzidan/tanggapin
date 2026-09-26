@@ -1,4 +1,4 @@
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 import {
     AlertTriangle,
     ArrowRight,
@@ -31,7 +31,7 @@ import {
     Users,
     WalletCards,
 } from 'lucide-react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { useActionModals } from '@/components/action-modals';
 import FlowbiteTanggapinLayout from '@/layouts/flowbite-tanggapin-layout';
@@ -67,7 +67,13 @@ export default function Dashboard({
         openStudent360Modal,
     } = useActionModals();
 
+    const page = usePage<{ auth?: { user?: { name?: string; email?: string; role?: RoleType } } }>();
+    const authRole = page.props.auth?.user?.role;
+
     const [currentRole, setCurrentRole] = useState<RoleType>(() => {
+        if (authRole && Object.keys(ROLE_CONFIGS).includes(authRole)) {
+            return authRole;
+        }
         if (typeof window !== 'undefined') {
             const saved = localStorage.getItem('tanggapin_current_role') as RoleType;
             if (saved && Object.keys(ROLE_CONFIGS).includes(saved)) {
@@ -76,6 +82,15 @@ export default function Dashboard({
         }
         return 'kepala_sekolah';
     });
+
+    useEffect(() => {
+        if (authRole && Object.keys(ROLE_CONFIGS).includes(authRole)) {
+            setCurrentRole(authRole);
+            if (typeof window !== 'undefined') {
+                localStorage.setItem('tanggapin_current_role', authRole);
+            }
+        }
+    }, [authRole]);
 
     const [feedRiskFilter, setFeedRiskFilter] = useState<'all' | 'high' | 'medium'>('all');
 

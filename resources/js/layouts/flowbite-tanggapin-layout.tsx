@@ -54,8 +54,10 @@ export default function FlowbiteTanggapinLayout({
     onRoleChange,
     onTriggerActionModal,
 }: FlowbiteLayoutProps) {
-    const page = usePage<{ auth: { user: { name: string; email: string } } }>();
+    const page = usePage<{ auth?: { user?: { name?: string; email?: string; role?: RoleType } } }>();
     const currentPath = page.url.split('?')[0];
+    const authUser = page.props.auth?.user;
+    const authRole = authUser?.role;
 
     const { appearance, resolvedAppearance, updateAppearance } = useAppearance();
     const actionModals = useActionModals();
@@ -70,6 +72,9 @@ export default function FlowbiteTanggapinLayout({
 
     const [localRole, setLocalRole] = useState<RoleType>(() => {
         if (controlledRole) return controlledRole;
+        if (authRole && Object.keys(ROLE_CONFIGS).includes(authRole)) {
+            return authRole;
+        }
         if (typeof window !== 'undefined') {
             const saved = localStorage.getItem('tanggapin_current_role') as RoleType;
             if (saved && Object.keys(ROLE_CONFIGS).includes(saved)) {
@@ -78,6 +83,15 @@ export default function FlowbiteTanggapinLayout({
         }
         return 'kepala_sekolah';
     });
+
+    useEffect(() => {
+        if (authRole && Object.keys(ROLE_CONFIGS).includes(authRole) && !controlledRole) {
+            setLocalRole(authRole);
+            if (typeof window !== 'undefined') {
+                localStorage.setItem('tanggapin_current_role', authRole);
+            }
+        }
+    }, [authRole, controlledRole]);
 
     const activeRole = controlledRole || localRole;
     const activeRoleConfig = ROLE_CONFIGS[activeRole] || ROLE_CONFIGS.kepala_sekolah;
@@ -628,10 +642,10 @@ export default function FlowbiteTanggapinLayout({
                                     <div className="z-50 absolute right-0 top-11 bg-neutral-primary-medium border border-default-medium rounded-base shadow-xl w-60 transition-all">
                                         <div className="px-4 py-3 border-b border-default-medium">
                                             <p className="text-sm font-semibold text-heading truncate">
-                                                {activeRoleConfig.userName}
+                                                {authUser?.name || activeRoleConfig.userName}
                                             </p>
                                             <p className="text-xs text-body truncate">
-                                                {activeRoleConfig.userEmail}
+                                                {authUser?.email || activeRoleConfig.userEmail}
                                             </p>
                                             <span className="mt-1.5 inline-block text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
                                                 {activeRoleConfig.title}

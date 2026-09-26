@@ -1,4 +1,13 @@
 import { Form, Head } from '@inertiajs/react';
+import {
+    Check,
+    CheckCircle2,
+    GraduationCap,
+    HeartPulse,
+    ShieldCheck,
+    WalletCards,
+} from 'lucide-react';
+import { useState } from 'react';
 import InputError from '@/components/input-error';
 import PasswordInput from '@/components/password-input';
 import TextLink from '@/components/text-link';
@@ -6,17 +15,79 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
+import { cn } from '@/lib/utils';
 import { login } from '@/routes';
 import { store } from '@/routes/register';
+import type { RoleType } from '@/types/tanggapin';
 
 type Props = {
     passwordRules: string;
 };
 
+interface RoleOption {
+    id: RoleType;
+    label: string;
+    shortTitle: string;
+    scopeBadge: string;
+    isFullAccess: boolean;
+    description: string;
+    icon: typeof ShieldCheck;
+}
+
+const ROLE_OPTIONS: RoleOption[] = [
+    {
+        id: 'kepala_sekolah',
+        label: 'Kepala Sekolah',
+        shortTitle: 'Kepsek',
+        scopeBadge: 'Akses Penuh',
+        isFullAccess: true,
+        description: 'Akses ke seluruh 11 modul: analitik menyeluruh, monitoring kinerja, dan keputusan.',
+        icon: ShieldCheck,
+    },
+    {
+        id: 'operator',
+        label: 'Operator Dapodik & Admin',
+        shortTitle: 'Operator',
+        scopeBadge: 'Akses Penuh',
+        isFullAccess: true,
+        description: 'Akses ke seluruh sistem: integritas data Dapodik, SK guru, dan sinkronisasi server.',
+        icon: CheckCircle2,
+    },
+    {
+        id: 'wali_kelas',
+        label: 'Wali Kelas (Rombel)',
+        shortTitle: 'Wali Kelas',
+        scopeBadge: 'Tupoksi Rombel',
+        isFullAccess: false,
+        description: 'Disesuaikan untuk presensi harian rombel, early warning kelas, dan komunikasi orang tua.',
+        icon: GraduationCap,
+    },
+    {
+        id: 'guru_bk',
+        label: 'Guru BK & Konseling',
+        shortTitle: 'Guru BK',
+        scopeBadge: 'Tupoksi Kasus',
+        isFullAccess: false,
+        description: 'Disesuaikan untuk alur kanban kasus konseling, mediasi masalah, dan pemantauan ATS.',
+        icon: HeartPulse,
+    },
+    {
+        id: 'bendahara',
+        label: 'Bendahara Sekolah',
+        shortTitle: 'Bendahara',
+        scopeBadge: 'Tupoksi Keuangan',
+        isFullAccess: false,
+        description: 'Disesuaikan untuk administrasi SPP, verifikasi bukti bayar transfer, dan rekonsiliasi kas.',
+        icon: WalletCards,
+    },
+];
+
 export default function Register({ passwordRules }: Props) {
+    const [selectedRole, setSelectedRole] = useState<RoleType>('wali_kelas');
+
     return (
         <>
-            <Head title="Register" />
+            <Head title="Daftar Akun — TANGGAPIN" />
             <Form
                 {...store.form()}
                 resetOnSuccess={['password', 'password_confirmation']}
@@ -25,9 +96,14 @@ export default function Register({ passwordRules }: Props) {
             >
                 {({ processing, errors }) => (
                     <>
-                        <div className="grid gap-6">
-                            <div className="grid gap-2">
-                                <Label htmlFor="name">Name</Label>
+                        <input type="hidden" name="role" value={selectedRole} />
+
+                        <div className="grid gap-5">
+                            {/* 1. NAMA LENGKAP */}
+                            <div className="grid gap-1.5">
+                                <Label htmlFor="name" className="text-xs font-semibold text-slate-700 dark:text-slate-300">
+                                    Nama Lengkap & Gelar
+                                </Label>
                                 <Input
                                     id="name"
                                     type="text"
@@ -36,16 +112,17 @@ export default function Register({ passwordRules }: Props) {
                                     tabIndex={1}
                                     autoComplete="name"
                                     name="name"
-                                    placeholder="Full name"
+                                    placeholder="Contoh: Bpk. Hendra Setiawan, S.Pd"
+                                    className="h-9 text-xs"
                                 />
-                                <InputError
-                                    message={errors.name}
-                                    className="mt-2"
-                                />
+                                <InputError message={errors.name} />
                             </div>
 
-                            <div className="grid gap-2">
-                                <Label htmlFor="email">Email address</Label>
+                            {/* 2. ALAMAT EMAIL RESMI */}
+                            <div className="grid gap-1.5">
+                                <Label htmlFor="email" className="text-xs font-semibold text-slate-700 dark:text-slate-300">
+                                    Alamat Email Sekolah
+                                </Label>
                                 <Input
                                     id="email"
                                     type="email"
@@ -53,58 +130,150 @@ export default function Register({ passwordRules }: Props) {
                                     tabIndex={2}
                                     autoComplete="email"
                                     name="email"
-                                    placeholder="email@example.com"
+                                    placeholder="nama@smk1harapan.sch.id"
+                                    className="h-9 text-xs"
                                 />
                                 <InputError message={errors.email} />
                             </div>
 
+                            {/* 3. PEMILIHAN ROLE & TUPOKSI */}
                             <div className="grid gap-2">
-                                <Label htmlFor="password">Password</Label>
-                                <PasswordInput
-                                    id="password"
-                                    required
-                                    tabIndex={3}
-                                    autoComplete="new-password"
-                                    name="password"
-                                    placeholder="Password"
-                                    passwordrules={passwordRules}
-                                />
-                                <InputError message={errors.password} />
+                                <div className="flex items-center justify-between">
+                                    <Label className="text-xs font-semibold text-slate-700 dark:text-slate-300">
+                                        Pilih Peran & Tanggung Jawab (Tupoksi)
+                                    </Label>
+                                    <span className="text-[11px] text-blue-700 dark:text-blue-400 font-medium">
+                                        5 Pilihan Peran
+                                    </span>
+                                </div>
+
+                                <div className="grid grid-cols-1 gap-2">
+                                    {ROLE_OPTIONS.map((role) => {
+                                        const Icon = role.icon;
+                                        const isSelected = selectedRole === role.id;
+
+                                        return (
+                                            <div
+                                                key={role.id}
+                                                role="button"
+                                                tabIndex={0}
+                                                onClick={() => setSelectedRole(role.id)}
+                                                onKeyDown={(e) => {
+                                                    if (e.key === 'Enter' || e.key === ' ') {
+                                                        setSelectedRole(role.id);
+                                                    }
+                                                }}
+                                                className={cn(
+                                                    'p-3 rounded-xl border text-left cursor-pointer transition-all flex items-start gap-3 select-none',
+                                                    isSelected
+                                                        ? 'bg-blue-50/80 dark:bg-blue-950/40 border-blue-600 dark:border-blue-500 ring-2 ring-blue-500/20 shadow-xs'
+                                                        : 'bg-white dark:bg-[#0f172a] border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
+                                                )}
+                                            >
+                                                <div
+                                                    className={cn(
+                                                        'p-2 rounded-lg shrink-0 mt-0.5 transition-colors',
+                                                        isSelected
+                                                            ? 'bg-blue-600 text-white'
+                                                            : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
+                                                    )}
+                                                >
+                                                    <Icon className="size-4" />
+                                                </div>
+
+                                                <div className="space-y-0.5 flex-1 min-w-0">
+                                                    <div className="flex items-center justify-between gap-1.5">
+                                                        <span className="font-bold text-xs text-slate-900 dark:text-white">
+                                                            {role.label}
+                                                        </span>
+                                                        <span
+                                                            className={cn(
+                                                                'text-[10px] font-bold px-1.5 py-0.5 rounded border',
+                                                                role.isFullAccess
+                                                                    ? 'bg-purple-50 text-purple-700 dark:bg-purple-950 dark:text-purple-300 border-purple-200 dark:border-purple-800'
+                                                                    : 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800'
+                                                            )}
+                                                        >
+                                                            {role.scopeBadge}
+                                                        </span>
+                                                    </div>
+                                                    <p className="text-[11px] text-slate-600 dark:text-slate-400 leading-snug">
+                                                        {role.description}
+                                                    </p>
+                                                </div>
+
+                                                <div className="shrink-0 pt-1">
+                                                    <div
+                                                        className={cn(
+                                                            'size-4 rounded-full border flex items-center justify-center transition-colors',
+                                                            isSelected
+                                                                ? 'border-blue-600 bg-blue-600 text-white'
+                                                                : 'border-slate-300 dark:border-slate-700'
+                                                        )}
+                                                    >
+                                                        {isSelected && <Check className="size-2.5 stroke-[3]" />}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                                <InputError message={errors.role} />
                             </div>
 
-                            <div className="grid gap-2">
-                                <Label htmlFor="password_confirmation">
-                                    Confirm password
-                                </Label>
-                                <PasswordInput
-                                    id="password_confirmation"
-                                    required
-                                    tabIndex={4}
-                                    autoComplete="new-password"
-                                    name="password_confirmation"
-                                    placeholder="Confirm password"
-                                    passwordrules={passwordRules}
-                                />
-                                <InputError
-                                    message={errors.password_confirmation}
-                                />
+                            {/* 4. PASSWORD & CONFIRM PASSWORD */}
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <div className="grid gap-1.5">
+                                    <Label htmlFor="password" className="text-xs font-semibold text-slate-700 dark:text-slate-300">
+                                        Kata Sandi
+                                    </Label>
+                                    <PasswordInput
+                                        id="password"
+                                        required
+                                        tabIndex={3}
+                                        autoComplete="new-password"
+                                        name="password"
+                                        placeholder="Minimal 8 karakter"
+                                        passwordrules={passwordRules}
+                                        className="h-9 text-xs"
+                                    />
+                                    <InputError message={errors.password} />
+                                </div>
+
+                                <div className="grid gap-1.5">
+                                    <Label htmlFor="password_confirmation" className="text-xs font-semibold text-slate-700 dark:text-slate-300">
+                                        Konfirmasi Sandi
+                                    </Label>
+                                    <PasswordInput
+                                        id="password_confirmation"
+                                        required
+                                        tabIndex={4}
+                                        autoComplete="new-password"
+                                        name="password_confirmation"
+                                        placeholder="Ulangi kata sandi"
+                                        passwordrules={passwordRules}
+                                        className="h-9 text-xs"
+                                    />
+                                    <InputError message={errors.password_confirmation} />
+                                </div>
                             </div>
 
                             <Button
                                 type="submit"
-                                className="mt-2 w-full"
+                                className="mt-2 w-full h-10 bg-blue-700 hover:bg-blue-800 text-white font-bold text-xs shadow-sm transition-all"
                                 tabIndex={5}
                                 data-test="register-user-button"
+                                disabled={processing}
                             >
-                                {processing && <Spinner />}
-                                Create account
+                                {processing && <Spinner className="mr-2" />}
+                                Buat Akun & Masuk Sistem
                             </Button>
                         </div>
 
-                        <div className="text-center text-sm text-muted-foreground">
-                            Already have an account?{' '}
-                            <TextLink href={login()} tabIndex={6}>
-                                Log in
+                        <div className="text-center text-xs text-muted-foreground">
+                            Sudah memiliki akun terdaftar?{' '}
+                            <TextLink href={login()} tabIndex={6} className="font-semibold text-blue-700 dark:text-blue-400">
+                                Masuk ke Tanggapin
                             </TextLink>
                         </div>
                     </>
@@ -115,6 +284,6 @@ export default function Register({ passwordRules }: Props) {
 }
 
 Register.layout = {
-    title: 'Create an account',
-    description: 'Enter your details below to create your account',
+    title: 'Pendaftaran Akun Terpadu',
+    description: 'Pilih peran dan lengkapi data untuk mulai menggunakan sistem sekolah terintegrasi',
 };
