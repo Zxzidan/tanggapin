@@ -15,15 +15,15 @@ Tanggapin adalah platform operasional sekolah yang menghubungkan data siswa, ear
 
 Sekolah sebenarnya sudah memiliki banyak data:
 
-* absensi
-* nilai
-* pelanggaran
-* data siswa
-* komunikasi orang tua
-* pembayaran
-* dokumen guru
-* data tugas tambahan
-* laporan kasus
+- absensi
+- nilai
+- pelanggaran
+- data siswa
+- komunikasi orang tua
+- pembayaran
+- dokumen guru
+- data tugas tambahan
+- laporan kasus
 
 Masalahnya, data tersebut **terpisah dan lebih banyak digunakan untuk administrasi daripada tindakan**.
 
@@ -179,13 +179,13 @@ Mendeteksi pola risiko siswa sebelum berkembang menjadi masalah yang lebih besar
 
 ### Data yang digunakan
 
-* Absensi
-* Keterlambatan
-* Nilai
-* Pelanggaran
-* Catatan pembinaan
-* Perubahan perilaku
-* Riwayat kasus
+- Absensi
+- Keterlambatan
+- Nilai
+- Pelanggaran
+- Catatan pembinaan
+- Perubahan perilaku
+- Riwayat kasus
 
 ### Fitur
 
@@ -193,19 +193,19 @@ Mendeteksi pola risiko siswa sebelum berkembang menjadi masalah yang lebih besar
 
 Menampilkan siswa berdasarkan kondisi:
 
-* Perlu perhatian
-* Perlu follow-up
-* Prioritas tinggi
+- Perlu perhatian
+- Perlu follow-up
+- Prioritas tinggi
 
 ### Student Risk Profile
 
 Setiap siswa memiliki ringkasan:
 
-* kehadiran
-* nilai
-* pelanggaran
-* tren
-* riwayat intervensi
+- kehadiran
+- nilai
+- pelanggaran
+- tren
+- riwayat intervensi
 
 ### Risk Trigger
 
@@ -223,11 +223,11 @@ Sistem menandai kondisi tersebut sebagai **trigger**, bukan sebagai diagnosis.
 
 Guru dapat langsung:
 
-* membuat follow-up
-* menghubungi orang tua
-* membuat case
-* memberi catatan
-* menjadwalkan pertemuan
+- membuat follow-up
+- menghubungi orang tua
+- membuat case
+- memberi catatan
+- menjadwalkan pertemuan
 
 ---
 
@@ -239,12 +239,12 @@ Memberikan wali kelas satu halaman untuk melihat kondisi kelas.
 
 ### Fitur
 
-* Ringkasan kehadiran
-* Ringkasan nilai
-* Pelanggaran
-* Siswa membutuhkan perhatian
-* Follow-up belum selesai
-* Tren kelas
+- Ringkasan kehadiran
+- Ringkasan nilai
+- Pelanggaran
+- Siswa membutuhkan perhatian
+- Follow-up belum selesai
+- Tren kelas
 
 ### Class Health
 
@@ -262,13 +262,13 @@ Mengubah penanganan siswa dari komunikasi ad-hoc menjadi workflow.
 
 ### Case Types
 
-* Akademik
-* Kehadiran
-* Kedisiplinan
-* Sosial
-* Komunikasi orang tua
-* Perlindungan siswa
-* Lainnya
+- Akademik
+- Kehadiran
+- Kedisiplinan
+- Sosial
+- Komunikasi orang tua
+- Perlindungan siswa
+- Lainnya
 
 ### Case Workflow
 
@@ -276,16 +276,16 @@ Mengubah penanganan siswa dari komunikasi ad-hoc menjadi workflow.
 
 ### Case Detail
 
-* Siswa
-* Jenis kasus
-* Ringkasan
-* Prioritas
-* Penanggung jawab
-* Timeline
-* Catatan
-* Tindakan
-* Lampiran
-* Status
+- Siswa
+- Jenis kasus
+- Ringkasan
+- Prioritas
+- Penanggung jawab
+- Timeline
+- Catatan
+- Tindakan
+- Lampiran
+- Status
 
 ### Timeline
 
@@ -300,10 +300,10 @@ Semua aktivitas tersimpan:
 
 Anggota terkait dapat memberikan:
 
-* catatan
-* update
-* tugas
-* lampiran
+- catatan
+- update
+- tugas
+- lampiran
 
 ---
 
@@ -321,30 +321,30 @@ Orang tua melihat informasi khusus anak.
 
 Contoh:
 
-* kehadiran
-* tugas
-* catatan wali kelas
-* perkembangan
-* agenda
+- kehadiran
+- tugas
+- catatan wali kelas
+- perkembangan
+- agenda
 
 ### Structured Message
 
 Pesan memiliki:
 
-* kategori
-* isi
-* tanggal
-* pengirim
-* status dibaca
+- kategori
+- isi
+- tanggal
+- pengirim
+- status dibaca
 
 ### Announcement
 
 Sekolah dapat membuat:
 
-* pengumuman kelas
-* pengumuman sekolah
-* agenda
-* reminder
+- pengumuman kelas
+- pengumuman sekolah
+- agenda
+- reminder
 
 ### Acknowledgement
 
@@ -366,22 +366,22 @@ Mengubah pencatatan pelanggaran menjadi sistem pembinaan.
 
 ### Fitur
 
-* Input pelanggaran
-* Kategori pelanggaran
-* Riwayat siswa
-* Poin
-* Catatan pembinaan
-* Follow-up
-* Riwayat tindakan
+- Input pelanggaran
+- Kategori pelanggaran
+- Riwayat siswa
+- Poin
+- Catatan pembinaan
+- Follow-up
+- Riwayat tindakan
 
 ### Pattern Detection
 
 Sistem membantu menemukan pola:
 
-* pelanggaran berulang
-* waktu tertentu
-* kategori tertentu
-* peningkatan frekuensi
+- pelanggaran berulang
+- waktu tertentu
+- kategori tertentu
+- peningkatan frekuensi
 
 Fokusnya bukan menghukum, tetapi **mendeteksi pola untuk pembinaan lebih awal.**
 
@@ -403,12 +403,12 @@ Daftar kandidat berdasarkan data yang dimasukkan/import sekolah.
 
 Petugas dapat mencatat:
 
-* status verifikasi
-* alamat
-* kondisi
-* hasil kunjungan
-* tanggal
-* petugas
+- status verifikasi
+- alamat
+- kondisi
+- hasil kunjungan
+- tanggal
+- petugas
 
 ### Field Visit
 
@@ -420,19 +420,19 @@ Workflow:
 
 Lampiran:
 
-* foto
-* dokumen
-* catatan kunjungan
+- foto
+- dokumen
+- catatan kunjungan
 
 ### Intervention Tracking
 
 Pilihan tindakan:
 
-* kembali sekolah
-* rujukan
-* bantuan
-* komunikasi keluarga
-* monitoring
+- kembali sekolah
+- rujukan
+- bantuan
+- komunikasi keluarga
+- monitoring
 
 Tanggapin tidak menggantikan database nasional; modul ini fokus pada **workflow operasional sekolah/lapangan**.
 
@@ -446,13 +446,13 @@ Mengurangi pekerjaan manual bendahara.
 
 ### Fitur
 
-* Data tagihan
-* SPP
-* Status pembayaran
-* Jatuh tempo
-* Riwayat transaksi
-* Reminder
-* Rekonsiliasi
+- Data tagihan
+- SPP
+- Status pembayaran
+- Jatuh tempo
+- Riwayat transaksi
+- Reminder
+- Rekonsiliasi
 
 ### Parent View
 
@@ -462,10 +462,10 @@ Orang tua melihat:
 
 ### Payment Status
 
-* Belum bayar
-* Menunggu verifikasi
-* Lunas
-* Terlambat
+- Belum bayar
+- Menunggu verifikasi
+- Lunas
+- Terlambat
 
 ### Payment Gateway
 
@@ -485,21 +485,21 @@ Mengurangi waktu guru mencari bukti aktivitas/kinerja.
 
 Guru menyimpan:
 
-* kegiatan
-* sertifikat
-* dokumentasi
-* perangkat pembelajaran
-* laporan
-* bukti kegiatan
+- kegiatan
+- sertifikat
+- dokumentasi
+- perangkat pembelajaran
+- laporan
+- bukti kegiatan
 
 ### Tagging
 
 Dokumen dapat diberi:
 
-* kategori
-* tahun
-* kegiatan
-* periode
+- kategori
+- tahun
+- kegiatan
+- periode
 
 ### Search
 
@@ -527,18 +527,18 @@ Membantu operator menemukan data yang berpotensi tidak konsisten sebelum proses 
 
 Memeriksa:
 
-* data kosong
-* data duplikat
-* ketidaksesuaian
-* tugas tambahan
-* data guru
-* data kelas
+- data kosong
+- data duplikat
+- ketidaksesuaian
+- tugas tambahan
+- data guru
+- data kelas
 
 ### Validation Status
 
-* Valid
-* Perlu diperiksa
-* Error
+- Valid
+- Perlu diperiksa
+- Error
 
 ### Issue List
 
@@ -548,10 +548,10 @@ Operator mendapatkan daftar:
 
 Setiap masalah memiliki:
 
-* field bermasalah
-* alasan
-* data saat ini
-* tindakan koreksi
+- field bermasalah
+- alasan
+- data saat ini
+- tindakan koreksi
 
 ### Import / Export
 
@@ -569,12 +569,12 @@ Membantu sekolah merespons keadaan darurat dengan workflow siap pakai.
 
 ### Incident Types
 
-* Banjir
-* Gempa
-* Kebakaran
-* Gangguan keamanan
-* Kecelakaan
-* Insiden sekolah lainnya
+- Banjir
+- Gempa
+- Kebakaran
+- Gangguan keamanan
+- Kecelakaan
+- Insiden sekolah lainnya
 
 ### Emergency Workflow
 
@@ -584,12 +584,12 @@ Membantu sekolah merespons keadaan darurat dengan workflow siap pakai.
 
 Menampilkan:
 
-* kondisi
-* lokasi
-* penanggung jawab
-* tugas
-* status
-* update
+- kondisi
+- lokasi
+- penanggung jawab
+- tugas
+- status
+- update
 
 ### Checklist
 
@@ -655,11 +655,11 @@ Fokus:
 
 ### Hari Ini
 
-* Absensi
-* Siswa membutuhkan perhatian
-* Follow-up
-* Pesan orang tua
-* Catatan
+- Absensi
+- Siswa membutuhkan perhatian
+- Follow-up
+- Pesan orang tua
+- Catatan
 
 ### Quick Actions
 
@@ -677,11 +677,11 @@ Fokus:
 
 Fokus:
 
-* Case aktif
-* Prioritas
-* Follow-up hari ini
-* Case overdue
-* Riwayat intervensi
+- Case aktif
+- Prioritas
+- Follow-up hari ini
+- Case overdue
+- Riwayat intervensi
 
 Tidak menggunakan tampilan dashboard yang penuh angka.
 
@@ -691,11 +691,11 @@ Tidak menggunakan tampilan dashboard yang penuh angka.
 
 Fokus:
 
-* Total tagihan
-* Belum bayar
-* Jatuh tempo
-* Menunggu verifikasi
-* Pembayaran terbaru
+- Total tagihan
+- Belum bayar
+- Jatuh tempo
+- Menunggu verifikasi
+- Pembayaran terbaru
 
 ---
 
@@ -703,11 +703,11 @@ Fokus:
 
 Fokus:
 
-* Data error
-* Data perlu validasi
-* Import terbaru
-* Perubahan data
-* Status sinkronisasi
+- Data error
+- Data perlu validasi
+- Import terbaru
+- Perubahan data
+- Status sinkronisasi
 
 ---
 
@@ -719,11 +719,11 @@ Orang tua hanya melihat data anaknya.
 
 **Perkembangan Anak**
 
-* Kehadiran
-* Akademik
-* Catatan
-* Agenda
-* Tagihan
+- Kehadiran
+- Akademik
+- Catatan
+- Agenda
+- Tagihan
 
 ### Notifications
 
@@ -794,9 +794,9 @@ Informasi biasa.
 
 Notifikasi dapat melalui:
 
-* In-app
-* Email
-* WhatsApp gateway sebagai integrasi opsional
+- In-app
+- Email
+- WhatsApp gateway sebagai integrasi opsional
 
 ---
 
@@ -804,12 +804,12 @@ Notifikasi dapat melalui:
 
 Global search untuk mencari:
 
-* siswa
-* guru
-* case
-* dokumen
-* tagihan
-* incident
+- siswa
+- guru
+- case
+- dokumen
+- tagihan
+- incident
 
 Contoh:
 
@@ -852,16 +852,16 @@ Tujuan:
 
 Karena produk menangani data siswa:
 
-* Role-based access
-* Data isolation
-* Audit log
-* Secure authentication
-* Password hashing
-* Session management
-* Backup
-* Minimal data exposure
-* Parent hanya melihat anaknya
-* Guru hanya melihat data sesuai kewenangan
+- Role-based access
+- Data isolation
+- Audit log
+- Secure authentication
+- Password hashing
+- Session management
+- Backup
+- Minimal data exposure
+- Parent hanya melihat anaknya
+- Guru hanya melihat data sesuai kewenangan
 
 Data sensitif tidak ditampilkan secara berlebihan di dashboard.
 
@@ -879,37 +879,37 @@ Untuk sekolah kecil.
 
 Fitur:
 
-* Student monitoring
-* Early warning
-* Parent communication
-* Discipline
-* Basic dashboard
+- Student monitoring
+- Early warning
+- Parent communication
+- Discipline
+- Basic dashboard
 
 ### Paket School
 
 Menambahkan:
 
-* Case management
-* Payment
-* Document hub
-* Data validation
-* Advanced reports
+- Case management
+- Payment
+- Document hub
+- Data validation
+- Advanced reports
 
 ### Paket Enterprise
 
 Untuk:
 
-* Yayasan
-* Multi-school
-* Dinas / institusi pendidikan
+- Yayasan
+- Multi-school
+- Dinas / institusi pendidikan
 
 Dengan:
 
-* Multi-school dashboard
-* Central administration
-* Advanced analytics
-* API
-* Custom integration
+- Multi-school dashboard
+- Central administration
+- Advanced analytics
+- API
+- Custom integration
 
 ---
 
@@ -954,10 +954,10 @@ Target awal:
 
 Alasan:
 
-* Pengambilan keputusan relatif lebih sederhana
-* Banyak aktivitas masih manual
-* Memiliki kebutuhan administrasi operasional
-* Bisa menggunakan SaaS tanpa menunggu perubahan sistem pemerintah
+- Pengambilan keputusan relatif lebih sederhana
+- Banyak aktivitas masih manual
+- Memiliki kebutuhan administrasi operasional
+- Bisa menggunakan SaaS tanpa menunggu perubahan sistem pemerintah
 
 ### Strategi masuk
 
@@ -975,12 +975,12 @@ Communication → Payment → Document → Data Validation → Incident.
 
 Tanggapin bukan:
 
-* LMS
-* e-learning
-* aplikasi absensi biasa
-* aplikasi pembayaran saja
-* aplikasi BK saja
-* pengganti Dapodik
+- LMS
+- e-learning
+- aplikasi absensi biasa
+- aplikasi pembayaran saja
+- aplikasi BK saja
+- pengganti Dapodik
 
 Tanggapin adalah:
 
@@ -1030,46 +1030,46 @@ Fokus:
 
 Fitur:
 
-* Student profile
-* Attendance input
-* Violation input
-* Grade input
-* Risk trigger
-* Risk dashboard
-* Case creation
-* Case timeline
-* Assignment
-* Follow-up
-* Parent update
-* Notification
-* Dashboard wali kelas
-* Dashboard BK
-* Dashboard kepala sekolah
+- Student profile
+- Attendance input
+- Violation input
+- Grade input
+- Risk trigger
+- Risk dashboard
+- Case creation
+- Case timeline
+- Assignment
+- Follow-up
+- Parent update
+- Notification
+- Dashboard wali kelas
+- Dashboard BK
+- Dashboard kepala sekolah
 
 ### PHASE 2
 
 Tambahkan:
 
-* Discipline
-* Payment
-* Teacher document hub
+- Discipline
+- Payment
+- Teacher document hub
 
 ### PHASE 3
 
 Tambahkan:
 
-* Dapodik validation
-* ATS workflow
-* Incident response
+- Dapodik validation
+- ATS workflow
+- Incident response
 
 ### PHASE 4
 
 Tambahkan:
 
-* Integrations
-* Multi-school
-* Enterprise dashboard
-* API
+- Integrations
+- Multi-school
+- Enterprise dashboard
+- API
 
 ---
 
@@ -1123,9 +1123,9 @@ Tambahkan:
 
 Seorang siswa mengalami:
 
-* absensi menurun
-* nilai beberapa mata pelajaran turun
-* pelanggaran meningkat
+- absensi menurun
+- nilai beberapa mata pelajaran turun
+- pelanggaran meningkat
 
 ### Sistem
 
@@ -1165,27 +1165,27 @@ Bukan desain AI dashboard.
 
 Jangan menggunakan:
 
-* gradient berlebihan
-* glassmorphism berlebihan
-* terlalu banyak card
-* grafik dekoratif
-* glowing effect
-* ilustrasi AI generik
-* terlalu banyak warna
-* angka besar tanpa konteks
-* copywriting panjang
+- gradient berlebihan
+- glassmorphism berlebihan
+- terlalu banyak card
+- grafik dekoratif
+- glowing effect
+- ilustrasi AI generik
+- terlalu banyak warna
+- angka besar tanpa konteks
+- copywriting panjang
 
 ### Visual
 
 Gunakan:
 
-* clean
-* calm
-* trustworthy
-* functional
-* modern
-* compact
-* human
+- clean
+- calm
+- trustworthy
+- functional
+- modern
+- compact
+- human
 
 ### Warna
 
@@ -1193,10 +1193,10 @@ Gunakan warna dasar netral dengan satu warna utama sebagai accent.
 
 Status menggunakan warna secara konsisten:
 
-* normal
-* perhatian
-* urgent
-* selesai
+- normal
+- perhatian
+- urgent
+- selesai
 
 Jangan menjadikan seluruh halaman berwarna.
 
@@ -1291,20 +1291,20 @@ Semua informasi penting tersedia tanpa berpindah banyak halaman.
 
 Laporan:
 
-* Siswa berisiko
-* Kehadiran
-* Pelanggaran
-* Case
-* Follow-up
-* Pembayaran
-* Data validation
-* Aktivitas guru
-* Incident
+- Siswa berisiko
+- Kehadiran
+- Pelanggaran
+- Case
+- Follow-up
+- Pembayaran
+- Data validation
+- Aktivitas guru
+- Incident
 
 Export:
 
-* PDF
-* Excel/CSV
+- PDF
+- Excel/CSV
 
 ---
 
@@ -1312,19 +1312,19 @@ Export:
 
 ### School
 
-* Nama sekolah
-* Logo
-* Tahun ajaran
-* Kelas
-* Jurusan
+- Nama sekolah
+- Logo
+- Tahun ajaran
+- Kelas
+- Jurusan
 
 ### Users
 
-* Guru
-* Operator
-* BK
-* Bendahara
-* Kepala sekolah
+- Guru
+- Operator
+- BK
+- Bendahara
+- Kepala sekolah
 
 ### Rules
 
@@ -1348,27 +1348,27 @@ Produk dianggap berhasil apabila:
 
 ### Operational
 
-* Waktu menemukan siswa berisiko berkurang
-* Follow-up terdokumentasi
-* Case overdue berkurang
-* Komunikasi penting tidak hilang
-* Pekerjaan rekap manual berkurang
+- Waktu menemukan siswa berisiko berkurang
+- Follow-up terdokumentasi
+- Case overdue berkurang
+- Komunikasi penting tidak hilang
+- Pekerjaan rekap manual berkurang
 
 ### Product
 
-* Weekly active school
-* Weekly active teacher
-* Case completion rate
-* Follow-up completion rate
-* Parent engagement
-* Data validation completion
+- Weekly active school
+- Weekly active teacher
+- Case completion rate
+- Follow-up completion rate
+- Parent engagement
+- Data validation completion
 
 ### Business
 
-* School conversion
-* Monthly recurring revenue
-* Retention
-* Expansion ke modul lain
+- School conversion
+- Monthly recurring revenue
+- Retention
+- Expansion ke modul lain
 
 ---
 
@@ -1394,13 +1394,13 @@ Tujuannya adalah:
 
 Tanggapin tidak boleh memposisikan diri sebagai:
 
-* pengganti Dapodik
-* pengganti sistem pemerintah
-* alat diagnosis siswa
-* alat penentu kondisi psikologis siswa
-* sistem yang otomatis menentukan hukuman
-* sistem yang menjamin pencairan TPG
-* sistem yang menjamin ATS kembali sekolah
+- pengganti Dapodik
+- pengganti sistem pemerintah
+- alat diagnosis siswa
+- alat penentu kondisi psikologis siswa
+- sistem yang otomatis menentukan hukuman
+- sistem yang menjamin pencairan TPG
+- sistem yang menjamin ATS kembali sekolah
 
 Tanggapin adalah **alat operasional dan workflow management**.
 

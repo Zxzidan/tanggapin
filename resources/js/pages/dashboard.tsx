@@ -1,44 +1,23 @@
 import { Head, router } from '@inertiajs/react';
 import {
-    AlertCircle,
     AlertTriangle,
     ArrowRight,
-    Award,
-    Building2,
-    Calendar,
-    Check,
     CheckCircle2,
     ChevronRight,
-    Clock,
     CreditCard,
-    ExternalLink,
     Eye,
-    FileSpreadsheet,
-    FileText,
-    Flame,
     GraduationCap,
-    HelpCircle,
-    Info,
     Layers,
     MapPin,
-    MessageSquare,
-    Phone,
     PhoneCall,
     Plus,
     RefreshCw,
     Scale,
-    Search,
     Send,
-    Shield,
     ShieldAlert,
     Siren,
     Sparkles,
-    TrendingDown,
-    TrendingUp,
-    UploadCloud,
     UserCheck,
-    UserX,
-    Users,
     X,
 } from 'lucide-react';
 import React, { useState } from 'react';
@@ -87,63 +66,95 @@ export default function Dashboard({
             duePayments: 18,
             activeIncidents: 1,
             resolvedThisMonth: 24,
-        }
+        },
     );
-    const [priorityFeed, setPriorityFeed] = useState<PriorityAlert[]>(initialPriorityFeed || []);
+    const [priorityFeed, setPriorityFeed] = useState<PriorityAlert[]>(
+        initialPriorityFeed || [],
+    );
     const [cases, setCases] = useState<CaseItem[]>(initialCases || []);
-    const [incidents, setIncidents] = useState<IncidentItem[]>(initialIncidents || []);
-    const [parentUpdates, setParentUpdates] = useState<ParentUpdate[]>(initialParentUpdates || []);
-    const [classes, setClasses] = useState<ClassMonitoringItem[]>(initialClasses || []);
-    const [atsList, setAtsList] = useState<AtsItem[]>(initialAtsList || []);
-    const [paymentList, setPaymentList] = useState<PaymentItem[]>(initialPaymentList || []);
-    const [dapodikIssues, setDapodikIssues] = useState<DapodikIssue[]>(initialDapodikIssues || []);
-    const [documents] = useState<TeacherDocument[]>(initialDocuments || []);
-    const [disciplineList, setDisciplineList] = useState<DisciplineRecordItem[]>(initialDisciplineList || []);
+    const [incidents, setIncidents] = useState<IncidentItem[]>(
+        initialIncidents || [],
+    );
+    const [parentUpdates, setParentUpdates] = useState<ParentUpdate[]>(
+        initialParentUpdates || [],
+    );
+    const [classes] = useState<ClassMonitoringItem[]>(initialClasses || []);
+    const [atsList] = useState<AtsItem[]>(initialAtsList || []);
+    const [paymentList] = useState<PaymentItem[]>(initialPaymentList || []);
+    const [dapodikIssues] = useState<DapodikIssue[]>(
+        initialDapodikIssues || [],
+    );
+    const [_documents] = useState<TeacherDocument[]>(initialDocuments || []);
+    const [_disciplineList, setDisciplineList] = useState<
+        DisciplineRecordItem[]
+    >(initialDisciplineList || []);
 
     // Filter states
-    const [feedRiskFilter, setFeedRiskFilter] = useState<'all' | 'high' | 'medium'>('all');
+    const [feedRiskFilter, setFeedRiskFilter] = useState<
+        'all' | 'high' | 'medium'
+    >('all');
 
     // Modals state
     const [isFollowupModalOpen, setIsFollowupModalOpen] = useState(false);
-    const [isParentContactModalOpen, setIsParentContactModalOpen] = useState(false);
+    const [isParentContactModalOpen, setIsParentContactModalOpen] =
+        useState(false);
     const [isNewCaseModalOpen, setIsNewCaseModalOpen] = useState(false);
     const [isDisciplineModalOpen, setIsDisciplineModalOpen] = useState(false);
     const [isStudent360Open, setIsStudent360Open] = useState(false);
 
     // Selected items for modal
     const [selectedStudentId, setSelectedStudentId] = useState<string>('1');
-    const [selectedStudentName, setSelectedStudentName] = useState('Brian Aditya (XI RPL 2)');
-    const [selectedStudentPhone, setSelectedStudentPhone] = useState('+62 812-3456-7890');
+    const [selectedStudentName, setSelectedStudentName] = useState(
+        'Brian Aditya (XI RPL 2)',
+    );
+    const [selectedStudentPhone, setSelectedStudentPhone] =
+        useState('+62 812-3456-7890');
     const [selectedAlertId, setSelectedAlertId] = useState<string | null>(null);
-    const [selectedStudent360, setSelectedStudent360] = useState<PriorityAlert | null>(null);
+    const [selectedStudent360, setSelectedStudent360] =
+        useState<PriorityAlert | null>(null);
 
     // Follow-up form
     const [followupType, setFollowupType] = useState('Panggilan Orang Tua');
-    const [followupAssignee, setFollowupAssignee] = useState('Wali Kelas (Hendra Setiawan, S.Pd)');
+    const [followupAssignee, setFollowupAssignee] = useState(
+        'Wali Kelas (Hendra Setiawan, S.Pd)',
+    );
     const [followupNote, setFollowupNote] = useState('');
 
     // Parent contact form
     const [parentCategory, setParentCategory] = useState('Kehadiran');
     const [parentCustomMessage, setParentCustomMessage] = useState(
-        'Yth. Bapak/Ibu Wali Murid, kami menginformasikan catatan kehadiran ananda yang memerlukan koordinasi bersama sekolah demi kelancaran proses belajar.'
+        'Yth. Bapak/Ibu Wali Murid, kami menginformasikan catatan kehadiran ananda yang memerlukan koordinasi bersama sekolah demi kelancaran proses belajar.',
     );
 
     // New case form
     const [newCaseCategory, setNewCaseCategory] = useState('Kedisiplinan');
-    const [newCasePriority, setNewCasePriority] = useState<'Tinggi' | 'Sedang' | 'Rendah'>('Tinggi');
+    const [newCasePriority, setNewCasePriority] = useState<
+        'Tinggi' | 'Sedang' | 'Rendah'
+    >('Tinggi');
     const [newCaseDesc, setNewCaseDesc] = useState('');
 
     // New discipline form
-    const [newInfraction, setNewInfraction] = useState('Terlambat Masuk Sekolah');
+    const [newInfraction, setNewInfraction] = useState(
+        'Terlambat Masuk Sekolah',
+    );
     const [newPoints, setNewPoints] = useState(10);
     const [newDisciplineNotes, setNewDisciplineNotes] = useState('');
 
     // Contextual greetings per role (Section 9 Header)
     const roleContexts: Record<RoleType, { name: string; position: string }> = {
         kepala_sekolah: { name: 'Bpk. Neil Sims', position: 'Kepala Sekolah' },
-        wali_kelas: { name: 'Bpk. Hendra Setiawan, S.Pd', position: 'Wali Kelas XI RPL 2' },
-        guru_bk: { name: 'Ibu Rahmawati, S.Pd', position: 'Koordinator BK & Konseling' },
-        bendahara: { name: 'Bpk. Joko Purwanto', position: 'Bendahara Sekolah' },
+        wali_kelas: {
+            name: 'Bpk. Hendra Setiawan, S.Pd',
+            position: 'Wali Kelas XI RPL 2',
+        },
+        guru_bk: {
+            name: 'Ibu Rahmawati, S.Pd',
+            position: 'Koordinator BK & Konseling',
+        },
+        bendahara: {
+            name: 'Bpk. Joko Purwanto',
+            position: 'Bendahara Sekolah',
+        },
         operator: { name: 'Ibu Dian Pratiwi', position: 'Operator Dapodik' },
     };
 
@@ -154,7 +165,11 @@ export default function Dashboard({
     };
 
     // Trigger action from topbar or buttons
-    const handleTriggerActionModal = (actionType: string, studentName?: string, studentId?: string) => {
+    const handleTriggerActionModal = (
+        actionType: string,
+        studentName?: string,
+        studentId?: string,
+    ) => {
         if (studentName) {
             setSelectedStudentName(studentName);
         }
@@ -186,17 +201,27 @@ export default function Dashboard({
             {
                 preserveScroll: true,
                 onSuccess: () => {
-                    toast.success(`Follow-up untuk ${selectedStudentName} berhasil disimpan di database!`, {
-                        description: `Tindakan: ${followupType} | PIC: ${followupAssignee}`,
-                    });
+                    toast.success(
+                        `Follow-up untuk ${selectedStudentName} berhasil disimpan di database!`,
+                        {
+                            description: `Tindakan: ${followupType} | PIC: ${followupAssignee}`,
+                        },
+                    );
                     if (selectedAlertId) {
                         setPriorityFeed((prev) =>
-                            prev.map((item) => (item.id === selectedAlertId ? { ...item, actionTaken: true } : item))
+                            prev.map((item) =>
+                                item.id === selectedAlertId
+                                    ? { ...item, actionTaken: true }
+                                    : item,
+                            ),
                         );
                     }
                     setStats((prev) => ({
                         ...prev,
-                        studentsNeedingAttention: Math.max(0, prev.studentsNeedingAttention - 1),
+                        studentsNeedingAttention: Math.max(
+                            0,
+                            prev.studentsNeedingAttention - 1,
+                        ),
                         resolvedThisMonth: prev.resolvedThisMonth + 1,
                     }));
                     setIsFollowupModalOpen(false);
@@ -205,7 +230,7 @@ export default function Dashboard({
                 onError: () => {
                     toast.error('Gagal menyimpan follow-up ke database.');
                 },
-            }
+            },
         );
     };
 
@@ -222,7 +247,9 @@ export default function Dashboard({
             {
                 preserveScroll: true,
                 onSuccess: () => {
-                    toast.success(`Pesan resmi berhasil dikirim dan tersimpan di database!`);
+                    toast.success(
+                        `Pesan resmi berhasil dikirim dan tersimpan di database!`,
+                    );
                     setIsParentContactModalOpen(false);
                     setParentUpdates((prev) => [
                         {
@@ -241,7 +268,7 @@ export default function Dashboard({
                 onError: () => {
                     toast.error('Gagal mengirim pesan ke orang tua.');
                 },
-            }
+            },
         );
     };
 
@@ -254,20 +281,27 @@ export default function Dashboard({
                 student_id: selectedStudentId || '1',
                 category: newCaseCategory,
                 priority: newCasePriority,
-                last_activity: newCaseDesc || 'Kasus baru didaftarkan dan menunggu verifikasi BK.',
+                last_activity:
+                    newCaseDesc ||
+                    'Kasus baru didaftarkan dan menunggu verifikasi BK.',
             },
             {
                 preserveScroll: true,
                 onSuccess: () => {
-                    toast.success(`Kasus baru untuk ${selectedStudentName} berhasil didaftarkan di database!`);
+                    toast.success(
+                        `Kasus baru untuk ${selectedStudentName} berhasil didaftarkan di database!`,
+                    );
                     setIsNewCaseModalOpen(false);
                     setNewCaseDesc('');
-                    setStats((prev) => ({ ...prev, activeCases: prev.activeCases + 1 }));
+                    setStats((prev) => ({
+                        ...prev,
+                        activeCases: prev.activeCases + 1,
+                    }));
                 },
                 onError: () => {
                     toast.error('Gagal mendaftarkan kasus ke database.');
                 },
-            }
+            },
         );
     };
 
@@ -280,12 +314,15 @@ export default function Dashboard({
                 student_id: selectedStudentId || '1',
                 infraction: newInfraction,
                 points: newPoints,
-                pattern_notes: newDisciplineNotes || 'Pencatatan pembinaan kedisiplinan',
+                pattern_notes:
+                    newDisciplineNotes || 'Pencatatan pembinaan kedisiplinan',
             },
             {
                 preserveScroll: true,
                 onSuccess: () => {
-                    toast.success(`Catatan kedisiplinan untuk ${selectedStudentName} berhasil disimpan!`);
+                    toast.success(
+                        `Catatan kedisiplinan untuk ${selectedStudentName} berhasil disimpan!`,
+                    );
                     setIsDisciplineModalOpen(false);
                     setNewDisciplineNotes('');
                     setDisciplineList((prev) => [
@@ -297,7 +334,9 @@ export default function Dashboard({
                             infraction: newInfraction,
                             points: newPoints,
                             actionStatus: 'Menunggu Pembinaan',
-                            patternNotes: newDisciplineNotes || 'Dicatat dari modul kedisiplinan',
+                            patternNotes:
+                                newDisciplineNotes ||
+                                'Dicatat dari modul kedisiplinan',
                             recordedAt: 'Hari ini',
                         },
                         ...prev,
@@ -306,7 +345,7 @@ export default function Dashboard({
                 onError: () => {
                     toast.error('Gagal menyimpan catatan kedisiplinan.');
                 },
-            }
+            },
         );
     };
 
@@ -318,12 +357,14 @@ export default function Dashboard({
                     return {
                         ...inc,
                         checklist: inc.checklist.map((chk) =>
-                            chk.id === checklistId ? { ...chk, done: !chk.done } : chk
+                            chk.id === checklistId
+                                ? { ...chk, done: !chk.done }
+                                : chk,
                         ),
                     };
                 }
                 return inc;
-            })
+            }),
         );
         toast.info('Status checklist kesiapsiagaan darurat diperbarui.');
     };
@@ -344,170 +385,200 @@ export default function Dashboard({
         >
             <Head title="Dashboard Operasional — TANGGAPIN" />
 
-            <div className="space-y-6 max-w-7xl mx-auto">
+            <div className="mx-auto max-w-7xl space-y-6">
                 {/* 1. CONTEXTUAL OPERATIONAL HEADER (Section 9: Konteks Pengguna) */}
-                <div className="p-5 sm:p-6 rounded-2xl bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col lg:flex-row lg:items-center justify-between gap-5">
+                <div className="flex flex-col justify-between gap-5 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs sm:p-6 lg:flex-row lg:items-center dark:border-slate-800 dark:bg-[#0f172a]">
                     <div className="space-y-1">
                         <div className="flex flex-wrap items-center gap-2">
-                            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-blue-700 text-white shadow-2xs">
+                            <span className="inline-flex items-center gap-1.5 rounded-md bg-blue-700 px-2.5 py-0.5 text-[11px] font-bold text-white shadow-2xs">
                                 <Sparkles className="size-3" />
                                 TANGGAPIN
                             </span>
-                            <span className="text-xs text-slate-500 font-medium">
+                            <span className="text-xs font-medium text-slate-500">
                                 SMK Negeri 1 Harapan • T.A. 2025/2026 Ganjil
                             </span>
-                            <span className="text-slate-300 dark:text-slate-700 hidden sm:inline">•</span>
-                            <span className="text-xs text-slate-500 font-medium hidden sm:inline">
+                            <span className="hidden text-slate-300 sm:inline dark:text-slate-700">
+                                •
+                            </span>
+                            <span className="hidden text-xs font-medium text-slate-500 sm:inline">
                                 Kamis, 24 September 2025
                             </span>
                         </div>
 
-                        <h1 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight pt-1">
+                        <h1 className="pt-1 text-xl font-bold tracking-tight text-slate-900 sm:text-2xl dark:text-white">
                             Selamat bertugas, {roleContexts[currentRole]?.name}
                         </h1>
 
-                        <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300">
-                            Masuk sebagai <strong className="font-semibold text-blue-700 dark:text-blue-400">{roleContexts[currentRole]?.position}</strong>.
-                            Sistem mendeteksi <strong className="text-red-600 dark:text-red-400">{stats.studentsNeedingAttention} siswa</strong> yang memerlukan perhatian dan tindak lanjut terarah hari ini.
+                        <p className="text-xs text-slate-600 sm:text-sm dark:text-slate-300">
+                            Masuk sebagai{' '}
+                            <strong className="font-semibold text-blue-700 dark:text-blue-400">
+                                {roleContexts[currentRole]?.position}
+                            </strong>
+                            . Sistem mendeteksi{' '}
+                            <strong className="text-red-600 dark:text-red-400">
+                                {stats.studentsNeedingAttention} siswa
+                            </strong>{' '}
+                            yang memerlukan perhatian dan tindak lanjut terarah
+                            hari ini.
                         </p>
                     </div>
 
                     {/* Role Simulator Switcher Pills */}
-                    <div className="flex flex-wrap items-center gap-1.5 p-1.5 rounded-xl bg-slate-100/80 dark:bg-[#162238] border border-slate-200 dark:border-slate-700 self-start lg:self-center shrink-0">
-                        <span className="text-[11px] font-semibold text-slate-500 px-2">Peran:</span>
-                        {(['kepala_sekolah', 'wali_kelas', 'guru_bk', 'bendahara', 'operator'] as RoleType[]).map((r) => (
+                    <div className="flex shrink-0 flex-wrap items-center gap-1.5 self-start rounded-xl border border-slate-200 bg-slate-100/80 p-1.5 lg:self-center dark:border-slate-700 dark:bg-[#162238]">
+                        <span className="px-2 text-[11px] font-semibold text-slate-500">
+                            Peran:
+                        </span>
+                        {(
+                            [
+                                'kepala_sekolah',
+                                'wali_kelas',
+                                'guru_bk',
+                                'bendahara',
+                                'operator',
+                            ] as RoleType[]
+                        ).map((r) => (
                             <button
                                 key={r}
                                 type="button"
                                 onClick={() => setCurrentRole(r)}
                                 className={cn(
-                                    'px-2.5 py-1 text-xs rounded-lg font-medium transition-all',
+                                    'rounded-lg px-2.5 py-1 text-xs font-medium transition-all',
                                     currentRole === r
-                                        ? 'bg-blue-700 text-white font-semibold shadow-xs'
-                                        : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-slate-700'
+                                        ? 'bg-blue-700 font-semibold text-white shadow-xs'
+                                        : 'text-slate-600 hover:bg-slate-200/60 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-700 dark:hover:text-white',
                                 )}
                             >
-                                {r === 'kepala_sekolah' ? 'Kepsek' : r === 'wali_kelas' ? 'Wali Kelas' : r === 'guru_bk' ? 'Guru BK' : r === 'bendahara' ? 'Bendahara' : 'Operator'}
+                                {r === 'kepala_sekolah'
+                                    ? 'Kepsek'
+                                    : r === 'wali_kelas'
+                                      ? 'Wali Kelas'
+                                      : r === 'guru_bk'
+                                        ? 'Guru BK'
+                                        : r === 'bendahara'
+                                          ? 'Bendahara'
+                                          : 'Operator'}
                             </button>
                         ))}
                     </div>
                 </div>
 
                 {/* 2. RINGKASAN KONDISI SISWA (Section 9: Metrik Berhierarki dengan Konteks) */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3.5 sm:gap-4">
+                <div className="grid grid-cols-2 gap-3.5 sm:gap-4 md:grid-cols-4">
                     {/* Primary Highlight Metric: Siswa Perlu Perhatian */}
                     <div
                         onClick={() => setActiveTab('early-warning')}
-                        className="p-4 rounded-xl bg-red-50/50 dark:bg-red-950/20 border border-red-200 dark:border-red-900/60 hover:border-red-400 transition-all cursor-pointer group shadow-2xs hover:shadow-xs"
+                        className="group cursor-pointer rounded-xl border border-red-200 bg-red-50/50 p-4 shadow-2xs transition-all hover:border-red-400 hover:shadow-xs dark:border-red-900/60 dark:bg-red-950/20"
                     >
-                        <div className="flex items-center justify-between mb-1.5">
-                            <span className="text-[11px] font-bold text-red-700 dark:text-red-400 uppercase tracking-wider">
+                        <div className="mb-1.5 flex items-center justify-between">
+                            <span className="text-[11px] font-bold tracking-wider text-red-700 uppercase dark:text-red-400">
                                 Butuh Perhatian
                             </span>
-                            <div className="p-1.5 rounded-lg bg-red-100 dark:bg-red-900/50 text-red-700 dark:text-red-300 group-hover:scale-105 transition-transform">
+                            <div className="rounded-lg bg-red-100 p-1.5 text-red-700 transition-transform group-hover:scale-105 dark:bg-red-900/50 dark:text-red-300">
                                 <AlertTriangle className="size-4" />
                             </div>
                         </div>
-                        <div className="text-3xl font-extrabold text-red-700 dark:text-red-400 tracking-tight">
+                        <div className="text-3xl font-extrabold tracking-tight text-red-700 dark:text-red-400">
                             {stats.studentsNeedingAttention}
                         </div>
-                        <p className="text-xs text-slate-600 dark:text-slate-400 mt-1 leading-snug">
-                            Siswa terdeteksi sinyal risiko (absensi, nilai, kedisiplinan)
+                        <p className="mt-1 text-xs leading-snug text-slate-600 dark:text-slate-400">
+                            Siswa terdeteksi sinyal risiko (absensi, nilai,
+                            kedisiplinan)
                         </p>
-                        <div className="mt-3 pt-2 border-t border-red-200/60 dark:border-red-900/60 flex items-center justify-between text-[11px] text-red-700 dark:text-red-400 font-semibold">
+                        <div className="mt-3 flex items-center justify-between border-t border-red-200/60 pt-2 text-[11px] font-semibold text-red-700 dark:border-red-900/60 dark:text-red-400">
                             <span>Tinjau Sinyal</span>
-                            <ArrowRight className="size-3 group-hover:translate-x-0.5 transition-transform" />
+                            <ArrowRight className="size-3 transition-transform group-hover:translate-x-0.5" />
                         </div>
                     </div>
 
                     {/* Secondary Metric: Kasus Aktif BK */}
                     <div
                         onClick={() => setActiveTab('cases')}
-                        className="p-4 rounded-xl bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-slate-800 hover:border-amber-400 transition-all cursor-pointer group shadow-2xs hover:shadow-xs"
+                        className="group cursor-pointer rounded-xl border border-slate-200 bg-white p-4 shadow-2xs transition-all hover:border-amber-400 hover:shadow-xs dark:border-slate-800 dark:bg-[#0f172a]"
                     >
-                        <div className="flex items-center justify-between mb-1.5">
-                            <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+                        <div className="mb-1.5 flex items-center justify-between">
+                            <span className="text-[11px] font-bold tracking-wider text-slate-500 uppercase">
                                 Kasus Aktif BK
                             </span>
-                            <div className="p-1.5 rounded-lg bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 group-hover:scale-105 transition-transform">
+                            <div className="rounded-lg bg-amber-50 p-1.5 text-amber-700 transition-transform group-hover:scale-105 dark:bg-amber-950/60 dark:text-amber-300">
                                 <ShieldAlert className="size-4" />
                             </div>
                         </div>
-                        <div className="text-3xl font-extrabold text-amber-700 dark:text-amber-400 tracking-tight">
+                        <div className="text-3xl font-extrabold tracking-tight text-amber-700 dark:text-amber-400">
                             {stats.activeCases}
                         </div>
-                        <p className="text-xs text-slate-600 dark:text-slate-400 mt-1 leading-snug">
+                        <p className="mt-1 text-xs leading-snug text-slate-600 dark:text-slate-400">
                             {stats.overdueCases} kasus butuh evaluasi &gt;48 jam
                         </p>
-                        <div className="mt-3 pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[11px] text-blue-700 dark:text-blue-400 font-semibold">
+                        <div className="mt-3 flex items-center justify-between border-t border-slate-100 pt-2 text-[11px] font-semibold text-blue-700 dark:border-slate-800 dark:text-blue-400">
                             <span>Alur Kasus</span>
-                            <ArrowRight className="size-3 group-hover:translate-x-0.5 transition-transform" />
+                            <ArrowRight className="size-3 transition-transform group-hover:translate-x-0.5" />
                         </div>
                     </div>
 
                     {/* Secondary Metric: Tindak Lanjut Selesai (North Star Metric) */}
                     <div
                         onClick={() => setActiveTab('cases')}
-                        className="p-4 rounded-xl bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-slate-800 hover:border-emerald-400 transition-all cursor-pointer group shadow-2xs hover:shadow-xs"
+                        className="group cursor-pointer rounded-xl border border-slate-200 bg-white p-4 shadow-2xs transition-all hover:border-emerald-400 hover:shadow-xs dark:border-slate-800 dark:bg-[#0f172a]"
                     >
-                        <div className="flex items-center justify-between mb-1.5">
-                            <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+                        <div className="mb-1.5 flex items-center justify-between">
+                            <span className="text-[11px] font-bold tracking-wider text-slate-500 uppercase">
                                 Terdokumentasi
                             </span>
-                            <div className="p-1.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 group-hover:scale-105 transition-transform">
+                            <div className="rounded-lg bg-emerald-50 p-1.5 text-emerald-700 transition-transform group-hover:scale-105 dark:bg-emerald-950/60 dark:text-emerald-300">
                                 <CheckCircle2 className="size-4" />
                             </div>
                         </div>
-                        <div className="text-3xl font-extrabold text-emerald-700 dark:text-emerald-400 tracking-tight">
+                        <div className="text-3xl font-extrabold tracking-tight text-emerald-700 dark:text-emerald-400">
                             {stats.resolvedThisMonth}
                         </div>
-                        <p className="text-xs text-slate-600 dark:text-slate-400 mt-1 leading-snug">
+                        <p className="mt-1 text-xs leading-snug text-slate-600 dark:text-slate-400">
                             Tindakan & pendampingan selesai bulan ini
                         </p>
-                        <div className="mt-3 pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[11px] text-blue-700 dark:text-blue-400 font-semibold">
+                        <div className="mt-3 flex items-center justify-between border-t border-slate-100 pt-2 text-[11px] font-semibold text-blue-700 dark:border-slate-800 dark:text-blue-400">
                             <span>Arsip Dokumen</span>
-                            <ArrowRight className="size-3 group-hover:translate-x-0.5 transition-transform" />
+                            <ArrowRight className="size-3 transition-transform group-hover:translate-x-0.5" />
                         </div>
                     </div>
 
                     {/* Secondary Metric: Tingkat Kehadiran Sekolah */}
                     <div
                         onClick={() => setActiveTab('class-monitoring')}
-                        className="p-4 rounded-xl bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-slate-800 hover:border-blue-400 transition-all cursor-pointer group shadow-2xs hover:shadow-xs"
+                        className="group cursor-pointer rounded-xl border border-slate-200 bg-white p-4 shadow-2xs transition-all hover:border-blue-400 hover:shadow-xs dark:border-slate-800 dark:bg-[#0f172a]"
                     >
-                        <div className="flex items-center justify-between mb-1.5">
-                            <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+                        <div className="mb-1.5 flex items-center justify-between">
+                            <span className="text-[11px] font-bold tracking-wider text-slate-500 uppercase">
                                 Rata-rata Hadir
                             </span>
-                            <div className="p-1.5 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 group-hover:scale-105 transition-transform">
+                            <div className="rounded-lg bg-blue-50 p-1.5 text-blue-700 transition-transform group-hover:scale-105 dark:bg-blue-950/60 dark:text-blue-300">
                                 <GraduationCap className="size-4" />
                             </div>
                         </div>
-                        <div className="text-3xl font-extrabold text-blue-700 dark:text-blue-400 tracking-tight">
+                        <div className="text-3xl font-extrabold tracking-tight text-blue-700 dark:text-blue-400">
                             92.4%
                         </div>
-                        <p className="text-xs text-slate-600 dark:text-slate-400 mt-1 leading-snug">
+                        <p className="mt-1 text-xs leading-snug text-slate-600 dark:text-slate-400">
                             Akumulasi 4 rombel kejuruan terdaftar
                         </p>
-                        <div className="mt-3 pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[11px] text-blue-700 dark:text-blue-400 font-semibold">
+                        <div className="mt-3 flex items-center justify-between border-t border-slate-100 pt-2 text-[11px] font-semibold text-blue-700 dark:border-slate-800 dark:text-blue-400">
                             <span>Lihat Rombel</span>
-                            <ArrowRight className="size-3 group-hover:translate-x-0.5 transition-transform" />
+                            <ArrowRight className="size-3 transition-transform group-hover:translate-x-0.5" />
                         </div>
                     </div>
                 </div>
 
                 {/* 3. PRIORITAS: PERLU PERHATIAN (Section 9: Bagian Paling Penting Dashboard) */}
-                <div className="p-5 rounded-2xl bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-slate-800 shadow-xs space-y-4">
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-200 dark:border-slate-800">
+                <div className="space-y-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
+                    <div className="flex flex-col justify-between gap-3 border-b border-slate-200 pb-3 sm:flex-row sm:items-center dark:border-slate-800">
                         <div>
                             <div className="flex items-center gap-2">
-                                <span className="size-2.5 rounded-full bg-red-600 animate-pulse" />
+                                <span className="size-2.5 animate-pulse rounded-full bg-red-600" />
                                 <h2 className="text-base font-bold text-slate-900 dark:text-white">
                                     Perlu Perhatian — Tindak Lanjut Mendesak
                                 </h2>
                             </div>
-                            <p className="text-xs text-slate-500 mt-0.5">
-                                Sinyal kondisi siswa yang membutuhkan keputusan dan respons hari ini.
+                            <p className="mt-0.5 text-xs text-slate-500">
+                                Sinyal kondisi siswa yang membutuhkan keputusan
+                                dan respons hari ini.
                             </p>
                         </div>
 
@@ -517,10 +588,10 @@ export default function Dashboard({
                                 type="button"
                                 onClick={() => setFeedRiskFilter('all')}
                                 className={cn(
-                                    'px-2.5 py-1 text-xs rounded-lg font-medium transition-colors',
+                                    'rounded-lg px-2.5 py-1 text-xs font-medium transition-colors',
                                     feedRiskFilter === 'all'
-                                        ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900 font-semibold'
-                                        : 'text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800'
+                                        ? 'bg-slate-900 font-semibold text-white dark:bg-white dark:text-slate-900'
+                                        : 'text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800',
                                 )}
                             >
                                 Semua ({priorityFeed.length})
@@ -529,10 +600,10 @@ export default function Dashboard({
                                 type="button"
                                 onClick={() => setFeedRiskFilter('high')}
                                 className={cn(
-                                    'px-2.5 py-1 text-xs rounded-lg font-medium transition-colors',
+                                    'rounded-lg px-2.5 py-1 text-xs font-medium transition-colors',
                                     feedRiskFilter === 'high'
-                                        ? 'bg-red-600 text-white font-semibold'
-                                        : 'text-slate-500 hover:bg-red-50 hover:text-red-700'
+                                        ? 'bg-red-600 font-semibold text-white'
+                                        : 'text-slate-500 hover:bg-red-50 hover:text-red-700',
                                 )}
                             >
                                 Kritis (3)
@@ -541,10 +612,10 @@ export default function Dashboard({
                                 type="button"
                                 onClick={() => setFeedRiskFilter('medium')}
                                 className={cn(
-                                    'px-2.5 py-1 text-xs rounded-lg font-medium transition-colors',
+                                    'rounded-lg px-2.5 py-1 text-xs font-medium transition-colors',
                                     feedRiskFilter === 'medium'
-                                        ? 'bg-amber-600 text-white font-semibold'
-                                        : 'text-slate-500 hover:bg-amber-50 hover:text-amber-700'
+                                        ? 'bg-amber-600 font-semibold text-white'
+                                        : 'text-slate-500 hover:bg-amber-50 hover:text-amber-700',
                                 )}
                             >
                                 Perlu Diperhatikan (1)
@@ -560,28 +631,28 @@ export default function Dashboard({
                                 <div
                                     key={alert.id}
                                     className={cn(
-                                        'p-4 rounded-xl border transition-all flex flex-col lg:flex-row lg:items-center justify-between gap-4',
+                                        'flex flex-col justify-between gap-4 rounded-xl border p-4 transition-all lg:flex-row lg:items-center',
                                         alert.actionTaken
-                                            ? 'bg-slate-50/60 dark:bg-slate-900/40 border-slate-200 dark:border-slate-800 opacity-60'
+                                            ? 'border-slate-200 bg-slate-50/60 opacity-60 dark:border-slate-800 dark:bg-slate-900/40'
                                             : isHigh
-                                            ? 'bg-white dark:bg-[#111c30] border-red-200/90 dark:border-red-900/60 shadow-xs'
-                                            : 'bg-white dark:bg-[#111c30] border-amber-200/90 dark:border-amber-900/60 shadow-xs'
+                                              ? 'border-red-200/90 bg-white shadow-xs dark:border-red-900/60 dark:bg-[#111c30]'
+                                              : 'border-amber-200/90 bg-white shadow-xs dark:border-amber-900/60 dark:bg-[#111c30]',
                                     )}
                                 >
-                                    <div className="space-y-1.5 flex-1">
+                                    <div className="flex-1 space-y-1.5">
                                         <div className="flex flex-wrap items-center gap-2">
-                                            <span className="font-bold text-slate-900 dark:text-white text-sm">
+                                            <span className="text-sm font-bold text-slate-900 dark:text-white">
                                                 {alert.studentName}
                                             </span>
-                                            <span className="text-xs font-semibold px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
+                                            <span className="rounded border border-slate-200 bg-slate-100 px-2 py-0.5 text-xs font-semibold text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
                                                 {alert.class}
                                             </span>
                                             <span
                                                 className={cn(
-                                                    'text-[10px] font-bold px-2 py-0.5 rounded-full border',
+                                                    'rounded-full border px-2 py-0.5 text-[10px] font-bold',
                                                     isHigh
-                                                        ? 'bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-300 border-red-200'
-                                                        : 'bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-300 border-amber-200'
+                                                        ? 'border-red-200 bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-300'
+                                                        : 'border-amber-200 bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-300',
                                                 )}
                                             >
                                                 {alert.triggerType}
@@ -590,29 +661,42 @@ export default function Dashboard({
                                                 • Terdeteksi {alert.timestamp}
                                             </span>
                                             {alert.actionTaken && (
-                                                <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">
+                                                <span className="rounded bg-emerald-100 px-2 py-0.5 text-[10px] font-bold text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">
                                                     ✓ Sudah Ditindaklanjuti
                                                 </span>
                                             )}
                                         </div>
 
-                                        <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed font-normal">
+                                        <p className="text-xs leading-relaxed font-normal text-slate-700 dark:text-slate-300">
                                             {alert.summary}
                                         </p>
 
-                                        <div className="text-[11px] text-slate-500 dark:text-slate-400 flex flex-wrap items-center gap-4 pt-0.5">
-                                            <span>Wali Kelas: <strong className="font-medium text-slate-700 dark:text-slate-300">{alert.homeroomTeacher}</strong></span>
-                                            <span>Orang Tua: <strong className="font-medium text-slate-700 dark:text-slate-300">{alert.parentName} ({alert.parentPhone})</strong></span>
+                                        <div className="flex flex-wrap items-center gap-4 pt-0.5 text-[11px] text-slate-500 dark:text-slate-400">
+                                            <span>
+                                                Wali Kelas:{' '}
+                                                <strong className="font-medium text-slate-700 dark:text-slate-300">
+                                                    {alert.homeroomTeacher}
+                                                </strong>
+                                            </span>
+                                            <span>
+                                                Orang Tua:{' '}
+                                                <strong className="font-medium text-slate-700 dark:text-slate-300">
+                                                    {alert.parentName} (
+                                                    {alert.parentPhone})
+                                                </strong>
+                                            </span>
                                         </div>
                                     </div>
 
                                     {/* Action-Oriented Buttons (Section 10: Action Connection) */}
-                                    <div className="flex flex-wrap items-center gap-2 shrink-0 self-start lg:self-center">
+                                    <div className="flex shrink-0 flex-wrap items-center gap-2 self-start lg:self-center">
                                         {/* Student 360 Degree View Action */}
                                         <button
                                             type="button"
-                                            onClick={() => handleOpenStudent360(alert)}
-                                            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 rounded-lg transition-colors"
+                                            onClick={() =>
+                                                handleOpenStudent360(alert)
+                                            }
+                                            className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-slate-100 px-3 py-1.5 text-xs font-semibold text-slate-700 transition-colors hover:bg-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
                                             title="Buka Profil Siswa 360°"
                                         >
                                             <Eye className="size-3.5 text-blue-600 dark:text-blue-400" />
@@ -625,13 +709,21 @@ export default function Dashboard({
                                             disabled={alert.actionTaken}
                                             onClick={() => {
                                                 setSelectedAlertId(alert.id);
-                                                setSelectedStudentId(alert.studentId || alert.id);
-                                                setSelectedStudentName(`${alert.studentName} (${alert.class})`);
-                                                setSelectedStudentPhone(alert.parentPhone);
-                                                setFollowupNote(`Tindak lanjut pemicu risiko: ${alert.summary}`);
+                                                setSelectedStudentId(
+                                                    alert.studentId || alert.id,
+                                                );
+                                                setSelectedStudentName(
+                                                    `${alert.studentName} (${alert.class})`,
+                                                );
+                                                setSelectedStudentPhone(
+                                                    alert.parentPhone,
+                                                );
+                                                setFollowupNote(
+                                                    `Tindak lanjut pemicu risiko: ${alert.summary}`,
+                                                );
                                                 setIsFollowupModalOpen(true);
                                             }}
-                                            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-white bg-blue-700 hover:bg-blue-800 disabled:opacity-50 rounded-lg shadow-sm transition-colors active:scale-95"
+                                            className="inline-flex items-center gap-1.5 rounded-lg bg-blue-700 px-3 py-1.5 text-xs font-semibold text-white shadow-sm transition-colors hover:bg-blue-800 active:scale-95 disabled:opacity-50"
                                         >
                                             <Plus className="size-3.5" />
                                             <span>Buat Tindak Lanjut</span>
@@ -642,19 +734,29 @@ export default function Dashboard({
                                             type="button"
                                             onClick={() => {
                                                 setSelectedAlertId(alert.id);
-                                                setSelectedStudentId(alert.studentId || alert.id);
-                                                setSelectedStudentName(`${alert.studentName} (${alert.class})`);
-                                                setSelectedStudentPhone(alert.parentPhone);
-                                                setParentCustomMessage(
-                                                    `Yth. Bapak/Ibu ${alert.parentName}, kami dari sekolah menginformasikan perkembangan ananda ${alert.studentName}. ${alert.summary}. Mohon berkenan berkoordinasi dengan sekolah demi kelancaran proses belajar.`
+                                                setSelectedStudentId(
+                                                    alert.studentId || alert.id,
                                                 );
-                                                setIsParentContactModalOpen(true);
+                                                setSelectedStudentName(
+                                                    `${alert.studentName} (${alert.class})`,
+                                                );
+                                                setSelectedStudentPhone(
+                                                    alert.parentPhone,
+                                                );
+                                                setParentCustomMessage(
+                                                    `Yth. Bapak/Ibu ${alert.parentName}, kami dari sekolah menginformasikan perkembangan ananda ${alert.studentName}. ${alert.summary}. Mohon berkenan berkoordinasi dengan sekolah demi kelancaran proses belajar.`,
+                                                );
+                                                setIsParentContactModalOpen(
+                                                    true,
+                                                );
                                             }}
-                                            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 rounded-lg transition-colors"
+                                            className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-slate-100 px-3 py-1.5 text-xs font-semibold text-slate-700 transition-colors hover:bg-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
                                             title="Kirim pesan terstruktur resmi ke orang tua"
                                         >
                                             <PhoneCall className="size-3.5 text-emerald-600" />
-                                            <span className="hidden sm:inline">Hubungi Ortu</span>
+                                            <span className="hidden sm:inline">
+                                                Hubungi Ortu
+                                            </span>
                                         </button>
 
                                         {/* Escalate to Case Management */}
@@ -662,12 +764,18 @@ export default function Dashboard({
                                             type="button"
                                             onClick={() => {
                                                 setSelectedAlertId(alert.id);
-                                                setSelectedStudentId(alert.studentId || alert.id);
-                                                setSelectedStudentName(`${alert.studentName} (${alert.class})`);
-                                                setNewCaseDesc(`Eskalasi dari Early Warning: ${alert.summary}`);
+                                                setSelectedStudentId(
+                                                    alert.studentId || alert.id,
+                                                );
+                                                setSelectedStudentName(
+                                                    `${alert.studentName} (${alert.class})`,
+                                                );
+                                                setNewCaseDesc(
+                                                    `Eskalasi dari Early Warning: ${alert.summary}`,
+                                                );
                                                 setIsNewCaseModalOpen(true);
                                             }}
-                                            className="p-2 text-slate-500 hover:text-amber-600 hover:bg-amber-50 dark:hover:bg-amber-950/60 rounded-lg border border-transparent hover:border-amber-200 transition-colors"
+                                            className="rounded-lg border border-transparent p-2 text-slate-500 transition-colors hover:border-amber-200 hover:bg-amber-50 hover:text-amber-600 dark:hover:bg-amber-950/60"
                                             title="Eskalasi ke Kasus BK"
                                         >
                                             <ShieldAlert className="size-4" />
@@ -680,17 +788,17 @@ export default function Dashboard({
                 </div>
 
                 {/* 4. MODULAR OPERATIONAL TABS NAVIGATION */}
-                <div className="border-b border-slate-200 dark:border-slate-800 overflow-x-auto">
-                    <ul className="flex flex-nowrap sm:flex-wrap -mb-px text-xs font-semibold text-center text-slate-500 dark:text-slate-400 gap-1">
+                <div className="overflow-x-auto border-b border-slate-200 dark:border-slate-800">
+                    <ul className="-mb-px flex flex-nowrap gap-1 text-center text-xs font-semibold text-slate-500 sm:flex-wrap dark:text-slate-400">
                         <li>
                             <button
                                 type="button"
                                 onClick={() => setActiveTab('overview')}
                                 className={cn(
-                                    'inline-flex items-center px-3.5 py-3 border-b-2 rounded-t-lg transition-colors gap-2 whitespace-nowrap',
+                                    'inline-flex items-center gap-2 rounded-t-lg border-b-2 px-3.5 py-3 whitespace-nowrap transition-colors',
                                     activeTab === 'overview'
-                                        ? 'text-blue-700 dark:text-blue-400 border-blue-700 dark:border-blue-400 font-bold'
-                                        : 'border-transparent hover:text-slate-900 dark:hover:text-white hover:border-slate-300'
+                                        ? 'border-blue-700 font-bold text-blue-700 dark:border-blue-400 dark:text-blue-400'
+                                        : 'border-transparent hover:border-slate-300 hover:text-slate-900 dark:hover:text-white',
                                 )}
                             >
                                 <Layers className="size-4" />
@@ -702,10 +810,10 @@ export default function Dashboard({
                                 type="button"
                                 onClick={() => setActiveTab('early-warning')}
                                 className={cn(
-                                    'inline-flex items-center px-3.5 py-3 border-b-2 rounded-t-lg transition-colors gap-2 whitespace-nowrap',
+                                    'inline-flex items-center gap-2 rounded-t-lg border-b-2 px-3.5 py-3 whitespace-nowrap transition-colors',
                                     activeTab === 'early-warning'
-                                        ? 'text-blue-700 dark:text-blue-400 border-blue-700 dark:border-blue-400 font-bold'
-                                        : 'border-transparent hover:text-slate-900 dark:hover:text-white hover:border-slate-300'
+                                        ? 'border-blue-700 font-bold text-blue-700 dark:border-blue-400 dark:text-blue-400'
+                                        : 'border-transparent hover:border-slate-300 hover:text-slate-900 dark:hover:text-white',
                                 )}
                             >
                                 <AlertTriangle className="size-4 text-red-500" />
@@ -717,10 +825,10 @@ export default function Dashboard({
                                 type="button"
                                 onClick={() => setActiveTab('class-monitoring')}
                                 className={cn(
-                                    'inline-flex items-center px-3.5 py-3 border-b-2 rounded-t-lg transition-colors gap-2 whitespace-nowrap',
+                                    'inline-flex items-center gap-2 rounded-t-lg border-b-2 px-3.5 py-3 whitespace-nowrap transition-colors',
                                     activeTab === 'class-monitoring'
-                                        ? 'text-blue-700 dark:text-blue-400 border-blue-700 dark:border-blue-400 font-bold'
-                                        : 'border-transparent hover:text-slate-900 dark:hover:text-white hover:border-slate-300'
+                                        ? 'border-blue-700 font-bold text-blue-700 dark:border-blue-400 dark:text-blue-400'
+                                        : 'border-transparent hover:border-slate-300 hover:text-slate-900 dark:hover:text-white',
                                 )}
                             >
                                 <GraduationCap className="size-4 text-blue-600" />
@@ -732,10 +840,10 @@ export default function Dashboard({
                                 type="button"
                                 onClick={() => setActiveTab('cases')}
                                 className={cn(
-                                    'inline-flex items-center px-3.5 py-3 border-b-2 rounded-t-lg transition-colors gap-2 whitespace-nowrap',
+                                    'inline-flex items-center gap-2 rounded-t-lg border-b-2 px-3.5 py-3 whitespace-nowrap transition-colors',
                                     activeTab === 'cases'
-                                        ? 'text-blue-700 dark:text-blue-400 border-blue-700 dark:border-blue-400 font-bold'
-                                        : 'border-transparent hover:text-slate-900 dark:hover:text-white hover:border-slate-300'
+                                        ? 'border-blue-700 font-bold text-blue-700 dark:border-blue-400 dark:text-blue-400'
+                                        : 'border-transparent hover:border-slate-300 hover:text-slate-900 dark:hover:text-white',
                                 )}
                             >
                                 <ShieldAlert className="size-4 text-amber-500" />
@@ -747,10 +855,10 @@ export default function Dashboard({
                                 type="button"
                                 onClick={() => setActiveTab('communication')}
                                 className={cn(
-                                    'inline-flex items-center px-3.5 py-3 border-b-2 rounded-t-lg transition-colors gap-2 whitespace-nowrap',
+                                    'inline-flex items-center gap-2 rounded-t-lg border-b-2 px-3.5 py-3 whitespace-nowrap transition-colors',
                                     activeTab === 'communication'
-                                        ? 'text-blue-700 dark:text-blue-400 border-blue-700 dark:border-blue-400 font-bold'
-                                        : 'border-transparent hover:text-slate-900 dark:hover:text-white hover:border-slate-300'
+                                        ? 'border-blue-700 font-bold text-blue-700 dark:border-blue-400 dark:text-blue-400'
+                                        : 'border-transparent hover:border-slate-300 hover:text-slate-900 dark:hover:text-white',
                                 )}
                             >
                                 <PhoneCall className="size-4 text-emerald-500" />
@@ -762,10 +870,10 @@ export default function Dashboard({
                                 type="button"
                                 onClick={() => setActiveTab('ats')}
                                 className={cn(
-                                    'inline-flex items-center px-3.5 py-3 border-b-2 rounded-t-lg transition-colors gap-2 whitespace-nowrap',
+                                    'inline-flex items-center gap-2 rounded-t-lg border-b-2 px-3.5 py-3 whitespace-nowrap transition-colors',
                                     activeTab === 'ats'
-                                        ? 'text-blue-700 dark:text-blue-400 border-blue-700 dark:border-blue-400 font-bold'
-                                        : 'border-transparent hover:text-slate-900 dark:hover:text-white hover:border-slate-300'
+                                        ? 'border-blue-700 font-bold text-blue-700 dark:border-blue-400 dark:text-blue-400'
+                                        : 'border-transparent hover:border-slate-300 hover:text-slate-900 dark:hover:text-white',
                                 )}
                             >
                                 <UserCheck className="size-4 text-emerald-600" />
@@ -777,10 +885,10 @@ export default function Dashboard({
                                 type="button"
                                 onClick={() => setActiveTab('data-check')}
                                 className={cn(
-                                    'inline-flex items-center px-3.5 py-3 border-b-2 rounded-t-lg transition-colors gap-2 whitespace-nowrap',
+                                    'inline-flex items-center gap-2 rounded-t-lg border-b-2 px-3.5 py-3 whitespace-nowrap transition-colors',
                                     activeTab === 'data-check'
-                                        ? 'text-blue-700 dark:text-blue-400 border-blue-700 dark:border-blue-400 font-bold'
-                                        : 'border-transparent hover:text-slate-900 dark:hover:text-white hover:border-slate-300'
+                                        ? 'border-blue-700 font-bold text-blue-700 dark:border-blue-400 dark:text-blue-400'
+                                        : 'border-transparent hover:border-slate-300 hover:text-slate-900 dark:hover:text-white',
                                 )}
                             >
                                 <CheckCircle2 className="size-4 text-orange-500" />
@@ -792,10 +900,10 @@ export default function Dashboard({
                                 type="button"
                                 onClick={() => setActiveTab('payments')}
                                 className={cn(
-                                    'inline-flex items-center px-3.5 py-3 border-b-2 rounded-t-lg transition-colors gap-2 whitespace-nowrap',
+                                    'inline-flex items-center gap-2 rounded-t-lg border-b-2 px-3.5 py-3 whitespace-nowrap transition-colors',
                                     activeTab === 'payments'
-                                        ? 'text-blue-700 dark:text-blue-400 border-blue-700 dark:border-blue-400 font-bold'
-                                        : 'border-transparent hover:text-slate-900 dark:hover:text-white hover:border-slate-300'
+                                        ? 'border-blue-700 font-bold text-blue-700 dark:border-blue-400 dark:text-blue-400'
+                                        : 'border-transparent hover:border-slate-300 hover:text-slate-900 dark:hover:text-white',
                                 )}
                             >
                                 <CreditCard className="size-4 text-purple-500" />
@@ -807,10 +915,10 @@ export default function Dashboard({
                                 type="button"
                                 onClick={() => setActiveTab('incidents')}
                                 className={cn(
-                                    'inline-flex items-center px-3.5 py-3 border-b-2 rounded-t-lg transition-colors gap-2 whitespace-nowrap',
+                                    'inline-flex items-center gap-2 rounded-t-lg border-b-2 px-3.5 py-3 whitespace-nowrap transition-colors',
                                     activeTab === 'incidents'
-                                        ? 'text-blue-700 dark:text-blue-400 border-blue-700 dark:border-blue-400 font-bold'
-                                        : 'border-transparent hover:text-slate-900 dark:hover:text-white hover:border-slate-300'
+                                        ? 'border-blue-700 font-bold text-blue-700 dark:border-blue-400 dark:text-blue-400'
+                                        : 'border-transparent hover:border-slate-300 hover:text-slate-900 dark:hover:text-white',
                                 )}
                             >
                                 <Siren className="size-4 text-red-600" />
@@ -824,84 +932,116 @@ export default function Dashboard({
 
                 {/* TAB 1: OVERVIEW (Kondisi Kelas + Follow-up Pipeline) */}
                 {activeTab === 'overview' && (
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+                    <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
                         {/* Class Health Monitoring (Section 9: Student Signal & Condition) */}
-                        <div className="p-5 rounded-2xl bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-slate-800 shadow-xs space-y-4">
-                            <div className="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-800">
+                        <div className="space-y-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
+                            <div className="flex items-center justify-between border-b border-slate-200 pb-2 dark:border-slate-800">
                                 <div>
-                                    <h3 className="font-bold text-slate-900 dark:text-white text-sm">
+                                    <h3 className="text-sm font-bold text-slate-900 dark:text-white">
                                         Indikator Kondisi Kelas (Class Health)
                                     </h3>
                                     <p className="text-[11px] text-slate-500">
-                                        Mendeteksi kelas yang memerlukan dukungan intervensi guru.
+                                        Mendeteksi kelas yang memerlukan
+                                        dukungan intervensi guru.
                                     </p>
                                 </div>
                                 <button
                                     type="button"
-                                    onClick={() => setActiveTab('class-monitoring')}
-                                    className="text-xs text-blue-700 dark:text-blue-400 hover:underline flex items-center gap-1 font-semibold"
+                                    onClick={() =>
+                                        setActiveTab('class-monitoring')
+                                    }
+                                    className="flex items-center gap-1 text-xs font-semibold text-blue-700 hover:underline dark:text-blue-400"
                                 >
-                                    Semua Rombel <ChevronRight className="size-3.5" />
+                                    Semua Rombel{' '}
+                                    <ChevronRight className="size-3.5" />
                                 </button>
                             </div>
 
                             <div className="space-y-3">
                                 {classes.map((cls) => {
-                                    const isCritical = cls.healthStatus === 'critical';
-                                    const isWarning = cls.healthStatus === 'warning';
+                                    const isCritical =
+                                        cls.healthStatus === 'critical';
+                                    const isWarning =
+                                        cls.healthStatus === 'warning';
 
                                     return (
                                         <div
                                             key={cls.id}
-                                            className="p-3.5 rounded-xl bg-slate-50/70 dark:bg-[#111c30] border border-slate-200 dark:border-slate-800 hover:border-blue-300 transition-colors space-y-2.5"
+                                            className="space-y-2.5 rounded-xl border border-slate-200 bg-slate-50/70 p-3.5 transition-colors hover:border-blue-300 dark:border-slate-800 dark:bg-[#111c30]"
                                         >
                                             <div className="flex items-center justify-between">
                                                 <div>
-                                                    <span className="font-bold text-slate-900 dark:text-white text-sm me-2">
+                                                    <span className="me-2 text-sm font-bold text-slate-900 dark:text-white">
                                                         {cls.name}
                                                     </span>
                                                     <span className="text-xs text-slate-500">
-                                                        {cls.major} • {cls.totalStudents} siswa
+                                                        {cls.major} •{' '}
+                                                        {cls.totalStudents}{' '}
+                                                        siswa
                                                     </span>
                                                 </div>
                                                 <span
                                                     className={cn(
-                                                        'text-[10px] font-bold px-2 py-0.5 rounded-full border',
+                                                        'rounded-full border px-2 py-0.5 text-[10px] font-bold',
                                                         isCritical
-                                                            ? 'bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-300 border-red-200'
+                                                            ? 'border-red-200 bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-300'
                                                             : isWarning
-                                                            ? 'bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-300 border-amber-200'
-                                                            : 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300 border-emerald-200'
+                                                              ? 'border-amber-200 bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-300'
+                                                              : 'border-emerald-200 bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300',
                                                     )}
                                                 >
-                                                    {isCritical ? 'Perlu Intervensi' : isWarning ? 'Perlu Perhatian' : 'Kondisi Baik'}
+                                                    {isCritical
+                                                        ? 'Perlu Intervensi'
+                                                        : isWarning
+                                                          ? 'Perlu Perhatian'
+                                                          : 'Kondisi Baik'}
                                                 </span>
                                             </div>
 
-                                            <div className="grid grid-cols-3 gap-2 text-xs py-1">
+                                            <div className="grid grid-cols-3 gap-2 py-1 text-xs">
                                                 <div>
-                                                    <span className="text-[10px] text-slate-400 block font-medium">Kehadiran</span>
-                                                    <span className="font-bold text-slate-800 dark:text-slate-200">{cls.attendanceRate}%</span>
+                                                    <span className="block text-[10px] font-medium text-slate-400">
+                                                        Kehadiran
+                                                    </span>
+                                                    <span className="font-bold text-slate-800 dark:text-slate-200">
+                                                        {cls.attendanceRate}%
+                                                    </span>
                                                 </div>
                                                 <div>
-                                                    <span className="text-[10px] text-slate-400 block font-medium">Perlu Perhatian</span>
-                                                    <span className="font-bold text-red-600">{cls.studentsAtRisk} siswa</span>
+                                                    <span className="block text-[10px] font-medium text-slate-400">
+                                                        Perlu Perhatian
+                                                    </span>
+                                                    <span className="font-bold text-red-600">
+                                                        {cls.studentsAtRisk}{' '}
+                                                        siswa
+                                                    </span>
                                                 </div>
                                                 <div>
-                                                    <span className="text-[10px] text-slate-400 block font-medium">Follow-up Pending</span>
-                                                    <span className="font-bold text-amber-600">{cls.pendingFollowups} pending</span>
+                                                    <span className="block text-[10px] font-medium text-slate-400">
+                                                        Follow-up Pending
+                                                    </span>
+                                                    <span className="font-bold text-amber-600">
+                                                        {cls.pendingFollowups}{' '}
+                                                        pending
+                                                    </span>
                                                 </div>
                                             </div>
 
-                                            <div className="flex items-center justify-between text-[11px] pt-2 border-t border-slate-200/60 dark:border-slate-800 text-slate-500">
-                                                <span>Wali: {cls.homeroomTeacher}</span>
+                                            <div className="flex items-center justify-between border-t border-slate-200/60 pt-2 text-[11px] text-slate-500 dark:border-slate-800">
+                                                <span>
+                                                    Wali: {cls.homeroomTeacher}
+                                                </span>
                                                 <button
                                                     type="button"
                                                     onClick={() => {
-                                                        setSelectedStudentName(`Siswa ${cls.name}`);
-                                                        setIsFollowupModalOpen(true);
+                                                        setSelectedStudentName(
+                                                            `Siswa ${cls.name}`,
+                                                        );
+                                                        setIsFollowupModalOpen(
+                                                            true,
+                                                        );
                                                     }}
-                                                    className="text-blue-700 dark:text-blue-400 font-semibold hover:underline"
+                                                    className="font-semibold text-blue-700 hover:underline dark:text-blue-400"
                                                 >
                                                     + Tangani Kelas
                                                 </button>
@@ -913,20 +1053,24 @@ export default function Dashboard({
                         </div>
 
                         {/* Case Workflow Summary (Section 13: Case Management) */}
-                        <div className="p-5 rounded-2xl bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-slate-800 shadow-xs space-y-4">
-                            <div className="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-800">
+                        <div className="space-y-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
+                            <div className="flex items-center justify-between border-b border-slate-200 pb-2 dark:border-slate-800">
                                 <div>
-                                    <h3 className="font-bold text-slate-900 dark:text-white text-sm">
-                                        Progres Penanganan Kasus (Alur Terstruktur)
+                                    <h3 className="text-sm font-bold text-slate-900 dark:text-white">
+                                        Progres Penanganan Kasus (Alur
+                                        Terstruktur)
                                     </h3>
                                     <p className="text-[11px] text-slate-500">
-                                        Alur: Baru → Ditugaskan → Ditangani → Selesai
+                                        Alur: Baru → Ditugaskan → Ditangani →
+                                        Selesai
                                     </p>
                                 </div>
                                 <button
                                     type="button"
-                                    onClick={() => handleTriggerActionModal('new_case')}
-                                    className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-white bg-blue-700 hover:bg-blue-800 rounded-lg shadow-sm transition-colors active:scale-95"
+                                    onClick={() =>
+                                        handleTriggerActionModal('new_case')
+                                    }
+                                    className="inline-flex items-center gap-1.5 rounded-lg bg-blue-700 px-3 py-1.5 text-xs font-semibold text-white shadow-sm transition-colors hover:bg-blue-800 active:scale-95"
                                 >
                                     <Plus className="size-3.5" />
                                     Buka Kasus
@@ -937,7 +1081,7 @@ export default function Dashboard({
                                 {cases.slice(0, 3).map((c) => (
                                     <div
                                         key={c.id}
-                                        className="p-3.5 rounded-xl bg-slate-50/70 dark:bg-[#111c30] border border-slate-200 dark:border-slate-800 space-y-2 text-xs"
+                                        className="space-y-2 rounded-xl border border-slate-200 bg-slate-50/70 p-3.5 text-xs dark:border-slate-800 dark:bg-[#111c30]"
                                     >
                                         <div className="flex items-center justify-between">
                                             <div className="flex items-center gap-2">
@@ -947,26 +1091,33 @@ export default function Dashboard({
                                                 <span className="font-bold text-slate-900 dark:text-white">
                                                     {c.studentName}
                                                 </span>
-                                                <span className="text-[11px] text-slate-400">({c.class})</span>
+                                                <span className="text-[11px] text-slate-400">
+                                                    ({c.class})
+                                                </span>
                                             </div>
                                             <span
                                                 className={cn(
-                                                    'text-[10px] font-bold px-2 py-0.5 rounded',
+                                                    'rounded px-2 py-0.5 text-[10px] font-bold',
                                                     c.priority === 'Tinggi'
                                                         ? 'bg-red-100 text-red-700 dark:bg-red-950 dark:text-red-300'
-                                                        : 'bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300'
+                                                        : 'bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300',
                                                 )}
                                             >
                                                 Prioritas: {c.priority}
                                             </span>
                                         </div>
 
-                                        <p className="text-slate-700 dark:text-slate-300 bg-white dark:bg-[#070b14] p-2.5 rounded-lg border border-slate-200 dark:border-slate-800 leading-relaxed font-normal">
+                                        <p className="rounded-lg border border-slate-200 bg-white p-2.5 leading-relaxed font-normal text-slate-700 dark:border-slate-800 dark:bg-[#070b14] dark:text-slate-300">
                                             {c.lastActivity}
                                         </p>
 
-                                        <div className="flex items-center justify-between text-[11px] text-slate-500 pt-1">
-                                            <span>PIC: <strong className="text-slate-700 dark:text-slate-300 font-medium">{c.assignee}</strong></span>
+                                        <div className="flex items-center justify-between pt-1 text-[11px] text-slate-500">
+                                            <span>
+                                                PIC:{' '}
+                                                <strong className="font-medium text-slate-700 dark:text-slate-300">
+                                                    {c.assignee}
+                                                </strong>
+                                            </span>
                                             <span className="font-semibold text-blue-700 dark:text-blue-400">
                                                 Tahap: {c.stageLabel}
                                             </span>
@@ -977,9 +1128,10 @@ export default function Dashboard({
                                 <button
                                     type="button"
                                     onClick={() => setActiveTab('cases')}
-                                    className="w-full text-center py-2 text-xs font-semibold text-blue-700 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/50 rounded-lg transition-colors border border-dashed border-blue-200 dark:border-blue-900"
+                                    className="w-full rounded-lg border border-dashed border-blue-200 py-2 text-center text-xs font-semibold text-blue-700 transition-colors hover:bg-blue-50 dark:border-blue-900 dark:text-blue-400 dark:hover:bg-blue-950/50"
                                 >
-                                    Buka Papan Kanban Kasus Lengkap ({cases.length} Kasus) →
+                                    Buka Papan Kanban Kasus Lengkap (
+                                    {cases.length} Kasus) →
                                 </button>
                             </div>
                         </div>
@@ -988,91 +1140,130 @@ export default function Dashboard({
 
                 {/* TAB 2: EARLY WARNING MONITORING TABLE (Section 12 & 16: Table) */}
                 {activeTab === 'early-warning' && (
-                    <div className="p-5 rounded-2xl bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-slate-800 shadow-xs space-y-4">
-                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-200 dark:border-slate-800">
+                    <div className="space-y-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
+                        <div className="flex flex-col justify-between gap-3 border-b border-slate-200 pb-3 sm:flex-row sm:items-center dark:border-slate-800">
                             <div>
-                                <h3 className="font-bold text-slate-900 dark:text-white text-base">
-                                    Modul 01: Early Warning System (Deteksi Sinyal Risiko Siswa)
+                                <h3 className="text-base font-bold text-slate-900 dark:text-white">
+                                    Modul 01: Early Warning System (Deteksi
+                                    Sinyal Risiko Siswa)
                                 </h3>
                                 <p className="text-xs text-slate-500">
-                                    Mengenali sinyal penurunan kondisi siswa sebelum menjadi masalah besar. Menampilkan indikator obyektif, bukan vonis.
+                                    Mengenali sinyal penurunan kondisi siswa
+                                    sebelum menjadi masalah besar. Menampilkan
+                                    indikator obyektif, bukan vonis.
                                 </p>
                             </div>
-                            <span className="text-xs font-bold px-3 py-1 rounded-full bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-300 border border-red-200 self-start sm:self-center">
+                            <span className="self-start rounded-full border border-red-200 bg-red-50 px-3 py-1 text-xs font-bold text-red-700 sm:self-center dark:bg-red-950 dark:text-red-300">
                                 12 Siswa Dalam Pantauan
                             </span>
                         </div>
 
                         {/* Clean Table Layout (Section 16: Table for scanning and comparison) */}
                         <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
-                            <table className="w-full text-xs text-left text-slate-700 dark:text-slate-300">
-                                <thead className="text-[11px] font-bold text-slate-600 dark:text-slate-300 uppercase bg-slate-50 dark:bg-[#111c30] border-b border-slate-200 dark:border-slate-800">
+                            <table className="w-full text-left text-xs text-slate-700 dark:text-slate-300">
+                                <thead className="border-b border-slate-200 bg-slate-50 text-[11px] font-bold text-slate-600 uppercase dark:border-slate-800 dark:bg-[#111c30] dark:text-slate-300">
                                     <tr>
-                                        <th className="px-4 py-3">Siswa & Kelas</th>
-                                        <th className="px-4 py-3">Pemicu Sinyal</th>
-                                        <th className="px-4 py-3">Konteks & Ringkasan</th>
-                                        <th className="px-4 py-3">Wali Kelas</th>
+                                        <th className="px-4 py-3">
+                                            Siswa & Kelas
+                                        </th>
+                                        <th className="px-4 py-3">
+                                            Pemicu Sinyal
+                                        </th>
+                                        <th className="px-4 py-3">
+                                            Konteks & Ringkasan
+                                        </th>
+                                        <th className="px-4 py-3">
+                                            Wali Kelas
+                                        </th>
                                         <th className="px-4 py-3">Orang Tua</th>
-                                        <th className="px-4 py-3 text-center">Tindakan Cepat</th>
+                                        <th className="px-4 py-3 text-center">
+                                            Tindakan Cepat
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
                                     {priorityFeed.map((item) => (
-                                        <tr key={item.id} className="hover:bg-slate-50/80 dark:hover:bg-[#162238]/60 transition-colors">
-                                            <td className="px-4 py-3.5 font-bold text-slate-900 dark:text-white whitespace-nowrap">
+                                        <tr
+                                            key={item.id}
+                                            className="transition-colors hover:bg-slate-50/80 dark:hover:bg-[#162238]/60"
+                                        >
+                                            <td className="px-4 py-3.5 font-bold whitespace-nowrap text-slate-900 dark:text-white">
                                                 <div>{item.studentName}</div>
-                                                <div className="text-[11px] font-normal text-slate-500">{item.class}</div>
+                                                <div className="text-[11px] font-normal text-slate-500">
+                                                    {item.class}
+                                                </div>
                                             </td>
                                             <td className="px-4 py-3.5 whitespace-nowrap">
                                                 <span
                                                     className={cn(
-                                                        'px-2 py-0.5 rounded text-[10px] font-bold border',
-                                                        item.riskLevel === 'high'
-                                                            ? 'bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-300 border-red-200'
-                                                            : 'bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-300 border-amber-200'
+                                                        'rounded border px-2 py-0.5 text-[10px] font-bold',
+                                                        item.riskLevel ===
+                                                            'high'
+                                                            ? 'border-red-200 bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-300'
+                                                            : 'border-amber-200 bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-300',
                                                     )}
                                                 >
                                                     {item.triggerType}
                                                 </span>
                                             </td>
-                                            <td className="px-4 py-3.5 max-w-xs text-[11px] leading-relaxed">
+                                            <td className="max-w-xs px-4 py-3.5 text-[11px] leading-relaxed">
                                                 {item.summary}
                                             </td>
                                             <td className="px-4 py-3.5 text-[11px] whitespace-nowrap text-slate-600 dark:text-slate-300">
                                                 {item.homeroomTeacher}
                                             </td>
                                             <td className="px-4 py-3.5 text-[11px] whitespace-nowrap">
-                                                <div className="font-medium text-slate-900 dark:text-white">{item.parentName}</div>
-                                                <div className="text-slate-400">{item.parentPhone}</div>
+                                                <div className="font-medium text-slate-900 dark:text-white">
+                                                    {item.parentName}
+                                                </div>
+                                                <div className="text-slate-400">
+                                                    {item.parentPhone}
+                                                </div>
                                             </td>
                                             <td className="px-4 py-3.5 text-center whitespace-nowrap">
                                                 <div className="flex items-center justify-center gap-1.5">
                                                     <button
                                                         type="button"
-                                                        onClick={() => handleOpenStudent360(item)}
-                                                        className="px-2.5 py-1 text-[11px] font-semibold text-blue-700 dark:text-blue-300 bg-blue-50 dark:bg-blue-950/60 hover:bg-blue-100 rounded-lg border border-blue-200 dark:border-blue-900 transition-colors"
+                                                        onClick={() =>
+                                                            handleOpenStudent360(
+                                                                item,
+                                                            )
+                                                        }
+                                                        className="rounded-lg border border-blue-200 bg-blue-50 px-2.5 py-1 text-[11px] font-semibold text-blue-700 transition-colors hover:bg-blue-100 dark:border-blue-900 dark:bg-blue-950/60 dark:text-blue-300"
                                                     >
                                                         Profil 360°
                                                     </button>
                                                     <button
                                                         type="button"
                                                         onClick={() => {
-                                                            setSelectedStudentName(`${item.studentName} (${item.class})`);
-                                                            setSelectedStudentPhone(item.parentPhone);
-                                                            setIsFollowupModalOpen(true);
+                                                            setSelectedStudentName(
+                                                                `${item.studentName} (${item.class})`,
+                                                            );
+                                                            setSelectedStudentPhone(
+                                                                item.parentPhone,
+                                                            );
+                                                            setIsFollowupModalOpen(
+                                                                true,
+                                                            );
                                                         }}
-                                                        className="px-2.5 py-1 text-[11px] font-semibold text-white bg-blue-700 hover:bg-blue-800 rounded-lg transition-colors shadow-2xs"
+                                                        className="rounded-lg bg-blue-700 px-2.5 py-1 text-[11px] font-semibold text-white shadow-2xs transition-colors hover:bg-blue-800"
                                                     >
                                                         Follow-up
                                                     </button>
                                                     <button
                                                         type="button"
                                                         onClick={() => {
-                                                            setSelectedStudentName(`${item.studentName} (${item.class})`);
-                                                            setSelectedStudentPhone(item.parentPhone);
-                                                            setIsParentContactModalOpen(true);
+                                                            setSelectedStudentName(
+                                                                `${item.studentName} (${item.class})`,
+                                                            );
+                                                            setSelectedStudentPhone(
+                                                                item.parentPhone,
+                                                            );
+                                                            setIsParentContactModalOpen(
+                                                                true,
+                                                            );
                                                         }}
-                                                        className="p-1.5 text-emerald-600 hover:bg-emerald-50 rounded-lg border border-slate-200 dark:border-slate-800 transition-colors"
+                                                        className="rounded-lg border border-slate-200 p-1.5 text-emerald-600 transition-colors hover:bg-emerald-50 dark:border-slate-800"
                                                         title="Kirim pesan resmi ke orang tua"
                                                     >
                                                         <PhoneCall className="size-3.5" />
@@ -1089,77 +1280,108 @@ export default function Dashboard({
 
                 {/* TAB 3: CLASS MONITORING (Section 16: Cards for Grouping) */}
                 {activeTab === 'class-monitoring' && (
-                    <div className="p-5 rounded-2xl bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-slate-800 shadow-xs space-y-4">
-                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-200 dark:border-slate-800">
+                    <div className="space-y-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
+                        <div className="flex flex-col justify-between gap-3 border-b border-slate-200 pb-3 sm:flex-row sm:items-center dark:border-slate-800">
                             <div>
-                                <h3 className="font-bold text-slate-900 dark:text-white text-base">
+                                <h3 className="text-base font-bold text-slate-900 dark:text-white">
                                     Modul 02: Kondisi Kelas (Halaman Wali Kelas)
                                 </h3>
                                 <p className="text-xs text-slate-500">
-                                    Satu layar terpadu melihat tren kehadiran, peserta didik berisiko, dan status tindak lanjut per rombel.
+                                    Satu layar terpadu melihat tren kehadiran,
+                                    peserta didik berisiko, dan status tindak
+                                    lanjut per rombel.
                                 </p>
                             </div>
                             <button
                                 type="button"
                                 onClick={() => {
-                                    toast.success('Pencatatan absensi harian kelas XI RPL 2 siap ditindaklanjuti.');
+                                    toast.success(
+                                        'Pencatatan absensi harian kelas XI RPL 2 siap ditindaklanjuti.',
+                                    );
                                     setSelectedStudentName('Kelas XI RPL 2');
                                     setIsFollowupModalOpen(true);
                                 }}
-                                className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-white bg-blue-700 hover:bg-blue-800 rounded-lg shadow-sm transition-colors active:scale-95"
+                                className="inline-flex items-center gap-1.5 rounded-lg bg-blue-700 px-3.5 py-2 text-xs font-semibold text-white shadow-sm transition-colors hover:bg-blue-800 active:scale-95"
                             >
                                 <Plus className="size-3.5" />
                                 Catat Absensi Hari Ini
                             </button>
                         </div>
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
                             {classes.map((cls) => {
                                 const isGood = cls.attendanceRate >= 95;
-                                const isWarning = cls.attendanceRate >= 90 && cls.attendanceRate < 95;
+                                const isWarning =
+                                    cls.attendanceRate >= 90 &&
+                                    cls.attendanceRate < 95;
 
                                 return (
                                     <div
                                         key={cls.id}
-                                        className="p-4 rounded-xl bg-slate-50/70 dark:bg-[#111c30] border border-slate-200 dark:border-slate-800 space-y-3 text-xs"
+                                        className="space-y-3 rounded-xl border border-slate-200 bg-slate-50/70 p-4 text-xs dark:border-slate-800 dark:bg-[#111c30]"
                                     >
                                         <div className="flex items-center justify-between">
-                                            <h4 className="font-bold text-slate-900 dark:text-white text-base">{cls.name}</h4>
+                                            <h4 className="text-base font-bold text-slate-900 dark:text-white">
+                                                {cls.name}
+                                            </h4>
                                             <span className="text-[11px] font-semibold text-slate-500">
                                                 {cls.totalStudents} Siswa
                                             </span>
                                         </div>
-                                        <p className="text-slate-500 text-[11px] leading-snug">{cls.major}</p>
+                                        <p className="text-[11px] leading-snug text-slate-500">
+                                            {cls.major}
+                                        </p>
 
-                                        <div className="space-y-1.5 pt-2 border-t border-slate-200 dark:border-slate-800">
+                                        <div className="space-y-1.5 border-t border-slate-200 pt-2 dark:border-slate-800">
                                             <div className="flex justify-between text-xs font-medium">
-                                                <span className="text-slate-500">Tingkat Hadir:</span>
-                                                <span className="font-bold text-slate-900 dark:text-white">{cls.attendanceRate}%</span>
+                                                <span className="text-slate-500">
+                                                    Tingkat Hadir:
+                                                </span>
+                                                <span className="font-bold text-slate-900 dark:text-white">
+                                                    {cls.attendanceRate}%
+                                                </span>
                                             </div>
-                                            <div className="w-full bg-slate-200 dark:bg-slate-800 rounded-full h-2 overflow-hidden">
+                                            <div className="h-2 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800">
                                                 <div
                                                     className={cn(
                                                         'h-full rounded-full transition-all',
-                                                        isGood ? 'bg-emerald-500' : isWarning ? 'bg-amber-500' : 'bg-red-500'
+                                                        isGood
+                                                            ? 'bg-emerald-500'
+                                                            : isWarning
+                                                              ? 'bg-amber-500'
+                                                              : 'bg-red-500',
                                                     )}
-                                                    style={{ width: `${cls.attendanceRate}%` }}
+                                                    style={{
+                                                        width: `${cls.attendanceRate}%`,
+                                                    }}
                                                 />
                                             </div>
                                         </div>
 
-                                        <div className="grid grid-cols-2 gap-2 text-xs pt-1">
-                                            <div className="p-2.5 rounded-lg bg-white dark:bg-[#070b14] border border-slate-200 dark:border-slate-800">
-                                                <span className="text-[10px] text-slate-400 block font-medium">Perlu Perhatian</span>
-                                                <span className="font-bold text-red-600 text-sm">{cls.studentsAtRisk} siswa</span>
+                                        <div className="grid grid-cols-2 gap-2 pt-1 text-xs">
+                                            <div className="rounded-lg border border-slate-200 bg-white p-2.5 dark:border-slate-800 dark:bg-[#070b14]">
+                                                <span className="block text-[10px] font-medium text-slate-400">
+                                                    Perlu Perhatian
+                                                </span>
+                                                <span className="text-sm font-bold text-red-600">
+                                                    {cls.studentsAtRisk} siswa
+                                                </span>
                                             </div>
-                                            <div className="p-2.5 rounded-lg bg-white dark:bg-[#070b14] border border-slate-200 dark:border-slate-800">
-                                                <span className="text-[10px] text-slate-400 block font-medium">Follow-up Pending</span>
-                                                <span className="font-bold text-amber-600 text-sm">{cls.pendingFollowups} kasus</span>
+                                            <div className="rounded-lg border border-slate-200 bg-white p-2.5 dark:border-slate-800 dark:bg-[#070b14]">
+                                                <span className="block text-[10px] font-medium text-slate-400">
+                                                    Follow-up Pending
+                                                </span>
+                                                <span className="text-sm font-bold text-amber-600">
+                                                    {cls.pendingFollowups} kasus
+                                                </span>
                                             </div>
                                         </div>
 
-                                        <div className="text-[11px] text-slate-500 pt-1 border-t border-slate-200 dark:border-slate-800">
-                                            Wali: <strong className="font-medium text-slate-800 dark:text-slate-200">{cls.homeroomTeacher}</strong>
+                                        <div className="border-t border-slate-200 pt-1 text-[11px] text-slate-500 dark:border-slate-800">
+                                            Wali:{' '}
+                                            <strong className="font-medium text-slate-800 dark:text-slate-200">
+                                                {cls.homeroomTeacher}
+                                            </strong>
                                         </div>
                                     </div>
                                 );
@@ -1170,20 +1392,25 @@ export default function Dashboard({
 
                 {/* TAB 4: CASE MANAGEMENT (Section 13: Alur Terstruktur Kanban & Timeline) */}
                 {activeTab === 'cases' && (
-                    <div className="p-5 rounded-2xl bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-slate-800 shadow-xs space-y-4">
-                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-200 dark:border-slate-800">
+                    <div className="space-y-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
+                        <div className="flex flex-col justify-between gap-3 border-b border-slate-200 pb-3 sm:flex-row sm:items-center dark:border-slate-800">
                             <div>
-                                <h3 className="font-bold text-slate-900 dark:text-white text-base">
-                                    Modul 03: Case Management (Papan Alur Penanganan Kasus)
+                                <h3 className="text-base font-bold text-slate-900 dark:text-white">
+                                    Modul 03: Case Management (Papan Alur
+                                    Penanganan Kasus)
                                 </h3>
                                 <p className="text-xs text-slate-500">
-                                    Mengubah koordinasi kasus dari percakapan informal menjadi workflow terstruktur: Baru → Ditugaskan → Konseling → Tuntas.
+                                    Mengubah koordinasi kasus dari percakapan
+                                    informal menjadi workflow terstruktur: Baru
+                                    → Ditugaskan → Konseling → Tuntas.
                                 </p>
                             </div>
                             <button
                                 type="button"
-                                onClick={() => handleTriggerActionModal('new_case')}
-                                className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-white bg-blue-700 hover:bg-blue-800 rounded-lg shadow-sm transition-colors active:scale-95"
+                                onClick={() =>
+                                    handleTriggerActionModal('new_case')
+                                }
+                                className="inline-flex items-center gap-1.5 rounded-lg bg-blue-700 px-3.5 py-2 text-xs font-semibold text-white shadow-sm transition-colors hover:bg-blue-800 active:scale-95"
                             >
                                 <Plus className="size-3.5" />
                                 Daftarkan Kasus Baru
@@ -1191,13 +1418,17 @@ export default function Dashboard({
                         </div>
 
                         {/* Kanban Columns */}
-                        <div className="grid grid-cols-1 md:grid-cols-4 gap-3.5 text-xs">
+                        <div className="grid grid-cols-1 gap-3.5 text-xs md:grid-cols-4">
                             {/* Column 1: Baru Masuk */}
-                            <div className="p-3.5 rounded-xl bg-slate-50/70 dark:bg-[#111c30] border border-slate-200 dark:border-slate-800 space-y-3">
-                                <div className="flex items-center justify-between font-bold text-slate-900 dark:text-white pb-1.5 border-b border-slate-200 dark:border-slate-800">
+                            <div className="space-y-3 rounded-xl border border-slate-200 bg-slate-50/70 p-3.5 dark:border-slate-800 dark:bg-[#111c30]">
+                                <div className="flex items-center justify-between border-b border-slate-200 pb-1.5 font-bold text-slate-900 dark:border-slate-800 dark:text-white">
                                     <span>1. Baru Masuk</span>
-                                    <span className="px-2 py-0.5 rounded-full bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300 text-[10px] font-bold">
-                                        {cases.filter((c) => c.stage === 'new').length}
+                                    <span className="rounded-full bg-blue-100 px-2 py-0.5 text-[10px] font-bold text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+                                        {
+                                            cases.filter(
+                                                (c) => c.stage === 'new',
+                                            ).length
+                                        }
                                     </span>
                                 </div>
                                 {cases
@@ -1205,26 +1436,39 @@ export default function Dashboard({
                                     .map((c) => (
                                         <div
                                             key={c.id}
-                                            className="p-3 rounded-lg bg-white dark:bg-[#070b14] border border-slate-200 dark:border-slate-800 space-y-2 shadow-2xs"
+                                            className="space-y-2 rounded-lg border border-slate-200 bg-white p-3 shadow-2xs dark:border-slate-800 dark:bg-[#070b14]"
                                         >
-                                            <div className="flex justify-between items-center">
-                                                <span className="font-bold text-slate-900 dark:text-white">{c.studentName}</span>
-                                                <span className="text-[10px] text-red-600 font-bold">{c.priority}</span>
+                                            <div className="flex items-center justify-between">
+                                                <span className="font-bold text-slate-900 dark:text-white">
+                                                    {c.studentName}
+                                                </span>
+                                                <span className="text-[10px] font-bold text-red-600">
+                                                    {c.priority}
+                                                </span>
                                             </div>
-                                            <p className="text-[11px] text-slate-600 dark:text-slate-400 leading-relaxed font-normal">{c.lastActivity}</p>
+                                            <p className="text-[11px] leading-relaxed font-normal text-slate-600 dark:text-slate-400">
+                                                {c.lastActivity}
+                                            </p>
                                             <button
                                                 type="button"
                                                 onClick={() => {
                                                     setCases((prev) =>
                                                         prev.map((item) =>
                                                             item.id === c.id
-                                                                ? { ...item, stage: 'assigned', stageLabel: 'Ditugaskan ke BK' }
-                                                                : item
-                                                        )
+                                                                ? {
+                                                                      ...item,
+                                                                      stage: 'assigned',
+                                                                      stageLabel:
+                                                                          'Ditugaskan ke BK',
+                                                                  }
+                                                                : item,
+                                                        ),
                                                     );
-                                                    toast.success(`Kasus ${c.code} berhasil ditugaskan ke Guru BK!`);
+                                                    toast.success(
+                                                        `Kasus ${c.code} berhasil ditugaskan ke Guru BK!`,
+                                                    );
                                                 }}
-                                                className="w-full text-center py-1.5 text-[11px] bg-blue-50 dark:bg-blue-950/70 text-blue-700 dark:text-blue-300 font-semibold rounded-lg hover:bg-blue-100 transition-colors"
+                                                className="w-full rounded-lg bg-blue-50 py-1.5 text-center text-[11px] font-semibold text-blue-700 transition-colors hover:bg-blue-100 dark:bg-blue-950/70 dark:text-blue-300"
                                             >
                                                 Tugaskan ke BK →
                                             </button>
@@ -1233,11 +1477,15 @@ export default function Dashboard({
                             </div>
 
                             {/* Column 2: Ditugaskan */}
-                            <div className="p-3.5 rounded-xl bg-slate-50/70 dark:bg-[#111c30] border border-slate-200 dark:border-slate-800 space-y-3">
-                                <div className="flex items-center justify-between font-bold text-slate-900 dark:text-white pb-1.5 border-b border-slate-200 dark:border-slate-800">
+                            <div className="space-y-3 rounded-xl border border-slate-200 bg-slate-50/70 p-3.5 dark:border-slate-800 dark:bg-[#111c30]">
+                                <div className="flex items-center justify-between border-b border-slate-200 pb-1.5 font-bold text-slate-900 dark:border-slate-800 dark:text-white">
                                     <span>2. Ditugaskan</span>
-                                    <span className="px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-300 text-[10px] font-bold">
-                                        {cases.filter((c) => c.stage === 'assigned').length}
+                                    <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-bold text-amber-700 dark:bg-amber-950 dark:text-amber-300">
+                                        {
+                                            cases.filter(
+                                                (c) => c.stage === 'assigned',
+                                            ).length
+                                        }
                                     </span>
                                 </div>
                                 {cases
@@ -1245,27 +1493,42 @@ export default function Dashboard({
                                     .map((c) => (
                                         <div
                                             key={c.id}
-                                            className="p-3 rounded-lg bg-white dark:bg-[#070b14] border border-slate-200 dark:border-slate-800 space-y-2 shadow-2xs"
+                                            className="space-y-2 rounded-lg border border-slate-200 bg-white p-3 shadow-2xs dark:border-slate-800 dark:bg-[#070b14]"
                                         >
-                                            <div className="flex justify-between items-center">
-                                                <span className="font-bold text-slate-900 dark:text-white">{c.studentName}</span>
-                                                <span className="text-[10px] text-blue-600 font-semibold">{c.category}</span>
+                                            <div className="flex items-center justify-between">
+                                                <span className="font-bold text-slate-900 dark:text-white">
+                                                    {c.studentName}
+                                                </span>
+                                                <span className="text-[10px] font-semibold text-blue-600">
+                                                    {c.category}
+                                                </span>
                                             </div>
-                                            <p className="text-[11px] text-slate-600 dark:text-slate-400 leading-relaxed font-normal">{c.lastActivity}</p>
-                                            <div className="text-[10px] text-slate-400">PIC: {c.assignee}</div>
+                                            <p className="text-[11px] leading-relaxed font-normal text-slate-600 dark:text-slate-400">
+                                                {c.lastActivity}
+                                            </p>
+                                            <div className="text-[10px] text-slate-400">
+                                                PIC: {c.assignee}
+                                            </div>
                                             <button
                                                 type="button"
                                                 onClick={() => {
                                                     setCases((prev) =>
                                                         prev.map((item) =>
                                                             item.id === c.id
-                                                                ? { ...item, stage: 'in_progress', stageLabel: 'Sedang Ditangani' }
-                                                                : item
-                                                        )
+                                                                ? {
+                                                                      ...item,
+                                                                      stage: 'in_progress',
+                                                                      stageLabel:
+                                                                          'Sedang Ditangani',
+                                                                  }
+                                                                : item,
+                                                        ),
                                                     );
-                                                    toast.success(`Kasus ${c.code} masuk ke sesi konseling & penanganan.`);
+                                                    toast.success(
+                                                        `Kasus ${c.code} masuk ke sesi konseling & penanganan.`,
+                                                    );
                                                 }}
-                                                className="w-full text-center py-1.5 text-[11px] bg-amber-50 dark:bg-amber-950/70 text-amber-700 dark:text-amber-300 font-semibold rounded-lg hover:bg-amber-100 transition-colors"
+                                                className="w-full rounded-lg bg-amber-50 py-1.5 text-center text-[11px] font-semibold text-amber-700 transition-colors hover:bg-amber-100 dark:bg-amber-950/70 dark:text-amber-300"
                                             >
                                                 Mulai Sesi Konseling →
                                             </button>
@@ -1274,11 +1537,16 @@ export default function Dashboard({
                             </div>
 
                             {/* Column 3: Sedang Ditangani */}
-                            <div className="p-3.5 rounded-xl bg-slate-50/70 dark:bg-[#111c30] border border-slate-200 dark:border-slate-800 space-y-3">
-                                <div className="flex items-center justify-between font-bold text-slate-900 dark:text-white pb-1.5 border-b border-slate-200 dark:border-slate-800">
+                            <div className="space-y-3 rounded-xl border border-slate-200 bg-slate-50/70 p-3.5 dark:border-slate-800 dark:bg-[#111c30]">
+                                <div className="flex items-center justify-between border-b border-slate-200 pb-1.5 font-bold text-slate-900 dark:border-slate-800 dark:text-white">
                                     <span>3. Sedang Ditangani</span>
-                                    <span className="px-2 py-0.5 rounded-full bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300 text-[10px] font-bold">
-                                        {cases.filter((c) => c.stage === 'in_progress').length}
+                                    <span className="rounded-full bg-purple-100 px-2 py-0.5 text-[10px] font-bold text-purple-700 dark:bg-purple-950 dark:text-purple-300">
+                                        {
+                                            cases.filter(
+                                                (c) =>
+                                                    c.stage === 'in_progress',
+                                            ).length
+                                        }
                                     </span>
                                 </div>
                                 {cases
@@ -1286,32 +1554,53 @@ export default function Dashboard({
                                     .map((c) => (
                                         <div
                                             key={c.id}
-                                            className="p-3 rounded-lg bg-white dark:bg-[#070b14] border border-slate-200 dark:border-slate-800 space-y-2 shadow-2xs"
+                                            className="space-y-2 rounded-lg border border-slate-200 bg-white p-3 shadow-2xs dark:border-slate-800 dark:bg-[#070b14]"
                                         >
-                                            <div className="flex justify-between items-center">
-                                                <span className="font-bold text-slate-900 dark:text-white">{c.studentName}</span>
-                                                <span className="text-[10px] text-slate-400 font-mono">{c.code}</span>
+                                            <div className="flex items-center justify-between">
+                                                <span className="font-bold text-slate-900 dark:text-white">
+                                                    {c.studentName}
+                                                </span>
+                                                <span className="font-mono text-[10px] text-slate-400">
+                                                    {c.code}
+                                                </span>
                                             </div>
-                                            <p className="text-[11px] text-slate-600 dark:text-slate-400 leading-relaxed font-normal">{c.lastActivity}</p>
-                                            <div className="text-[10px] text-slate-400">PIC: {c.assignee}</div>
+                                            <p className="text-[11px] leading-relaxed font-normal text-slate-600 dark:text-slate-400">
+                                                {c.lastActivity}
+                                            </p>
+                                            <div className="text-[10px] text-slate-400">
+                                                PIC: {c.assignee}
+                                            </div>
                                             <button
                                                 type="button"
                                                 onClick={() => {
                                                     setCases((prev) =>
                                                         prev.map((item) =>
                                                             item.id === c.id
-                                                                ? { ...item, stage: 'resolved', stageLabel: 'Selesai & Terdokumentasi' }
-                                                                : item
-                                                        )
+                                                                ? {
+                                                                      ...item,
+                                                                      stage: 'resolved',
+                                                                      stageLabel:
+                                                                          'Selesai & Terdokumentasi',
+                                                                  }
+                                                                : item,
+                                                        ),
                                                     );
                                                     setStats((prev) => ({
                                                         ...prev,
-                                                        activeCases: Math.max(0, prev.activeCases - 1),
-                                                        resolvedThisMonth: prev.resolvedThisMonth + 1,
+                                                        activeCases: Math.max(
+                                                            0,
+                                                            prev.activeCases -
+                                                                1,
+                                                        ),
+                                                        resolvedThisMonth:
+                                                            prev.resolvedThisMonth +
+                                                            1,
                                                     }));
-                                                    toast.success(`Kasus ${c.code} telah diselesaikan dan tersimpan di arsip digital!`);
+                                                    toast.success(
+                                                        `Kasus ${c.code} telah diselesaikan dan tersimpan di arsip digital!`,
+                                                    );
                                                 }}
-                                                className="w-full text-center py-1.5 text-[11px] bg-emerald-50 dark:bg-emerald-950/70 text-emerald-700 dark:text-emerald-300 font-semibold rounded-lg hover:bg-emerald-100 transition-colors"
+                                                className="w-full rounded-lg bg-emerald-50 py-1.5 text-center text-[11px] font-semibold text-emerald-700 transition-colors hover:bg-emerald-100 dark:bg-emerald-950/70 dark:text-emerald-300"
                                             >
                                                 Selesaikan & Arsipkan ✓
                                             </button>
@@ -1320,17 +1609,23 @@ export default function Dashboard({
                             </div>
 
                             {/* Column 4: Selesai & Arsip */}
-                            <div className="p-3.5 rounded-xl bg-slate-50/70 dark:bg-[#111c30] border border-slate-200 dark:border-slate-800 space-y-3">
-                                <div className="flex items-center justify-between font-bold text-slate-900 dark:text-white pb-1.5 border-b border-slate-200 dark:border-slate-800">
+                            <div className="space-y-3 rounded-xl border border-slate-200 bg-slate-50/70 p-3.5 dark:border-slate-800 dark:bg-[#111c30]">
+                                <div className="flex items-center justify-between border-b border-slate-200 pb-1.5 font-bold text-slate-900 dark:border-slate-800 dark:text-white">
                                     <span>4. Selesai (Arsip)</span>
-                                    <span className="px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 text-[10px] font-bold">
-                                        {cases.filter((c) => c.stage === 'resolved').length + 18}
+                                    <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-bold text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">
+                                        {cases.filter(
+                                            (c) => c.stage === 'resolved',
+                                        ).length + 18}
                                     </span>
                                 </div>
-                                <div className="p-3 rounded-lg bg-white dark:bg-[#070b14] border border-slate-200 dark:border-slate-800 text-[11px] text-slate-600 dark:text-slate-400 space-y-1">
-                                    <div className="font-semibold text-slate-900 dark:text-white">18 Kasus Bulan Ini</div>
+                                <div className="space-y-1 rounded-lg border border-slate-200 bg-white p-3 text-[11px] text-slate-600 dark:border-slate-800 dark:bg-[#070b14] dark:text-slate-400">
+                                    <div className="font-semibold text-slate-900 dark:text-white">
+                                        18 Kasus Bulan Ini
+                                    </div>
                                     <p className="text-[10px] leading-relaxed">
-                                        Seluruh berkas konseling, komitmen siswa, dan laporan ortu tersimpan di arsip digital sekolah.
+                                        Seluruh berkas konseling, komitmen
+                                        siswa, dan laporan ortu tersimpan di
+                                        arsip digital sekolah.
                                     </p>
                                 </div>
                             </div>
@@ -1340,20 +1635,25 @@ export default function Dashboard({
 
                 {/* TAB 5: PARENT COMMUNICATION (Section 15: Komunikasi Formal & Terstruktur) */}
                 {activeTab === 'communication' && (
-                    <div className="p-5 rounded-2xl bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-slate-800 shadow-xs space-y-4">
-                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-200 dark:border-slate-800">
+                    <div className="space-y-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
+                        <div className="flex flex-col justify-between gap-3 border-b border-slate-200 pb-3 sm:flex-row sm:items-center dark:border-slate-800">
                             <div>
-                                <h3 className="font-bold text-slate-900 dark:text-white text-base">
+                                <h3 className="text-base font-bold text-slate-900 dark:text-white">
                                     Modul 04: Komunikasi Orang Tua Terstruktur
                                 </h3>
                                 <p className="text-xs text-slate-500">
-                                    Komunikasi resmi sekolah ke orang tua berbasis data dengan tanda terima (acknowledgement), menghindari perdebatan di grup chat.
+                                    Komunikasi resmi sekolah ke orang tua
+                                    berbasis data dengan tanda terima
+                                    (acknowledgement), menghindari perdebatan di
+                                    grup chat.
                                 </p>
                             </div>
                             <button
                                 type="button"
-                                onClick={() => handleTriggerActionModal('parent_contact')}
-                                className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-white bg-blue-700 hover:bg-blue-800 rounded-lg shadow-sm transition-colors active:scale-95"
+                                onClick={() =>
+                                    handleTriggerActionModal('parent_contact')
+                                }
+                                className="inline-flex items-center gap-1.5 rounded-lg bg-blue-700 px-3.5 py-2 text-xs font-semibold text-white shadow-sm transition-colors hover:bg-blue-800 active:scale-95"
                             >
                                 <Plus className="size-3.5" />
                                 Kirim Pesan Terstruktur
@@ -1364,33 +1664,45 @@ export default function Dashboard({
                             {parentUpdates.map((msg) => (
                                 <div
                                     key={msg.id}
-                                    className="p-4 rounded-xl bg-slate-50/70 dark:bg-[#111c30] border border-slate-200 dark:border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs"
+                                    className="flex flex-col justify-between gap-3 rounded-xl border border-slate-200 bg-slate-50/70 p-4 text-xs md:flex-row md:items-center dark:border-slate-800 dark:bg-[#111c30]"
                                 >
-                                    <div className="space-y-1.5 flex-1">
+                                    <div className="flex-1 space-y-1.5">
                                         <div className="flex flex-wrap items-center gap-2">
-                                            <span className="font-bold text-slate-900 dark:text-white text-sm">{msg.studentName}</span>
-                                            <span className="text-slate-400">• Wali: {msg.parentName}</span>
-                                            <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-blue-50 dark:bg-blue-950 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-900">
+                                            <span className="text-sm font-bold text-slate-900 dark:text-white">
+                                                {msg.studentName}
+                                            </span>
+                                            <span className="text-slate-400">
+                                                • Wali: {msg.parentName}
+                                            </span>
+                                            <span className="rounded border border-blue-200 bg-blue-50 px-2 py-0.5 text-[10px] font-semibold text-blue-700 dark:border-blue-900 dark:bg-blue-950 dark:text-blue-300">
                                                 {msg.category}
                                             </span>
-                                            <span className="text-slate-400">• {msg.date}</span>
+                                            <span className="text-slate-400">
+                                                • {msg.date}
+                                            </span>
                                         </div>
-                                        <p className="text-slate-700 dark:text-slate-300 bg-white dark:bg-[#070b14] p-3 rounded-lg border border-slate-200 dark:border-slate-800 leading-relaxed font-normal">
+                                        <p className="rounded-lg border border-slate-200 bg-white p-3 leading-relaxed font-normal text-slate-700 dark:border-slate-800 dark:bg-[#070b14] dark:text-slate-300">
                                             {msg.message}
                                         </p>
                                         <div className="text-[11px] text-slate-500">
-                                            Saluran: <strong className="text-slate-700 dark:text-slate-300 font-medium">{msg.status}</strong>
+                                            Saluran:{' '}
+                                            <strong className="font-medium text-slate-700 dark:text-slate-300">
+                                                {msg.status}
+                                            </strong>
                                         </div>
                                     </div>
 
-                                    <div className="shrink-0 flex flex-col items-start md:items-end gap-1">
-                                        <span className="text-[10px] text-slate-400 font-medium">Status Tanggapan Ortu:</span>
+                                    <div className="flex shrink-0 flex-col items-start gap-1 md:items-end">
+                                        <span className="text-[10px] font-medium text-slate-400">
+                                            Status Tanggapan Ortu:
+                                        </span>
                                         <span
                                             className={cn(
-                                                'px-3 py-1 text-xs font-semibold rounded-full border',
-                                                msg.acknowledgement === 'Sudah membaca'
-                                                    ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300 border-emerald-200'
-                                                    : 'bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-300 border-amber-200'
+                                                'rounded-full border px-3 py-1 text-xs font-semibold',
+                                                msg.acknowledgement ===
+                                                    'Sudah membaca'
+                                                    ? 'border-emerald-200 bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300'
+                                                    : 'border-amber-200 bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-300',
                                             )}
                                         >
                                             {msg.acknowledgement}
@@ -1404,51 +1716,67 @@ export default function Dashboard({
 
                 {/* TAB 6: LAPANGAN ATS (Anak Tidak Sekolah) */}
                 {activeTab === 'ats' && (
-                    <div className="p-5 rounded-2xl bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-slate-800 shadow-xs space-y-4">
-                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-200 dark:border-slate-800">
+                    <div className="space-y-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
+                        <div className="flex flex-col justify-between gap-3 border-b border-slate-200 pb-3 sm:flex-row sm:items-center dark:border-slate-800">
                             <div>
-                                <h3 className="font-bold text-slate-900 dark:text-white text-base">
-                                    Modul 06: Alur Lapangan ATS (Anak Tidak Sekolah)
+                                <h3 className="text-base font-bold text-slate-900 dark:text-white">
+                                    Modul 06: Alur Lapangan ATS (Anak Tidak
+                                    Sekolah)
                                 </h3>
                                 <p className="text-xs text-slate-500">
-                                    Workflow penanganan verifikasi lapangan & intervensi: Ditugaskan → Kunjungan → Terverifikasi → Intervensi → Kembali Sekolah.
+                                    Workflow penanganan verifikasi lapangan &
+                                    intervensi: Ditugaskan → Kunjungan →
+                                    Terverifikasi → Intervensi → Kembali
+                                    Sekolah.
                                 </p>
                             </div>
-                            <span className="text-xs font-semibold px-3 py-1 rounded-lg bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-200">
+                            <span className="rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">
                                 Tim Satgas Terpadu
                             </span>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                        <div className="grid grid-cols-1 gap-4 text-xs md:grid-cols-2">
                             {atsList.map((ats) => (
                                 <div
                                     key={ats.id}
-                                    className="p-4 rounded-xl bg-slate-50/70 dark:bg-[#111c30] border border-slate-200 dark:border-slate-800 space-y-3"
+                                    className="space-y-3 rounded-xl border border-slate-200 bg-slate-50/70 p-4 dark:border-slate-800 dark:bg-[#111c30]"
                                 >
                                     <div className="flex items-center justify-between">
-                                        <span className="font-bold text-slate-900 dark:text-white text-sm">{ats.studentName}</span>
-                                        <span className="text-xs text-blue-700 dark:text-blue-400 font-semibold">
+                                        <span className="text-sm font-bold text-slate-900 dark:text-white">
+                                            {ats.studentName}
+                                        </span>
+                                        <span className="text-xs font-semibold text-blue-700 dark:text-blue-400">
                                             {ats.lastClass}
                                         </span>
                                     </div>
-                                    <div className="text-[11px] text-slate-600 dark:text-slate-400 flex items-start gap-1.5">
-                                        <MapPin className="size-3.5 text-red-500 shrink-0 mt-0.5" />
+                                    <div className="flex items-start gap-1.5 text-[11px] text-slate-600 dark:text-slate-400">
+                                        <MapPin className="mt-0.5 size-3.5 shrink-0 text-red-500" />
                                         <span>{ats.address}</span>
                                     </div>
-                                    <div className="p-2.5 rounded-lg bg-white dark:bg-[#070b14] border border-slate-200 dark:border-slate-800 space-y-1">
-                                        <span className="text-[10px] text-slate-400 font-medium block">Identifikasi Hambatan:</span>
-                                        <div className="font-medium text-slate-800 dark:text-slate-200">{ats.reason}</div>
+                                    <div className="space-y-1 rounded-lg border border-slate-200 bg-white p-2.5 dark:border-slate-800 dark:bg-[#070b14]">
+                                        <span className="block text-[10px] font-medium text-slate-400">
+                                            Identifikasi Hambatan:
+                                        </span>
+                                        <div className="font-medium text-slate-800 dark:text-slate-200">
+                                            {ats.reason}
+                                        </div>
                                     </div>
-                                    <div className="flex items-center justify-between pt-2 border-t border-slate-200 dark:border-slate-800 text-[11px]">
-                                        <span className="text-slate-500">Petugas: {ats.officer}</span>
+                                    <div className="flex items-center justify-between border-t border-slate-200 pt-2 text-[11px] dark:border-slate-800">
+                                        <span className="text-slate-500">
+                                            Petugas: {ats.officer}
+                                        </span>
                                         <span className="font-bold text-amber-600 dark:text-amber-400">
                                             {ats.status}
                                         </span>
                                     </div>
                                     <button
                                         type="button"
-                                        onClick={() => toast.success(`Hasil verifikasi lapangan ananda ${ats.studentName} berhasil diperbarui!`)}
-                                        className="w-full py-2 text-xs font-semibold bg-blue-700 hover:bg-blue-800 text-white rounded-lg shadow-sm transition-colors"
+                                        onClick={() =>
+                                            toast.success(
+                                                `Hasil verifikasi lapangan ananda ${ats.studentName} berhasil diperbarui!`,
+                                            )
+                                        }
+                                        className="w-full rounded-lg bg-blue-700 py-2 text-xs font-semibold text-white shadow-sm transition-colors hover:bg-blue-800"
                                     >
                                         Update Catatan Kunjungan Rumah
                                     </button>
@@ -1460,20 +1788,28 @@ export default function Dashboard({
 
                 {/* TAB 7: DAPODIK CHECK (Anomali Operator) */}
                 {activeTab === 'data-check' && (
-                    <div className="p-5 rounded-2xl bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-slate-800 shadow-xs space-y-4">
-                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-200 dark:border-slate-800">
+                    <div className="space-y-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
+                        <div className="flex flex-col justify-between gap-3 border-b border-slate-200 pb-3 sm:flex-row sm:items-center dark:border-slate-800">
                             <div>
-                                <h3 className="font-bold text-slate-900 dark:text-white text-base">
-                                    Modul 09: Cek Data Dapodik (Deteksi Anomali Operator)
+                                <h3 className="text-base font-bold text-slate-900 dark:text-white">
+                                    Modul 09: Cek Data Dapodik (Deteksi Anomali
+                                    Operator)
                                 </h3>
                                 <p className="text-xs text-slate-500">
-                                    Membantu operator menemukan inkonsistensi data sebelum administrasi resmi cut-off (data kosong, SK belum terunggah, rombel tanpa pengampu).
+                                    Membantu operator menemukan inkonsistensi
+                                    data sebelum administrasi resmi cut-off
+                                    (data kosong, SK belum terunggah, rombel
+                                    tanpa pengampu).
                                 </p>
                             </div>
                             <button
                                 type="button"
-                                onClick={() => toast.success('Sinkronisasi validasi selesai. 7 anomali terverifikasi.')}
-                                className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-white bg-blue-700 hover:bg-blue-800 rounded-lg shadow-sm transition-colors"
+                                onClick={() =>
+                                    toast.success(
+                                        'Sinkronisasi validasi selesai. 7 anomali terverifikasi.',
+                                    )
+                                }
+                                className="inline-flex items-center gap-1.5 rounded-lg bg-blue-700 px-3.5 py-2 text-xs font-semibold text-white shadow-sm transition-colors hover:bg-blue-800"
                             >
                                 <RefreshCw className="size-3.5" />
                                 Validasi Ulang Sekarang
@@ -1484,33 +1820,46 @@ export default function Dashboard({
                             {dapodikIssues.map((issue) => (
                                 <div
                                     key={issue.id}
-                                    className="p-4 rounded-xl bg-slate-50/70 dark:bg-[#111c30] border border-slate-200 dark:border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs"
+                                    className="flex flex-col justify-between gap-3 rounded-xl border border-slate-200 bg-slate-50/70 p-4 text-xs md:flex-row md:items-center dark:border-slate-800 dark:bg-[#111c30]"
                                 >
                                     <div className="space-y-1">
                                         <div className="flex items-center gap-2">
                                             <span
                                                 className={cn(
-                                                    'px-2 py-0.5 rounded text-[10px] font-bold border',
+                                                    'rounded border px-2 py-0.5 text-[10px] font-bold',
                                                     issue.severity === 'Error'
-                                                        ? 'bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-300 border-red-200'
-                                                        : 'bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-300 border-amber-200'
+                                                        ? 'border-red-200 bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-300'
+                                                        : 'border-amber-200 bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-300',
                                                 )}
                                             >
                                                 {issue.severity}
                                             </span>
-                                            <span className="font-bold text-slate-900 dark:text-white">{issue.category}</span>
-                                            <span className="text-slate-400">• {issue.targetName}</span>
+                                            <span className="font-bold text-slate-900 dark:text-white">
+                                                {issue.category}
+                                            </span>
+                                            <span className="text-slate-400">
+                                                • {issue.targetName}
+                                            </span>
                                         </div>
-                                        <p className="text-slate-700 dark:text-slate-300 font-medium">{issue.description}</p>
+                                        <p className="font-medium text-slate-700 dark:text-slate-300">
+                                            {issue.description}
+                                        </p>
                                         <div className="text-[11px] text-slate-500">
-                                            Field Terkait: <span className="font-mono text-slate-800 dark:text-slate-200">{issue.field}</span>
+                                            Field Terkait:{' '}
+                                            <span className="font-mono text-slate-800 dark:text-slate-200">
+                                                {issue.field}
+                                            </span>
                                         </div>
                                     </div>
 
                                     <button
                                         type="button"
-                                        onClick={() => toast.success(`Membuka menu perbaikan: ${issue.action}`)}
-                                        className="px-3.5 py-1.5 text-xs font-semibold text-white bg-blue-700 hover:bg-blue-800 rounded-lg transition-colors shrink-0"
+                                        onClick={() =>
+                                            toast.success(
+                                                `Membuka menu perbaikan: ${issue.action}`,
+                                            )
+                                        }
+                                        className="shrink-0 rounded-lg bg-blue-700 px-3.5 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-blue-800"
                                     >
                                         {issue.action}
                                     </button>
@@ -1522,57 +1871,84 @@ export default function Dashboard({
 
                 {/* TAB 8: PAYMENTS & SPP */}
                 {activeTab === 'payments' && (
-                    <div className="p-5 rounded-2xl bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-slate-800 shadow-xs space-y-4">
-                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-200 dark:border-slate-800">
+                    <div className="space-y-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
+                        <div className="flex flex-col justify-between gap-3 border-b border-slate-200 pb-3 sm:flex-row sm:items-center dark:border-slate-800">
                             <div>
-                                <h3 className="font-bold text-slate-900 dark:text-white text-base">
-                                    Modul 07: Pembayaran & SPP (Rekonsiliasi Bendahara)
+                                <h3 className="text-base font-bold text-slate-900 dark:text-white">
+                                    Modul 07: Pembayaran & SPP (Rekonsiliasi
+                                    Bendahara)
                                 </h3>
                                 <p className="text-xs text-slate-500">
-                                    Menghubungkan catatan pembayaran dengan status tindak lanjut, menghindari penagihan keliru kepada siswa rentan.
+                                    Menghubungkan catatan pembayaran dengan
+                                    status tindak lanjut, menghindari penagihan
+                                    keliru kepada siswa rentan.
                                 </p>
                             </div>
-                            <span className="text-xs font-bold px-3 py-1 rounded-full bg-purple-50 text-purple-700 dark:bg-purple-950 dark:text-purple-300 border border-purple-200">
+                            <span className="rounded-full border border-purple-200 bg-purple-50 px-3 py-1 text-xs font-bold text-purple-700 dark:bg-purple-950 dark:text-purple-300">
                                 18 Tagihan Jatuh Tempo
                             </span>
                         </div>
 
                         <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
-                            <table className="w-full text-xs text-left text-slate-700 dark:text-slate-300">
-                                <thead className="text-[11px] font-bold text-slate-600 dark:text-slate-300 uppercase bg-slate-50 dark:bg-[#111c30] border-b border-slate-200 dark:border-slate-800">
+                            <table className="w-full text-left text-xs text-slate-700 dark:text-slate-300">
+                                <thead className="border-b border-slate-200 bg-slate-50 text-[11px] font-bold text-slate-600 uppercase dark:border-slate-800 dark:bg-[#111c30] dark:text-slate-300">
                                     <tr>
-                                        <th className="px-4 py-3">No. Invoice</th>
-                                        <th className="px-4 py-3">Siswa & Kelas</th>
-                                        <th className="px-4 py-3">Jenis Pembayaran</th>
+                                        <th className="px-4 py-3">
+                                            No. Invoice
+                                        </th>
+                                        <th className="px-4 py-3">
+                                            Siswa & Kelas
+                                        </th>
+                                        <th className="px-4 py-3">
+                                            Jenis Pembayaran
+                                        </th>
                                         <th className="px-4 py-3">Nominal</th>
-                                        <th className="px-4 py-3">Jatuh Tempo</th>
+                                        <th className="px-4 py-3">
+                                            Jatuh Tempo
+                                        </th>
                                         <th className="px-4 py-3">Status</th>
-                                        <th className="px-4 py-3 text-center">Aksi</th>
+                                        <th className="px-4 py-3 text-center">
+                                            Aksi
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
                                     {paymentList.map((p) => (
-                                        <tr key={p.id} className="hover:bg-slate-50/80 dark:hover:bg-[#162238]/60 transition-colors">
+                                        <tr
+                                            key={p.id}
+                                            className="transition-colors hover:bg-slate-50/80 dark:hover:bg-[#162238]/60"
+                                        >
                                             <td className="px-4 py-3 font-mono font-semibold text-blue-700 dark:text-blue-400">
                                                 {p.invoiceNo}
                                             </td>
                                             <td className="px-4 py-3 font-bold text-slate-900 dark:text-white">
-                                                {p.studentName} <span className="text-slate-400 font-normal">({p.class})</span>
+                                                {p.studentName}{' '}
+                                                <span className="font-normal text-slate-400">
+                                                    ({p.class})
+                                                </span>
                                             </td>
-                                            <td className="px-4 py-3">{p.type}</td>
+                                            <td className="px-4 py-3">
+                                                {p.type}
+                                            </td>
                                             <td className="px-4 py-3 font-semibold text-slate-900 dark:text-white">
-                                                Rp {p.amount.toLocaleString('id-ID')}
+                                                Rp{' '}
+                                                {p.amount.toLocaleString(
+                                                    'id-ID',
+                                                )}
                                             </td>
-                                            <td className="px-4 py-3 text-slate-500">{p.dueDate}</td>
+                                            <td className="px-4 py-3 text-slate-500">
+                                                {p.dueDate}
+                                            </td>
                                             <td className="px-4 py-3">
                                                 <span
                                                     className={cn(
-                                                        'px-2 py-0.5 rounded text-[10px] font-bold border',
+                                                        'rounded border px-2 py-0.5 text-[10px] font-bold',
                                                         p.status === 'Lunas'
-                                                            ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300 border-emerald-200'
-                                                            : p.status === 'Terlambat'
-                                                            ? 'bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-300 border-red-200'
-                                                            : 'bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-300 border-amber-200'
+                                                            ? 'border-emerald-200 bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300'
+                                                            : p.status ===
+                                                                'Terlambat'
+                                                              ? 'border-red-200 bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-300'
+                                                              : 'border-amber-200 bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-300',
                                                     )}
                                                 >
                                                     {p.status}
@@ -1581,8 +1957,12 @@ export default function Dashboard({
                                             <td className="px-4 py-3 text-center">
                                                 <button
                                                     type="button"
-                                                    onClick={() => toast.success(`Rekonsiliasi ${p.invoiceNo} berhasil diverifikasi!`)}
-                                                    className="px-2.5 py-1 text-[11px] font-semibold text-blue-700 dark:text-blue-300 bg-blue-50 dark:bg-blue-950/60 hover:bg-blue-100 rounded-lg border border-blue-200 dark:border-blue-900 transition-colors"
+                                                    onClick={() =>
+                                                        toast.success(
+                                                            `Rekonsiliasi ${p.invoiceNo} berhasil diverifikasi!`,
+                                                        )
+                                                    }
+                                                    className="rounded-lg border border-blue-200 bg-blue-50 px-2.5 py-1 text-[11px] font-semibold text-blue-700 transition-colors hover:bg-blue-100 dark:border-blue-900 dark:bg-blue-950/60 dark:text-blue-300"
                                                 >
                                                     Verifikasi
                                                 </button>
@@ -1597,18 +1977,21 @@ export default function Dashboard({
 
                 {/* TAB 9: INCIDENTS & TANGGAP DARURAT */}
                 {activeTab === 'incidents' && (
-                    <div className="p-5 rounded-2xl bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-slate-800 shadow-xs space-y-4">
-                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-200 dark:border-slate-800">
+                    <div className="space-y-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
+                        <div className="flex flex-col justify-between gap-3 border-b border-slate-200 pb-3 sm:flex-row sm:items-center dark:border-slate-800">
                             <div>
-                                <h3 className="font-bold text-slate-900 dark:text-white text-base flex items-center gap-2">
-                                    <Siren className="size-5 text-red-600 animate-pulse" />
-                                    Modul 10: Respons Insiden & Kesiapsiagaan Sekolah
+                                <h3 className="flex items-center gap-2 text-base font-bold text-slate-900 dark:text-white">
+                                    <Siren className="size-5 animate-pulse text-red-600" />
+                                    Modul 10: Respons Insiden & Kesiapsiagaan
+                                    Sekolah
                                 </h3>
                                 <p className="text-xs text-slate-500">
-                                    Workflow kesiapan darurat: Insiden → Aktivasi Tim → Verifikasi → Komunikasi Cepat → Respons → Pemulihan.
+                                    Workflow kesiapan darurat: Insiden →
+                                    Aktivasi Tim → Verifikasi → Komunikasi Cepat
+                                    → Respons → Pemulihan.
                                 </p>
                             </div>
-                            <span className="text-xs font-bold px-3 py-1 rounded-full bg-red-100 text-red-700 dark:bg-red-950 dark:text-red-300 border border-red-300">
+                            <span className="rounded-full border border-red-300 bg-red-100 px-3 py-1 text-xs font-bold text-red-700 dark:bg-red-950 dark:text-red-300">
                                 Status: Siaga Cuaca Ekstrem
                             </span>
                         </div>
@@ -1616,19 +1999,28 @@ export default function Dashboard({
                         {incidents.map((inc) => (
                             <div
                                 key={inc.id}
-                                className="p-4 rounded-xl bg-slate-50/70 dark:bg-[#111c30] border border-red-200 dark:border-red-900/60 space-y-3 text-xs"
+                                className="space-y-3 rounded-xl border border-red-200 bg-slate-50/70 p-4 text-xs dark:border-red-900/60 dark:bg-[#111c30]"
                             >
-                                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                                <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
                                     <div>
-                                        <h4 className="font-bold text-slate-900 dark:text-white text-sm">{inc.title}</h4>
+                                        <h4 className="text-sm font-bold text-slate-900 dark:text-white">
+                                            {inc.title}
+                                        </h4>
                                         <div className="text-[11px] text-slate-500">
-                                            Komandan Lapangan: <span className="text-slate-900 dark:text-white font-medium">{inc.leadOfficer}</span>
+                                            Komandan Lapangan:{' '}
+                                            <span className="font-medium text-slate-900 dark:text-white">
+                                                {inc.leadOfficer}
+                                            </span>
                                         </div>
                                     </div>
                                     <button
                                         type="button"
-                                        onClick={() => toast.success('Broadcast darurat berhasil dikirim ke seluruh staf & wali murid!')}
-                                        className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-white bg-red-600 hover:bg-red-700 rounded-lg shadow-sm transition-colors active:scale-95"
+                                        onClick={() =>
+                                            toast.success(
+                                                'Broadcast darurat berhasil dikirim ke seluruh staf & wali murid!',
+                                            )
+                                        }
+                                        className="inline-flex items-center gap-1.5 rounded-lg bg-red-600 px-3.5 py-2 text-xs font-semibold text-white shadow-sm transition-colors hover:bg-red-700 active:scale-95"
                                     >
                                         <PhoneCall className="size-3.5" />
                                         Broadcast Peringatan Darurat
@@ -1636,25 +2028,32 @@ export default function Dashboard({
                                 </div>
 
                                 <div className="pt-2">
-                                    <span className="font-semibold text-slate-900 dark:text-white text-xs block mb-2">
+                                    <span className="mb-2 block text-xs font-semibold text-slate-900 dark:text-white">
                                         Checklist Evakuasi & Pengamanan:
                                     </span>
                                     <div className="space-y-2">
                                         {inc.checklist.map((chk) => (
                                             <label
                                                 key={chk.id}
-                                                className="flex items-center gap-2.5 p-2.5 rounded-lg bg-white dark:bg-[#070b14] border border-slate-200 dark:border-slate-800 cursor-pointer hover:bg-slate-100/60 dark:hover:bg-slate-800/60 transition-colors"
+                                                className="flex cursor-pointer items-center gap-2.5 rounded-lg border border-slate-200 bg-white p-2.5 transition-colors hover:bg-slate-100/60 dark:border-slate-800 dark:bg-[#070b14] dark:hover:bg-slate-800/60"
                                             >
                                                 <input
                                                     type="checkbox"
                                                     checked={chk.done}
-                                                    onChange={() => handleToggleChecklist(inc.id, chk.id)}
-                                                    className="size-4 text-blue-600 rounded border-slate-300 focus:ring-blue-500"
+                                                    onChange={() =>
+                                                        handleToggleChecklist(
+                                                            inc.id,
+                                                            chk.id,
+                                                        )
+                                                    }
+                                                    className="size-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
                                                 />
                                                 <span
                                                     className={cn(
                                                         'text-xs font-medium',
-                                                        chk.done ? 'line-through text-slate-400' : 'text-slate-800 dark:text-slate-200'
+                                                        chk.done
+                                                            ? 'text-slate-400 line-through'
+                                                            : 'text-slate-800 dark:text-slate-200',
                                                     )}
                                                 >
                                                     {chk.label}
@@ -1680,20 +2079,24 @@ export default function Dashboard({
                     setSelectedAlertId(st.id);
                     setSelectedStudentName(`${st.studentName} (${st.class})`);
                     setSelectedStudentPhone(st.parentPhone);
-                    setFollowupNote(`Tindak lanjut pemicu risiko: ${st.summary}`);
+                    setFollowupNote(
+                        `Tindak lanjut pemicu risiko: ${st.summary}`,
+                    );
                     setIsFollowupModalOpen(true);
                 }}
                 onContactParent={(st) => {
                     setSelectedStudentName(`${st.studentName} (${st.class})`);
                     setSelectedStudentPhone(st.parentPhone);
                     setParentCustomMessage(
-                        `Yth. Bapak/Ibu ${st.parentName}, kami dari sekolah mengonfirmasi perkembangan ananda ${st.studentName}. ${st.summary}. Mohon berkenan berkoordinasi dengan sekolah.`
+                        `Yth. Bapak/Ibu ${st.parentName}, kami dari sekolah mengonfirmasi perkembangan ananda ${st.studentName}. ${st.summary}. Mohon berkenan berkoordinasi dengan sekolah.`,
                     );
                     setIsParentContactModalOpen(true);
                 }}
                 onEscalateCase={(st) => {
                     setSelectedStudentName(`${st.studentName} (${st.class})`);
-                    setNewCaseDesc(`Eskalasi dari Early Warning: ${st.summary}`);
+                    setNewCaseDesc(
+                        `Eskalasi dari Early Warning: ${st.summary}`,
+                    );
                     setIsNewCaseModalOpen(true);
                 }}
             />
@@ -1704,12 +2107,12 @@ export default function Dashboard({
 
             {/* Modal 1: Buat Follow-up Siswa */}
             {isFollowupModalOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in">
-                    <div className="bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl w-full max-w-lg p-5 space-y-4 text-xs">
-                        <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
+                <div className="fixed inset-0 z-50 flex animate-in items-center justify-center bg-slate-900/60 p-4 backdrop-blur-xs fade-in">
+                    <div className="w-full max-w-lg space-y-4 rounded-2xl border border-slate-200 bg-white p-5 text-xs shadow-2xl dark:border-slate-800 dark:bg-[#0f172a]">
+                        <div className="flex items-center justify-between border-b border-slate-200 pb-3 dark:border-slate-800">
                             <div className="flex items-center gap-2">
                                 <AlertTriangle className="size-4 text-amber-500" />
-                                <h3 className="font-bold text-slate-900 dark:text-white text-sm">
+                                <h3 className="text-sm font-bold text-slate-900 dark:text-white">
                                     Buat Tindak Lanjut / Follow-up Siswa
                                 </h3>
                             </div>
@@ -1722,79 +2125,110 @@ export default function Dashboard({
                             </button>
                         </div>
 
-                        <form onSubmit={handleSaveFollowup} className="space-y-3">
+                        <form
+                            onSubmit={handleSaveFollowup}
+                            className="space-y-3"
+                        >
                             <div>
-                                <label className="block text-[11px] font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                                <label className="mb-1 block text-[11px] font-semibold text-slate-700 dark:text-slate-300">
                                     Target Siswa
                                 </label>
                                 <input
                                     type="text"
                                     value={selectedStudentName}
-                                    onChange={(e) => setSelectedStudentName(e.target.value)}
-                                    className="w-full p-2 text-xs border border-slate-300 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-[#070b14] text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-blue-600/30"
+                                    onChange={(e) =>
+                                        setSelectedStudentName(e.target.value)
+                                    }
+                                    className="w-full rounded-lg border border-slate-300 bg-slate-50 p-2 text-xs text-slate-900 outline-none focus:ring-2 focus:ring-blue-600/30 dark:border-slate-700 dark:bg-[#070b14] dark:text-white"
                                     required
                                 />
                             </div>
 
                             <div className="grid grid-cols-2 gap-3">
                                 <div>
-                                    <label className="block text-[11px] font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                                    <label className="mb-1 block text-[11px] font-semibold text-slate-700 dark:text-slate-300">
                                         Jenis Follow-up
                                     </label>
                                     <select
                                         value={followupType}
-                                        onChange={(e) => setFollowupType(e.target.value)}
-                                        className="w-full p-2 text-xs border border-slate-300 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-[#070b14] text-slate-900 dark:text-white outline-none"
+                                        onChange={(e) =>
+                                            setFollowupType(e.target.value)
+                                        }
+                                        className="w-full rounded-lg border border-slate-300 bg-slate-50 p-2 text-xs text-slate-900 outline-none dark:border-slate-700 dark:bg-[#070b14] dark:text-white"
                                     >
-                                        <option value="Panggilan Orang Tua">Panggilan Orang Tua</option>
-                                        <option value="Konseling Tatap Muka BK">Konseling Tatap Muka BK</option>
-                                        <option value="Home Visit (Kunjungan Rumah)">Home Visit (Kunjungan Rumah)</option>
-                                        <option value="Remidial / Pembinaan Belajar">Remidial / Pembinaan Belajar</option>
-                                        <option value="Perjanjian Komitmen Siswa">Perjanjian Komitmen Siswa</option>
+                                        <option value="Panggilan Orang Tua">
+                                            Panggilan Orang Tua
+                                        </option>
+                                        <option value="Konseling Tatap Muka BK">
+                                            Konseling Tatap Muka BK
+                                        </option>
+                                        <option value="Home Visit (Kunjungan Rumah)">
+                                            Home Visit (Kunjungan Rumah)
+                                        </option>
+                                        <option value="Remidial / Pembinaan Belajar">
+                                            Remidial / Pembinaan Belajar
+                                        </option>
+                                        <option value="Perjanjian Komitmen Siswa">
+                                            Perjanjian Komitmen Siswa
+                                        </option>
                                     </select>
                                 </div>
                                 <div>
-                                    <label className="block text-[11px] font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                                    <label className="mb-1 block text-[11px] font-semibold text-slate-700 dark:text-slate-300">
                                         Penanggung Jawab (PIC)
                                     </label>
                                     <select
                                         value={followupAssignee}
-                                        onChange={(e) => setFollowupAssignee(e.target.value)}
-                                        className="w-full p-2 text-xs border border-slate-300 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-[#070b14] text-slate-900 dark:text-white outline-none"
+                                        onChange={(e) =>
+                                            setFollowupAssignee(e.target.value)
+                                        }
+                                        className="w-full rounded-lg border border-slate-300 bg-slate-50 p-2 text-xs text-slate-900 outline-none dark:border-slate-700 dark:bg-[#070b14] dark:text-white"
                                     >
-                                        <option value="Wali Kelas (Hendra Setiawan, S.Pd)">Wali Kelas (Hendra Setiawan, S.Pd)</option>
-                                        <option value="Guru BK (Rahmawati, S.Pd)">Guru BK (Rahmawati, S.Pd)</option>
-                                        <option value="Kesiswaan (Bpk. Faisal)">Kesiswaan (Bpk. Faisal)</option>
-                                        <option value="Tim Satgas ATS">Tim Satgas ATS</option>
+                                        <option value="Wali Kelas (Hendra Setiawan, S.Pd)">
+                                            Wali Kelas (Hendra Setiawan, S.Pd)
+                                        </option>
+                                        <option value="Guru BK (Rahmawati, S.Pd)">
+                                            Guru BK (Rahmawati, S.Pd)
+                                        </option>
+                                        <option value="Kesiswaan (Bpk. Faisal)">
+                                            Kesiswaan (Bpk. Faisal)
+                                        </option>
+                                        <option value="Tim Satgas ATS">
+                                            Tim Satgas ATS
+                                        </option>
                                     </select>
                                 </div>
                             </div>
 
                             <div>
-                                <label className="block text-[11px] font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                                <label className="mb-1 block text-[11px] font-semibold text-slate-700 dark:text-slate-300">
                                     Catatan / Rencana Tindakan
                                 </label>
                                 <textarea
                                     rows={3}
                                     value={followupNote}
-                                    onChange={(e) => setFollowupNote(e.target.value)}
+                                    onChange={(e) =>
+                                        setFollowupNote(e.target.value)
+                                    }
                                     placeholder="Jelaskan langkah konkret yang akan diambil dan batas waktu tindak lanjut..."
-                                    className="w-full p-2 text-xs border border-slate-300 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-[#070b14] text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-blue-600/30"
+                                    className="w-full rounded-lg border border-slate-300 bg-slate-50 p-2 text-xs text-slate-900 outline-none focus:ring-2 focus:ring-blue-600/30 dark:border-slate-700 dark:bg-[#070b14] dark:text-white"
                                     required
                                 />
                             </div>
 
-                            <div className="flex items-center justify-end gap-2 pt-2 border-t border-slate-200 dark:border-slate-800">
+                            <div className="flex items-center justify-end gap-2 border-t border-slate-200 pt-2 dark:border-slate-800">
                                 <button
                                     type="button"
-                                    onClick={() => setIsFollowupModalOpen(false)}
-                                    className="px-3 py-1.5 text-xs text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg"
+                                    onClick={() =>
+                                        setIsFollowupModalOpen(false)
+                                    }
+                                    className="rounded-lg px-3 py-1.5 text-xs text-slate-600 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
                                 >
                                     Batal
                                 </button>
                                 <button
                                     type="submit"
-                                    className="px-4 py-1.5 text-xs font-semibold text-white bg-blue-700 hover:bg-blue-800 rounded-lg shadow-sm"
+                                    className="rounded-lg bg-blue-700 px-4 py-1.5 text-xs font-semibold text-white shadow-sm hover:bg-blue-800"
                                 >
                                     Simpan Follow-up
                                 </button>
@@ -1806,82 +2240,117 @@ export default function Dashboard({
 
             {/* Modal 2: Hubungi Orang Tua (Pesan Terstruktur) */}
             {isParentContactModalOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in">
-                    <div className="bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl w-full max-w-lg p-5 space-y-4 text-xs">
-                        <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
+                <div className="fixed inset-0 z-50 flex animate-in items-center justify-center bg-slate-900/60 p-4 backdrop-blur-xs fade-in">
+                    <div className="w-full max-w-lg space-y-4 rounded-2xl border border-slate-200 bg-white p-5 text-xs shadow-2xl dark:border-slate-800 dark:bg-[#0f172a]">
+                        <div className="flex items-center justify-between border-b border-slate-200 pb-3 dark:border-slate-800">
                             <div className="flex items-center gap-2">
                                 <PhoneCall className="size-4 text-emerald-600" />
-                                <h3 className="font-bold text-slate-900 dark:text-white text-sm">
+                                <h3 className="text-sm font-bold text-slate-900 dark:text-white">
                                     Kirim Pesan Resmi Sekolah ke Orang Tua
                                 </h3>
                             </div>
                             <button
                                 type="button"
-                                onClick={() => setIsParentContactModalOpen(false)}
+                                onClick={() =>
+                                    setIsParentContactModalOpen(false)
+                                }
                                 className="text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"
                             >
                                 <X className="size-4" />
                             </button>
                         </div>
 
-                        <form onSubmit={handleSendParentMessage} className="space-y-3">
-                            <div className="grid grid-cols-2 gap-3">
+                        <form
+                            onSubmit={handleSendParentMessage}
+                            className="space-y-3"
+                        >
+                            <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
                                 <div>
-                                    <label className="block text-[11px] font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                                    <label className="mb-1 block text-[11px] font-semibold text-slate-700 dark:text-slate-300">
                                         Nama Siswa
                                     </label>
                                     <input
                                         type="text"
                                         value={selectedStudentName}
                                         readOnly
-                                        className="w-full p-2 text-xs border border-slate-300 dark:border-slate-700 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white"
+                                        className="w-full rounded-lg border border-slate-300 bg-slate-100 p-2 text-xs text-slate-900 dark:border-slate-700 dark:bg-slate-800 dark:text-white"
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-[11px] font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                                    <label className="mb-1 block text-[11px] font-semibold text-slate-700 dark:text-slate-300">
+                                        WhatsApp Orang Tua
+                                    </label>
+                                    <input
+                                        type="text"
+                                        value={selectedStudentPhone}
+                                        readOnly
+                                        className="w-full rounded-lg border border-slate-300 bg-slate-100 p-2 text-xs text-slate-900 dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="mb-1 block text-[11px] font-semibold text-slate-700 dark:text-slate-300">
                                         Kategori Pesan
                                     </label>
                                     <select
                                         value={parentCategory}
-                                        onChange={(e) => setParentCategory(e.target.value)}
-                                        className="w-full p-2 text-xs border border-slate-300 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-[#070b14] text-slate-900 dark:text-white outline-none"
+                                        onChange={(e) =>
+                                            setParentCategory(e.target.value)
+                                        }
+                                        className="w-full rounded-lg border border-slate-300 bg-slate-50 p-2 text-xs text-slate-900 outline-none dark:border-slate-700 dark:bg-[#070b14] dark:text-white"
                                     >
-                                        <option value="Kehadiran">Kehadiran / Keterlambatan</option>
-                                        <option value="Akademik">Perkembangan Nilai & Tugas</option>
-                                        <option value="Kedisiplinan">Pembinaan Perilaku & Tata Tertib</option>
-                                        <option value="Pengumuman">Pengumuman & Agenda Penting</option>
+                                        <option value="Kehadiran">
+                                            Kehadiran / Keterlambatan
+                                        </option>
+                                        <option value="Akademik">
+                                            Perkembangan Nilai & Tugas
+                                        </option>
+                                        <option value="Kedisiplinan">
+                                            Pembinaan Perilaku & Tata Tertib
+                                        </option>
+                                        <option value="Pengumuman">
+                                            Pengumuman & Agenda Penting
+                                        </option>
                                     </select>
                                 </div>
                             </div>
 
                             <div>
-                                <label className="block text-[11px] font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                                <label className="mb-1 block text-[11px] font-semibold text-slate-700 dark:text-slate-300">
                                     Isi Pesan Resmi Sekolah
                                 </label>
                                 <textarea
                                     rows={4}
                                     value={parentCustomMessage}
-                                    onChange={(e) => setParentCustomMessage(e.target.value)}
-                                    className="w-full p-2 text-xs border border-slate-300 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-[#070b14] text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-blue-600/30"
+                                    onChange={(e) =>
+                                        setParentCustomMessage(e.target.value)
+                                    }
+                                    className="w-full rounded-lg border border-slate-300 bg-slate-50 p-2 text-xs text-slate-900 outline-none focus:ring-2 focus:ring-blue-600/30 dark:border-slate-700 dark:bg-[#070b14] dark:text-white"
                                     required
                                 />
                             </div>
 
-                            <div className="p-3 rounded-lg bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-900 text-[11px] text-slate-700 dark:text-slate-300 leading-relaxed">
-                                <strong>Fitur Acknowledgement TANGGAPIN:</strong> Orang tua akan menerima opsi konfirmasi status pembacaan (Sudah Membaca / Butuh Koordinasi Lanjutan) demi kepastian informasi.
+                            <div className="rounded-lg border border-blue-200 bg-blue-50 p-3 text-[11px] leading-relaxed text-slate-700 dark:border-blue-900 dark:bg-blue-950/60 dark:text-slate-300">
+                                <strong>
+                                    Fitur Acknowledgement TANGGAPIN:
+                                </strong>{' '}
+                                Orang tua akan menerima opsi konfirmasi status
+                                pembacaan (Sudah Membaca / Butuh Koordinasi
+                                Lanjutan) demi kepastian informasi.
                             </div>
 
-                            <div className="flex items-center justify-end gap-2 pt-2 border-t border-slate-200 dark:border-slate-800">
+                            <div className="flex items-center justify-end gap-2 border-t border-slate-200 pt-2 dark:border-slate-800">
                                 <button
                                     type="button"
-                                    onClick={() => setIsParentContactModalOpen(false)}
-                                    className="px-3 py-1.5 text-xs text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg"
+                                    onClick={() =>
+                                        setIsParentContactModalOpen(false)
+                                    }
+                                    className="rounded-lg px-3 py-1.5 text-xs text-slate-600 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
                                 >
                                     Batal
                                 </button>
                                 <button
                                     type="submit"
-                                    className="inline-flex items-center gap-1.5 px-4 py-1.5 text-xs font-semibold text-white bg-emerald-700 hover:bg-emerald-800 rounded-lg shadow-sm"
+                                    className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-700 px-4 py-1.5 text-xs font-semibold text-white shadow-sm hover:bg-emerald-800"
                                 >
                                     <Send className="size-3.5" />
                                     Kirim Pesan Resmi
@@ -1894,12 +2363,12 @@ export default function Dashboard({
 
             {/* Modal 3: Buka Kasus BK & Kesiswaan */}
             {isNewCaseModalOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in">
-                    <div className="bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl w-full max-w-lg p-5 space-y-4 text-xs">
-                        <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
+                <div className="fixed inset-0 z-50 flex animate-in items-center justify-center bg-slate-900/60 p-4 backdrop-blur-xs fade-in">
+                    <div className="w-full max-w-lg space-y-4 rounded-2xl border border-slate-200 bg-white p-5 text-xs shadow-2xl dark:border-slate-800 dark:bg-[#0f172a]">
+                        <div className="flex items-center justify-between border-b border-slate-200 pb-3 dark:border-slate-800">
                             <div className="flex items-center gap-2">
                                 <ShieldAlert className="size-4 text-blue-600" />
-                                <h3 className="font-bold text-slate-900 dark:text-white text-sm">
+                                <h3 className="text-sm font-bold text-slate-900 dark:text-white">
                                     Buka Kasus BK & Kesiswaan (Modul 03)
                                 </h3>
                             </div>
@@ -1914,76 +2383,103 @@ export default function Dashboard({
 
                         <form onSubmit={handleCreateCase} className="space-y-3">
                             <div>
-                                <label className="block text-[11px] font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                                <label className="mb-1 block text-[11px] font-semibold text-slate-700 dark:text-slate-300">
                                     Nama Siswa
                                 </label>
                                 <input
                                     type="text"
                                     value={selectedStudentName}
-                                    onChange={(e) => setSelectedStudentName(e.target.value)}
-                                    className="w-full p-2 text-xs border border-slate-300 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-[#070b14] text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-blue-600/30"
+                                    onChange={(e) =>
+                                        setSelectedStudentName(e.target.value)
+                                    }
+                                    className="w-full rounded-lg border border-slate-300 bg-slate-50 p-2 text-xs text-slate-900 outline-none focus:ring-2 focus:ring-blue-600/30 dark:border-slate-700 dark:bg-[#070b14] dark:text-white"
                                     required
                                 />
                             </div>
 
                             <div className="grid grid-cols-2 gap-3">
                                 <div>
-                                    <label className="block text-[11px] font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                                    <label className="mb-1 block text-[11px] font-semibold text-slate-700 dark:text-slate-300">
                                         Kategori Kasus
                                     </label>
                                     <select
                                         value={newCaseCategory}
-                                        onChange={(e) => setNewCaseCategory(e.target.value)}
-                                        className="w-full p-2 text-xs border border-slate-300 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-[#070b14] text-slate-900 dark:text-white outline-none"
+                                        onChange={(e) =>
+                                            setNewCaseCategory(e.target.value)
+                                        }
+                                        className="w-full rounded-lg border border-slate-300 bg-slate-50 p-2 text-xs text-slate-900 outline-none dark:border-slate-700 dark:bg-[#070b14] dark:text-white"
                                     >
-                                        <option value="Kedisiplinan">Kedisiplinan & Tata Tertib</option>
-                                        <option value="Kehadiran">Kehadiran (Alpa / Bolos Berulang)</option>
-                                        <option value="Akademik">Akademik & Penurunan Nilai</option>
-                                        <option value="Sosial">Sosial / Konflik Pertemanan</option>
-                                        <option value="Sosial & Perlindungan">Perlindungan Siswa & Anti-Perundungan</option>
+                                        <option value="Kedisiplinan">
+                                            Kedisiplinan & Tata Tertib
+                                        </option>
+                                        <option value="Kehadiran">
+                                            Kehadiran (Alpa / Bolos Berulang)
+                                        </option>
+                                        <option value="Akademik">
+                                            Akademik & Penurunan Nilai
+                                        </option>
+                                        <option value="Sosial">
+                                            Sosial / Konflik Pertemanan
+                                        </option>
+                                        <option value="Sosial & Perlindungan">
+                                            Perlindungan Siswa &
+                                            Anti-Perundungan
+                                        </option>
                                     </select>
                                 </div>
                                 <div>
-                                    <label className="block text-[11px] font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                                    <label className="mb-1 block text-[11px] font-semibold text-slate-700 dark:text-slate-300">
                                         Tingkat Prioritas
                                     </label>
                                     <select
                                         value={newCasePriority}
-                                        onChange={(e) => setNewCasePriority(e.target.value as any)}
-                                        className="w-full p-2 text-xs border border-slate-300 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-[#070b14] text-slate-900 dark:text-white outline-none"
+                                        onChange={(e) =>
+                                            setNewCasePriority(
+                                                e.target.value as any,
+                                            )
+                                        }
+                                        className="w-full rounded-lg border border-slate-300 bg-slate-50 p-2 text-xs text-slate-900 outline-none dark:border-slate-700 dark:bg-[#070b14] dark:text-white"
                                     >
-                                        <option value="Tinggi">Tinggi (Butuh tindakan &lt;24 jam)</option>
-                                        <option value="Sedang">Sedang (Konseling terjadwal)</option>
-                                        <option value="Rendah">Rendah (Pemantauan biasa)</option>
+                                        <option value="Tinggi">
+                                            Tinggi (Butuh tindakan &lt;24 jam)
+                                        </option>
+                                        <option value="Sedang">
+                                            Sedang (Konseling terjadwal)
+                                        </option>
+                                        <option value="Rendah">
+                                            Rendah (Pemantauan biasa)
+                                        </option>
                                     </select>
                                 </div>
                             </div>
 
                             <div>
-                                <label className="block text-[11px] font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                                <label className="mb-1 block text-[11px] font-semibold text-slate-700 dark:text-slate-300">
                                     Deskripsi Kasus & Kronologi
                                 </label>
                                 <textarea
                                     rows={3}
                                     value={newCaseDesc}
-                                    onChange={(e) => setNewCaseDesc(e.target.value)}
+                                    onChange={(e) =>
+                                        setNewCaseDesc(e.target.value)
+                                    }
                                     placeholder="Jelaskan ringkasan peristiwa, indikasi, atau laporan saksi..."
-                                    className="w-full p-2 text-xs border border-slate-300 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-[#070b14] text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-blue-600/30"
+                                    className="w-full rounded-lg border border-slate-300 bg-slate-50 p-2 text-xs text-slate-900 outline-none focus:ring-2 focus:ring-blue-600/30 dark:border-slate-700 dark:bg-[#070b14] dark:text-white"
                                     required
                                 />
                             </div>
 
-                            <div className="flex items-center justify-end gap-2 pt-2 border-t border-slate-200 dark:border-slate-800">
+                            <div className="flex items-center justify-end gap-2 border-t border-slate-200 pt-2 dark:border-slate-800">
                                 <button
                                     type="button"
                                     onClick={() => setIsNewCaseModalOpen(false)}
-                                    className="px-3 py-1.5 text-xs text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg"
+                                    className="rounded-lg px-3 py-1.5 text-xs text-slate-600 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
                                 >
                                     Batal
                                 </button>
                                 <button
                                     type="submit"
-                                    className="px-4 py-1.5 text-xs font-semibold text-white bg-blue-700 hover:bg-blue-800 rounded-lg shadow-sm"
+                                    className="rounded-lg bg-blue-700 px-4 py-1.5 text-xs font-semibold text-white shadow-sm hover:bg-blue-800"
                                 >
                                     Daftarkan Kasus Baru
                                 </button>
@@ -1994,12 +2490,12 @@ export default function Dashboard({
             )}
             {/* Modal 4: Catat Pelanggaran / Poin Kedisiplinan */}
             {isDisciplineModalOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in">
-                    <div className="bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl w-full max-w-lg p-5 space-y-4 text-xs">
-                        <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
+                <div className="fixed inset-0 z-50 flex animate-in items-center justify-center bg-slate-900/60 p-4 backdrop-blur-xs fade-in">
+                    <div className="w-full max-w-lg space-y-4 rounded-2xl border border-slate-200 bg-white p-5 text-xs shadow-2xl dark:border-slate-800 dark:bg-[#0f172a]">
+                        <div className="flex items-center justify-between border-b border-slate-200 pb-3 dark:border-slate-800">
                             <div className="flex items-center gap-2">
                                 <Scale className="size-4 text-blue-600" />
-                                <h3 className="font-bold text-slate-900 dark:text-white text-sm">
+                                <h3 className="text-sm font-bold text-slate-900 dark:text-white">
                                     Catat Pelanggaran & Pembinaan (Modul 05)
                                 </h3>
                             </div>
@@ -2012,79 +2508,111 @@ export default function Dashboard({
                             </button>
                         </div>
 
-                        <form onSubmit={handleCreateDiscipline} className="space-y-3">
+                        <form
+                            onSubmit={handleCreateDiscipline}
+                            className="space-y-3"
+                        >
                             <div>
-                                <label className="block text-[11px] font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                                <label className="mb-1 block text-[11px] font-semibold text-slate-700 dark:text-slate-300">
                                     Target Siswa
                                 </label>
                                 <input
                                     type="text"
                                     value={selectedStudentName}
-                                    onChange={(e) => setSelectedStudentName(e.target.value)}
-                                    className="w-full p-2 text-xs border border-slate-300 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-[#070b14] text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-blue-600/30"
+                                    onChange={(e) =>
+                                        setSelectedStudentName(e.target.value)
+                                    }
+                                    className="w-full rounded-lg border border-slate-300 bg-slate-50 p-2 text-xs text-slate-900 outline-none focus:ring-2 focus:ring-blue-600/30 dark:border-slate-700 dark:bg-[#070b14] dark:text-white"
                                     required
                                 />
                             </div>
 
                             <div className="grid grid-cols-2 gap-3">
                                 <div>
-                                    <label className="block text-[11px] font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                                    <label className="mb-1 block text-[11px] font-semibold text-slate-700 dark:text-slate-300">
                                         Jenis Pelanggaran
                                     </label>
                                     <select
                                         value={newInfraction}
-                                        onChange={(e) => setNewInfraction(e.target.value)}
-                                        className="w-full p-2 text-xs border border-slate-300 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-[#070b14] text-slate-900 dark:text-white outline-none"
+                                        onChange={(e) =>
+                                            setNewInfraction(e.target.value)
+                                        }
+                                        className="w-full rounded-lg border border-slate-300 bg-slate-50 p-2 text-xs text-slate-900 outline-none dark:border-slate-700 dark:bg-[#070b14] dark:text-white"
                                     >
-                                        <option value="Terlambat Masuk Sekolah">Terlambat Masuk Sekolah (&gt;15 menit)</option>
-                                        <option value="Atribut Seragam Tidak Lengkap">Atribut Seragam Tidak Lengkap</option>
-                                        <option value="Keluar Sekolah Tanpa Surat Izin">Keluar Sekolah Tanpa Surat Izin</option>
-                                        <option value="Menggunakan HP di Jam Belajar">Menggunakan HP di Jam Belajar</option>
-                                        <option value="Konflik Antar Siswa / Perilaku Tidak Sopan">Konflik Antar Siswa / Perilaku</option>
+                                        <option value="Terlambat Masuk Sekolah">
+                                            Terlambat Masuk Sekolah (&gt;15
+                                            menit)
+                                        </option>
+                                        <option value="Atribut Seragam Tidak Lengkap">
+                                            Atribut Seragam Tidak Lengkap
+                                        </option>
+                                        <option value="Keluar Sekolah Tanpa Surat Izin">
+                                            Keluar Sekolah Tanpa Surat Izin
+                                        </option>
+                                        <option value="Menggunakan HP di Jam Belajar">
+                                            Menggunakan HP di Jam Belajar
+                                        </option>
+                                        <option value="Konflik Antar Siswa / Perilaku Tidak Sopan">
+                                            Konflik Antar Siswa / Perilaku
+                                        </option>
                                     </select>
                                 </div>
                                 <div>
-                                    <label className="block text-[11px] font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                                    <label className="mb-1 block text-[11px] font-semibold text-slate-700 dark:text-slate-300">
                                         Poin Pelanggaran
                                     </label>
                                     <select
                                         value={newPoints}
-                                        onChange={(e) => setNewPoints(Number(e.target.value))}
-                                        className="w-full p-2 text-xs border border-slate-300 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-[#070b14] text-slate-900 dark:text-white outline-none"
+                                        onChange={(e) =>
+                                            setNewPoints(Number(e.target.value))
+                                        }
+                                        className="w-full rounded-lg border border-slate-300 bg-slate-50 p-2 text-xs text-slate-900 outline-none dark:border-slate-700 dark:bg-[#070b14] dark:text-white"
                                     >
-                                        <option value={5}>5 Poin (Ringan)</option>
-                                        <option value={10}>10 Poin (Sedang)</option>
-                                        <option value={15}>15 Poin (Perhatian Khusus)</option>
-                                        <option value={25}>25 Poin (Berat / Konseling BK)</option>
+                                        <option value={5}>
+                                            5 Poin (Ringan)
+                                        </option>
+                                        <option value={10}>
+                                            10 Poin (Sedang)
+                                        </option>
+                                        <option value={15}>
+                                            15 Poin (Perhatian Khusus)
+                                        </option>
+                                        <option value={25}>
+                                            25 Poin (Berat / Konseling BK)
+                                        </option>
                                     </select>
                                 </div>
                             </div>
 
                             <div>
-                                <label className="block text-[11px] font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                                <label className="mb-1 block text-[11px] font-semibold text-slate-700 dark:text-slate-300">
                                     Catatan Pola & Rencana Tindakan Restoratif
                                 </label>
                                 <textarea
                                     rows={3}
                                     value={newDisciplineNotes}
-                                    onChange={(e) => setNewDisciplineNotes(e.target.value)}
+                                    onChange={(e) =>
+                                        setNewDisciplineNotes(e.target.value)
+                                    }
                                     placeholder="Jelaskan tindakan pembinaan karakter yang disepakati bersama siswa..."
-                                    className="w-full p-2 text-xs border border-slate-300 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-[#070b14] text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-blue-600/30"
+                                    className="w-full rounded-lg border border-slate-300 bg-slate-50 p-2 text-xs text-slate-900 outline-none focus:ring-2 focus:ring-blue-600/30 dark:border-slate-700 dark:bg-[#070b14] dark:text-white"
                                     required
                                 />
                             </div>
 
-                            <div className="flex items-center justify-end gap-2 pt-2 border-t border-slate-200 dark:border-slate-800">
+                            <div className="flex items-center justify-end gap-2 border-t border-slate-200 pt-2 dark:border-slate-800">
                                 <button
                                     type="button"
-                                    onClick={() => setIsDisciplineModalOpen(false)}
-                                    className="px-3 py-1.5 text-xs text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg"
+                                    onClick={() =>
+                                        setIsDisciplineModalOpen(false)
+                                    }
+                                    className="rounded-lg px-3 py-1.5 text-xs text-slate-600 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
                                 >
                                     Batal
                                 </button>
                                 <button
                                     type="submit"
-                                    className="px-4 py-1.5 text-xs font-semibold text-white bg-blue-700 hover:bg-blue-800 rounded-lg shadow-sm"
+                                    className="rounded-lg bg-blue-700 px-4 py-1.5 text-xs font-semibold text-white shadow-sm hover:bg-blue-800"
                                 >
                                     Simpan Catatan
                                 </button>

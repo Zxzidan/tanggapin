@@ -20,7 +20,7 @@ export default function AuthCardLayout({
     description?: string;
 }>) {
     return (
-        <div className="flex min-h-svh flex-col items-center justify-center gap-6 bg-slate-50 dark:bg-[#070b14] p-6 md:p-10 transition-colors">
+        <div className="flex min-h-svh flex-col items-center justify-center gap-6 bg-slate-50 p-6 transition-colors md:p-10 dark:bg-[#070b14]">
             <div className="flex w-full max-w-md flex-col gap-6">
                 <Link
                     href={home()}

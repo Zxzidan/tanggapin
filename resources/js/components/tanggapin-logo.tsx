@@ -14,7 +14,7 @@ export default function TanggapinLogo({
     size = 'md',
     showDescriptor = true,
     showTagline = false,
-    variant = 'auto',
+    variant: _variant = 'auto',
 }: TanggapinLogoProps) {
     const sizeConfig = {
         sm: {
@@ -48,12 +48,17 @@ export default function TanggapinLogo({
     }[size];
 
     return (
-        <div className={cn('inline-flex items-center gap-2.5 select-none', className)}>
+        <div
+            className={cn(
+                'inline-flex items-center gap-2.5 select-none',
+                className,
+            )}
+        >
             {/* Geometric Dignified Emblem: Compassion & Vigilance / Proactive Follow-up */}
             <div
                 className={cn(
-                    'relative rounded-xl bg-gradient-to-br from-blue-700 via-blue-800 to-indigo-950 flex items-center justify-center text-white shadow-sm ring-1 ring-blue-500/20 shrink-0',
-                    sizeConfig.icon
+                    'relative flex shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-blue-700 via-blue-800 to-indigo-950 text-white shadow-sm ring-1 ring-blue-500/20',
+                    sizeConfig.icon,
                 )}
             >
                 <svg
@@ -88,16 +93,16 @@ export default function TanggapinLogo({
                 <div className="flex items-center gap-1.5">
                     <span
                         className={cn(
-                            'font-bold tracking-tight text-slate-900 dark:text-slate-100 uppercase',
-                            sizeConfig.title
+                            'font-bold tracking-tight text-slate-900 uppercase dark:text-slate-100',
+                            sizeConfig.title,
                         )}
                     >
                         TANGGAPIN
                     </span>
                     <span
                         className={cn(
-                            'font-semibold rounded-md bg-blue-50 text-blue-700 dark:bg-blue-950/80 dark:text-blue-300 border border-blue-200 dark:border-blue-800/80 tracking-wide',
-                            sizeConfig.badge
+                            'rounded-md border border-blue-200 bg-blue-50 font-semibold tracking-wide text-blue-700 dark:border-blue-800/80 dark:bg-blue-950/80 dark:text-blue-300',
+                            sizeConfig.badge,
                         )}
                     >
                         EdTech
@@ -106,15 +111,15 @@ export default function TanggapinLogo({
                 {showDescriptor && (
                     <span
                         className={cn(
-                            'text-slate-500 dark:text-slate-400 font-medium leading-tight',
-                            sizeConfig.descriptor
+                            'leading-tight font-medium text-slate-500 dark:text-slate-400',
+                            sizeConfig.descriptor,
                         )}
                     >
                         Platform Tindak Lanjut Siswa
                     </span>
                 )}
                 {showTagline && (
-                    <span className="text-[11px] text-blue-600 dark:text-blue-400 font-medium tracking-tight mt-0.5">
+                    <span className="mt-0.5 text-[11px] font-medium tracking-tight text-blue-600 dark:text-blue-400">
                         Kenali lebih cepat. Tanggapi lebih tepat.
                     </span>
                 )}

@@ -1,4 +1,9 @@
-export type RoleType = 'kepala_sekolah' | 'wali_kelas' | 'guru_bk' | 'bendahara' | 'operator';
+export type RoleType =
+    | 'kepala_sekolah'
+    | 'wali_kelas'
+    | 'guru_bk'
+    | 'bendahara'
+    | 'operator';
 
 export interface TanggapinStats {
     studentsNeedingAttention: number;
@@ -49,7 +54,13 @@ export interface CaseItem {
     code: string;
     studentName: string;
     class: string;
-    category: 'Akademik' | 'Kehadiran' | 'Kedisiplinan' | 'Sosial' | 'Sosial & Perlindungan' | string;
+    category:
+        | 'Akademik'
+        | 'Kehadiran'
+        | 'Kedisiplinan'
+        | 'Sosial'
+        | 'Sosial & Perlindungan'
+        | (string & {});
     priority: 'Tinggi' | 'Sedang' | 'Rendah';
     stage: 'new' | 'assigned' | 'in_progress' | 'follow_up' | 'resolved';
     stageLabel: string;
