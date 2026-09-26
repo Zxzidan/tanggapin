@@ -17,13 +17,155 @@ use App\Models\Student;
 use App\Models\StudentCase;
 use App\Models\StudentReport;
 use App\Models\TeacherDocument;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class DashboardController extends Controller
 {
+    /**
+     * Direct link access for Operator Sekolah without needing to log out.
+     */
+    public function openOperator(Request $request): RedirectResponse
+    {
+        return $this->switchRoleByTarget($request, 'operator', null, route('users.index'));
+    }
+
+    /**
+     * Direct link access for Guru BK without needing to log out.
+     */
+    public function openGuruBk(Request $request): RedirectResponse
+    {
+        return $this->switchRoleByTarget($request, 'guru_bk', null, route('kondisi-kelas'));
+    }
+
+    /**
+     * Direct link access for Wali Kelas (XI RPL 2 - Ratna Dewi) without needing to log out.
+     */
+    public function openWaliKelas(Request $request): RedirectResponse
+    {
+        return $this->switchRoleByTarget($request, 'wali_kelas', 'walikelas@sekolah.sch.id', route('kondisi-kelas'));
+    }
+
+    /**
+     * Direct link access for Wali Kelas (X TKJ 1 - Budi Santoso) without needing to log out.
+     */
+    public function openWaliKelasTkj(Request $request): RedirectResponse
+    {
+        return $this->switchRoleByTarget($request, 'wali_kelas', 'budi@sekolah.sch.id', route('kondisi-kelas'));
+    }
+
+    /**
+     * Direct link access for Kepala Sekolah without needing to log out.
+     */
+    public function openKepalaSekolah(Request $request): RedirectResponse
+    {
+        return $this->switchRoleByTarget($request, 'kepala_sekolah', null, route('dashboard'));
+    }
+
+    /**
+     * Direct link access for Bendahara Sekolah without needing to log out.
+     */
+    public function openBendahara(Request $request): RedirectResponse
+    {
+        return $this->switchRoleByTarget($request, 'bendahara', null, route('payments'));
+    }
+
+    /**
+     * Switch authenticated role session instantly for multi-role simulation in 1 browser.
+     */
+    public function switchRole(Request $request): RedirectResponse
+    {
+        $role = $request->input('role') ?: $request->query('role');
+        $email = $request->input('email') ?: $request->query('email');
+        $redirect = $request->input('redirect') ?: $request->query('redirect');
+
+        if (! $role && ! $email) {
+            return back()->withErrors(['role' => 'Pilih peran yang valid.']);
+        }
+
+        return $this->switchRoleByTarget($request, $role ?? 'operator', $email, $redirect);
+    }
+
+    /**
+     * Core helper to authenticate as target role persona and redirect to role-tailored workspace.
+     */
+    public function switchRoleByTarget(Request $request, string $role, ?string $email = null, ?string $destination = null): RedirectResponse
+    {
+        $query = User::with('schoolClass');
+
+        if (! empty($email)) {
+            $query->where('email', $email);
+        } else {
+            $query->where('role', $role);
+        }
+
+        $targetUser = $query->first();
+
+        // Seed fallback if user doesn't exist
+        if (! $targetUser) {
+            $roleFallbacks = [
+                'operator' => ['name' => 'Operator Sekolah', 'email' => 'operator@sekolah.sch.id'],
+                'guru_bk' => ['name' => 'Dra. Hj. Nurjanah, M.Pd', 'email' => 'gurubk@sekolah.sch.id'],
+                'wali_kelas' => ['name' => 'Ratna Dewi, S.Pd', 'email' => 'walikelas@sekolah.sch.id'],
+                'kepala_sekolah' => ['name' => 'Drs. H. Mulyadi, M.Pd', 'email' => 'kepsek@sekolah.sch.id'],
+                'bendahara' => ['name' => 'Ahmad Suhendra, S.E.', 'email' => 'bendahara@sekolah.sch.id'],
+            ];
+
+            if (isset($roleFallbacks[$role])) {
+                $fallback = $roleFallbacks[$role];
+                $targetUser = User::create([
+                    'name' => $fallback['name'],
+                    'email' => $email ?? $fallback['email'],
+                    'role' => $role,
+                    'password' => bcrypt('password'),
+                    'raw_password' => 'password',
+                    'email_verified_at' => now(),
+                ]);
+
+                if ($role === 'wali_kelas') {
+                    $firstClass = SchoolClass::first();
+                    if ($firstClass) {
+                        $targetUser->school_class_id = $firstClass->id;
+                        $targetUser->save();
+                    }
+                }
+            }
+        }
+
+        if (! $targetUser) {
+            return back()->withErrors(['role' => 'Pengguna untuk peran tersebut belum tersedia.']);
+        }
+
+        Auth::login($targetUser);
+        $request->session()->regenerate();
+
+        $roleLabels = [
+            'operator' => 'Operator Sekolah',
+            'guru_bk' => 'Guru BK',
+            'wali_kelas' => 'Wali Kelas',
+            'kepala_sekolah' => 'Kepala Sekolah',
+            'bendahara' => 'Bendahara Sekolah',
+        ];
+
+        $label = $roleLabels[$targetUser->role] ?? $targetUser->role;
+        $classSuffix = $targetUser->schoolClass ? " ({$targetUser->schoolClass->name})" : '';
+
+        // Determine destination: pick optimal landing page
+        $targetUrl = $destination ?? match ($targetUser->role) {
+            'operator' => route('users.index'),
+            'guru_bk' => route('kondisi-kelas'),
+            'wali_kelas' => route('kondisi-kelas'),
+            'bendahara' => route('payments'),
+            default => route('dashboard'),
+        };
+
+        return redirect($targetUrl)->with('success', "Beralih peran berhasil! Anda kini aktif sebagai {$label}{$classSuffix} ({$targetUser->name}) tanpa perlu log out.");
+    }
+
     /**
      * Display the Tanggapin operational dashboard (Ikhtisar & Tindakan).
      */
@@ -46,8 +188,12 @@ class DashboardController extends Controller
     /**
      * Modul 01: Early Warning System
      */
-    public function earlyWarning(): Response
+    public function earlyWarning(): Response|RedirectResponse
     {
+        if (auth()->user()?->role === 'operator') {
+            return redirect()->route('users.index')->with('status', 'Akses khusus Wali Kelas & Guru BK. Role Operator difokuskan pada modul Administrasi & Operasional Sekolah.');
+        }
+
         return Inertia::render('early-warning', [
             'stats' => $this->getStats(),
             'priorityFeed' => $this->getPriorityFeed(),
@@ -57,19 +203,36 @@ class DashboardController extends Controller
     /**
      * Modul 02: Kondisi Kelas & Monitoring Rombel
      */
-    public function kondisiKelas(): Response
+    public function kondisiKelas(): Response|RedirectResponse
     {
+        if (auth()->user()?->role === 'operator') {
+            return redirect()->route('users.index')->with('status', 'Akses khusus Wali Kelas & Guru BK. Role Operator difokuskan pada modul Administrasi & Operasional Sekolah.');
+        }
+
         return Inertia::render('kondisi-kelas', [
             'classes' => $this->getClasses(),
+            'allClasses' => SchoolClass::orderBy('name')->get(['id', 'name', 'major', 'homeroom_teacher_name', 'total_students'])->map(fn ($c) => [
+                'id' => (string) $c->id,
+                'name' => $c->name,
+                'major' => $c->major,
+                'homeroomTeacher' => $c->homeroom_teacher_name,
+                'totalStudents' => $c->total_students,
+            ])->toArray(),
             'disciplineList' => $this->getDisciplineList(),
+            'students' => $this->getStudentsWithDiscipline(),
+            'cases' => $this->getCases(),
         ]);
     }
 
     /**
      * Modul 06: Alur Lapangan ATS (Anak Tidak Sekolah)
      */
-    public function alurAts(): Response
+    public function alurAts(): Response|RedirectResponse
     {
+        if (auth()->user()?->role === 'operator') {
+            return redirect()->route('users.index')->with('status', 'Akses khusus Guru BK. Role Operator difokuskan pada modul Administrasi & Operasional Sekolah.');
+        }
+
         return Inertia::render('alur-ats', [
             'atsList' => $this->getAtsList(),
         ]);
@@ -78,19 +241,42 @@ class DashboardController extends Controller
     /**
      * Modul 03: Case Management (Manajemen Kasus BK)
      */
-    public function manajemenKasus(): Response
+    public function manajemenKasus(): Response|RedirectResponse
     {
+        if (auth()->user()?->role === 'operator') {
+            return redirect()->route('users.index')->with('status', 'Akses khusus Guru BK, Wali Kelas & Pimpinan. Role Operator difokuskan pada modul Administrasi & Operasional Sekolah.');
+        }
+
+        $user = auth()->user();
+        $studentQuery = Student::with('schoolClass')->orderBy('name');
+
+        if ($user && $user->role === 'wali_kelas' && $user->school_class_id) {
+            $studentQuery->where('school_class_id', $user->school_class_id);
+        }
+
+        $students = $studentQuery->get(['id', 'name', 'nisn', 'school_class_id'])->map(fn ($s) => [
+            'id' => (string) $s->id,
+            'name' => $s->name,
+            'nisn' => $s->nisn,
+            'className' => $s->schoolClass?->name ?? '-',
+        ])->toArray();
+
         return Inertia::render('manajemen-kasus', [
             'stats' => $this->getStats(),
             'cases' => $this->getCases(),
+            'students' => $students,
         ]);
     }
 
     /**
      * Modul 04: Komunikasi Orang Tua Terstruktur
      */
-    public function komunikasiOrtu(): Response
+    public function komunikasiOrtu(): Response|RedirectResponse
     {
+        if (auth()->user()?->role === 'operator') {
+            return redirect()->route('users.index')->with('status', 'Akses khusus Wali Kelas & Guru BK. Role Operator difokuskan pada modul Administrasi & Operasional Sekolah.');
+        }
+
         return Inertia::render('komunikasi-ortu', [
             'parentUpdates' => $this->getParentUpdates(),
         ]);
@@ -139,8 +325,12 @@ class DashboardController extends Controller
     /**
      * Modul AI & Rapor: Pembuatan Rapor Siswa Otomatis Berbasis AI & Pengiriman ke Orang Tua
      */
-    public function raporSiswa(): Response
+    public function raporSiswa(): Response|RedirectResponse
     {
+        if (auth()->user()?->role === 'operator') {
+            return redirect()->route('users.index')->with('status', 'Akses khusus Wali Kelas. Role Operator difokuskan pada modul Administrasi & Operasional Sekolah.');
+        }
+
         $user = auth()->user();
         $studentQuery = Student::with(['schoolClass', 'reports' => fn ($q) => $q->latest()]);
 
@@ -296,7 +486,7 @@ class DashboardController extends Controller
     private function getCases(): array
     {
         $user = auth()->user();
-        $query = StudentCase::with(['student.schoolClass', 'timelines'])->latest();
+        $query = StudentCase::with(['student.schoolClass', 'timelines'])->orderByDesc('id');
 
         if ($user && $user->role === 'wali_kelas' && $user->school_class_id) {
             $query->whereHas('student', fn ($q) => $q->where('school_class_id', $user->school_class_id));
@@ -304,9 +494,14 @@ class DashboardController extends Controller
 
         return $query->get()
             ->map(function (StudentCase $case): array {
+                $referredByName = $case->referred_by_name ?? ($case->timelines->firstWhere('actor_name', '!=', 'Guru BK')?->actor_name ?? 'Wali Kelas');
+                $referralNotes = $case->referral_notes ?? $case->last_activity;
+                $isHandledByBk = in_array($case->stage, ['handled_by_bk', 'resolved']) || ! empty($case->handled_at);
+
                 return [
                     'id' => (string) $case->id,
                     'code' => $case->code,
+                    'studentId' => (string) $case->student_id,
                     'studentName' => $case->student->name ?? 'Siswa',
                     'class' => $case->student->schoolClass->name ?? '-',
                     'category' => $case->category,
@@ -314,8 +509,16 @@ class DashboardController extends Controller
                     'stage' => $case->stage,
                     'stageLabel' => $case->stage_label,
                     'assignee' => $case->assignee_name,
+                    'referredByName' => $referredByName,
+                    'referralNotes' => $referralNotes,
+                    'handledByBkName' => $case->handled_by_bk_name,
+                    'bkActionType' => $case->bk_action_type,
+                    'bkHandlingNotes' => $case->bk_handling_notes,
+                    'handledAt' => $case->handled_at?->format('d M Y, H:i'),
+                    'isHandledByBk' => $isHandledByBk,
                     'lastActivity' => $case->last_activity,
                     'lastUpdate' => $case->updated_at?->diffForHumans() ?? 'Baru saja',
+                    'createdAt' => $case->created_at?->format('d M Y, H:i') ?? '-',
                     'timeline' => $case->timelines->map(fn (CaseTimeline $t): array => [
                         'time' => $t->recorded_at ?? $t->created_at?->format('d M H:i') ?? '-',
                         'title' => $t->title,
@@ -449,28 +652,267 @@ class DashboardController extends Controller
         ])->toArray();
     }
 
+    private function getStudentsWithDiscipline(): array
+    {
+        $user = auth()->user();
+        $query = Student::with(['schoolClass', 'disciplineRecords'])->orderBy('name');
+
+        if ($user && $user->role === 'wali_kelas' && $user->school_class_id) {
+            $query->where('school_class_id', $user->school_class_id);
+        }
+
+        return $query->get()->map(function (Student $student): array {
+            $totalPoints = $student->disciplineRecords->sum('points');
+            $pendingFollowups = $student->disciplineRecords->where('action_status', '!=', 'Selesai Ditindaklanjuti Wali Kelas')->count();
+
+            return [
+                'id' => (string) $student->id,
+                'name' => $student->name,
+                'nisn' => $student->nisn,
+                'gender' => $student->gender,
+                'classId' => (string) $student->school_class_id,
+                'className' => $student->schoolClass->name ?? '-',
+                'homeroomTeacher' => $student->schoolClass->homeroom_teacher_name ?? '-',
+                'attendanceRate' => (int) $student->attendance_rate,
+                'riskLevel' => $student->risk_level,
+                'parentName' => $student->parent_name,
+                'parentPhone' => $student->parent_phone,
+                'address' => $student->address,
+                'totalPoints' => (int) $totalPoints,
+                'pendingFollowups' => $pendingFollowups,
+                'disciplineRecords' => $student->disciplineRecords->map(fn (DisciplineRecord $dr): array => [
+                    'id' => (string) $dr->id,
+                    'infraction' => $dr->infraction,
+                    'points' => (int) $dr->points,
+                    'actionStatus' => $dr->action_status,
+                    'patternNotes' => $dr->pattern_notes,
+                    'recordedAt' => $dr->recorded_at ?? $dr->created_at?->format('d M H:i') ?? '-',
+                ])->values()->toArray(),
+            ];
+        })->toArray();
+    }
+
     /**
-     * Store a newly created discipline record in database.
+     * Store a new student created by Guru BK or authorized staff.
+     */
+    public function storeStudent(Request $request): RedirectResponse
+    {
+        $user = auth()->user();
+        if ($user && $user->role === 'wali_kelas') {
+            $request->merge(['school_class_id' => $user->school_class_id]);
+        }
+
+        $validated = $request->validate([
+            'school_class_id' => ['required', 'exists:school_classes,id'],
+            'nisn' => ['required', 'string', 'max:20', 'unique:students,nisn'],
+            'name' => ['required', 'string', 'max:255'],
+            'gender' => ['required', 'string', 'in:L,P'],
+            'parent_name' => ['required', 'string', 'max:255'],
+            'parent_phone' => ['required', 'string', 'max:50'],
+            'address' => ['nullable', 'string', 'max:500'],
+            'attendance_rate' => ['nullable', 'integer', 'min:0', 'max:100'],
+        ], [
+            'nisn.unique' => 'Nomor Induk Siswa Nasional (NISN) ini sudah terdaftar.',
+            'school_class_id.required' => 'Pilih rombongan belajar / kelas.',
+        ]);
+
+        $student = Student::create([
+            'school_class_id' => $validated['school_class_id'],
+            'nisn' => $validated['nisn'],
+            'name' => $validated['name'],
+            'gender' => $validated['gender'],
+            'parent_name' => $validated['parent_name'],
+            'parent_phone' => $validated['parent_phone'],
+            'address' => $validated['address'] ?? '-',
+            'attendance_rate' => $validated['attendance_rate'] ?? 100,
+            'risk_level' => 'low',
+            'status' => 'active',
+        ]);
+
+        $schoolClass = SchoolClass::find($validated['school_class_id']);
+        if ($schoolClass) {
+            $schoolClass->increment('total_students');
+        }
+
+        return back()->with('success', "Peserta didik {$student->name} (NISN: {$student->nisn}) berhasil ditambahkan ke rombel {$schoolClass?->name}!");
+    }
+
+    /**
+     * Store a newly created discipline record in database (Points by Guru BK).
      */
     public function storeDisciplineRecord(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'student_id' => 'required|exists:students,id',
-            'infraction' => 'required|string',
-            'points' => 'required|integer',
-            'pattern_notes' => 'nullable|string',
+            'student_id' => ['required', 'exists:students,id'],
+            'infraction' => ['required', 'string', 'max:255'],
+            'points' => ['required', 'integer', 'min:1', 'max:100'],
+            'pattern_notes' => ['nullable', 'string'],
         ]);
 
+        $student = Student::with('schoolClass')->findOrFail($validated['student_id']);
+        $points = (int) $validated['points'];
+
         DisciplineRecord::create([
-            'student_id' => $validated['student_id'],
+            'student_id' => $student->id,
             'infraction' => $validated['infraction'],
-            'points' => $validated['points'],
-            'action_status' => 'Menunggu Pembinaan',
-            'pattern_notes' => $validated['pattern_notes'] ?? 'Dicatat dari modul kedisiplinan',
+            'points' => $points,
+            'action_status' => 'Menunggu Tindak Lanjut Wali Kelas',
+            'pattern_notes' => $validated['pattern_notes'] ?? 'Dicatat oleh Guru BK untuk ditindaklanjuti Wali Kelas.',
             'recorded_at' => now()->format('d M H:i'),
         ]);
 
-        return back()->with('success', 'Catatan kedisiplinan berhasil disimpan!');
+        $totalPoints = $student->disciplineRecords()->sum('points');
+        if ($totalPoints >= 30) {
+            $student->update(['risk_level' => 'high']);
+        } elseif ($totalPoints >= 15 && $student->risk_level === 'low') {
+            $student->update(['risk_level' => 'medium']);
+        }
+
+        // Create alert for Wali Kelas to act upon
+        RiskAlert::create([
+            'student_id' => $student->id,
+            'risk_level' => $totalPoints >= 30 ? 'high' : 'medium',
+            'trigger_type' => 'Poin Pelanggaran Guru BK',
+            'summary' => "Guru BK memberikan +{$points} poin ({$validated['infraction']}) kepada {$student->name}. Memerlukan pembinaan Wali Kelas ({$student->schoolClass?->homeroom_teacher_name}).",
+            'is_action_taken' => false,
+            'suggested_action' => 'Pembinaan Kelas & Tindak Lanjut',
+        ]);
+
+        return back()->with('success', "Poin pelanggaran (+{$points} poin) untuk {$student->name} berhasil dicatat oleh Guru BK! Catatan telah diteruskan ke Wali Kelas ({$student->schoolClass?->homeroom_teacher_name}) untuk ditindaklanjuti.");
+    }
+
+    /**
+     * Store student issue/referral reported by Wali Kelas to Guru BK.
+     */
+    public function storeReferralToBk(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'student_id' => ['required', 'exists:students,id'],
+            'category' => ['required', 'string', 'max:255'],
+            'priority' => ['required', 'string', 'in:Rendah,Sedang,Tinggi'],
+            'notes' => ['required', 'string'],
+        ], [
+            'notes.required' => 'Rincian kendala siswa wajib diisi oleh Wali Kelas.',
+        ]);
+
+        $student = Student::with('schoolClass')->findOrFail($validated['student_id']);
+        $user = auth()->user();
+
+        if ($user && $user->role === 'wali_kelas' && $user->school_class_id && $student->school_class_id !== $user->school_class_id) {
+            return back()->withErrors(['unauthorized' => 'Anda hanya berhak melaporkan kendala siswa di rombel binaan Anda.']);
+        }
+
+        $code = 'CS-'.date('Y').'-'.str_pad((string) (StudentCase::count() + 1), 3, '0', STR_PAD_LEFT);
+
+        $case = StudentCase::create([
+            'code' => $code,
+            'student_id' => $student->id,
+            'category' => $validated['category'],
+            'priority' => $validated['priority'],
+            'stage' => 'new',
+            'stage_label' => 'Rujukan Masuk dari Wali Kelas',
+            'assignee_name' => 'Koordinator Guru BK',
+            'referred_by_name' => $user->name,
+            'referral_notes' => $validated['notes'],
+            'last_activity' => "Wali Kelas ({$user->name}) melaporkan kendala: {$validated['notes']}",
+        ]);
+
+        CaseTimeline::create([
+            'student_case_id' => $case->id,
+            'title' => "Kendala siswa dirujuk oleh Wali Kelas ({$student->schoolClass?->name})",
+            'actor_name' => $user->name ?? 'Wali Kelas',
+            'recorded_at' => now()->format('d M H:i'),
+        ]);
+
+        RiskAlert::create([
+            'student_id' => $student->id,
+            'risk_level' => $validated['priority'] === 'Tinggi' ? 'high' : 'medium',
+            'trigger_type' => 'Rujukan Kendala Wali Kelas',
+            'summary' => "Wali Kelas ({$user->name}) merujuk kendala {$student->name} ({$validated['category']}) ke Guru BK untuk ditindaklanjuti.",
+            'is_action_taken' => false,
+            'suggested_action' => 'Panggilan Konseling BK & Asesmen Masalah',
+        ]);
+
+        return back()->with('success', "Kendala siswa {$student->name} berhasil dilaporkan dan langsung diteruskan ke Guru BK (Nomor Rujukan: {$code})!");
+    }
+
+    /**
+     * Handle and resolve an inbound referral by Guru BK.
+     */
+    public function handleReferralByBk(Request $request, StudentCase $studentCase): RedirectResponse
+    {
+        $validated = $request->validate([
+            'action_type' => ['required', 'string', 'max:255'],
+            'handling_notes' => ['required', 'string'],
+        ], [
+            'action_type.required' => 'Jenis tindakan penanganan BK wajib dipilih.',
+            'handling_notes.required' => 'Catatan hasil penanganan Guru BK wajib diisi.',
+        ]);
+
+        $user = auth()->user();
+        $studentCase->load(['student.schoolClass']);
+
+        $handlerName = $user->name ?? 'Guru BK';
+
+        $studentCase->update([
+            'stage' => 'handled_by_bk',
+            'stage_label' => 'Sudah Ditangani oleh Guru BK',
+            'handled_by_bk_name' => $handlerName,
+            'bk_action_type' => $validated['action_type'],
+            'bk_handling_notes' => $validated['handling_notes'],
+            'last_activity' => "Telah ditangani oleh Guru BK ({$handlerName}) [{$validated['action_type']}]: {$validated['handling_notes']}",
+            'handled_at' => now(),
+        ]);
+
+        CaseTimeline::create([
+            'student_case_id' => $studentCase->id,
+            'title' => "Ditangani oleh Guru BK ({$validated['action_type']})",
+            'actor_name' => $handlerName,
+            'recorded_at' => now()->format('d M H:i'),
+        ]);
+
+        RiskAlert::where('student_id', $studentCase->student_id)
+            ->where('trigger_type', 'Rujukan Kendala Wali Kelas')
+            ->where('is_action_taken', false)
+            ->update([
+                'is_action_taken' => true,
+                'suggested_action' => "Sudah ditangani oleh Guru BK ({$handlerName})",
+            ]);
+
+        return back()->with('success', "Rujukan kendala siswa {$studentCase->student?->name} ({$studentCase->code}) berhasil ditangani oleh Guru BK! Status di dashboard Wali Kelas telah otomatis diperbarui menjadi 'Sudah Ditangani oleh Guru BK'.");
+    }
+
+    /**
+     * Follow up and resolve a discipline record by Wali Kelas.
+     */
+    public function followUpDisciplineRecord(Request $request, DisciplineRecord $record): RedirectResponse
+    {
+        $validated = $request->validate([
+            'followup_notes' => ['required', 'string'],
+        ], [
+            'followup_notes.required' => 'Catatan pembinaan wali kelas wajib diisi.',
+        ]);
+
+        $user = auth()->user();
+        $record->load('student.schoolClass');
+
+        if ($user && $user->role === 'wali_kelas' && $user->school_class_id && $record->student->school_class_id !== $user->school_class_id) {
+            return back()->withErrors(['unauthorized' => 'Anda hanya berhak menindaklanjuti siswa di kelas binaan Anda.']);
+        }
+
+        $existing = $record->pattern_notes ?? '';
+        $appended = $existing ? $existing." | [Tindak Lanjut Wali Kelas ({$user->name})]: ".$validated['followup_notes'] : "[Tindak Lanjut Wali Kelas ({$user->name})]: ".$validated['followup_notes'];
+
+        $record->update([
+            'action_status' => 'Selesai Ditindaklanjuti Wali Kelas',
+            'pattern_notes' => $appended,
+        ]);
+
+        RiskAlert::where('student_id', $record->student_id)
+            ->where('trigger_type', 'Poin Pelanggaran Guru BK')
+            ->update(['is_action_taken' => true]);
+
+        return back()->with('success', "Tindak lanjut pembinaan kedisiplinan untuk {$record->student->name} berhasil dicatat oleh Wali Kelas!");
     }
 
     /**
@@ -505,6 +947,10 @@ class DashboardController extends Controller
      */
     public function storeCase(Request $request): RedirectResponse
     {
+        if (auth()->user()?->role === 'guru_bk') {
+            return back()->withErrors(['forbidden' => 'Guru BK tidak membuat kasus baru dari nol. Guru BK menerima dan menindaklanjuti kasus rujukan yang dilaporkan oleh Wali Kelas.']);
+        }
+
         $validated = $request->validate([
             'student_id' => 'required|exists:students,id',
             'category' => 'required|string',

@@ -16,6 +16,18 @@ class StudentCase extends Model
     protected $guarded = [];
 
     /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'handled_at' => 'datetime',
+        ];
+    }
+
+    /**
      * @return BelongsTo<Student, $this>
      */
     public function student(): BelongsTo

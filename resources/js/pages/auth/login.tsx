@@ -18,6 +18,11 @@ import type { RoleType } from '@/types/tanggapin';
 type Props = {
     status?: string;
     canResetPassword: boolean;
+    currentUser?: {
+        name: string;
+        email: string;
+        role: string;
+    } | null;
 };
 
 interface DemoPersona {
@@ -72,7 +77,7 @@ const DEMO_PERSONAS: DemoPersona[] = [
     },
 ];
 
-export default function Login({ status, canResetPassword }: Props) {
+export default function Login({ status, canResetPassword, currentUser }: Props) {
     const [selectedRole, setSelectedRole] = useState<RoleType>('guru_bk');
     const [selectedEmail, setSelectedEmail] = useState('gurubk@sekolah.sch.id');
     const [selectedPassword, setSelectedPassword] = useState('password');
@@ -111,6 +116,23 @@ export default function Login({ status, canResetPassword }: Props) {
             <Head title="Masuk ke Akun — TANGGAPIN" />
 
             <PasskeyVerify />
+
+            {currentUser && (
+                <div className="rounded-xl border border-blue-200 bg-blue-50/80 p-3 text-xs text-blue-900 dark:border-blue-900/60 dark:bg-blue-950/40 dark:text-blue-300">
+                    <div className="flex items-center justify-between">
+                        <span className="font-bold">Sesi Aktif di Tab Lain:</span>
+                        <span className="rounded bg-blue-200/60 px-1.5 py-0.5 text-[10px] font-semibold text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                            {currentUser.role}
+                        </span>
+                    </div>
+                    <div className="mt-0.5 truncate text-[11px] text-blue-700 dark:text-blue-300">
+                        {currentUser.name} ({currentUser.email})
+                    </div>
+                    <p className="mt-1 text-[10px] text-blue-600/90 dark:text-blue-400">
+                        Pilih peran baru di bawah untuk login langsung tanpa perlu log out manual.
+                    </p>
+                </div>
+            )}
 
             {/* Role Switcher Grid */}
             <div className="space-y-2">

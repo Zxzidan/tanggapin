@@ -4,13 +4,18 @@ import {
     ArrowRight,
     CheckCircle2,
     ChevronRight,
+    Clock,
+    CreditCard,
     Eye,
+    FileText,
     GraduationCap,
+    Inbox,
     PhoneCall,
     Plus,
     Shield,
     ShieldAlert,
     Siren,
+    Users,
 } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { useActionModals } from '@/components/action-modals';
@@ -136,12 +141,20 @@ export default function Dashboard({
                             <strong className="font-semibold text-blue-700 dark:text-blue-400">
                                 {activeRoleConfig.title}
                             </strong>
-                            . Terdeteksi{' '}
-                            <strong className="font-semibold text-slate-900 dark:text-white">
-                                {safeStats.studentsNeedingAttention} siswa
-                            </strong>{' '}
-                            yang memerlukan perhatian dan koordinasi terarah
-                            hari ini.
+                            {currentRole === 'operator' ? (
+                                <>
+                                    . Pusat pengelolaan administrasi sekolah, pembuatan & aktivasi akun GTK, sinkronisasi Dapodik, verifikasi SPP, dan kelengkapan berkas operasional.
+                                </>
+                            ) : (
+                                <>
+                                    . Terdeteksi{' '}
+                                    <strong className="font-semibold text-slate-900 dark:text-white">
+                                        {safeStats.studentsNeedingAttention} siswa
+                                    </strong>{' '}
+                                    yang memerlukan perhatian dan koordinasi terarah
+                                    hari ini.
+                                </>
+                            )}
                         </p>
                     </div>
 
@@ -154,113 +167,218 @@ export default function Dashboard({
                     </div>
                 </div>
 
-                {/* 2. RINGKASAN KONDISI SISWA (4 Kartu Metrik Utama - Single Accent Palette) */}
-                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
-                    {/* Metric 1: Siswa Butuh Perhatian */}
-                    <Link
-                        href="/early-warning"
-                        className="group block cursor-pointer rounded-2xl border border-slate-200 bg-white p-5 shadow-xs transition-all hover:border-blue-600 hover:shadow-sm dark:border-slate-800 dark:bg-[#0f172a]"
-                    >
-                        <div className="mb-2 flex items-center justify-between">
-                            <span className="text-[11px] font-bold tracking-wider text-slate-500 uppercase">
-                                Butuh Perhatian
-                            </span>
-                            <div className="rounded-lg border border-slate-200 bg-slate-50 p-1.5 text-blue-700 transition-colors group-hover:border-blue-300 group-hover:bg-blue-50 dark:border-slate-700 dark:bg-slate-800 dark:text-blue-400">
-                                <AlertTriangle className="size-4" />
+                {/* 2. RINGKASAN METRIK OPERASIONAL & KONDISI (Berdasarkan Peran) */}
+                {currentRole === 'operator' ? (
+                    <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
+                        {/* Metric 1: Kelola Pengguna GTK */}
+                        <Link
+                            href="/kelola-pengguna"
+                            className="group block cursor-pointer rounded-2xl border border-slate-200 bg-white p-5 shadow-xs transition-all hover:border-blue-600 hover:shadow-sm dark:border-slate-800 dark:bg-[#0f172a]"
+                        >
+                            <div className="mb-2 flex items-center justify-between">
+                                <span className="text-[11px] font-bold tracking-wider text-slate-500 uppercase">
+                                    Kelola Pengguna
+                                </span>
+                                <div className="rounded-lg border border-slate-200 bg-slate-50 p-1.5 text-blue-700 transition-colors group-hover:border-blue-300 group-hover:bg-blue-50 dark:border-slate-700 dark:bg-slate-800 dark:text-blue-400">
+                                    <Users className="size-4" />
+                                </div>
                             </div>
-                        </div>
-                        <div className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
-                            {safeStats.studentsNeedingAttention}
-                        </div>
-                        <p className="mt-1.5 text-xs leading-snug text-slate-500 dark:text-slate-400">
-                            Sinyal risiko kehadiran, capaian belajar, atau
-                            ketertiban
-                        </p>
-                        <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3 text-[11px] font-semibold text-blue-700 dark:border-slate-800 dark:text-blue-400">
-                            <span>Tinjau Sinyal Risiko</span>
-                            <ArrowRight className="size-3 transition-transform group-hover:translate-x-0.5" />
-                        </div>
-                    </Link>
-
-                    {/* Metric 2: Kasus Aktif BK */}
-                    <Link
-                        href="/manajemen-kasus"
-                        className="group block cursor-pointer rounded-2xl border border-slate-200 bg-white p-5 shadow-xs transition-all hover:border-blue-600 hover:shadow-sm dark:border-slate-800 dark:bg-[#0f172a]"
-                    >
-                        <div className="mb-2 flex items-center justify-between">
-                            <span className="text-[11px] font-bold tracking-wider text-slate-500 uppercase">
-                                Kasus Aktif BK
-                            </span>
-                            <div className="rounded-lg border border-slate-200 bg-slate-50 p-1.5 text-blue-700 transition-colors group-hover:border-blue-300 group-hover:bg-blue-50 dark:border-slate-700 dark:bg-slate-800 dark:text-blue-400">
-                                <ShieldAlert className="size-4" />
+                            <div className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+                                Akun GTK
                             </div>
-                        </div>
-                        <div className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
-                            {safeStats.activeCases}
-                        </div>
-                        <p className="mt-1.5 text-xs leading-snug text-slate-500 dark:text-slate-400">
-                            {safeStats.overdueCases} pendampingan perlu evaluasi
-                            berkala
-                        </p>
-                        <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3 text-[11px] font-semibold text-blue-700 dark:border-slate-800 dark:text-blue-400">
-                            <span>Alur Kasus BK</span>
-                            <ArrowRight className="size-3 transition-transform group-hover:translate-x-0.5" />
-                        </div>
-                    </Link>
-
-                    {/* Metric 3: Tindak Lanjut Selesai */}
-                    <Link
-                        href="/manajemen-kasus"
-                        className="group block cursor-pointer rounded-2xl border border-slate-200 bg-white p-5 shadow-xs transition-all hover:border-blue-600 hover:shadow-sm dark:border-slate-800 dark:bg-[#0f172a]"
-                    >
-                        <div className="mb-2 flex items-center justify-between">
-                            <span className="text-[11px] font-bold tracking-wider text-slate-500 uppercase">
-                                Terdokumentasi
-                            </span>
-                            <div className="rounded-lg border border-slate-200 bg-slate-50 p-1.5 text-blue-700 transition-colors group-hover:border-blue-300 group-hover:bg-blue-50 dark:border-slate-700 dark:bg-slate-800 dark:text-blue-400">
-                                <CheckCircle2 className="size-4" />
+                            <p className="mt-1.5 text-xs leading-snug text-slate-500 dark:text-slate-400">
+                                Atur akun Wali Kelas, Bendahara, Kepsek & kuota kelas
+                            </p>
+                            <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3 text-[11px] font-semibold text-blue-700 dark:border-slate-800 dark:text-blue-400">
+                                <span>Buka Kelola Pengguna</span>
+                                <ArrowRight className="size-3 transition-transform group-hover:translate-x-0.5" />
                             </div>
-                        </div>
-                        <div className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
-                            {safeStats.resolvedThisMonth}
-                        </div>
-                        <p className="mt-1.5 text-xs leading-snug text-slate-500 dark:text-slate-400">
-                            Langkah pendampingan terselesaikan bulan ini
-                        </p>
-                        <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3 text-[11px] font-semibold text-blue-700 dark:border-slate-800 dark:text-blue-400">
-                            <span>Arsip Catatan</span>
-                            <ArrowRight className="size-3 transition-transform group-hover:translate-x-0.5" />
-                        </div>
-                    </Link>
+                        </Link>
 
-                    {/* Metric 4: Rata-rata Kehadiran */}
-                    <Link
-                        href="/kondisi-kelas"
-                        className="group block cursor-pointer rounded-2xl border border-slate-200 bg-white p-5 shadow-xs transition-all hover:border-blue-600 hover:shadow-sm dark:border-slate-800 dark:bg-[#0f172a]"
-                    >
-                        <div className="mb-2 flex items-center justify-between">
-                            <span className="text-[11px] font-bold tracking-wider text-slate-500 uppercase">
-                                Rata-rata Hadir
-                            </span>
-                            <div className="rounded-lg border border-slate-200 bg-slate-50 p-1.5 text-blue-700 transition-colors group-hover:border-blue-300 group-hover:bg-blue-50 dark:border-slate-700 dark:bg-slate-800 dark:text-blue-400">
-                                <GraduationCap className="size-4" />
+                        {/* Metric 2: Data Dapodik & Residu */}
+                        <Link
+                            href="/dapodik"
+                            className="group block cursor-pointer rounded-2xl border border-slate-200 bg-white p-5 shadow-xs transition-all hover:border-blue-600 hover:shadow-sm dark:border-slate-800 dark:bg-[#0f172a]"
+                        >
+                            <div className="mb-2 flex items-center justify-between">
+                                <span className="text-[11px] font-bold tracking-wider text-slate-500 uppercase">
+                                    Residu Dapodik
+                                </span>
+                                <div className="rounded-lg border border-slate-200 bg-slate-50 p-1.5 text-blue-700 transition-colors group-hover:border-blue-300 group-hover:bg-blue-50 dark:border-slate-700 dark:bg-slate-800 dark:text-blue-400">
+                                    <CheckCircle2 className="size-4" />
+                                </div>
                             </div>
-                        </div>
-                        <div className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
-                            92.4%
-                        </div>
-                        <p className="mt-1.5 text-xs leading-snug text-slate-500 dark:text-slate-400">
-                            Rangkuman presensi 4 rombel kejuruan
-                        </p>
-                        <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3 text-[11px] font-semibold text-blue-700 dark:border-slate-800 dark:text-blue-400">
-                            <span>Pantau Presensi Rombel</span>
-                            <ArrowRight className="size-3 transition-transform group-hover:translate-x-0.5" />
-                        </div>
-                    </Link>
-                </div>
+                            <div className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+                                {safeStats.dataCheckIssues}
+                            </div>
+                            <p className="mt-1.5 text-xs leading-snug text-slate-500 dark:text-slate-400">
+                                Anomali NIK/NISN & residu pemetaan rombel
+                            </p>
+                            <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3 text-[11px] font-semibold text-blue-700 dark:border-slate-800 dark:text-blue-400">
+                                <span>Tinjau Data Residu</span>
+                                <ArrowRight className="size-3 transition-transform group-hover:translate-x-0.5" />
+                            </div>
+                        </Link>
 
-                {/* 3. PERINGATAN DINI & TINDAK LANJUT MENDESAK */}
-                <div className="space-y-5 rounded-2xl border border-slate-200 bg-white p-6 shadow-xs sm:p-7 dark:border-slate-800 dark:bg-[#0f172a]">
+                        {/* Metric 3: Pembayaran & Tagihan SPP */}
+                        <Link
+                            href="/pembayaran"
+                            className="group block cursor-pointer rounded-2xl border border-slate-200 bg-white p-5 shadow-xs transition-all hover:border-blue-600 hover:shadow-sm dark:border-slate-800 dark:bg-[#0f172a]"
+                        >
+                            <div className="mb-2 flex items-center justify-between">
+                                <span className="text-[11px] font-bold tracking-wider text-slate-500 uppercase">
+                                    Keuangan SPP
+                                </span>
+                                <div className="rounded-lg border border-slate-200 bg-slate-50 p-1.5 text-blue-700 transition-colors group-hover:border-blue-300 group-hover:bg-blue-50 dark:border-slate-700 dark:bg-slate-800 dark:text-blue-400">
+                                    <CreditCard className="size-4" />
+                                </div>
+                            </div>
+                            <div className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+                                {safeStats.duePayments}
+                            </div>
+                            <p className="mt-1.5 text-xs leading-snug text-slate-500 dark:text-slate-400">
+                                Tagihan aktif & bukti transfer verifikasi SPP
+                            </p>
+                            <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3 text-[11px] font-semibold text-blue-700 dark:border-slate-800 dark:text-blue-400">
+                                <span>Kelola Pembayaran</span>
+                                <ArrowRight className="size-3 transition-transform group-hover:translate-x-0.5" />
+                            </div>
+                        </Link>
+
+                        {/* Metric 4: Dokumen & Administrasi GTK */}
+                        <Link
+                            href="/dokumen-guru"
+                            className="group block cursor-pointer rounded-2xl border border-slate-200 bg-white p-5 shadow-xs transition-all hover:border-blue-600 hover:shadow-sm dark:border-slate-800 dark:bg-[#0f172a]"
+                        >
+                            <div className="mb-2 flex items-center justify-between">
+                                <span className="text-[11px] font-bold tracking-wider text-slate-500 uppercase">
+                                    Dokumen GTK
+                                </span>
+                                <div className="rounded-lg border border-slate-200 bg-slate-50 p-1.5 text-blue-700 transition-colors group-hover:border-blue-300 group-hover:bg-blue-50 dark:border-slate-700 dark:bg-slate-800 dark:text-blue-400">
+                                    <FileText className="size-4" />
+                                </div>
+                            </div>
+                            <div className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+                                {docList.length} Berkas
+                            </div>
+                            <p className="mt-1.5 text-xs leading-snug text-slate-500 dark:text-slate-400">
+                                SK penugasan, silabus, dan perangkat ajar guru
+                            </p>
+                            <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3 text-[11px] font-semibold text-blue-700 dark:border-slate-800 dark:text-blue-400">
+                                <span>Verifikasi Berkas</span>
+                                <ArrowRight className="size-3 transition-transform group-hover:translate-x-0.5" />
+                            </div>
+                        </Link>
+                    </div>
+                ) : (
+                    <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
+                        {/* Metric 1: Siswa Butuh Perhatian */}
+                        <Link
+                            href="/early-warning"
+                            className="group block cursor-pointer rounded-2xl border border-slate-200 bg-white p-5 shadow-xs transition-all hover:border-blue-600 hover:shadow-sm dark:border-slate-800 dark:bg-[#0f172a]"
+                        >
+                            <div className="mb-2 flex items-center justify-between">
+                                <span className="text-[11px] font-bold tracking-wider text-slate-500 uppercase">
+                                    Butuh Perhatian
+                                </span>
+                                <div className="rounded-lg border border-slate-200 bg-slate-50 p-1.5 text-blue-700 transition-colors group-hover:border-blue-300 group-hover:bg-blue-50 dark:border-slate-700 dark:bg-slate-800 dark:text-blue-400">
+                                    <AlertTriangle className="size-4" />
+                                </div>
+                            </div>
+                            <div className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+                                {safeStats.studentsNeedingAttention}
+                            </div>
+                            <p className="mt-1.5 text-xs leading-snug text-slate-500 dark:text-slate-400">
+                                Sinyal risiko kehadiran, capaian belajar, atau
+                                ketertiban
+                            </p>
+                            <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3 text-[11px] font-semibold text-blue-700 dark:border-slate-800 dark:text-blue-400">
+                                <span>Tinjau Sinyal Risiko</span>
+                                <ArrowRight className="size-3 transition-transform group-hover:translate-x-0.5" />
+                            </div>
+                        </Link>
+
+                        {/* Metric 2: Kasus Aktif BK */}
+                        <Link
+                            href="/manajemen-kasus"
+                            className="group block cursor-pointer rounded-2xl border border-slate-200 bg-white p-5 shadow-xs transition-all hover:border-blue-600 hover:shadow-sm dark:border-slate-800 dark:bg-[#0f172a]"
+                        >
+                            <div className="mb-2 flex items-center justify-between">
+                                <span className="text-[11px] font-bold tracking-wider text-slate-500 uppercase">
+                                    Kasus Aktif BK
+                                </span>
+                                <div className="rounded-lg border border-slate-200 bg-slate-50 p-1.5 text-blue-700 transition-colors group-hover:border-blue-300 group-hover:bg-blue-50 dark:border-slate-700 dark:bg-slate-800 dark:text-blue-400">
+                                    <ShieldAlert className="size-4" />
+                                </div>
+                            </div>
+                            <div className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+                                {safeStats.activeCases}
+                            </div>
+                            <p className="mt-1.5 text-xs leading-snug text-slate-500 dark:text-slate-400">
+                                {safeStats.overdueCases} pendampingan perlu evaluasi
+                                berkala
+                            </p>
+                            <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3 text-[11px] font-semibold text-blue-700 dark:border-slate-800 dark:text-blue-400">
+                                <span>Alur Kasus BK</span>
+                                <ArrowRight className="size-3 transition-transform group-hover:translate-x-0.5" />
+                            </div>
+                        </Link>
+
+                        {/* Metric 3: Tindak Lanjut Selesai */}
+                        <Link
+                            href="/manajemen-kasus"
+                            className="group block cursor-pointer rounded-2xl border border-slate-200 bg-white p-5 shadow-xs transition-all hover:border-blue-600 hover:shadow-sm dark:border-slate-800 dark:bg-[#0f172a]"
+                        >
+                            <div className="mb-2 flex items-center justify-between">
+                                <span className="text-[11px] font-bold tracking-wider text-slate-500 uppercase">
+                                    Terdokumentasi
+                                </span>
+                                <div className="rounded-lg border border-slate-200 bg-slate-50 p-1.5 text-blue-700 transition-colors group-hover:border-blue-300 group-hover:bg-blue-50 dark:border-slate-700 dark:bg-slate-800 dark:text-blue-400">
+                                    <CheckCircle2 className="size-4" />
+                                </div>
+                            </div>
+                            <div className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+                                {safeStats.resolvedThisMonth}
+                            </div>
+                            <p className="mt-1.5 text-xs leading-snug text-slate-500 dark:text-slate-400">
+                                Langkah pendampingan terselesaikan bulan ini
+                            </p>
+                            <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3 text-[11px] font-semibold text-blue-700 dark:border-slate-800 dark:text-blue-400">
+                                <span>Arsip Catatan</span>
+                                <ArrowRight className="size-3 transition-transform group-hover:translate-x-0.5" />
+                            </div>
+                        </Link>
+
+                        {/* Metric 4: Rata-rata Kehadiran */}
+                        <Link
+                            href="/kondisi-kelas"
+                            className="group block cursor-pointer rounded-2xl border border-slate-200 bg-white p-5 shadow-xs transition-all hover:border-blue-600 hover:shadow-sm dark:border-slate-800 dark:bg-[#0f172a]"
+                        >
+                            <div className="mb-2 flex items-center justify-between">
+                                <span className="text-[11px] font-bold tracking-wider text-slate-500 uppercase">
+                                    Rata-rata Hadir
+                                </span>
+                                <div className="rounded-lg border border-slate-200 bg-slate-50 p-1.5 text-blue-700 transition-colors group-hover:border-blue-300 group-hover:bg-blue-50 dark:border-slate-700 dark:bg-slate-800 dark:text-blue-400">
+                                    <GraduationCap className="size-4" />
+                                </div>
+                            </div>
+                            <div className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+                                92.4%
+                            </div>
+                            <p className="mt-1.5 text-xs leading-snug text-slate-500 dark:text-slate-400">
+                                Rangkuman presensi 4 rombel kejuruan
+                            </p>
+                            <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3 text-[11px] font-semibold text-blue-700 dark:border-slate-800 dark:text-blue-400">
+                                <span>Pantau Presensi Rombel</span>
+                                <ArrowRight className="size-3 transition-transform group-hover:translate-x-0.5" />
+                            </div>
+                        </Link>
+                    </div>
+                )}
+
+                {/* 3. PERINGATAN DINI & TINDAK LANJUT MENDESAK (Disembunyikan untuk Role Operator) */}
+                {currentRole !== 'operator' && (
+                    <div className="space-y-5 rounded-2xl border border-slate-200 bg-white p-6 shadow-xs sm:p-7 dark:border-slate-800 dark:bg-[#0f172a]">
                     <div className="flex flex-col justify-between gap-4 border-b border-slate-200 pb-4 sm:flex-row sm:items-center dark:border-slate-800">
                         <div>
                             <div className="flex items-center gap-2">
@@ -457,6 +575,7 @@ export default function Dashboard({
                         })}
                     </div>
                 </div>
+                )}
 
                 {/* 4. DUA KOLOM OPERASIONAL BERDASARKAN PERAN (Role-tailored Spotlight) */}
                 <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
@@ -742,6 +861,225 @@ export default function Dashboard({
                                 ))}
                             </div>
                         </div>
+                    ) : currentRole === 'wali_kelas' ? (
+                        <div className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
+                            <div className="flex flex-col justify-between gap-3 border-b border-slate-200 pb-3 sm:flex-row sm:items-center dark:border-slate-800">
+                                <div>
+                                    <div className="flex items-center gap-2">
+                                        <div className="rounded-lg bg-emerald-50 p-1 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300">
+                                            <ShieldAlert className="size-4" />
+                                        </div>
+                                        <h3 className="text-sm font-bold text-slate-900 dark:text-white">
+                                            Tracking Rujukan Kendala Siswa ke Guru BK
+                                        </h3>
+                                    </div>
+                                    <p className="mt-0.5 text-[11px] text-slate-500 dark:text-slate-400">
+                                        Pantau status penanganan rujukan kendala siswa binaan Anda ke Guru BK secara real-time.
+                                    </p>
+                                </div>
+                                <Link
+                                    href="/kondisi-kelas"
+                                    className="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-blue-700 px-3 py-1.5 text-xs font-semibold text-white shadow-2xs transition-colors hover:bg-blue-800 active:scale-95"
+                                >
+                                    <Plus className="size-3.5" />
+                                    <span>Laporkan Rujukan Siswa</span>
+                                </Link>
+                            </div>
+
+                            <div className="space-y-3">
+                                {caseList.length === 0 ? (
+                                    <div className="rounded-xl border border-dashed border-slate-200 py-8 text-center text-xs text-slate-400 dark:border-slate-800">
+                                        Belum ada rujukan kendala siswa yang dilaporkan ke Guru BK.
+                                    </div>
+                                ) : (
+                                    caseList.slice(0, 4).map((c) => {
+                                        const isHandled =
+                                            c.isHandledByBk ||
+                                            c.stage === 'handled_by_bk' ||
+                                            c.stage === 'resolved' ||
+                                            !!c.handledAt;
+
+                                        return (
+                                            <div
+                                                key={c.id}
+                                                className={cn(
+                                                    'space-y-2.5 rounded-xl border p-4 text-xs transition-colors',
+                                                    isHandled
+                                                        ? 'border-emerald-200/90 bg-emerald-50/40 dark:border-emerald-900/60 dark:bg-emerald-950/20'
+                                                        : 'border-amber-200/90 bg-amber-50/40 dark:border-amber-900/60 dark:bg-amber-950/20',
+                                                )}
+                                            >
+                                                <div className="flex flex-wrap items-center justify-between gap-2">
+                                                    <div className="flex items-center gap-2">
+                                                        <span className="font-mono text-xs font-bold text-blue-700 dark:text-blue-400">
+                                                            {c.code}
+                                                        </span>
+                                                        <span className="font-bold text-slate-900 dark:text-white">
+                                                            {c.studentName}
+                                                        </span>
+                                                        <span className="text-[11px] text-slate-400">
+                                                            • {c.class}
+                                                        </span>
+                                                    </div>
+
+                                                    {/* Real-time Tracking Badge */}
+                                                    {isHandled ? (
+                                                        <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-300 bg-emerald-100 px-2.5 py-0.5 text-[11px] font-bold text-emerald-800 shadow-2xs dark:border-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">
+                                                            <CheckCircle2 className="size-3.5 text-emerald-600 dark:text-emerald-400" />
+                                                            Sudah Ditangani oleh Guru BK
+                                                        </span>
+                                                    ) : (
+                                                        <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-300 bg-amber-100 px-2.5 py-0.5 text-[11px] font-bold text-amber-800 shadow-2xs dark:border-amber-800 dark:bg-amber-950 dark:text-amber-300">
+                                                            <Clock className="size-3.5 text-amber-600 dark:text-amber-400" />
+                                                            Menunggu Penanganan Guru BK
+                                                        </span>
+                                                    )}
+                                                </div>
+
+                                                {/* Kendala yang dilaporkan oleh Wali Kelas */}
+                                                <div className="rounded-lg border border-slate-200 bg-white p-3 leading-relaxed font-normal text-slate-700 dark:border-slate-800 dark:bg-[#070b14] dark:text-slate-300">
+                                                    <div className="mb-0.5 text-[10px] font-semibold text-slate-500">
+                                                        Kendala yang Dilaporkan Wali Kelas:
+                                                    </div>
+                                                    <p>{c.referralNotes || c.lastActivity}</p>
+                                                </div>
+
+                                                {/* Bukti & Catatan Hasil Penanganan Guru BK */}
+                                                {isHandled ? (
+                                                    <div className="rounded-lg border border-emerald-200 bg-white p-3 leading-relaxed text-slate-700 shadow-2xs dark:border-emerald-900/60 dark:bg-[#09111e] dark:text-slate-200">
+                                                        <div className="flex flex-wrap items-center justify-between text-[11px] font-bold text-emerald-700 dark:text-emerald-400">
+                                                            <span>
+                                                                Tindakan Guru BK: {c.bkActionType || 'Konseling Siswa'}
+                                                            </span>
+                                                            <span className="text-[10px] font-normal text-slate-500">
+                                                                {c.handledAt || c.lastUpdate}
+                                                            </span>
+                                                        </div>
+                                                        <div className="mt-0.5 text-[10px] text-slate-500">
+                                                            Konselor:{' '}
+                                                            <strong className="text-slate-800 dark:text-slate-200">
+                                                                {c.handledByBkName || c.assignee}
+                                                            </strong>
+                                                        </div>
+                                                        <p className="mt-1.5 border-t border-slate-100 pt-1.5 text-[11px] leading-relaxed text-slate-700 dark:border-slate-800 dark:text-slate-300">
+                                                            {c.bkHandlingNotes || 'Sesi bimbingan & konseling telah berhasil dilaksanakan bersama siswa.'}
+                                                        </p>
+                                                    </div>
+                                                ) : (
+                                                    <div className="flex items-center justify-between pt-1 text-[11px] text-slate-500">
+                                                        <span>
+                                                            PIC Guru BK:{' '}
+                                                            <strong className="font-medium text-slate-700 dark:text-slate-300">
+                                                                {c.assignee}
+                                                            </strong>
+                                                        </span>
+                                                        <span className="text-[10px] text-amber-700 dark:text-amber-400">
+                                                            Dalam antrean jadwal konseling
+                                                        </span>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        );
+                                    })
+                                )}
+
+                                <Link
+                                    href="/kondisi-kelas"
+                                    className="block w-full rounded-lg border border-dashed border-slate-300 py-2.5 text-center text-xs font-semibold text-blue-700 transition-colors hover:bg-slate-50 dark:border-slate-700 dark:text-blue-400 dark:hover:bg-slate-800/40"
+                                >
+                                    Kelola Binaan & Rujukan Siswa di Kondisi Kelas →
+                                </Link>
+                            </div>
+                        </div>
+                    ) : currentRole === 'guru_bk' ? (
+                        <div className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
+                            <div className="flex flex-col justify-between gap-3 border-b border-slate-200 pb-3 sm:flex-row sm:items-center dark:border-slate-800">
+                                <div>
+                                    <div className="flex items-center gap-2">
+                                        <div className="rounded-lg bg-blue-50 p-1 text-blue-700 dark:bg-blue-950/60 dark:text-blue-300">
+                                            <Inbox className="size-4" />
+                                        </div>
+                                        <h3 className="text-sm font-bold text-slate-900 dark:text-white">
+                                            Rujukan Siswa Masuk dari Wali Kelas
+                                        </h3>
+                                    </div>
+                                    <p className="mt-0.5 text-[11px] text-slate-500 dark:text-slate-400">
+                                        Daftar kendala siswa yang dilaporkan Wali Kelas untuk ditangani melalui layanan BK.
+                                    </p>
+                                </div>
+                                <Link
+                                    href="/manajemen-kasus"
+                                    className="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-blue-700 px-3 py-1.5 text-xs font-semibold text-white shadow-2xs transition-colors hover:bg-blue-800 active:scale-95"
+                                >
+                                    <span>Papan Kasus Rujukan BK →</span>
+                                </Link>
+                            </div>
+
+                            <div className="space-y-3">
+                                {caseList.slice(0, 3).map((c) => {
+                                    const isHandled =
+                                        c.isHandledByBk ||
+                                        c.stage === 'handled_by_bk' ||
+                                        c.stage === 'resolved' ||
+                                        !!c.handledAt;
+
+                                    return (
+                                        <div
+                                            key={c.id}
+                                            className="space-y-2 rounded-xl border border-slate-200 bg-slate-50/70 p-4 text-xs dark:border-slate-800 dark:bg-[#111c30]"
+                                        >
+                                            <div className="flex items-center justify-between">
+                                                <div className="flex items-center gap-2">
+                                                    <span className="font-mono text-xs font-bold text-blue-700 dark:text-blue-400">
+                                                        {c.code}
+                                                    </span>
+                                                    <span className="font-bold text-slate-900 dark:text-white">
+                                                        {c.studentName}
+                                                    </span>
+                                                    <span className="text-[11px] text-slate-400">
+                                                        • {c.class}
+                                                    </span>
+                                                </div>
+                                                <span className="rounded border border-slate-200 bg-white px-2 py-0.5 text-[10px] font-semibold text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
+                                                    Prioritas: {c.priority}
+                                                </span>
+                                            </div>
+
+                                            <div className="rounded-lg border border-sky-100 bg-sky-50/70 p-2.5 text-[11px] dark:border-sky-950 dark:bg-sky-950/30">
+                                                <div className="text-[10px] font-semibold text-sky-800 dark:text-sky-300">
+                                                    Perujuk: {c.referredByName || 'Wali Kelas'}
+                                                </div>
+                                                <p className="mt-0.5 text-slate-700 leading-relaxed dark:text-slate-300">
+                                                    {c.referralNotes || c.lastActivity}
+                                                </p>
+                                            </div>
+
+                                            <div className="flex items-center justify-between pt-1 text-[11px]">
+                                                <span className="text-slate-500">
+                                                    Status:{' '}
+                                                    <strong className={isHandled ? 'text-emerald-600 font-bold' : 'text-amber-600 font-semibold'}>
+                                                        {isHandled ? '✓ Sudah Ditangani oleh Guru BK' : 'Menunggu Penanganan BK'}
+                                                    </strong>
+                                                </span>
+                                                <Link
+                                                    href="/manajemen-kasus"
+                                                    className="font-semibold text-blue-700 hover:underline dark:text-blue-400"
+                                                >
+                                                    {isHandled ? 'Lihat Arsip →' : 'Tangani Sekarang →'}
+                                                </Link>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+
+                                <Link
+                                    href="/manajemen-kasus"
+                                    className="block w-full rounded-lg border border-dashed border-slate-300 py-2.5 text-center text-xs font-semibold text-blue-700 transition-colors hover:bg-slate-50 dark:border-slate-700 dark:text-blue-400 dark:hover:bg-slate-800/40"
+                                >
+                                    Buka Papan Rujukan Lengkap — {caseList.length} Rujukan →
+                                </Link>
+                            </div>
+                        </div>
                     ) : (
                         <div className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
                             <div className="flex items-center justify-between border-b border-slate-200 pb-3 dark:border-slate-800">
@@ -750,8 +1088,7 @@ export default function Dashboard({
                                         Progres Penanganan Kasus Terstruktur
                                     </h3>
                                     <p className="text-[11px] text-slate-500">
-                                        Alur tahapan: Baru → Ditugaskan →
-                                        Ditangani → Selesai
+                                        Alur tahapan: Rujukan Masuk → Ditugaskan → Ditangani → Selesai
                                     </p>
                                 </div>
                                 <button
@@ -829,85 +1166,154 @@ export default function Dashboard({
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-3.5 pt-1 sm:grid-cols-3 lg:grid-cols-6">
-                        <Link
-                            href="/early-warning"
-                            className="group rounded-xl border border-slate-200 bg-slate-50/70 p-3.5 text-center transition-all hover:border-blue-500 hover:bg-white dark:border-slate-800 dark:bg-[#111c30] dark:hover:border-blue-500"
-                        >
-                            <AlertTriangle className="mx-auto mb-2 size-5 text-blue-700 transition-transform group-hover:scale-110 dark:text-blue-400" />
-                            <div className="text-xs font-bold text-slate-900 dark:text-white">
-                                Early Warning
-                            </div>
-                            <div className="text-[10px] text-slate-500">
-                                {safeStats.studentsNeedingAttention} Berisiko
-                            </div>
-                        </Link>
+                    {currentRole === 'operator' ? (
+                        <div className="grid grid-cols-2 gap-3.5 pt-1 sm:grid-cols-3 lg:grid-cols-5">
+                            <Link
+                                href="/kelola-pengguna"
+                                className="group rounded-xl border border-slate-200 bg-slate-50/70 p-3.5 text-center transition-all hover:border-blue-500 hover:bg-white dark:border-slate-800 dark:bg-[#111c30] dark:hover:border-blue-500"
+                            >
+                                <Users className="mx-auto mb-2 size-5 text-blue-700 transition-transform group-hover:scale-110 dark:text-blue-400" />
+                                <div className="text-xs font-bold text-slate-900 dark:text-white">
+                                    Kelola Pengguna
+                                </div>
+                                <div className="text-[10px] text-slate-500">
+                                    Akun & Kuota Kelas
+                                </div>
+                            </Link>
 
-                        <Link
-                            href="/kondisi-kelas"
-                            className="group rounded-xl border border-slate-200 bg-slate-50/70 p-3.5 text-center transition-all hover:border-blue-500 hover:bg-white dark:border-slate-800 dark:bg-[#111c30] dark:hover:border-blue-500"
-                        >
-                            <GraduationCap className="mx-auto mb-2 size-5 text-blue-700 transition-transform group-hover:scale-110 dark:text-blue-400" />
-                            <div className="text-xs font-bold text-slate-900 dark:text-white">
-                                Kondisi Kelas
-                            </div>
-                            <div className="text-[10px] text-slate-500">
-                                {classList.length || 4} Rombel
-                            </div>
-                        </Link>
+                            <Link
+                                href="/dapodik"
+                                className="group rounded-xl border border-slate-200 bg-slate-50/70 p-3.5 text-center transition-all hover:border-blue-500 hover:bg-white dark:border-slate-800 dark:bg-[#111c30] dark:hover:border-blue-500"
+                            >
+                                <CheckCircle2 className="mx-auto mb-2 size-5 text-blue-700 transition-transform group-hover:scale-110 dark:text-blue-400" />
+                                <div className="text-xs font-bold text-slate-900 dark:text-white">
+                                    Cek Dapodik
+                                </div>
+                                <div className="text-[10px] text-slate-500">
+                                    {safeStats.dataCheckIssues} Residu Data
+                                </div>
+                            </Link>
 
-                        <Link
-                            href="/manajemen-kasus"
-                            className="group rounded-xl border border-slate-200 bg-slate-50/70 p-3.5 text-center transition-all hover:border-blue-500 hover:bg-white dark:border-slate-800 dark:bg-[#111c30] dark:hover:border-blue-500"
-                        >
-                            <ShieldAlert className="mx-auto mb-2 size-5 text-blue-700 transition-transform group-hover:scale-110 dark:text-blue-400" />
-                            <div className="text-xs font-bold text-slate-900 dark:text-white">
-                                Kasus BK
-                            </div>
-                            <div className="text-[10px] text-slate-500">
-                                {safeStats.activeCases} Kasus Aktif
-                            </div>
-                        </Link>
+                            <Link
+                                href="/pembayaran"
+                                className="group rounded-xl border border-slate-200 bg-slate-50/70 p-3.5 text-center transition-all hover:border-blue-500 hover:bg-white dark:border-slate-800 dark:bg-[#111c30] dark:hover:border-blue-500"
+                            >
+                                <CreditCard className="mx-auto mb-2 size-5 text-blue-700 transition-transform group-hover:scale-110 dark:text-blue-400" />
+                                <div className="text-xs font-bold text-slate-900 dark:text-white">
+                                    Pembayaran SPP
+                                </div>
+                                <div className="text-[10px] text-slate-500">
+                                    {safeStats.duePayments} Tagihan Aktif
+                                </div>
+                            </Link>
 
-                        <Link
-                            href="/komunikasi-ortu"
-                            className="group rounded-xl border border-slate-200 bg-slate-50/70 p-3.5 text-center transition-all hover:border-blue-500 hover:bg-white dark:border-slate-800 dark:bg-[#111c30] dark:hover:border-blue-500"
-                        >
-                            <PhoneCall className="mx-auto mb-2 size-5 text-blue-700 transition-transform group-hover:scale-110 dark:text-blue-400" />
-                            <div className="text-xs font-bold text-slate-900 dark:text-white">
-                                Kontak Ortu
-                            </div>
-                            <div className="text-[10px] text-slate-500">
-                                Pesan Resmi
-                            </div>
-                        </Link>
+                            <Link
+                                href="/dokumen-guru"
+                                className="group rounded-xl border border-slate-200 bg-slate-50/70 p-3.5 text-center transition-all hover:border-blue-500 hover:bg-white dark:border-slate-800 dark:bg-[#111c30] dark:hover:border-blue-500"
+                            >
+                                <FileText className="mx-auto mb-2 size-5 text-blue-700 transition-transform group-hover:scale-110 dark:text-blue-400" />
+                                <div className="text-xs font-bold text-slate-900 dark:text-white">
+                                    Dokumen GTK
+                                </div>
+                                <div className="text-[10px] text-slate-500">
+                                    {docList.length} Berkas Guru
+                                </div>
+                            </Link>
 
-                        <Link
-                            href="/dapodik"
-                            className="group rounded-xl border border-slate-200 bg-slate-50/70 p-3.5 text-center transition-all hover:border-blue-500 hover:bg-white dark:border-slate-800 dark:bg-[#111c30] dark:hover:border-blue-500"
-                        >
-                            <CheckCircle2 className="mx-auto mb-2 size-5 text-blue-700 transition-transform group-hover:scale-110 dark:text-blue-400" />
-                            <div className="text-xs font-bold text-slate-900 dark:text-white">
-                                Cek Dapodik
-                            </div>
-                            <div className="text-[10px] text-slate-500">
-                                {safeStats.dataCheckIssues} Catatan
-                            </div>
-                        </Link>
+                            <Link
+                                href="/respons-insiden"
+                                className="group rounded-xl border border-slate-200 bg-slate-50/70 p-3.5 text-center transition-all hover:border-blue-500 hover:bg-white dark:border-slate-800 dark:bg-[#111c30] dark:hover:border-blue-500"
+                            >
+                                <Siren className="mx-auto mb-2 size-5 text-blue-700 transition-transform group-hover:scale-110 dark:text-blue-400" />
+                                <div className="text-xs font-bold text-slate-900 dark:text-white">
+                                    Tanggap Darurat
+                                </div>
+                                <div className="text-[10px] text-slate-500">
+                                    SOP & Insiden
+                                </div>
+                            </Link>
+                        </div>
+                    ) : (
+                        <div className="grid grid-cols-2 gap-3.5 pt-1 sm:grid-cols-3 lg:grid-cols-6">
+                            <Link
+                                href="/early-warning"
+                                className="group rounded-xl border border-slate-200 bg-slate-50/70 p-3.5 text-center transition-all hover:border-blue-500 hover:bg-white dark:border-slate-800 dark:bg-[#111c30] dark:hover:border-blue-500"
+                            >
+                                <AlertTriangle className="mx-auto mb-2 size-5 text-blue-700 transition-transform group-hover:scale-110 dark:text-blue-400" />
+                                <div className="text-xs font-bold text-slate-900 dark:text-white">
+                                    Early Warning
+                                </div>
+                                <div className="text-[10px] text-slate-500">
+                                    {safeStats.studentsNeedingAttention} Berisiko
+                                </div>
+                            </Link>
 
-                        <Link
-                            href="/respons-insiden"
-                            className="group rounded-xl border border-slate-200 bg-slate-50/70 p-3.5 text-center transition-all hover:border-blue-500 hover:bg-white dark:border-slate-800 dark:bg-[#111c30] dark:hover:border-blue-500"
-                        >
-                            <Siren className="mx-auto mb-2 size-5 text-blue-700 transition-transform group-hover:scale-110 dark:text-blue-400" />
-                            <div className="text-xs font-bold text-slate-900 dark:text-white">
-                                Tanggap Darurat
-                            </div>
-                            <div className="text-[10px] text-slate-500">
-                                SOP & Insiden
-                            </div>
-                        </Link>
-                    </div>
+                            <Link
+                                href="/kondisi-kelas"
+                                className="group rounded-xl border border-slate-200 bg-slate-50/70 p-3.5 text-center transition-all hover:border-blue-500 hover:bg-white dark:border-slate-800 dark:bg-[#111c30] dark:hover:border-blue-500"
+                            >
+                                <GraduationCap className="mx-auto mb-2 size-5 text-blue-700 transition-transform group-hover:scale-110 dark:text-blue-400" />
+                                <div className="text-xs font-bold text-slate-900 dark:text-white">
+                                    {currentRole === 'wali_kelas' || currentRole === 'guru_bk' ? 'Data Siswa & Poin' : 'Kondisi Kelas'}
+                                </div>
+                                <div className="text-[10px] text-slate-500">
+                                    {classList.length || 4} Rombel
+                                </div>
+                            </Link>
+
+                            <Link
+                                href="/manajemen-kasus"
+                                className="group rounded-xl border border-slate-200 bg-slate-50/70 p-3.5 text-center transition-all hover:border-blue-500 hover:bg-white dark:border-slate-800 dark:bg-[#111c30] dark:hover:border-blue-500"
+                            >
+                                <ShieldAlert className="mx-auto mb-2 size-5 text-blue-700 transition-transform group-hover:scale-110 dark:text-blue-400" />
+                                <div className="text-xs font-bold text-slate-900 dark:text-white">
+                                    Kasus BK
+                                </div>
+                                <div className="text-[10px] text-slate-500">
+                                    {safeStats.activeCases} Kasus Aktif
+                                </div>
+                            </Link>
+
+                            <Link
+                                href="/komunikasi-ortu"
+                                className="group rounded-xl border border-slate-200 bg-slate-50/70 p-3.5 text-center transition-all hover:border-blue-500 hover:bg-white dark:border-slate-800 dark:bg-[#111c30] dark:hover:border-blue-500"
+                            >
+                                <PhoneCall className="mx-auto mb-2 size-5 text-blue-700 transition-transform group-hover:scale-110 dark:text-blue-400" />
+                                <div className="text-xs font-bold text-slate-900 dark:text-white">
+                                    Kontak Ortu
+                                </div>
+                                <div className="text-[10px] text-slate-500">
+                                    Pesan Resmi
+                                </div>
+                            </Link>
+
+                            <Link
+                                href="/dapodik"
+                                className="group rounded-xl border border-slate-200 bg-slate-50/70 p-3.5 text-center transition-all hover:border-blue-500 hover:bg-white dark:border-slate-800 dark:bg-[#111c30] dark:hover:border-blue-500"
+                            >
+                                <CheckCircle2 className="mx-auto mb-2 size-5 text-blue-700 transition-transform group-hover:scale-110 dark:text-blue-400" />
+                                <div className="text-xs font-bold text-slate-900 dark:text-white">
+                                    Cek Dapodik
+                                </div>
+                                <div className="text-[10px] text-slate-500">
+                                    {safeStats.dataCheckIssues} Catatan
+                                </div>
+                            </Link>
+
+                            <Link
+                                href="/respons-insiden"
+                                className="group rounded-xl border border-slate-200 bg-slate-50/70 p-3.5 text-center transition-all hover:border-blue-500 hover:bg-white dark:border-slate-800 dark:bg-[#111c30] dark:hover:border-blue-500"
+                            >
+                                <Siren className="mx-auto mb-2 size-5 text-blue-700 transition-transform group-hover:scale-110 dark:text-blue-400" />
+                                <div className="text-xs font-bold text-slate-900 dark:text-white">
+                                    Tanggap Darurat
+                                </div>
+                                <div className="text-[10px] text-slate-500">
+                                    SOP & Insiden
+                                </div>
+                            </Link>
+                        </div>
+                    )}
                 </div>
             </div>
         </FlowbiteTanggapinLayout>

@@ -269,10 +269,18 @@ export default function Welcome() {
     const unggulanAnnualCost = 8544000;
     const roiMultiplier = (totalBosProtected / unggulanAnnualCost).toFixed(1);
 
+    const directRoleMap: Record<string, string> = {
+        operator: '/operator',
+        guru_bk: '/guru-bk',
+        wali_kelas: '/wali-kelas',
+        kepala_sekolah: '/kepala-sekolah',
+        bendahara: '/bendahara',
+    };
+
     const handleSelectDemoRole = (roleId: string) => {
         if (typeof window !== 'undefined') {
             localStorage.setItem('tanggapin_current_role', roleId);
-            window.location.href = `/demo-login?role=${roleId}`;
+            window.location.href = directRoleMap[roleId] || `/demo-login?role=${roleId}`;
         }
     };
 
@@ -461,39 +469,29 @@ Hotline Layanan BOS: +62 812-9988-7766
 
                         <nav className="flex items-center gap-3">
                             {auth?.user ? (
+                                <div className="flex items-center gap-2">
+                                    <Link
+                                        href="/login"
+                                        className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-xs font-semibold text-slate-700 shadow-2xs transition-all hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+                                    >
+                                        Masuk Akun Lain
+                                    </Link>
+                                    <Link
+                                        href={dashboard()}
+                                        className="inline-flex items-center gap-1.5 rounded-xl bg-blue-700 px-4 py-2 text-xs font-semibold text-white shadow-xs transition-all hover:bg-blue-800"
+                                    >
+                                        Buka Dashboard
+                                        <ArrowRight className="size-3.5" />
+                                    </Link>
+                                </div>
+                            ) : (
                                 <Link
-                                    href={dashboard()}
-                                    className="inline-flex items-center gap-1.5 rounded-xl bg-blue-700 px-4 py-2 text-xs font-semibold text-white shadow-xs transition-all hover:bg-blue-800"
+                                    href="/login"
+                                    className="inline-flex items-center gap-1.5 rounded-xl bg-blue-700 px-4 py-2 text-xs font-semibold text-white shadow-xs transition-all hover:bg-blue-800 active:scale-98"
                                 >
-                                    Buka Dashboard
+                                    <span>Masuk ke Akun</span>
                                     <ArrowRight className="size-3.5" />
                                 </Link>
-                            ) : (
-                                <>
-                                    <button
-                                        type="button"
-                                        onClick={() =>
-                                            setIsDemoRoleModalOpen(true)
-                                        }
-                                        className="inline-flex items-center gap-1.5 rounded-xl bg-blue-700 px-4 py-2 text-xs font-semibold text-white shadow-xs transition-all hover:bg-blue-800 active:scale-98"
-                                    >
-                                        <span>Coba Demo Langsung</span>
-                                        <ArrowRight className="size-3.5" />
-                                    </button>
-                                    <Link
-                                        href={login()}
-                                        className="rounded-xl px-3.5 py-2 text-xs font-semibold text-slate-700 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
-                                    >
-                                        Masuk
-                                    </Link>
-                                    <button
-                                        type="button"
-                                        onClick={() => setIsDemoRoleModalOpen(true)}
-                                        className="hidden rounded-xl border border-blue-200 bg-blue-50 px-3.5 py-2 text-xs font-semibold text-blue-700 transition-colors hover:bg-blue-100 sm:inline-block dark:border-blue-800 dark:bg-blue-950 dark:text-blue-300"
-                                    >
-                                        Pilih Peran Demo
-                                    </button>
-                                </>
                             )}
                         </nav>
                     </div>
@@ -536,14 +534,13 @@ Hotline Layanan BOS: +62 812-9988-7766
 
                             {/* Primary Interactive CTA Area */}
                             <div className="flex flex-wrap items-center justify-center gap-3.5 pt-4">
-                                <button
-                                    type="button"
-                                    onClick={() => setIsDemoRoleModalOpen(true)}
+                                <Link
+                                    href="/login"
                                     className="inline-flex items-center gap-2 rounded-xl bg-blue-700 px-6 py-3.5 text-xs font-bold text-white shadow-xs transition-all hover:bg-blue-800 active:scale-98 sm:text-sm"
                                 >
-                                    Eksplorasi Dashboard Interaktif
+                                    Masuk ke Akun / Login Peran
                                     <ArrowRight className="size-4" />
-                                </button>
+                                </Link>
                                 <a
                                     href="#harga"
                                     className="inline-flex items-center gap-2 rounded-xl border border-blue-200 bg-blue-50/60 px-5 py-3.5 text-xs font-bold text-blue-700 shadow-xs transition-colors hover:bg-blue-100 sm:text-sm dark:border-blue-800 dark:bg-blue-950/40 dark:text-blue-300 dark:hover:bg-blue-900/40"

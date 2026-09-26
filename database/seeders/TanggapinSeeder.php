@@ -173,21 +173,52 @@ class TanggapinSeeder extends Seeder
             'suggested_action' => 'Buat Follow-up & Hubungi Orang Tua',
         ]);
 
-        // 4. Single Case & Timeline (Modul 03 - Kasus BK)
+        // 4. Single Case & Timeline (Modul 03 - Kasus BK & Rujukan Wali Kelas)
         $case = StudentCase::updateOrCreate(['code' => 'CS-2025-001'], [
             'student_id' => $siswa->id,
             'category' => 'Kedisiplinan',
             'priority' => 'Tinggi',
             'stage' => 'new',
-            'stage_label' => 'Baru Masuk',
-            'assignee_name' => 'Guru BK',
-            'last_activity' => 'Kasus baru didaftarkan ke sistem, menunggu penugasan.',
+            'stage_label' => 'Rujukan Masuk dari Wali Kelas',
+            'assignee_name' => 'Ibu Rahmawati, S.Psi (Guru BK)',
+            'referred_by_name' => 'Budi Santoso, S.Pd (Wali Kelas)',
+            'referral_notes' => 'Kehadiran menurun drastis 3 minggu terakhir dan siswa sering murung saat jam pelajaran.',
+            'last_activity' => 'Rujukan kendala siswa dilaporkan oleh Wali Kelas, menunggu penanganan Guru BK.',
         ]);
 
-        CaseTimeline::updateOrCreate(['student_case_id' => $case->id, 'title' => 'Kasus didaftarkan ke sistem'], [
-            'actor_name' => 'Wali Kelas',
+        CaseTimeline::updateOrCreate(['student_case_id' => $case->id, 'title' => 'Rujukan kendala siswa dilaporkan ke Guru BK'], [
+            'actor_name' => 'Budi Santoso, S.Pd (Wali Kelas)',
             'recorded_at' => '22 Sep 08:30',
         ]);
+
+        $secondStudent = Student::where('school_class_id', $classRpl2->id)->skip(1)->first();
+        if ($secondStudent) {
+            $handledCase = StudentCase::updateOrCreate(['code' => 'CS-2025-002'], [
+                'student_id' => $secondStudent->id,
+                'category' => 'Motivasi Belajar',
+                'priority' => 'Sedang',
+                'stage' => 'handled_by_bk',
+                'stage_label' => 'Sudah Ditangani oleh Guru BK',
+                'assignee_name' => 'Ibu Rahmawati, S.Psi (Guru BK)',
+                'referred_by_name' => 'Budi Santoso, S.Pd (Wali Kelas)',
+                'referral_notes' => 'Siswa mengalami penurunan nilai drastis dan kesulitan fokus saat praktikum kejuruan.',
+                'handled_by_bk_name' => 'Ibu Rahmawati, S.Psi (Guru BK)',
+                'bk_action_type' => 'Konseling Individu & Pendampingan Belajar',
+                'bk_handling_notes' => 'Telah dilaksanakan sesi konseling individu. Siswa mengalami kesulitan adaptasi materi kejuruan dan hambatan kerja kelompok. Telah disusun kesepakatan target belajar bertahap dan pendampingan tutor sebaya.',
+                'handled_at' => now()->subDay(),
+                'last_activity' => 'Telah ditangani oleh Guru BK (Ibu Rahmawati, S.Psi): Konseling individu & rencana tutor sebaya disepakati.',
+            ]);
+
+            CaseTimeline::updateOrCreate(['student_case_id' => $handledCase->id, 'title' => 'Dirujuk oleh Wali Kelas'], [
+                'actor_name' => 'Budi Santoso, S.Pd (Wali Kelas)',
+                'recorded_at' => '23 Sep 09:00',
+            ]);
+
+            CaseTimeline::updateOrCreate(['student_case_id' => $handledCase->id, 'title' => 'Ditangani oleh Guru BK: Konseling Individu'], [
+                'actor_name' => 'Ibu Rahmawati, S.Psi (Guru BK)',
+                'recorded_at' => '24 Sep 11:30',
+            ]);
+        }
 
         // 5. Single Followup
         Followup::updateOrCreate(['student_id' => $siswa->id, 'type' => 'Panggilan Orang Tua'], [
