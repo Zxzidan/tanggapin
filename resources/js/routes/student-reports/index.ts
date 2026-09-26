@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../wayfinder'
 /**
 * @see \App\Http\Controllers\DashboardController::generate
- * @see app/Http/Controllers/DashboardController.php:1143
+ * @see app/Http/Controllers/DashboardController.php:1149
  * @route '/student-reports/generate'
  */
 export const generate = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -16,7 +16,7 @@ generate.definition = {
 
 /**
 * @see \App\Http\Controllers\DashboardController::generate
- * @see app/Http/Controllers/DashboardController.php:1143
+ * @see app/Http/Controllers/DashboardController.php:1149
  * @route '/student-reports/generate'
  */
 generate.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ generate.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\DashboardController::generate
- * @see app/Http/Controllers/DashboardController.php:1143
+ * @see app/Http/Controllers/DashboardController.php:1149
  * @route '/student-reports/generate'
  */
 generate.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -35,7 +35,7 @@ generate.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
     /**
 * @see \App\Http\Controllers\DashboardController::generate
- * @see app/Http/Controllers/DashboardController.php:1143
+ * @see app/Http/Controllers/DashboardController.php:1149
  * @route '/student-reports/generate'
  */
     const generateForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -45,7 +45,7 @@ generate.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
             /**
 * @see \App\Http\Controllers\DashboardController::generate
- * @see app/Http/Controllers/DashboardController.php:1143
+ * @see app/Http/Controllers/DashboardController.php:1149
  * @route '/student-reports/generate'
  */
         generateForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -56,7 +56,7 @@ generate.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     generate.form = generateForm
 /**
 * @see \App\Http\Controllers\DashboardController::send
- * @see app/Http/Controllers/DashboardController.php:1223
+ * @see app/Http/Controllers/DashboardController.php:1229
  * @route '/student-reports/{report}/send'
  */
 export const send = (args: { report: number | { id: number } } | [report: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -71,7 +71,7 @@ send.definition = {
 
 /**
 * @see \App\Http\Controllers\DashboardController::send
- * @see app/Http/Controllers/DashboardController.php:1223
+ * @see app/Http/Controllers/DashboardController.php:1229
  * @route '/student-reports/{report}/send'
  */
 send.url = (args: { report: number | { id: number } } | [report: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -104,7 +104,7 @@ send.url = (args: { report: number | { id: number } } | [report: number | { id: 
 
 /**
 * @see \App\Http\Controllers\DashboardController::send
- * @see app/Http/Controllers/DashboardController.php:1223
+ * @see app/Http/Controllers/DashboardController.php:1229
  * @route '/student-reports/{report}/send'
  */
 send.post = (args: { report: number | { id: number } } | [report: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -114,7 +114,7 @@ send.post = (args: { report: number | { id: number } } | [report: number | { id:
 
     /**
 * @see \App\Http\Controllers\DashboardController::send
- * @see app/Http/Controllers/DashboardController.php:1223
+ * @see app/Http/Controllers/DashboardController.php:1229
  * @route '/student-reports/{report}/send'
  */
     const sendForm = (args: { report: number | { id: number } } | [report: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -124,7 +124,7 @@ send.post = (args: { report: number | { id: number } } | [report: number | { id:
 
             /**
 * @see \App\Http\Controllers\DashboardController::send
- * @see app/Http/Controllers/DashboardController.php:1223
+ * @see app/Http/Controllers/DashboardController.php:1229
  * @route '/student-reports/{report}/send'
  */
         sendForm.post = (args: { report: number | { id: number } } | [report: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

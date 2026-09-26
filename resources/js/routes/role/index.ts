@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../wayfinder'
 /**
 * @see \App\Http\Controllers\DashboardController::operator
- * @see app/Http/Controllers/DashboardController.php:32
+ * @see app/Http/Controllers/DashboardController.php:33
  * @route '/operator'
  */
 export const operator = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ operator.definition = {
 
 /**
 * @see \App\Http\Controllers\DashboardController::operator
- * @see app/Http/Controllers/DashboardController.php:32
+ * @see app/Http/Controllers/DashboardController.php:33
  * @route '/operator'
  */
 operator.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ operator.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\DashboardController::operator
- * @see app/Http/Controllers/DashboardController.php:32
+ * @see app/Http/Controllers/DashboardController.php:33
  * @route '/operator'
  */
 operator.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -34,7 +34,7 @@ operator.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\DashboardController::operator
- * @see app/Http/Controllers/DashboardController.php:32
+ * @see app/Http/Controllers/DashboardController.php:33
  * @route '/operator'
  */
 operator.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -44,7 +44,7 @@ operator.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\DashboardController::operator
- * @see app/Http/Controllers/DashboardController.php:32
+ * @see app/Http/Controllers/DashboardController.php:33
  * @route '/operator'
  */
     const operatorForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -54,7 +54,7 @@ operator.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\DashboardController::operator
- * @see app/Http/Controllers/DashboardController.php:32
+ * @see app/Http/Controllers/DashboardController.php:33
  * @route '/operator'
  */
         operatorForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -63,7 +63,7 @@ operator.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\DashboardController::operator
- * @see app/Http/Controllers/DashboardController.php:32
+ * @see app/Http/Controllers/DashboardController.php:33
  * @route '/operator'
  */
         operatorForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -79,7 +79,7 @@ operator.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     operator.form = operatorForm
 /**
 * @see \App\Http\Controllers\DashboardController::guruBk
- * @see app/Http/Controllers/DashboardController.php:40
+ * @see app/Http/Controllers/DashboardController.php:41
  * @route '/guru-bk'
  */
 export const guruBk = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -94,7 +94,7 @@ guruBk.definition = {
 
 /**
 * @see \App\Http\Controllers\DashboardController::guruBk
- * @see app/Http/Controllers/DashboardController.php:40
+ * @see app/Http/Controllers/DashboardController.php:41
  * @route '/guru-bk'
  */
 guruBk.url = (options?: RouteQueryOptions) => {
@@ -103,7 +103,7 @@ guruBk.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\DashboardController::guruBk
- * @see app/Http/Controllers/DashboardController.php:40
+ * @see app/Http/Controllers/DashboardController.php:41
  * @route '/guru-bk'
  */
 guruBk.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -112,7 +112,7 @@ guruBk.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\DashboardController::guruBk
- * @see app/Http/Controllers/DashboardController.php:40
+ * @see app/Http/Controllers/DashboardController.php:41
  * @route '/guru-bk'
  */
 guruBk.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -122,7 +122,7 @@ guruBk.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\DashboardController::guruBk
- * @see app/Http/Controllers/DashboardController.php:40
+ * @see app/Http/Controllers/DashboardController.php:41
  * @route '/guru-bk'
  */
     const guruBkForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -132,7 +132,7 @@ guruBk.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\DashboardController::guruBk
- * @see app/Http/Controllers/DashboardController.php:40
+ * @see app/Http/Controllers/DashboardController.php:41
  * @route '/guru-bk'
  */
         guruBkForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -141,7 +141,7 @@ guruBk.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\DashboardController::guruBk
- * @see app/Http/Controllers/DashboardController.php:40
+ * @see app/Http/Controllers/DashboardController.php:41
  * @route '/guru-bk'
  */
         guruBkForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -157,7 +157,7 @@ guruBk.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     guruBk.form = guruBkForm
 /**
 * @see \App\Http\Controllers\DashboardController::waliKelas
- * @see app/Http/Controllers/DashboardController.php:48
+ * @see app/Http/Controllers/DashboardController.php:49
  * @route '/wali-kelas'
  */
 export const waliKelas = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -172,7 +172,7 @@ waliKelas.definition = {
 
 /**
 * @see \App\Http\Controllers\DashboardController::waliKelas
- * @see app/Http/Controllers/DashboardController.php:48
+ * @see app/Http/Controllers/DashboardController.php:49
  * @route '/wali-kelas'
  */
 waliKelas.url = (options?: RouteQueryOptions) => {
@@ -181,7 +181,7 @@ waliKelas.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\DashboardController::waliKelas
- * @see app/Http/Controllers/DashboardController.php:48
+ * @see app/Http/Controllers/DashboardController.php:49
  * @route '/wali-kelas'
  */
 waliKelas.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -190,7 +190,7 @@ waliKelas.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\DashboardController::waliKelas
- * @see app/Http/Controllers/DashboardController.php:48
+ * @see app/Http/Controllers/DashboardController.php:49
  * @route '/wali-kelas'
  */
 waliKelas.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -200,7 +200,7 @@ waliKelas.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\DashboardController::waliKelas
- * @see app/Http/Controllers/DashboardController.php:48
+ * @see app/Http/Controllers/DashboardController.php:49
  * @route '/wali-kelas'
  */
     const waliKelasForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -210,7 +210,7 @@ waliKelas.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\DashboardController::waliKelas
- * @see app/Http/Controllers/DashboardController.php:48
+ * @see app/Http/Controllers/DashboardController.php:49
  * @route '/wali-kelas'
  */
         waliKelasForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -219,7 +219,7 @@ waliKelas.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\DashboardController::waliKelas
- * @see app/Http/Controllers/DashboardController.php:48
+ * @see app/Http/Controllers/DashboardController.php:49
  * @route '/wali-kelas'
  */
         waliKelasForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -235,7 +235,7 @@ waliKelas.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     waliKelas.form = waliKelasForm
 /**
 * @see \App\Http\Controllers\DashboardController::waliKelasTkj
- * @see app/Http/Controllers/DashboardController.php:56
+ * @see app/Http/Controllers/DashboardController.php:57
  * @route '/wali-kelas/tkj'
  */
 export const waliKelasTkj = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -250,7 +250,7 @@ waliKelasTkj.definition = {
 
 /**
 * @see \App\Http\Controllers\DashboardController::waliKelasTkj
- * @see app/Http/Controllers/DashboardController.php:56
+ * @see app/Http/Controllers/DashboardController.php:57
  * @route '/wali-kelas/tkj'
  */
 waliKelasTkj.url = (options?: RouteQueryOptions) => {
@@ -259,7 +259,7 @@ waliKelasTkj.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\DashboardController::waliKelasTkj
- * @see app/Http/Controllers/DashboardController.php:56
+ * @see app/Http/Controllers/DashboardController.php:57
  * @route '/wali-kelas/tkj'
  */
 waliKelasTkj.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -268,7 +268,7 @@ waliKelasTkj.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\DashboardController::waliKelasTkj
- * @see app/Http/Controllers/DashboardController.php:56
+ * @see app/Http/Controllers/DashboardController.php:57
  * @route '/wali-kelas/tkj'
  */
 waliKelasTkj.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -278,7 +278,7 @@ waliKelasTkj.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\DashboardController::waliKelasTkj
- * @see app/Http/Controllers/DashboardController.php:56
+ * @see app/Http/Controllers/DashboardController.php:57
  * @route '/wali-kelas/tkj'
  */
     const waliKelasTkjForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -288,7 +288,7 @@ waliKelasTkj.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\DashboardController::waliKelasTkj
- * @see app/Http/Controllers/DashboardController.php:56
+ * @see app/Http/Controllers/DashboardController.php:57
  * @route '/wali-kelas/tkj'
  */
         waliKelasTkjForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -297,7 +297,7 @@ waliKelasTkj.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\DashboardController::waliKelasTkj
- * @see app/Http/Controllers/DashboardController.php:56
+ * @see app/Http/Controllers/DashboardController.php:57
  * @route '/wali-kelas/tkj'
  */
         waliKelasTkjForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -313,7 +313,7 @@ waliKelasTkj.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     waliKelasTkj.form = waliKelasTkjForm
 /**
 * @see \App\Http\Controllers\DashboardController::kepalaSekolah
- * @see app/Http/Controllers/DashboardController.php:64
+ * @see app/Http/Controllers/DashboardController.php:65
  * @route '/kepala-sekolah'
  */
 export const kepalaSekolah = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -328,7 +328,7 @@ kepalaSekolah.definition = {
 
 /**
 * @see \App\Http\Controllers\DashboardController::kepalaSekolah
- * @see app/Http/Controllers/DashboardController.php:64
+ * @see app/Http/Controllers/DashboardController.php:65
  * @route '/kepala-sekolah'
  */
 kepalaSekolah.url = (options?: RouteQueryOptions) => {
@@ -337,7 +337,7 @@ kepalaSekolah.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\DashboardController::kepalaSekolah
- * @see app/Http/Controllers/DashboardController.php:64
+ * @see app/Http/Controllers/DashboardController.php:65
  * @route '/kepala-sekolah'
  */
 kepalaSekolah.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -346,7 +346,7 @@ kepalaSekolah.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\DashboardController::kepalaSekolah
- * @see app/Http/Controllers/DashboardController.php:64
+ * @see app/Http/Controllers/DashboardController.php:65
  * @route '/kepala-sekolah'
  */
 kepalaSekolah.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -356,7 +356,7 @@ kepalaSekolah.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => (
 
     /**
 * @see \App\Http\Controllers\DashboardController::kepalaSekolah
- * @see app/Http/Controllers/DashboardController.php:64
+ * @see app/Http/Controllers/DashboardController.php:65
  * @route '/kepala-sekolah'
  */
     const kepalaSekolahForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -366,7 +366,7 @@ kepalaSekolah.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => (
 
             /**
 * @see \App\Http\Controllers\DashboardController::kepalaSekolah
- * @see app/Http/Controllers/DashboardController.php:64
+ * @see app/Http/Controllers/DashboardController.php:65
  * @route '/kepala-sekolah'
  */
         kepalaSekolahForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -375,7 +375,7 @@ kepalaSekolah.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => (
         })
             /**
 * @see \App\Http\Controllers\DashboardController::kepalaSekolah
- * @see app/Http/Controllers/DashboardController.php:64
+ * @see app/Http/Controllers/DashboardController.php:65
  * @route '/kepala-sekolah'
  */
         kepalaSekolahForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -391,7 +391,7 @@ kepalaSekolah.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => (
     kepalaSekolah.form = kepalaSekolahForm
 /**
 * @see \App\Http\Controllers\DashboardController::bendahara
- * @see app/Http/Controllers/DashboardController.php:72
+ * @see app/Http/Controllers/DashboardController.php:73
  * @route '/bendahara'
  */
 export const bendahara = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -406,7 +406,7 @@ bendahara.definition = {
 
 /**
 * @see \App\Http\Controllers\DashboardController::bendahara
- * @see app/Http/Controllers/DashboardController.php:72
+ * @see app/Http/Controllers/DashboardController.php:73
  * @route '/bendahara'
  */
 bendahara.url = (options?: RouteQueryOptions) => {
@@ -415,7 +415,7 @@ bendahara.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\DashboardController::bendahara
- * @see app/Http/Controllers/DashboardController.php:72
+ * @see app/Http/Controllers/DashboardController.php:73
  * @route '/bendahara'
  */
 bendahara.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -424,7 +424,7 @@ bendahara.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\DashboardController::bendahara
- * @see app/Http/Controllers/DashboardController.php:72
+ * @see app/Http/Controllers/DashboardController.php:73
  * @route '/bendahara'
  */
 bendahara.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -434,7 +434,7 @@ bendahara.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\DashboardController::bendahara
- * @see app/Http/Controllers/DashboardController.php:72
+ * @see app/Http/Controllers/DashboardController.php:73
  * @route '/bendahara'
  */
     const bendaharaForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -444,7 +444,7 @@ bendahara.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\DashboardController::bendahara
- * @see app/Http/Controllers/DashboardController.php:72
+ * @see app/Http/Controllers/DashboardController.php:73
  * @route '/bendahara'
  */
         bendaharaForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -453,7 +453,7 @@ bendahara.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\DashboardController::bendahara
- * @see app/Http/Controllers/DashboardController.php:72
+ * @see app/Http/Controllers/DashboardController.php:73
  * @route '/bendahara'
  */
         bendaharaForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -469,7 +469,7 @@ bendahara.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     bendahara.form = bendaharaForm
 /**
 * @see \App\Http\Controllers\DashboardController::switchMethod
- * @see app/Http/Controllers/DashboardController.php:80
+ * @see app/Http/Controllers/DashboardController.php:81
  * @route '/switch-role'
  */
 export const switchMethod = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -484,7 +484,7 @@ switchMethod.definition = {
 
 /**
 * @see \App\Http\Controllers\DashboardController::switchMethod
- * @see app/Http/Controllers/DashboardController.php:80
+ * @see app/Http/Controllers/DashboardController.php:81
  * @route '/switch-role'
  */
 switchMethod.url = (options?: RouteQueryOptions) => {
@@ -493,7 +493,7 @@ switchMethod.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\DashboardController::switchMethod
- * @see app/Http/Controllers/DashboardController.php:80
+ * @see app/Http/Controllers/DashboardController.php:81
  * @route '/switch-role'
  */
 switchMethod.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -503,7 +503,7 @@ switchMethod.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
     /**
 * @see \App\Http\Controllers\DashboardController::switchMethod
- * @see app/Http/Controllers/DashboardController.php:80
+ * @see app/Http/Controllers/DashboardController.php:81
  * @route '/switch-role'
  */
     const switchMethodForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -513,7 +513,7 @@ switchMethod.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
             /**
 * @see \App\Http\Controllers\DashboardController::switchMethod
- * @see app/Http/Controllers/DashboardController.php:80
+ * @see app/Http/Controllers/DashboardController.php:81
  * @route '/switch-role'
  */
         switchMethodForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

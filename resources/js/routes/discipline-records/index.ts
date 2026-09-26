@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../wayfinder'
 /**
 * @see \App\Http\Controllers\DashboardController::store
- * @see app/Http/Controllers/DashboardController.php:871
+ * @see app/Http/Controllers/DashboardController.php:877
  * @route '/discipline-records'
  */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -16,7 +16,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\DashboardController::store
- * @see app/Http/Controllers/DashboardController.php:871
+ * @see app/Http/Controllers/DashboardController.php:877
  * @route '/discipline-records'
  */
 store.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\DashboardController::store
- * @see app/Http/Controllers/DashboardController.php:871
+ * @see app/Http/Controllers/DashboardController.php:877
  * @route '/discipline-records'
  */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -35,7 +35,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
     /**
 * @see \App\Http\Controllers\DashboardController::store
- * @see app/Http/Controllers/DashboardController.php:871
+ * @see app/Http/Controllers/DashboardController.php:877
  * @route '/discipline-records'
  */
     const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -45,7 +45,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
             /**
 * @see \App\Http\Controllers\DashboardController::store
- * @see app/Http/Controllers/DashboardController.php:871
+ * @see app/Http/Controllers/DashboardController.php:877
  * @route '/discipline-records'
  */
         storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -56,7 +56,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     store.form = storeForm
 /**
 * @see \App\Http\Controllers\DashboardController::followup
- * @see app/Http/Controllers/DashboardController.php:1016
+ * @see app/Http/Controllers/DashboardController.php:1022
  * @route '/discipline-records/{record}/followup'
  */
 export const followup = (args: { record: number | { id: number } } | [record: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -71,7 +71,7 @@ followup.definition = {
 
 /**
 * @see \App\Http\Controllers\DashboardController::followup
- * @see app/Http/Controllers/DashboardController.php:1016
+ * @see app/Http/Controllers/DashboardController.php:1022
  * @route '/discipline-records/{record}/followup'
  */
 followup.url = (args: { record: number | { id: number } } | [record: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -104,7 +104,7 @@ followup.url = (args: { record: number | { id: number } } | [record: number | { 
 
 /**
 * @see \App\Http\Controllers\DashboardController::followup
- * @see app/Http/Controllers/DashboardController.php:1016
+ * @see app/Http/Controllers/DashboardController.php:1022
  * @route '/discipline-records/{record}/followup'
  */
 followup.post = (args: { record: number | { id: number } } | [record: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -114,7 +114,7 @@ followup.post = (args: { record: number | { id: number } } | [record: number | {
 
     /**
 * @see \App\Http\Controllers\DashboardController::followup
- * @see app/Http/Controllers/DashboardController.php:1016
+ * @see app/Http/Controllers/DashboardController.php:1022
  * @route '/discipline-records/{record}/followup'
  */
     const followupForm = (args: { record: number | { id: number } } | [record: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -124,7 +124,7 @@ followup.post = (args: { record: number | { id: number } } | [record: number | {
 
             /**
 * @see \App\Http\Controllers\DashboardController::followup
- * @see app/Http/Controllers/DashboardController.php:1016
+ * @see app/Http/Controllers/DashboardController.php:1022
  * @route '/discipline-records/{record}/followup'
  */
         followupForm.post = (args: { record: number | { id: number } } | [record: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

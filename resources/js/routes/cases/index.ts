@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../wayfinder'
 /**
 * @see \App\Http\Controllers\DashboardController::store
- * @see app/Http/Controllers/DashboardController.php:1076
+ * @see app/Http/Controllers/DashboardController.php:1082
  * @route '/cases'
  */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -16,7 +16,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\DashboardController::store
- * @see app/Http/Controllers/DashboardController.php:1076
+ * @see app/Http/Controllers/DashboardController.php:1082
  * @route '/cases'
  */
 store.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\DashboardController::store
- * @see app/Http/Controllers/DashboardController.php:1076
+ * @see app/Http/Controllers/DashboardController.php:1082
  * @route '/cases'
  */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -35,7 +35,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
     /**
 * @see \App\Http\Controllers\DashboardController::store
- * @see app/Http/Controllers/DashboardController.php:1076
+ * @see app/Http/Controllers/DashboardController.php:1082
  * @route '/cases'
  */
     const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -45,7 +45,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
             /**
 * @see \App\Http\Controllers\DashboardController::store
- * @see app/Http/Controllers/DashboardController.php:1076
+ * @see app/Http/Controllers/DashboardController.php:1082
  * @route '/cases'
  */
         storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -56,7 +56,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     store.form = storeForm
 /**
 * @see \App\Http\Controllers\DashboardController::handleBk
- * @see app/Http/Controllers/DashboardController.php:970
+ * @see app/Http/Controllers/DashboardController.php:976
  * @route '/cases/{studentCase}/handle-bk'
  */
 export const handleBk = (args: { studentCase: number | { id: number } } | [studentCase: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -71,7 +71,7 @@ handleBk.definition = {
 
 /**
 * @see \App\Http\Controllers\DashboardController::handleBk
- * @see app/Http/Controllers/DashboardController.php:970
+ * @see app/Http/Controllers/DashboardController.php:976
  * @route '/cases/{studentCase}/handle-bk'
  */
 handleBk.url = (args: { studentCase: number | { id: number } } | [studentCase: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -104,7 +104,7 @@ handleBk.url = (args: { studentCase: number | { id: number } } | [studentCase: n
 
 /**
 * @see \App\Http\Controllers\DashboardController::handleBk
- * @see app/Http/Controllers/DashboardController.php:970
+ * @see app/Http/Controllers/DashboardController.php:976
  * @route '/cases/{studentCase}/handle-bk'
  */
 handleBk.post = (args: { studentCase: number | { id: number } } | [studentCase: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -114,7 +114,7 @@ handleBk.post = (args: { studentCase: number | { id: number } } | [studentCase: 
 
     /**
 * @see \App\Http\Controllers\DashboardController::handleBk
- * @see app/Http/Controllers/DashboardController.php:970
+ * @see app/Http/Controllers/DashboardController.php:976
  * @route '/cases/{studentCase}/handle-bk'
  */
     const handleBkForm = (args: { studentCase: number | { id: number } } | [studentCase: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -124,7 +124,7 @@ handleBk.post = (args: { studentCase: number | { id: number } } | [studentCase: 
 
             /**
 * @see \App\Http\Controllers\DashboardController::handleBk
- * @see app/Http/Controllers/DashboardController.php:970
+ * @see app/Http/Controllers/DashboardController.php:976
  * @route '/cases/{studentCase}/handle-bk'
  */
         handleBkForm.post = (args: { studentCase: number | { id: number } } | [studentCase: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
