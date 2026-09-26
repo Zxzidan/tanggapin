@@ -14,7 +14,7 @@ export default function TanggapinLogo({
     size = 'md',
     showDescriptor = true,
     showTagline = false,
-    variant: _variant = 'auto',
+    variant = 'auto',
 }: TanggapinLogoProps) {
     const sizeConfig = {
         sm: {
@@ -93,7 +93,12 @@ export default function TanggapinLogo({
                 <div className="flex items-center gap-1.5">
                     <span
                         className={cn(
-                            'font-bold tracking-tight text-slate-900 uppercase dark:text-slate-100',
+                            'font-bold tracking-tight uppercase',
+                            variant === 'light'
+                                ? 'text-white'
+                                : variant === 'dark'
+                                  ? 'text-slate-900'
+                                  : 'text-slate-900 dark:text-slate-100',
                             sizeConfig.title,
                         )}
                     >
@@ -103,7 +108,12 @@ export default function TanggapinLogo({
                 {showDescriptor && (
                     <span
                         className={cn(
-                            'leading-tight font-medium text-slate-500 dark:text-slate-400',
+                            'leading-tight font-medium',
+                            variant === 'light'
+                                ? 'text-slate-300'
+                                : variant === 'dark'
+                                  ? 'text-slate-600'
+                                  : 'text-slate-500 dark:text-slate-400',
                             sizeConfig.descriptor,
                         )}
                     >
@@ -111,7 +121,14 @@ export default function TanggapinLogo({
                     </span>
                 )}
                 {showTagline && (
-                    <span className="mt-0.5 text-[11px] font-medium tracking-tight text-blue-600 dark:text-blue-400">
+                    <span
+                        className={cn(
+                            'mt-0.5 text-[11px] font-medium tracking-tight',
+                            variant === 'light'
+                                ? 'text-blue-300'
+                                : 'text-blue-600 dark:text-blue-400',
+                        )}
+                    >
                         Kenali lebih cepat. Tanggapi lebih tepat.
                     </span>
                 )}
