@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AtsRecord;
 use App\Models\CaseTimeline;
 use App\Models\DapodikIssue;
+use App\Models\DisciplineRecord;
 use App\Models\Followup;
 use App\Models\Incident;
 use App\Models\IncidentChecklist;
@@ -192,6 +193,19 @@ class DashboardController extends Controller
             'acknowledgement' => $msg->acknowledgement,
         ]);
 
+        // 11. Discipline Records
+        $disciplineList = DisciplineRecord::with('student.schoolClass')->latest()->get()->map(fn (DisciplineRecord $rec): array => [
+            'id' => (string) $rec->id,
+            'studentId' => (string) $rec->student_id,
+            'studentName' => $rec->student->name ?? 'Siswa',
+            'class' => $rec->student->schoolClass->name ?? '-',
+            'infraction' => $rec->infraction,
+            'points' => (int) $rec->points,
+            'actionStatus' => $rec->action_status,
+            'patternNotes' => $rec->pattern_notes ?? 'Pencatatan pembinaan berkala',
+            'recordedAt' => $rec->recorded_at ?? $rec->created_at?->format('d M H:i') ?? 'Hari ini',
+        ]);
+
         return Inertia::render('dashboard', [
             'stats' => [
                 'studentsNeedingAttention' => $studentsNeedingAttention,
@@ -211,7 +225,32 @@ class DashboardController extends Controller
             'documents' => $documents->toArray(),
             'incidents' => $incidents->toArray(),
             'parentUpdates' => $parentUpdates->toArray(),
+            'disciplineList' => $disciplineList->toArray(),
         ]);
+    }
+
+    /**
+     * Store a newly created discipline record in database.
+     */
+    public function storeDisciplineRecord(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'student_id' => 'required|exists:students,id',
+            'infraction' => 'required|string',
+            'points' => 'required|integer',
+            'pattern_notes' => 'nullable|string',
+        ]);
+
+        DisciplineRecord::create([
+            'student_id' => $validated['student_id'],
+            'infraction' => $validated['infraction'],
+            'points' => $validated['points'],
+            'action_status' => 'Menunggu Pembinaan',
+            'pattern_notes' => $validated['pattern_notes'] ?? 'Dicatat dari modul kedisiplinan',
+            'recorded_at' => now()->format('d M H:i'),
+        ]);
+
+        return back()->with('success', 'Catatan kedisiplinan berhasil disimpan!');
     }
 
     /**

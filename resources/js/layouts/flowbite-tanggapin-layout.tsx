@@ -48,7 +48,7 @@ export default function FlowbiteTanggapinLayout({
     onTriggerActionModal,
 }: FlowbiteLayoutProps) {
     const { auth } = usePage<{ auth: { user: { name: string; email: string } } }>().props;
-    const { appearance, updateAppearance } = useAppearance();
+    const { appearance, resolvedAppearance, updateAppearance } = useAppearance();
 
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
@@ -508,14 +508,20 @@ export default function FlowbiteTanggapinLayout({
                             {/* Theme Toggle Button */}
                             <button
                                 type="button"
-                                onClick={() => updateAppearance(appearance === 'dark' ? 'light' : 'dark')}
-                                className="p-2 text-body hover:bg-neutral-secondary-medium hover:text-heading rounded-base transition-colors"
-                                title={appearance === 'dark' ? 'Ganti ke Mode Terang' : 'Ganti ke Mode Gelap'}
+                                onClick={() => updateAppearance(resolvedAppearance === 'dark' ? 'light' : 'dark')}
+                                className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-semibold rounded-base transition-colors border bg-neutral-secondary-soft hover:bg-neutral-secondary-medium text-heading border-default shadow-2xs"
+                                title={resolvedAppearance === 'dark' ? 'Beralih ke Mode Terang' : 'Beralih ke Mode Gelap'}
                             >
-                                {appearance === 'dark' ? (
-                                    <Sun className="w-4 h-4 text-amber-400" />
+                                {resolvedAppearance === 'dark' ? (
+                                    <>
+                                        <Sun className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                                        <span className="hidden sm:inline">Terang</span>
+                                    </>
                                 ) : (
-                                    <Moon className="w-4 h-4" />
+                                    <>
+                                        <Moon className="w-3.5 h-3.5 text-slate-700 dark:text-slate-300 shrink-0" />
+                                        <span className="hidden sm:inline">Gelap</span>
+                                    </>
                                 )}
                             </button>
 
@@ -669,14 +675,16 @@ export default function FlowbiteTanggapinLayout({
                                             type="button"
                                             onClick={() => handleNavClick(item.id)}
                                             className={cn(
-                                                'w-full flex items-center px-2.5 py-2 text-xs text-body rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group transition-colors text-left',
-                                                isActive && 'bg-neutral-secondary-medium text-fg-brand font-semibold shadow-2xs'
+                                                'w-full flex items-center px-2.5 py-2 text-xs rounded-base transition-all text-left border',
+                                                isActive
+                                                    ? 'bg-blue-50 dark:bg-blue-950/80 border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-300 font-bold shadow-2xs'
+                                                    : 'border-transparent text-body hover:bg-neutral-secondary-medium hover:text-heading'
                                             )}
                                         >
                                             <IconComponent
                                                 className={cn(
-                                                    'w-4 h-4 transition duration-75 group-hover:text-fg-brand shrink-0',
-                                                    isActive ? 'text-fg-brand' : 'text-fg-disabled'
+                                                    'w-4 h-4 transition duration-75 shrink-0',
+                                                    isActive ? 'text-blue-600 dark:text-blue-400' : 'text-fg-disabled'
                                                 )}
                                             />
                                             <span className="ms-2.5 flex-1 whitespace-nowrap">{item.title}</span>

@@ -128,6 +128,18 @@ export interface ParentUpdate {
     acknowledgement: 'Sudah membaca' | 'Perlu ditindaklanjuti';
 }
 
+export interface DisciplineRecordItem {
+    id: string;
+    studentId: string;
+    studentName: string;
+    class: string;
+    infraction: string;
+    points: number;
+    actionStatus: string;
+    patternNotes: string;
+    recordedAt: string;
+}
+
 export interface DashboardPageProps {
     stats: TanggapinStats;
     priorityFeed: PriorityAlert[];
@@ -139,4 +151,5 @@ export interface DashboardPageProps {
     documents: TeacherDocument[];
     incidents: IncidentItem[];
     parentUpdates: ParentUpdate[];
+    disciplineList?: DisciplineRecordItem[];
 }

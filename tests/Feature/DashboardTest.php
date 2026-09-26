@@ -71,3 +71,24 @@ test('authenticated users can create a new student case', function () {
         'category' => 'Kedisiplinan',
     ]);
 });
+
+test('authenticated users can store a new discipline record', function () {
+    $this->seed(TanggapinSeeder::class);
+
+    $user = User::factory()->create();
+    $student = Student::first();
+
+    $response = $this->actingAs($user)->post(route('discipline-records.store'), [
+        'student_id' => $student->id,
+        'infraction' => 'Terlambat Masuk Sekolah',
+        'points' => 10,
+        'pattern_notes' => 'Terjadi saat apel pagi',
+    ]);
+
+    $response->assertSessionHas('success');
+    $this->assertDatabaseHas('discipline_records', [
+        'student_id' => $student->id,
+        'infraction' => 'Terlambat Masuk Sekolah',
+        'points' => 10,
+    ]);
+});
