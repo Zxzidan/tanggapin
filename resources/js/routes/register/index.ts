@@ -1,6 +1,6 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../wayfinder'
 /**
- * @see routes/web.php:14
+ * @see routes/web.php:15
  * @route '/register'
  */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -14,7 +14,7 @@ store.definition = {
 } satisfies RouteDefinition<["post"]>
 
 /**
- * @see routes/web.php:14
+ * @see routes/web.php:15
  * @route '/register'
  */
 store.url = (options?: RouteQueryOptions) => {
@@ -22,7 +22,7 @@ store.url = (options?: RouteQueryOptions) => {
 }
 
 /**
- * @see routes/web.php:14
+ * @see routes/web.php:15
  * @route '/register'
  */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -31,7 +31,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 })
 
     /**
- * @see routes/web.php:14
+ * @see routes/web.php:15
  * @route '/register'
  */
     const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -40,7 +40,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     })
 
             /**
- * @see routes/web.php:14
+ * @see routes/web.php:15
  * @route '/register'
  */
         storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

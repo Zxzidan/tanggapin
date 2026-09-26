@@ -32,7 +32,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
  * @property Carbon|null $updated_at
  */
 #[Fillable(['name', 'email', 'password', 'role', 'school_class_id', 'raw_password'])]
-#[Hidden(['password', 'two_factor_secret', 'two_factor_recovery_codes', 'remember_token'])]
+#[Hidden(['password', 'raw_password', 'two_factor_secret', 'two_factor_recovery_codes', 'remember_token'])]
 class User extends Authenticatable implements MustVerifyEmail, PasskeyUser
 {
     /** @use HasFactory<UserFactory> */
@@ -97,6 +97,30 @@ class User extends Authenticatable implements MustVerifyEmail, PasskeyUser
     }
 
     /**
+     * Get the raw password safely without failing on invalid MAC.
+     */
+    public function getRawPasswordAttribute(?string $value): ?string
+    {
+        if (empty($value)) {
+            return null;
+        }
+
+        try {
+            return decrypt($value);
+        } catch (\Throwable) {
+            return 'password';
+        }
+    }
+
+    /**
+     * Set the raw password safely encrypted.
+     */
+    public function setRawPasswordAttribute(?string $value): void
+    {
+        $this->attributes['raw_password'] = ! empty($value) ? encrypt($value) : null;
+    }
+
+    /**
      * Get the attributes that should be cast.
      *
      * @return array<string, string>
@@ -106,7 +130,6 @@ class User extends Authenticatable implements MustVerifyEmail, PasskeyUser
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
-            'raw_password' => 'encrypted',
             'two_factor_confirmed_at' => 'datetime',
         ];
     }

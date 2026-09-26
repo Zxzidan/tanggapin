@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserManagementController;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 
@@ -76,3 +77,28 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 require __DIR__.'/settings.php';
+
+Route::get('/diagnostics', function () {
+    $results = [
+        'php_version' => PHP_VERSION,
+        'pdo_pgsql' => extension_loaded('pdo_pgsql'),
+        'openssl' => extension_loaded('openssl'),
+        'storage_path' => storage_path(),
+        'storage_writable' => is_writable(storage_path()),
+        'app_key_set' => ! empty(config('app.key')),
+        'app_env' => config('app.env'),
+        'app_debug' => config('app.debug'),
+        'db_connection' => 'UNTESTED',
+        'vite_manifest' => file_exists(public_path('build/manifest.json')),
+    ];
+
+    try {
+        DB::connection()->getPdo();
+        $results['db_connection'] = 'CONNECTED';
+        $results['users_count'] = DB::table('users')->count();
+    } catch (Throwable $e) {
+        $results['db_connection'] = 'FAILED: '.$e->getMessage();
+    }
+
+    return response()->json($results, 200, [], JSON_PRETTY_PRINT);
+});

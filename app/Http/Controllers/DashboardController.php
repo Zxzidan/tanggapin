@@ -241,6 +241,7 @@ class DashboardController extends Controller
 
         $students = $studentQuery->get()->map(function (Student $s): array {
             $totalPoints = (int) $s->disciplineRecords->sum('points');
+
             return [
                 'id' => (string) $s->id,
                 'name' => $s->name,
