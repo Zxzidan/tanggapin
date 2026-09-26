@@ -83,10 +83,10 @@ interface AttendanceLogItem {
     avatar?: string | null;
     timestamp: string;
     time: string;
-    status: 'Hadir (Tepat Waktu)' | 'Hadir (Terlambat)';
+    status: 'Hadir Tepat Waktu' | 'Hadir Terlambat';
     method: 'Face Recognition AI';
     confidence: number;
-    attributeStatus: 'Lengkap (Tertib)' | 'Pelanggaran Atribut';
+    attributeStatus: 'Lengkap Tertib' | 'Pelanggaran Atribut';
     infractionSummary?: string;
     points: number;
 }
@@ -237,11 +237,11 @@ export default function PemantauAtribut({
                 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80',
             timestamp: 'Hari ini',
             time: '07:05:18 WIB',
-            status: 'Hadir (Tepat Waktu)',
+            status: 'Hadir Tepat Waktu',
             method: 'Face Recognition AI',
             confidence: 99.4,
             attributeStatus: 'Pelanggaran Atribut',
-            infractionSummary: 'Dasi, Sabuk, Kerapian (+15 Poin)',
+            infractionSummary: 'Dasi, Sabuk, Kerapian +15 Poin',
             points: 15,
         },
         {
@@ -255,10 +255,10 @@ export default function PemantauAtribut({
                 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=150&q=80',
             timestamp: 'Hari ini',
             time: '06:54:10 WIB',
-            status: 'Hadir (Tepat Waktu)',
+            status: 'Hadir Tepat Waktu',
             method: 'Face Recognition AI',
             confidence: 99.8,
-            attributeStatus: 'Lengkap (Tertib)',
+            attributeStatus: 'Lengkap Tertib',
             points: 0,
         },
         {
@@ -272,11 +272,11 @@ export default function PemantauAtribut({
                 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=150&q=80',
             timestamp: 'Hari ini',
             time: '06:48:32 WIB',
-            status: 'Hadir (Tepat Waktu)',
+            status: 'Hadir Tepat Waktu',
             method: 'Face Recognition AI',
             confidence: 98.9,
             attributeStatus: 'Pelanggaran Atribut',
-            infractionSummary: 'Sepatu Non-Standar, Dasi (+15 Poin)',
+            infractionSummary: 'Sepatu Non-Standar, Dasi +15 Poin',
             points: 15,
         },
     ]);
@@ -304,7 +304,7 @@ export default function PemantauAtribut({
     // Preset Inspection Scenarios with Face Recognition Identity
     const samplePresets = [
         {
-            label: 'Ahmad Fauzi (Dasi, Sabuk & Kemeja Kurang)',
+            label: 'Ahmad Fauzi - Dasi, Sabuk & Kemeja Kurang',
             studentNisn: students[0]?.nisn || '0071234567',
             image:
                 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80',
@@ -320,7 +320,7 @@ export default function PemantauAtribut({
             ],
         },
         {
-            label: 'Citra Lestari (Atribut Lengkap 100% Tertib)',
+            label: 'Citra Lestari - Atribut Lengkap 100% Tertib',
             studentNisn: students[1]?.nisn || '0082345678',
             image:
                 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80',
@@ -336,7 +336,7 @@ export default function PemantauAtribut({
             ],
         },
         {
-            label: 'Brian Aditya (Sepatu Bukan Standar & Dasi Miring)',
+            label: 'Brian Aditya - Sepatu Bukan Standar & Dasi Miring',
             studentNisn: students[2]?.nisn || '0069876543',
             image:
                 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=800&q=80',
@@ -467,7 +467,7 @@ export default function PemantauAtribut({
                 setAutoAttendanceStatus('success');
                 setFaceMatchScore(matchedScore);
                 setScanPhaseText(
-                    `Wajah Teridentifikasi: ${targetStudent.name} (${targetStudent.class}) • Terabsensi Otomatis`,
+                    `Wajah Teridentifikasi: ${targetStudent.name} kelas ${targetStudent.class} • Terabsensi Otomatis`,
                 );
 
                 // Timestamp formatted
@@ -496,15 +496,15 @@ export default function PemantauAtribut({
                     avatar: targetStudent.avatar || null,
                     timestamp: 'Hari ini',
                     time: nowTime,
-                    status: 'Hadir (Tepat Waktu)',
+                    status: 'Hadir Tepat Waktu',
                     method: 'Face Recognition AI',
                     confidence: matchedScore,
                     attributeStatus:
-                        missing.length === 0 ? 'Lengkap (Tertib)' : 'Pelanggaran Atribut',
+                        missing.length === 0 ? 'Lengkap Tertib' : 'Pelanggaran Atribut',
                     infractionSummary:
                         missing.length === 0
                             ? undefined
-                            : `${missing.map((m) => m.name).join(', ')} (+${violationPts} Poin)`,
+                            : `${missing.map((m) => m.name).join(', ')} +${violationPts} Poin`,
                     points: violationPts,
                 };
 
@@ -515,12 +515,12 @@ export default function PemantauAtribut({
 
                 // Toast Notification
                 toast.success(
-                    `✅ Presensi Berhasil: ${targetStudent.name} (${targetStudent.class}) — Terabsensi Otomatis via Face Recognition!`,
+                    `✅ Presensi Berhasil: ${targetStudent.name} kelas ${targetStudent.class} — Terabsensi Otomatis via Face Recognition!`,
                     {
                         description:
                             missing.length === 0
-                                ? 'Atribut Seragam Lengkap 100% (Tertib).'
-                                : `Perhatian: Terdeteksi ${missing.length} pelanggaran atribut (+${violationPts} Poin).`,
+                                ? 'Atribut Seragam Lengkap 100% Tertib.'
+                                : `Perhatian: Terdeteksi ${missing.length} pelanggaran atribut +${violationPts} Poin.`,
                     },
                 );
 
@@ -529,15 +529,15 @@ export default function PemantauAtribut({
 
             if (currentProg < 40) {
                 setScanPhaseText(
-                    `Mendeteksi Biometrik Wajah (68 Landmark) & Posisi Kerah, Pinggang... (${currentProg}%)`,
+                    `Mendeteksi Biometrik Wajah 68 Landmark & Posisi Kerah, Pinggang... ${currentProg}%`,
                 );
             } else if (currentProg < 80) {
                 setScanPhaseText(
-                    `Mengekstraksi Vektor Fitur & Memeriksa Dasi, Sabuk, Badge... (${currentProg}%)`,
+                    `Mengekstraksi Vektor Fitur & Memeriksa Dasi, Sabuk, Badge... ${currentProg}%`,
                 );
             } else {
                 setScanPhaseText(
-                    `Mencocokkan Database Siswa & Mengesahkan Presensi Otomatis... (${currentProg}%)`,
+                    `Mencocokkan Database Siswa & Mengesahkan Presensi Otomatis... ${currentProg}%`,
                 );
             }
 
@@ -610,7 +610,7 @@ export default function PemantauAtribut({
     const patternNotes =
         missingAttributes.length === 0
             ? 'Inspeksi Kamera Pemantau BK & Face Recognition: Seluruh atribut seragam siswa terdeteksi lengkap dan tertib.'
-            : `Hasil Inspeksi Kamera Pemantau BK & AI Vision (${new Date().toLocaleDateString('id-ID')} ${new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })}): ${missingAttributes.map((m) => `${m.name} (+${m.points} poin)`).join(', ')}. Total: ${totalViolationPoints} poin pelanggaran dibebankan kepada siswa. Presensi kehadiran telah tercatat otomatis.`;
+            : `Hasil Inspeksi Kamera Pemantau BK & AI Vision ${new Date().toLocaleDateString('id-ID')}: ${missingAttributes.map((m) => `${m.name} +${m.points} poin`).join(', ')}. Total: ${totalViolationPoints} poin pelanggaran dibebankan kepada siswa. Presensi kehadiran telah tercatat otomatis.`;
 
     // Submit discipline record
     const handleSubmitViolationPoints = () => {
@@ -640,10 +640,10 @@ export default function PemantauAtribut({
                 onSuccess: () => {
                     setIsSubmitting(false);
                     setSuccessMessage(
-                        `Berhasil mengenakan +${totalViolationPoints} poin pelanggaran atribut ke ${selectedStudent.name} (${selectedStudent.class}). Wali Kelas telah otomatis dinotifikasi. Kehadiran tetap berstatus HADIR.`,
+                        `Berhasil mengenakan +${totalViolationPoints} poin pelanggaran atribut ke ${selectedStudent.name} kelas ${selectedStudent.class}. Wali Kelas telah otomatis dinotifikasi. Kehadiran tetap berstatus HADIR.`,
                     );
                     toast.success(
-                        `Poin kedisiplinan (+${totalViolationPoints} Poin) berhasil disimpan untuk ${selectedStudent.name}.`,
+                        `Poin kedisiplinan +${totalViolationPoints} Poin berhasil disimpan untuk ${selectedStudent.name}.`,
                     );
                 },
                 onError: (errors) => {
@@ -659,7 +659,7 @@ export default function PemantauAtribut({
 
     return (
         <FlowbiteTanggapinLayout activeTab="attribute-scanner">
-            <Head title="Kamera Pemantau Atribut & Presensi Siswa (Face Recognition) — TANGGAPIN" />
+            <Head title="Kamera Pemantau Atribut & Presensi Siswa Face Recognition — TANGGAPIN" />
 
             <div className="space-y-6">
                 {/* Mobile Quick Navigation Strip */}
@@ -778,7 +778,7 @@ export default function PemantauAtribut({
                         <div className="mt-2 flex items-baseline gap-2">
                             <span className="text-2xl font-extrabold text-slate-900 dark:text-white">
                                 {attendanceLogs.filter(
-                                    (a) => a.attributeStatus === 'Lengkap (Tertib)',
+                                    (a) => a.attributeStatus === 'Lengkap Tertib',
                                 ).length + 12}
                             </span>
                             <span className="text-[11px] font-semibold text-blue-600">
@@ -798,7 +798,7 @@ export default function PemantauAtribut({
                         <div className="mt-2 flex items-baseline gap-2">
                             <span className="text-2xl font-extrabold text-blue-700 dark:text-blue-400">
                                 {attendanceLogs.filter(
-                                    (a) => a.attributeStatus !== 'Lengkap (Tertib)',
+                                    (a) => a.attributeStatus !== 'Lengkap Tertib',
                                 ).length}
                             </span>
                             <span className="text-[11px] font-semibold text-slate-500">
@@ -842,7 +842,7 @@ export default function PemantauAtribut({
                                     </span>
                                     <span className="text-xs font-bold text-slate-800 dark:text-white">
                                         {isCameraActive
-                                            ? 'Kamera Gerbang Aktif (Live Feed)'
+                                            ? 'Kamera Gerbang Aktif Live Feed'
                                             : 'Viewport AI Vision & Biometrik'}
                                     </span>
                                 </div>
@@ -1010,7 +1010,7 @@ export default function PemantauAtribut({
                                                 <span className="rounded border border-blue-400/60 bg-slate-900/90 px-2 py-0.5 text-[10px] font-extrabold tracking-wide text-white shadow-md">
                                                     {isScanning
                                                         ? '⚡ Memindai Biometrik Wajah...'
-                                                        : `👤 Wajah: ${selectedStudent.name} (${faceMatchScore}%)`}
+                                                        : `👤 Wajah: ${selectedStudent.name} • ${faceMatchScore}%`}
                                                 </span>
                                             </div>
 
@@ -1050,7 +1050,7 @@ export default function PemantauAtribut({
                                                 {attributeDetections.find((d) => d.id === 'dasi')
                                                     ?.isDetected
                                                     ? '✅ Terpasang'
-                                                    : '⚠️ Tidak Ada (+5)'}
+                                                    : '⚠️ Tidak Ada - 5 Poin'}
                                             </span>
                                         </div>
 
@@ -1076,7 +1076,7 @@ export default function PemantauAtribut({
                                                 {attributeDetections.find((d) => d.id === 'sabuk')
                                                     ?.isDetected
                                                     ? '✅ Terpasang'
-                                                    : '⚠️ Tidak Ada (+5)'}
+                                                    : '⚠️ Tidak Ada - 5 Poin'}
                                             </span>
                                         </div>
 
@@ -1087,7 +1087,7 @@ export default function PemantauAtribut({
                                                 {attributeDetections.find((d) => d.id === 'sepatu')
                                                     ?.isDetected
                                                     ? '✅ Standar'
-                                                    : '⚠️ Pelanggaran (+10)'}
+                                                    : '⚠️ Pelanggaran - 10 Poin'}
                                             </span>
                                         </div>
                                     </div>
@@ -1230,10 +1230,10 @@ export default function PemantauAtribut({
                                                         </td>
                                                         <td className="py-2.5">
                                                             {att.attributeStatus ===
-                                                            'Lengkap (Tertib)' ? (
+                                                            'Lengkap Tertib' ? (
                                                                 <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-blue-700 dark:text-blue-400">
                                                                     <CheckCircle2 className="size-3.5" />
-                                                                    Lengkap (Tertib)
+                                                                    Lengkap Tertib
                                                                 </span>
                                                             ) : (
                                                                 <span className="text-[11px] text-slate-700 dark:text-slate-300">

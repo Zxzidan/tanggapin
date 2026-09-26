@@ -175,7 +175,7 @@ export default function Dashboard({
                             </strong>
                             {currentRole === 'operator' ? (
                                 <>
-                                    . Pusat pengelolaan administrasi sekolah, pembuatan & aktivasi akun GTK, sinkronisasi Dapodik, verifikasi SPP, dan kelengkapan berkas operasional.
+                                    . Pusat administrasi sekolah, sinkronisasi Dapodik, verifikasi SPP, dan berkas GTK.
                                 </>
                             ) : (
                                 <>
@@ -183,8 +183,7 @@ export default function Dashboard({
                                     <strong className="font-semibold text-slate-900 dark:text-white">
                                         {safeStats.studentsNeedingAttention} siswa
                                     </strong>{' '}
-                                    yang memerlukan perhatian dan koordinasi terarah
-                                    hari ini.
+                                    membutuhkan koordinasi dan tindak lanjut hari ini.
                                 </>
                             )}
                         </p>
@@ -218,7 +217,7 @@ export default function Dashboard({
                                     Akun GTK
                                 </div>
                                 <p className="mt-1 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
-                                    Atur akun Wali Kelas, Bendahara, Kepsek & kuota kelas
+                                    Kelola akun GTK dan kuota rombel kelas
                                 </p>
                             </div>
                             <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3 text-[11px] font-medium text-blue-600 dark:border-slate-800 dark:text-blue-400">
@@ -243,7 +242,7 @@ export default function Dashboard({
                                     {safeStats.dataCheckIssues}
                                 </div>
                                 <p className="mt-1 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
-                                    Anomali NIK/NISN & residu pemetaan rombel
+                                    Validasi NISN, NIK, dan residu rombel
                                 </p>
                             </div>
                             <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3 text-[11px] font-medium text-blue-600 dark:border-slate-800 dark:text-blue-400">
@@ -268,7 +267,7 @@ export default function Dashboard({
                                     {safeStats.duePayments}
                                 </div>
                                 <p className="mt-1 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
-                                    Tagihan aktif & bukti transfer verifikasi SPP
+                                    Monitoring tunggakan dan verifikasi SPP
                                 </p>
                             </div>
                             <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3 text-[11px] font-medium text-blue-600 dark:border-slate-800 dark:text-blue-400">
@@ -293,7 +292,7 @@ export default function Dashboard({
                                     {docList.length} Berkas
                                 </div>
                                 <p className="mt-1 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
-                                    SK penugasan, silabus, dan perangkat ajar guru
+                                    SK penugasan dan perangkat ajar guru
                                 </p>
                             </div>
                             <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3 text-[11px] font-medium text-blue-600 dark:border-slate-800 dark:text-blue-400">
@@ -320,7 +319,7 @@ export default function Dashboard({
                                     {safeStats.studentsNeedingAttention}
                                 </div>
                                 <p className="mt-1 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
-                                    Sinyal risiko kehadiran, capaian belajar, atau ketertiban
+                                    Sinyal presensi, nilai, dan ketertiban
                                 </p>
                             </div>
                             <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3 text-[11px] font-medium text-blue-600 dark:border-slate-800 dark:text-blue-400">
@@ -345,7 +344,7 @@ export default function Dashboard({
                                     {safeStats.activeCases}
                                 </div>
                                 <p className="mt-1 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
-                                    {safeStats.overdueCases} pendampingan perlu evaluasi berkala
+                                    {safeStats.overdueCases} kasus butuh evaluasi berkala
                                 </p>
                             </div>
                             <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3 text-[11px] font-medium text-blue-600 dark:border-slate-800 dark:text-blue-400">
@@ -370,7 +369,7 @@ export default function Dashboard({
                                     {safeStats.resolvedThisMonth}
                                 </div>
                                 <p className="mt-1 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
-                                    Langkah pendampingan terselesaikan bulan ini
+                                    Penanganan tuntas bulan ini
                                 </p>
                             </div>
                             <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3 text-[11px] font-medium text-blue-600 dark:border-slate-800 dark:text-blue-400">
@@ -395,7 +394,7 @@ export default function Dashboard({
                                     92.4%
                                 </div>
                                 <p className="mt-1 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
-                                    Rangkuman presensi 4 rombel kejuruan
+                                    Rata-rata presensi seluruh rombel
                                 </p>
                             </div>
                             <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3 text-[11px] font-medium text-blue-600 dark:border-slate-800 dark:text-blue-400">
@@ -418,8 +417,7 @@ export default function Dashboard({
                                 </h2>
                             </div>
                             <p className="mt-0.5 text-xs text-slate-500">
-                                Indikasi awal siswa yang membutuhkan
-                                pendampingan dan keputusan hari ini.
+                                Deteksi risiko siswa yang butuh pendampingan segera.
                             </p>
                         </div>
 
@@ -571,7 +569,7 @@ export default function Dashboard({
                                                     studentName: `${alert.studentName} — ${alert.class}`,
                                                     studentPhone:
                                                         alert.parentPhone,
-                                                    message: `Yth. Bapak Ibu ${alert.parentName}, kami dari sekolah menginformasikan perkembangan siswa ${alert.studentName}. ${alert.summary}. Mohon berkenan berkoordinasi dengan sekolah demi kelancaran proses belajar.`,
+                                                    message: `Yth. Bapak Ibu ${alert.parentName}, menginformasikan perkembangan ananda ${alert.studentName}: ${alert.summary}. Mohon koordinasi dengan sekolah.`,
                                                 });
                                             }}
                                             className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 transition-colors hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
@@ -618,8 +616,7 @@ export default function Dashboard({
                                         Daftar Tagihan & Verifikasi SPP
                                     </h3>
                                     <p className="text-[11px] text-slate-500">
-                                        Monitoring tunggakan dan verifikasi
-                                        bukti transfer ortu.
+                                        Monitoring tunggakan dan verifikasi bukti bayar SPP.
                                     </p>
                                 </div>
                                 <Link
@@ -667,8 +664,7 @@ export default function Dashboard({
                                         Anomali Data Dapodik & Residu
                                     </h3>
                                     <p className="text-[11px] text-slate-500">
-                                        Validasi NISN, NIK, dan pemetaan rombel
-                                        pembelajaran.
+                                        Validasi NISN, NIK, dan residu rombel.
                                     </p>
                                 </div>
                                 <Link
@@ -708,8 +704,7 @@ export default function Dashboard({
                                         Indikator Kondisi Kelas
                                     </h3>
                                     <p className="text-[11px] text-slate-500">
-                                        Pantauan kelas yang memerlukan dukungan
-                                        koordinasi guru.
+                                        Pantauan kelas yang butuh perhatian guru.
                                     </p>
                                 </div>
                                 <Link
@@ -818,8 +813,7 @@ export default function Dashboard({
                                         Komunikasi & Reminder Pembayaran
                                     </h3>
                                     <p className="text-[11px] text-slate-500">
-                                        Koordinasi dengan wali murid terkait
-                                        dispensasi SPP.
+                                        Koordinasi dispensasi dan konfirmasi SPP.
                                     </p>
                                 </div>
                                 <Link
@@ -858,8 +852,7 @@ export default function Dashboard({
                                         Verifikasi Dokumen Guru
                                     </h3>
                                     <p className="text-[11px] text-slate-500">
-                                        Kelengkapan SK, silabus, dan perangkat
-                                        ajar pengajar.
+                                        Kelengkapan SK dan perangkat ajar guru.
                                     </p>
                                 </div>
                                 <Link
@@ -902,7 +895,7 @@ export default function Dashboard({
                                         </h3>
                                     </div>
                                     <p className="mt-0.5 text-[11px] text-slate-500 dark:text-slate-400">
-                                        Pantau status penanganan rujukan kendala siswa binaan Anda ke Guru BK secara real-time.
+                                        Pantau status tindak lanjut rujukan kendala siswa ke Guru BK.
                                     </p>
                                 </div>
                                 <Link
@@ -917,7 +910,7 @@ export default function Dashboard({
                             <div className="space-y-3">
                                 {caseList.length === 0 ? (
                                     <div className="rounded-lg border border-dashed border-slate-200 py-8 text-center text-xs text-slate-400 dark:border-slate-800">
-                                        Belum ada rujukan kendala siswa yang dilaporkan ke Guru BK.
+                                        Belum ada rujukan siswa ke Guru BK.
                                     </div>
                                 ) : (
                                     caseList.slice(0, 4).map((c) => {
@@ -990,7 +983,7 @@ export default function Dashboard({
                                                             </strong>
                                                         </div>
                                                         <p className="mt-1 border-t border-slate-200/60 pt-1 text-[11px] leading-relaxed text-slate-600 dark:border-slate-800 dark:text-slate-300">
-                                                            {c.bkHandlingNotes || 'Sesi bimbingan & konseling telah berhasil dilaksanakan bersama siswa.'}
+                                                            {c.bkHandlingNotes || 'Sesi konseling siswa telah dilaksanakan.'}
                                                         </p>
                                                     </div>
                                                 ) : (
@@ -1030,7 +1023,7 @@ export default function Dashboard({
                                         </h3>
                                     </div>
                                     <p className="mt-0.5 text-[11px] text-slate-500 dark:text-slate-400">
-                                        Daftar kendala siswa yang dilaporkan Wali Kelas untuk ditangani melalui layanan BK.
+                                        Kendala siswa dari Wali Kelas untuk penanganan BK.
                                     </p>
                                 </div>
                                 <Link
@@ -1114,7 +1107,7 @@ export default function Dashboard({
                                         Progres Penanganan Kasus Terstruktur
                                     </h3>
                                     <p className="text-[11px] text-slate-500">
-                                        Alur tahapan: Rujukan Masuk → Ditugaskan → Ditangani → Selesai
+                                        Alur: Masuk → Ditugaskan → Ditangani → Selesai
                                     </p>
                                 </div>
                                 <button
@@ -1187,8 +1180,7 @@ export default function Dashboard({
                             Pintasan Modul & Tanggap Cepat
                         </h3>
                         <p className="text-[11px] text-slate-500">
-                            Navigasi langsung ke modul spesifik sesuai kebutuhan
-                            tugas Anda.
+                            Akses langsung ke seluruh modul operasional sekolah.
                         </p>
                     </div>
 

@@ -213,7 +213,7 @@ export default function KondisiKelas({
                     setPointsStudentId('');
                     setPatternNotes('');
                     setNotificationMessage(
-                        `Poin pelanggaran (+${pointsWeight} Poin) berhasil dicatat dan diteruskan ke Wali Kelas untuk ditindaklanjuti!`,
+                        `Poin pelanggaran +${pointsWeight} Poin berhasil dicatat dan diteruskan ke Wali Kelas untuk ditindaklanjuti!`,
                     );
                     setTimeout(() => setNotificationMessage(null), 5000);
                 },
@@ -1152,8 +1152,8 @@ export default function KondisiKelas({
                                         onChange={(e) => setStudentGender(e.target.value as 'L' | 'P')}
                                         className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-xs text-slate-900 focus:border-blue-500 focus:outline-hidden dark:border-slate-700 dark:bg-slate-800 dark:text-white"
                                     >
-                                        <option value="L">Laki-laki (L)</option>
-                                        <option value="P">Perempuan (P)</option>
+                                        <option value="L">Laki-laki</option>
+                                        <option value="P">Perempuan</option>
                                     </select>
                                 </div>
                             </div>
@@ -1305,13 +1305,13 @@ export default function KondisiKelas({
                                         onChange={(e) => setInfractionName(e.target.value)}
                                         className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-xs text-slate-900 focus:border-blue-500 focus:outline-hidden dark:border-slate-700 dark:bg-slate-800 dark:text-white"
                                     >
-                                        <option value="Terlambat Masuk Sekolah">Terlambat Masuk Sekolah (10 Poin)</option>
-                                        <option value="Membolos Jam Pelajaran">Membolos Jam Pelajaran (15 Poin)</option>
-                                        <option value="Merokok / Vape di Area Sekolah">Merokok / Vape di Sekolah (25 Poin)</option>
-                                        <option value="Pelanggaran Seragam & Atribut">Pelanggaran Seragam / Atribut (5 Poin)</option>
-                                        <option value="Menggunakan HP Saat KBM">Menggunakan HP Saat KBM (5 Poin)</option>
-                                        <option value="Konflik / Pertengkaran Antar Siswa">Konflik Antar Teman (20 Poin)</option>
-                                        <option value="Tindakan Intimidasi / Bullying">Dugaan Bullying / Intimidasi (35 Poin)</option>
+                                        <option value="Terlambat Masuk Sekolah">Terlambat Masuk Sekolah - 10 Poin</option>
+                                        <option value="Membolos Jam Pelajaran">Membolos Jam Pelajaran - 15 Poin</option>
+                                        <option value="Merokok / Vape di Area Sekolah">Merokok / Vape di Sekolah - 25 Poin</option>
+                                        <option value="Pelanggaran Seragam & Atribut">Pelanggaran Seragam / Atribut - 5 Poin</option>
+                                        <option value="Menggunakan HP Saat KBM">Menggunakan HP Saat KBM - 5 Poin</option>
+                                        <option value="Konflik / Pertengkaran Antar Siswa">Konflik Antar Teman - 20 Poin</option>
+                                        <option value="Tindakan Intimidasi / Bullying">Dugaan Bullying / Intimidasi - 35 Poin</option>
                                     </select>
                                 </div>
 
@@ -1451,9 +1451,9 @@ export default function KondisiKelas({
                                         onChange={(e) => setReferralPriority(e.target.value as 'Rendah' | 'Sedang' | 'Tinggi')}
                                         className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-xs text-slate-900 focus:border-blue-500 focus:outline-hidden dark:border-slate-700 dark:bg-slate-800 dark:text-white"
                                     >
-                                        <option value="Sedang">Sedang (Dalam 2-3 hari)</option>
-                                        <option value="Tinggi">Tinggi / Mendesak (Hari ini)</option>
-                                        <option value="Rendah">Rendah (Observasi bertahap)</option>
+                                        <option value="Sedang">Sedang - Dalam 2-3 hari</option>
+                                        <option value="Tinggi">Tinggi / Mendesak - Hari ini</option>
+                                        <option value="Rendah">Rendah - Observasi bertahap</option>
                                     </select>
                                 </div>
                             </div>

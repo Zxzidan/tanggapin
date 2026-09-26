@@ -305,7 +305,7 @@ export default function DashboardVideoPreview({ onExploreDemo }: DashboardVideoP
                         <div className="flex items-center gap-4 mt-2 text-[11px] text-slate-500">
                           <span>Wali Kelas: Bpk. Budi Santoso</span>
                           <span>•</span>
-                          <span>Wali Murid: Ibu Fatimah (0812-9876-xxxx)</span>
+                          <span>Wali Murid: Ibu Fatimah • 0812-9876-xxxx</span>
                         </div>
                       </div>
                     </div>

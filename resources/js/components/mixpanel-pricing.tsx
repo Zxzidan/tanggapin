@@ -180,7 +180,7 @@ const Calculator = ({ onSelectPlanProposal }: CalculatorProps) => {
                   period === 'yearly' ? 'bg-blue-700 text-white shadow-xs' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                 )}
               >
-                <span>Tahunan (BOS)</span>
+                <span>Tahunan BOS</span>
                 <span className="rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 text-[9px] px-1.5 py-0.5 font-extrabold">
                   -20%
                 </span>
@@ -196,7 +196,7 @@ const Calculator = ({ onSelectPlanProposal }: CalculatorProps) => {
               <span className="text-slate-500 dark:text-slate-400 text-sm">/ bulan</span>
             </div>
             <p className="text-xs text-blue-700 dark:text-blue-400 font-medium">
-              Estimasi: ~Rp {(calculatePrice(students) / students).toFixed(0)} per siswa / bulan (100% Legal SPJ Dana BOS)
+              Estimasi: ~Rp {(calculatePrice(students) / students).toFixed(0)} per siswa / bulan • Legal SPJ Dana BOS
             </p>
           </div>
         </div>
@@ -288,7 +288,7 @@ export function MixpanelPricing({ onSelectPlan }: MixpanelPricingProps) {
             title="Paket Perintis"
             subtitle="Ideal untuk sekolah skala dasar/perintis dengan kebutuhan sistem pendampingan awal."
             price="Gratis Uji Coba"
-            priceDetail="Kapasitas s.d. 300 siswa & 10 rombel. Modul deteksi sinyal & konseling dasar."
+            priceDetail="Kapasitas s.d. 300 siswa & 10 rombel. Modul sinyal dan konseling dasar."
             buttonText="Mulai Gratis"
             buttonVariant="secondary"
             onButtonClick={() => onSelectPlan && onSelectPlan('perintis')}
@@ -305,7 +305,7 @@ export function MixpanelPricing({ onSelectPlan }: MixpanelPricingProps) {
             title="Paket Unggulan"
             subtitle="Solusi terlengkap 11 modul + AI Generator Rapor & WhatsApp Resmi ke Orang Tua."
             price="Rp 712.000"
-            priceDetail="per bulan (ditagih tahunan). Mengelola s.d. 800 siswa terpadu. 100% BOS Compliant."
+            priceDetail="per bulan ditagih tahunan. Mengelola s.d. 800 siswa terpadu. Sesuai juknis BOS."
             buttonText="Pilih Paket Unggulan"
             buttonVariant="primary"
             linkText="Hitung simulasi anggaran siswa"
@@ -314,7 +314,7 @@ export function MixpanelPricing({ onSelectPlan }: MixpanelPricingProps) {
             features={[
               '11 Modul Operasional Tanggapin Lengkap',
               'Fitur AI: Generator Rapor Perkembangan Otomatis',
-              'WhatsApp Official Gateway (Tanda Terima Sah)',
+              'WhatsApp Official Gateway Tanda Terima Sah',
               'Paket Lengkap SPJ BOS: Surat, BAST & E-Faktur',
             ]}
           />
@@ -322,7 +322,7 @@ export function MixpanelPricing({ onSelectPlan }: MixpanelPricingProps) {
           <PricingCard
             title="Yayasan & Dinas"
             subtitle="Pengawasan multi-unit terpusat untuk Yayasan Pendidikan atau Cabang Dinas."
-            priceDetail="Kapasitas siswa & rombel tanpa batas (> 800 Siswa). Master dashboard yayasan terpusat, konsolidasi residu Dapodik & statistik ATS lintas unit."
+            priceDetail="Kapasitas siswa & rombel tanpa batas di atas 800 Siswa. Dashboard yayasan terpusat, konsolidasi residu Dapodik & statistik ATS lintas unit."
             buttonText="Konsultasi Tim"
             buttonVariant="secondary"
             onButtonClick={() => onSelectPlan && onSelectPlan('yayasan')}
@@ -350,7 +350,7 @@ export function MixpanelPricing({ onSelectPlan }: MixpanelPricingProps) {
             Sekolah Rintisan & Wilayah 3T: Akses Pendampingan Gratis
           </h3>
           <p className="text-slate-600 dark:text-slate-300 text-xs sm:text-sm mb-5 max-w-2xl mx-auto leading-relaxed">
-            Sekolah dengan status rintisan atau kategori afirmasi berhak memperoleh pendampingan implementasi, bimtek pencegahan kekerasan TPPK (Permendikbud 46/2023), serta uji coba sistem tanpa biaya di termin pertama.
+            Sekolah dengan status rintisan atau kategori afirmasi berhak memperoleh pendampingan implementasi, bimtek pencegahan kekerasan TPPK Permendikbud 46/2023, serta uji coba sistem tanpa biaya di termin pertama.
           </p>
           <button
             type="button"
@@ -376,7 +376,7 @@ export function MixpanelPricing({ onSelectPlan }: MixpanelPricingProps) {
           <Calculator onSelectPlanProposal={onSelectPlan} />
 
           <p className="text-center text-xs text-slate-500 dark:text-slate-400 mt-5">
-            * Seluruh paket langganan Tanggapin dapat dibiayai 100% menggunakan alokasi Dana BOS Reguler / Kinerja (BOSP).
+            * Seluruh paket langganan Tanggapin dapat dibiayai menggunakan alokasi Dana BOS Reguler atau Kinerja BOSP.
           </p>
         </div>
 

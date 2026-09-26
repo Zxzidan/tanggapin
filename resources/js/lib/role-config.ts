@@ -230,7 +230,7 @@ export const ROLE_SWITCHER_OPTIONS: RoleSwitcherOption[] = [
     {
         role: 'wali_kelas',
         email: 'walikelas@sekolah.sch.id',
-        title: 'Wali Kelas (XI RPL 2)',
+        title: 'Wali Kelas XI RPL 2',
         personName: 'Ratna Dewi, S.Pd',
         scope: 'Rombel XI RPL 2',
         description: 'Data siswa kelas XI RPL 2, poin pelanggaran dari BK & rujuk kendala.',
@@ -240,7 +240,7 @@ export const ROLE_SWITCHER_OPTIONS: RoleSwitcherOption[] = [
     {
         role: 'wali_kelas',
         email: 'budi@sekolah.sch.id',
-        title: 'Wali Kelas (X TKJ 1)',
+        title: 'Wali Kelas X TKJ 1',
         personName: 'Budi Santoso, S.Kom',
         scope: 'Rombel X TKJ 1',
         description: 'Data siswa kelas X TKJ 1, poin pelanggaran & pembinaan kelas.',

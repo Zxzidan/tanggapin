@@ -37,7 +37,7 @@ export default function DokumenGuru({
     });
 
     const handleDownload = (doc: TeacherDocument) => {
-        toast.success(`Mengunduh dokumen: ${doc.title} (${doc.size})`);
+        toast.success(`Mengunduh dokumen: ${doc.title} ukuran ${doc.size}`);
     };
 
     const handlePreview = (doc: TeacherDocument) => {

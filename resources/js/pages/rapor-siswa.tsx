@@ -126,7 +126,7 @@ export default function RaporSiswa({ students, stats }: RaporSiswaProps) {
                 onSuccess: () => {
                     setSendingReportId(null);
                     setNotificationMessage(
-                        `Dokumen Rapor ${report.reportCode} berhasil dikirim ke WhatsApp Orang Tua (${student.parentName})!`,
+                        `Dokumen Rapor ${report.reportCode} berhasil dikirim ke WhatsApp Orang Tua ${student.parentName}!`,
                     );
                     // Update active report state if open in modal
                     if (activeReport && activeReport.id === report.id) {
@@ -156,7 +156,7 @@ export default function RaporSiswa({ students, stats }: RaporSiswaProps) {
 
     return (
         <FlowbiteTanggapinLayout activeTab="reports">
-            <Head title="Rapor Siswa (AI) & Pengiriman Ortu — TANGGAPIN" />
+            <Head title="Rapor Siswa AI & Pengiriman Ortu — TANGGAPIN" />
 
             <div className="mx-auto max-w-7xl space-y-6">
                 {/* Toast Notification Banner */}
@@ -722,13 +722,13 @@ export default function RaporSiswa({ students, stats }: RaporSiswaProps) {
                                             </div>
                                         </div>
                                         <div className="rounded-lg border border-slate-200 p-3 text-center dark:border-slate-800">
-                                            <span className="text-[11px] text-slate-500">Sakit (S)</span>
+                                            <span className="text-[11px] text-slate-500">Sakit</span>
                                             <div className="mt-1 text-xl font-bold text-slate-900 dark:text-white">
                                                 {activeReport?.sickCount ?? 0} hari
                                             </div>
                                         </div>
                                         <div className="rounded-lg border border-slate-200 p-3 text-center dark:border-slate-800">
-                                            <span className="text-[11px] text-slate-500">Izin (I)</span>
+                                            <span className="text-[11px] text-slate-500">Izin</span>
                                             <div className="mt-1 text-xl font-bold text-slate-900 dark:text-white">
                                                 {activeReport?.permissionCount ?? 0} hari
                                             </div>
@@ -752,7 +752,7 @@ export default function RaporSiswa({ students, stats }: RaporSiswaProps) {
                                     <div className="flex items-center justify-between border-b border-slate-200 pb-2 text-xs font-bold uppercase tracking-wider text-slate-800 dark:border-slate-800 dark:text-slate-200">
                                         <div className="flex items-center gap-2">
                                             <Sparkles className="size-4 text-blue-600" />
-                                            <span>II. Sintesis Naratif Evaluasi Karakter (Asisten AI)</span>
+                                            <span>II. Sintesis Naratif Evaluasi Karakter — Asisten AI</span>
                                         </div>
                                         <span className="rounded-full bg-blue-100 px-2 py-0.5 text-[10px] font-semibold text-blue-800 dark:bg-blue-950 dark:text-blue-300">
                                             AI-Generated • Terverifikasi

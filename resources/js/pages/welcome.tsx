@@ -88,12 +88,12 @@ const PRICING_PLANS = [
         id: 'perintis',
         name: 'Paket Perintis',
         badge: 'Sekolah Berkembang',
-        description: 'Ideal untuk sekolah skala dasar/perintis dengan kebutuhan sistem pendampingan awal.',
+        description: 'Ideal untuk sekolah skala dasar dengan kebutuhan pendampingan siswa.',
         monthlyPrice: 450000,
         annualMonthlyEquivalent: 360000,
         annualTotal: 4320000,
         annualSavings: 1080000,
-        targetAudience: 'SD / SMP / Madrasah (< 300 Siswa)',
+        targetAudience: 'SD / SMP / Madrasah di bawah 300 Siswa',
         features: [
             'Kapasitas s.d. 300 siswa & 10 rombel',
             'Modul Deteksi Sinyal & Early Warning',
@@ -113,28 +113,28 @@ const PRICING_PLANS = [
         id: 'unggulan',
         name: 'Paket Unggulan',
         badge: 'Paling Diminati Sekolah',
-        description: 'Solusi terlengkap 11 modul + AI Generator Rapor & Notifikasi WhatsApp Resmi ke Orang Tua.',
+        description: 'Solusi lengkap 11 modul, AI Generator Rapor, dan pesan resmi orang tua.',
         monthlyPrice: 890000,
         annualMonthlyEquivalent: 712000,
         annualTotal: 8544000,
         annualSavings: 2136000,
-        targetAudience: 'SMP / SMA / SMK Mandiri (s.d. 800 Siswa)',
+        targetAudience: 'SMP / SMA / SMK Mandiri hingga 800 Siswa',
         features: [
             'Semua fitur Paket Perintis tercakup',
-            'Mengelola s.d. 35 Rombel / Kelas Aktif',
-            'Pusat Kontrol Operator: Kelola Akun Wali Kelas, Bendahara & Kepsek',
+            'Mengelola s.d. 35 Rombel Kelas Aktif',
+            'Pusat Kontrol Operator: Akun Wali Kelas, Bendahara, Kepsek',
             'Fitur AI: Generator Rapor Perkembangan Siswa Otomatis',
-            'Kirim Rapor Langsung ke WhatsApp Ortu (Tanda Terima Sah)',
-            'Sintesis AI: Narasi Karakter & Rekomendasi Pendampingan Rumah',
+            'Kirim Rapor Langsung ke WhatsApp Ortu Tanda Terima Sah',
+            'Sintesis AI: Narasi Karakter & Rekomendasi Pendampingan',
             'Kapasitas s.d. 800 Siswa Terintegrasi',
             '11 Modul Operasional Tanggapin Lengkap',
-            'Modul Alur ATS (Anak Tidak Sekolah) & Satgas Kunjungan',
+            'Modul Alur ATS Anak Tidak Sekolah & Satgas Kunjungan',
             'Deteksi Residu Data & Validasi Dapodik',
-            'WhatsApp Official Gateway (Tanda Terima Baca Terverifikasi)',
+            'WhatsApp Official Gateway Tanda Terima Terverifikasi',
             'Rekonsiliasi SPP Terpadu & Proteksi Siswa Afirmasi',
             'Modul Kesiapsiagaan Insiden & Tim TPPK Permendikbud 46/2023',
-            '5 Akun Peran (+ Operator Dapodik & Bendahara Sekolah)',
-            '1x Sesi Pelatihan Online Tim Sekolah (2 Jam Interaktif)',
+            '5 Akun Peran termasuk Operator Dapodik & Bendahara Sekolah',
+            '1 Sesi Pelatihan Online Tim Sekolah 2 Jam Interaktif',
             'Prioritas Support WhatsApp Fast-Response',
             'Paket Lengkap SPJ BOS: Surat Penawaran, BAST & E-Faktur',
         ],
@@ -145,24 +145,24 @@ const PRICING_PLANS = [
         id: 'yayasan',
         name: 'Paket Yayasan & Dinas',
         badge: 'Multi-Sekolah & Korporasi',
-        description: 'Pengawasan multi-unit terpusat untuk Yayasan Pendidikan, Pesantren Terpadu, atau Cabang Dinas.',
+        description: 'Pengawasan terpusat multi unit untuk Yayasan, Pesantren, atau Dinas.',
         monthlyPrice: 1850000,
         annualMonthlyEquivalent: 1480000,
         annualTotal: 17760000,
         annualSavings: 4440000,
-        targetAudience: 'Grup Yayasan / Multi-Kampus (> 800 Siswa)',
+        targetAudience: 'Grup Yayasan atau Multi Kampus di atas 800 Siswa',
         features: [
             'Semua fitur Paket Unggulan tercakup',
-            'Kapasitas Kelas Tanpa Batas (Unlimited Rombel)',
-            'Kapasitas Siswa Tanpa Batas (> 800 Siswa)',
-            'Fitur AI: Batch Generator Rapor Siswa Seluruh Unit Sekolah',
-            'Distribusi Rapor Massal Terjadwal ke WhatsApp Seluruh Orang Tua',
-            'Master Dashboard Pengawasan Multi-Sekolah Terpusat',
+            'Kapasitas Kelas dan Rombel Tanpa Batas',
+            'Kapasitas Siswa Tanpa Batas di atas 800 Siswa',
+            'Fitur AI: Batch Generator Rapor Siswa Seluruh Unit',
+            'Distribusi Rapor Massal Terjadwal ke WhatsApp Orang Tua',
+            'Master Dashboard Pengawasan Multi Sekolah Terpusat',
             'Konsolidasi Residu Dapodik & Statistik ATS Lintas Unit',
             'Kustomisasi SOP & Alur Penanganan Insiden Sekolah',
-            'Opsi Integrasi Presensi Mesin RFID / Kartu Pintar',
-            'Dedicated Account Manager & Kunjungan Pendampingan On-site',
-            'Perjanjian Kerahasiaan Data (NDA) & Jaminan SLA 99.9%',
+            'Opsi Integrasi Presensi Mesin RFID atau Kartu Pintar',
+            'Dedicated Account Manager & Pendampingan On-site',
+            'Perjanjian Kerahasiaan Data NDA & Jaminan SLA 99.9%',
             'Bimbingan Teknis Standarisasi TPPK & Sertifikat Kesiapsiagaan',
         ],
         highlight: false,
@@ -172,32 +172,32 @@ const PRICING_PLANS = [
 
 const PRICING_FAQS = [
     {
-        q: 'Apakah biaya langganan Tanggapin boleh dibiayai menggunakan Dana BOS / BOSP?',
-        a: 'Tentu saja. Sesuai Permendikbudristek No. 63 Tahun 2023 tentang Petunjuk Teknis Pengelolaan BOSP, sekolah diperbolehkan mengalokasikan dana BOS reguler maupun kinerja pada komponen Pemeliharaan Sarana dan Prasarana (pengembangan/pemeliharaan sistem informasi sekolah berbasis teknologi) serta Komponen Administrasi Kegiatan Sekolah. Kami menyediakan seluruh kelengkapan administrasi SPJ mulai dari surat penawaran, BAST, kuitansi resmi, hingga faktur pajak.',
+        q: 'Apakah biaya langganan Tanggapin boleh dibiayai menggunakan Dana BOS atau BOSP?',
+        a: 'Bisa. Sesuai Permendikbudristek No. 63 Tahun 2023 tentang Juknis BOSP, sekolah dapat mengalokasikan dana BOS reguler maupun kinerja pada komponen pemeliharaan sarana prasarana serta administrasi sekolah. Kami menyediakan kelengkapan SPJ seperti surat penawaran, BAST, kuitansi resmi, dan faktur pajak.',
     },
     {
         q: 'Bagaimana mekanisme pembayaran jika disesuaikan dengan siklus pencairan Dana BOS?',
-        a: 'Kami memahami bahwa sekolah menganggarkan operasional per termin pencairan Dana BOS (Tahap I di awal semester dan Tahap II di pertengahan tahun). Tanggapin menyediakan opsi penagihan per semester atau tahunan dengan jatuh tempo yang fleksibel mengikuti tanggal cairnya transfer kas daerah/rekening BOS sekolah.',
+        a: 'Tanggapin menyediakan opsi termin per semester atau tahunan dengan jatuh tempo fleksibel mengikuti jadwal pencairan dana BOS Tahap I dan Tahap II sekolah.',
     },
     {
         q: 'Berapa lama proses implementasi dan integrasi data awal dari Dapodik?',
-        a: 'Prosesnya instan dan mudah. Operator sekolah hanya perlu mengekspor daftar siswa dan rombongan belajar dari aplikasi Dapodik ke format Excel/CSV. Sistem Tanggapin siap mengimpor data tersebut dalam hitungan menit, dan sekolah dapat langsung beroperasi di hari yang sama.',
+        a: 'Cukup beberapa menit. Operator sekolah mengekspor daftar siswa dari Dapodik ke Excel atau CSV, lalu sistem Tanggapin mengimpor data secara otomatis.',
     },
     {
         q: 'Apakah ada biaya tersembunyi atau biaya per siswa tambahan?',
-        a: 'Tidak ada. Biaya langganan Tanggapin bersifat flat per paket sekolah selama berada dalam batas kuota siswa. Tidak ada biaya instalasi server (karena berbasis cloud modern), tidak ada biaya lisensi per guru, dan semua pembaruan fitur (update modul) diberikan gratis selama masa aktif berlangganan.',
+        a: 'Tidak ada. Biaya langganan bersifat flat per paket. Tidak ada biaya server, tidak ada biaya lisensi per guru, dan seluruh pembaruan fitur diberikan gratis selama masa aktif.',
     },
     {
         q: 'Bagaimana dengan privasi data siswa dan kerahasiaan konseling guru BK?',
-        a: 'Tanggapin dirancang dengan prinsip enkripsi ujung-ke-ujung dan kontrol hak akses ketat (Role-Based Access Control). Catatan rahasia konseling BK hanya dapat dibaca oleh Guru BK yang bersangkutan dan Kepala Sekolah, tanpa bisa diakses oleh staf lain. Kami tidak pernah membagikan atau menjual data sekolah kepada pihak ketiga.',
+        a: 'Tanggapin menerapkan enkripsi data dan pembatasan hak akses berbasis peran. Catatan rahasia konseling BK hanya dapat diakses oleh Guru BK bersangkutan dan Kepala Sekolah.',
     },
     {
         q: 'Apakah sekolah mendapatkan pelatihan dan pendampingan untuk para guru?',
-        a: 'Ya. Seluruh sekolah mitra mendapatkan akses ke dokumentasi panduan operasional, video tutorial langkah demi langkah, serta webinar orientasi interaktif bagi Kepala Sekolah, Wali Kelas, Guru BK, Operator, dan Bendahara.',
+        a: 'Ya. Sekolah mendapatkan panduan lengkap, video tutorial, serta sesi orientasi online untuk seluruh guru dan staf.',
     },
     {
         q: 'Bagaimana cara kerja fitur AI Generator Rapor Siswa & pengiriman WhatsApp ke orang tua?',
-        a: 'Asisten AI Tanggapin secara otomatis mengolah rekapitulasi presensi harian, tren keaktifan kelas, dan poin catatan kedisiplinan siswa menjadi narasi evaluasi karakter yang konstruktif dan rekomendasi pendampingan di rumah. Dokumen rapor resmi ini dapat langsung dikirim ke WhatsApp orang tua dengan satu klik, lengkap dengan tanda terima digital (acknowledgement) yang mencatat waktu baca orang tua secara sah.',
+        a: 'AI mengolah presensi dan catatan kedisiplinan menjadi narasi perkembangan karakter siswa. Rapor dapat dikirim langsung ke WhatsApp orang tua dengan bukti tanda terima digital resmi.',
     },
 ];
 
@@ -265,34 +265,34 @@ Tanggal       : ${todayStr}
 Instansi      : ${proposalSchoolName || 'Sekolah Pemohon'}
 Jenjang       : ${proposalLevel}
 Estimasi Siswa: ${proposalStudentCount} Siswa
-Paket Pilihan : ${planObj.name} (${planObj.targetAudience})
+Paket Pilihan : ${planObj.name} • ${planObj.targetAudience}
 
 DASAR HUKUM PENGANGGARAN DANA BOSP / BOS:
-1. Permendikbudristek No. 46 Tahun 2023 tentang Pencegahan dan Penanganan Kekerasan di Satuan Pendidikan (PPKSP / TPPK).
-2. Permendikbudristek No. 63 Tahun 2023 tentang Petunjuk Teknis Pengelolaan Dana Bantuan Operasional Satuan Pendidikan (BOSP).
-   - Komponen Pemeliharaan Sarana & Prasarana Sekolah (Sistem Informasi Manajemen Sekolah Berbasis Cloud).
-   - Komponen Administrasi Kegiatan Sekolah & Tata Kelola Pembinaan Siswa.
+1. Permendikbudristek No. 46 Tahun 2023 tentang PPKSP dan TPPK Sekolah.
+2. Permendikbudristek No. 63 Tahun 2023 tentang Petunjuk Teknis Dana BOSP.
+   - Komponen Pemeliharaan Sarana dan Prasarana Sistem Informasi Sekolah.
+   - Komponen Administrasi Kegiatan Sekolah dan Tata Kelola Siswa.
 
 RINCIAN INVESTASI LAYANAN:
 - Nama Paket        : ${planObj.name}
-- Periode Langganan : 1 Tahun Ajaran Penuh (12 Bulan / 2 Termin BOS)
+- Periode Langganan : 1 Tahun Ajaran Penuh • 12 Bulan atau 2 Termin BOS
 - Tarif Normal      : ${formatRupiah(planObj.monthlyPrice)} / bulan
-- Tarif Komitmen BOS: ${formatRupiah(planObj.annualMonthlyEquivalent)} / bulan (Diskon 20% Termin Tahunan)
+- Tarif Komitmen BOS: ${formatRupiah(planObj.annualMonthlyEquivalent)} / bulan • Diskon 20% Termin Tahunan
 - Total Investasi   : ${formatRupiah(planObj.annualTotal)} / tahun
 - Rincian Termin    : Tahap I: ${formatRupiah(planObj.annualTotal / 2)} | Tahap II: ${formatRupiah(planObj.annualTotal / 2)}
 
 KELENGKAPAN ADMINISTRASI SPJ BOS YANG DISEDIAKAN:
-1. Surat Penawaran Resmi & Rincian Anggaran Belanja (RAB)
-2. Perjanjian Kerja Sama (PKS / Surat Perintah Kerja)
-3. Berita Acara Serah Terima Pekerjaan (BAST) & Laporan Aktivasi Sistem
-4. Faktur Pajak Resmi (E-Faktur PPN) & Kuitansi Pembayaran Terverifikasi
+1. Surat Penawaran Resmi & Rincian Anggaran Belanja RAB
+2. Perjanjian Kerja Sama PKS atau Surat Perintah Kerja SPK
+3. Berita Acara Serah Terima Pekerjaan BAST & Laporan Aktivasi Sistem
+4. Faktur Pajak Resmi E-Faktur PPN & Kuitansi Pembayaran Terverifikasi
 
 TARGET CAPAIAN OPERASIONAL:
-- Generator Rapor Karakter AI: Sintesis cerdas data presensi & kedisiplinan menjadi narasi evaluasi perkembangan siswa otomatis.
-- Otomasi Pengiriman WhatsApp Ortu: Lembar rapor terkirim instan ke kontak orang tua dengan tanda terima digital berkekuatan hukum.
-- Mempertahankan retensi siswa dari risiko Anak Tidak Sekolah (ATS) sehingga pagu alokasi Dana BOS tetap aman.
-- Efisiensi administrasi wali kelas & guru BK hingga ~45 jam kerja per bulan.
-- Kepatuhan 100% audit inspektorat atas pencatatan insiden Tim TPPK sekolah (Permendikbudristek No. 46/2023).
+- Generator Rapor Karakter AI: Sintesis cerdas presensi dan kedisiplinan siswa otomatis.
+- Otomasi Pengiriman WhatsApp Ortu: Lembar rapor terkirim instan dengan tanda terima sah.
+- Mempertahankan retensi siswa dari risiko Anak Tidak Sekolah ATS agar alokasi BOS aman.
+- Efisiensi administrasi wali kelas dan guru BK hingga 45 jam kerja per bulan.
+- Kepatuhan pencatatan insiden Tim TPPK sekolah sesuai Permendikbudristek No. 46/2023.
 
 Dibuat Oleh:
 Tim Kemitraan Sekolah — TANGGAPIN
@@ -719,7 +719,7 @@ Hotline Layanan BOS: +62 812-9988-7766
                                                         Sinyal Peringatan: 3 Hari Berturut-turut Alfa
                                                     </div>
                                                     <div className="text-[11px] text-slate-500">
-                                                        Siswa: Rian Prasetya (Kelas XI-RPL 2) • Indikasi Risiko Drop Out
+                                                        Siswa: Rian Prasetya Kelas XI-RPL 2 • Indikasi Risiko Drop Out
                                                     </div>
                                                 </div>
                                             </div>
@@ -754,7 +754,7 @@ Hotline Layanan BOS: +62 812-9988-7766
 
                                 <Step title="Langkah 3: Rencana Tindak Lanjut & Penugasan PIC">
                                     <p className="mb-4">
-                                        Langkah intervensi didelegasikan dengan PIC terukur: konseling individual, bimbingan remedial, kunjungan rumah (home visit), atau pelibatan Tim TPPK.
+                                        Langkah intervensi didelegasikan dengan PIC terukur: konseling individual, bimbingan remedial, kunjungan rumah home visit, atau pelibatan Tim TPPK.
                                     </p>
                                     <div className="space-y-2 rounded-xl border border-slate-200/80 bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
                                         <div className="flex items-center justify-between text-xs p-2.5 rounded-lg border border-slate-100 bg-slate-50/80 dark:border-slate-800/80 dark:bg-slate-800/50">
@@ -1095,10 +1095,10 @@ Hotline Layanan BOS: +62 812-9988-7766
                             <div className="space-y-4 lg:col-span-2">
                                 <TanggapinLogo size="md" showDescriptor={true} variant="light" />
                                 <p className="max-w-sm text-xs leading-relaxed text-slate-300">
-                                    Platform operasional sekolah terpadu untuk deteksi dini risiko siswa, penanganan kasus BK beretika, pencegahan Anak Tidak Sekolah (ATS), dan kepatuhan regulasi TPPK Kemendikbudristek.
+                                    Platform operasional sekolah terpadu untuk deteksi dini risiko siswa, penanganan kasus BK beretika, pencegahan Anak Tidak Sekolah ATS, dan kepatuhan regulasi TPPK Kemendikbudristek.
                                 </p>
                                 <div className="inline-block rounded-lg border border-slate-800 bg-slate-900/90 px-3 py-2 text-[11px] text-slate-300">
-                                    ✓ 100% Kompatibel dengan Petunjuk Teknis Pengelolaan Dana BOSP Permendikbudristek No. 63/2023.
+                                    ✓ 100% Kompatibel dengan Petunjuk Teknis Dana BOSP Permendikbudristek No. 63/2023.
                                 </div>
                             </div>
 
@@ -1137,7 +1137,7 @@ Hotline Layanan BOS: +62 812-9988-7766
                                 <ul className="space-y-2.5 text-xs text-slate-300">
                                     <li>Early Warning Presensi Siswa</li>
                                     <li>Alur Linimasa Kasus BK</li>
-                                    <li>Mitigasi Anak Tidak Sekolah (ATS)</li>
+                                    <li>Mitigasi Anak Tidak Sekolah ATS</li>
                                     <li>Validasi Residu Dapodik</li>
                                     <li>Tim Siaga TPPK & Insiden</li>
                                     <li>Generator Rapor Karakter AI</li>
@@ -1150,14 +1150,14 @@ Hotline Layanan BOS: +62 812-9988-7766
                                     Kemitraan & Dukungan
                                 </div>
                                 <p className="text-xs text-slate-400">
-                                    Konsultasi Rencana Anggaran Sekolah (RKAS) & Pengadaan SIPLah:
+                                    Konsultasi Rencana Anggaran Sekolah RKAS & Pengadaan SIPLah:
                                 </p>
                                 <div className="space-y-1.5 text-xs">
                                     <div className="font-semibold text-white">
                                         halo@tanggapin.sch.id
                                     </div>
                                     <div className="text-slate-300">Hotline: +62 812-9988-7766</div>
-                                    <div className="text-slate-400">Senin – Jumat (08.00 – 17.00 WIB)</div>
+                                    <div className="text-slate-400">Senin – Jumat pukul 08.00 – 17.00 WIB</div>
                                 </div>
                             </div>
                         </div>
@@ -1387,7 +1387,7 @@ Hotline Layanan BOS: +62 812-9988-7766
                                     <div className="rounded-lg border border-blue-200/80 bg-blue-50/60 p-3 text-[11px] text-blue-900 dark:border-blue-900/60 dark:bg-blue-950/40 dark:text-blue-300">
                                         <p className="font-semibold">Kode Rekening RKAS Dana BOS:</p>
                                         <p className="mt-0.5 text-blue-800 dark:text-blue-300/80">
-                                            Komponen Pemeliharaan Sarana / Sistem Informasi Manajemen Sekolah Digital (Permendikbud 63/2023).
+                                            Komponen Pemeliharaan Sarana / Sistem Informasi Manajemen Sekolah Digital Permendikbud 63/2023.
                                         </p>
                                     </div>
                                 </div>
@@ -1432,7 +1432,7 @@ Hotline Layanan BOS: +62 812-9988-7766
                                             className="inline-flex items-center gap-1.5 rounded-lg bg-blue-700 px-3.5 py-2 text-xs font-bold text-white shadow-2xs transition-all hover:bg-blue-800 active:scale-98"
                                         >
                                             <Download className="size-3.5" />
-                                            <span>Unduh File (.txt)</span>
+                                            <span>Unduh File TXT</span>
                                         </button>
                                     </div>
                                 </div>

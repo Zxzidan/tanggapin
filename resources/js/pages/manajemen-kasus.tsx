@@ -49,7 +49,7 @@ const ACTION_TYPES = [
     'Konseling Individu',
     'Mediasi Antar Siswa',
     'Pemanggilan Orang Tua & Wali Kelas',
-    'Home Visit (Kunjungan Rumah)',
+    'Home Visit Kunjungan Rumah',
     'Pendampingan Belajar & Tutor Sebaya',
     'Pembinaan Khusus & Kontrak Komitmen',
 ];
@@ -172,7 +172,7 @@ export default function ManajemenKasus({
                 preserveScroll: true,
                 onSuccess: () => {
                     toast.success(
-                        `Rujukan kasus ${selectedCaseForHandling.code} (${selectedCaseForHandling.studentName}) berhasil ditangani! Status di Dashboard Wali Kelas otomatis terbarui menjadi 'Sudah Ditangani oleh Guru BK'.`,
+                        `Rujukan kasus ${selectedCaseForHandling.code} siswa ${selectedCaseForHandling.studentName} berhasil ditangani! Status di Dashboard Wali Kelas otomatis terbarui menjadi 'Sudah Ditangani oleh Guru BK'.`,
                     );
                     handleCloseHandlingModal();
                 },
@@ -232,13 +232,13 @@ export default function ManajemenKasus({
                             <h1 className="text-xl font-bold tracking-tight text-slate-900 sm:text-2xl dark:text-white">
                                 {isWaliKelas
                                     ? 'Tracking Rujukan Kendala Siswa ke Guru BK'
-                                    : 'Manajemen Rujukan Kasus Siswa (Guru BK)'}
+                                    : 'Manajemen Rujukan Kasus Siswa Guru BK'}
                             </h1>
                         </div>
                         <p className="text-xs text-slate-600 sm:text-sm dark:text-slate-300">
                             {isWaliKelas
-                                ? 'Lapor kendala siswa binaan Anda ke Guru BK, lalu pantau status dan histori penanganannya. Validasi dan penyelesaian kasus sepenuhnya dilakukan oleh Guru BK.'
-                                : 'Guru BK menerima rujukan kendala siswa dari Wali Kelas, melakukan tindakan bimbingan & konseling, lalu mencatat hasil penanganan yang otomatis terlacak di dashboard Wali Kelas.'}
+                                ? 'Laporkan kendala siswa binaan Anda ke Guru BK dan pantau status penanganannya.'
+                                : 'Terima rujukan kendala siswa dari Wali Kelas, lakukan bimbingan konseling, dan catat hasil penanganannya.'}
                         </p>
                     </div>
 

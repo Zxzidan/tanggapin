@@ -240,7 +240,7 @@ export default function KelolaPengguna({
     const handleDeleteUser = (user: StaffUserItem) => {
         if (
             !confirm(
-                `Apakah Anda yakin ingin menghapus akun ${user.name} (${user.email})? Akses ke sistem akan dicabut.`,
+                `Apakah Anda yakin ingin menghapus akun ${user.name} dengan email ${user.email}? Akses ke sistem akan dicabut.`,
             )
         ) {
             return;
@@ -459,7 +459,7 @@ export default function KelolaPengguna({
                                 </div>
                                 <h3 className="mt-1 text-lg font-bold text-slate-900 dark:text-white">
                                     {quota.isUnlimited ? (
-                                        <span>Pengelolaan Rombongan Belajar: Unlimited (Tanpa Batas)</span>
+                                        <span>Pengelolaan Rombongan Belajar: Kuota Tanpa Batas</span>
                                     ) : (
                                         <span>
                                             Penggunaan Kuota: {quota.currentClasses} dari {quota.maxClasses} Kelas Aktif
@@ -582,9 +582,9 @@ export default function KelolaPengguna({
                                 <tr>
                                     <th className="px-5 py-3.5">Nama Pendidik & Staf</th>
                                     <th className="px-5 py-3.5">Peran Akun Resmi</th>
-                                    <th className="px-5 py-3.5">Rombel Binaan (Khusus Wali Kelas)</th>
+                                    <th className="px-5 py-3.5">Rombel Binaan Khusus Wali Kelas</th>
                                     <th className="px-5 py-3.5">Email Akses</th>
-                                    <th className="px-4 py-3.5">Kata Sandi Akun (Akses Operator)</th>
+                                    <th className="px-4 py-3.5">Kata Sandi Akun Akses Operator</th>
                                     <th className="px-5 py-3.5">Terdaftar</th>
                                     <th className="px-5 py-3.5 text-right">Tindakan</th>
                                 </tr>
@@ -746,7 +746,7 @@ export default function KelolaPengguna({
                 <div className="rounded-xl border border-blue-200/80 bg-blue-50/50 p-5 text-xs text-blue-950 dark:border-blue-900/60 dark:bg-blue-950/30 dark:text-blue-200">
                     <div className="flex items-center gap-2 font-bold text-sm">
                         <Lock className="size-4 text-blue-700 dark:text-blue-400" />
-                        <span>Kebijakan Keamanan & Batasan Peran (Role-Based Access Control)</span>
+                        <span>Kebijakan Keamanan & Batasan Peran RBAC</span>
                     </div>
                     <ul className="mt-2 list-disc space-y-1 pl-5 leading-relaxed text-blue-900/90 dark:text-blue-300">
                         <li>
@@ -1005,7 +1005,7 @@ export default function KelolaPengguna({
                                 <div className="flex items-center justify-between">
                                     <div className="flex items-center gap-1.5 font-semibold text-blue-950 dark:text-blue-200">
                                         <KeyRound className="size-4 text-blue-600 dark:text-blue-400" />
-                                        <span>Kata Sandi Tersimpan Saat Ini (Akses Operator)</span>
+                                        <span>Kata Sandi Tersimpan Saat Ini Akses Operator</span>
                                     </div>
                                     <span className="rounded-full bg-blue-200/70 px-2 py-0.5 text-[10px] font-bold text-blue-800 dark:bg-blue-900/60 dark:text-blue-300">
                                         Tersimpan
@@ -1149,7 +1149,7 @@ export default function KelolaPengguna({
                                 <strong>Batas Kuota Kelas Penuh!</strong>
                                 <p className="mt-1">
                                     Sekolah Anda saat ini menggunakan {quota.planName} dengan batas {quota.maxClasses} kelas.
-                                    Untuk menambah rombel baru, silakan beralih ke <strong>Paket Yayasan (Unlimited Kelas)</strong>.
+                                    Untuk menambah rombel baru, silakan beralih ke <strong>Paket Yayasan Kuota Tanpa Batas</strong>.
                                 </p>
                             </div>
                         ) : (
@@ -1184,13 +1184,13 @@ export default function KelolaPengguna({
 
                                 <div>
                                     <label className="block font-semibold text-slate-700 dark:text-slate-300">
-                                        Nama Wali Kelas (Awal)
+                                        Nama Wali Kelas Awal
                                     </label>
                                     <input
                                         type="text"
                                         value={newClassTeacher}
                                         onChange={(e) => setNewClassTeacher(e.target.value)}
-                                        placeholder="Contoh: Budi Santoso, S.Kom (atau kosongkan)"
+                                        placeholder="Contoh: Budi Santoso, S.Kom atau kosongkan"
                                         className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-xs text-slate-900 focus:border-blue-500 focus:outline-hidden dark:border-slate-700 dark:bg-slate-800 dark:text-white"
                                     />
                                 </div>
