@@ -23,35 +23,42 @@ export default function KomunikasiOrtu({
     const [parentUpdates] = useState<ParentUpdate[]>(initialParentUpdates);
     const { openParentContactModal } = useActionModals();
 
-    const readCount = parentUpdates.filter((m) => m.acknowledgement === 'Sudah membaca').length;
-    const pendingCount = parentUpdates.filter((m) => m.acknowledgement !== 'Sudah membaca').length;
+    const readCount = parentUpdates.filter(
+        (m) => m.acknowledgement === 'Sudah membaca',
+    ).length;
+    const pendingCount = parentUpdates.filter(
+        (m) => m.acknowledgement !== 'Sudah membaca',
+    ).length;
 
     return (
         <FlowbiteTanggapinLayout activeTab="communication">
             <Head title="Komunikasi Orang Tua — TANGGAPIN" />
 
-            <div className="space-y-6 max-w-7xl mx-auto">
+            <div className="mx-auto max-w-7xl space-y-6">
                 {/* Header Module */}
-                <div className="p-5 sm:p-6 rounded-2xl bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="flex flex-col justify-between gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs sm:flex-row sm:items-center sm:p-6 dark:border-slate-800 dark:bg-[#0f172a]">
                     <div className="space-y-1">
                         <div className="flex items-center gap-2">
-                            <div className="p-1.5 rounded-lg bg-blue-100 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400">
+                            <div className="rounded-lg bg-blue-100 p-1.5 text-blue-600 dark:bg-blue-950/60 dark:text-blue-400">
                                 <PhoneCall className="size-5" />
                             </div>
-                            <h1 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
+                            <h1 className="text-xl font-bold tracking-tight text-slate-900 sm:text-2xl dark:text-white">
                                 Komunikasi Orang Tua Terstruktur
                             </h1>
                         </div>
-                        <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300">
-                            Komunikasi resmi sekolah ke orang tua berbasis data dengan tanda terima digital (acknowledgement), menghindari kesalahpahaman dan perdebatan informal di grup chat.
+                        <p className="text-xs text-slate-600 sm:text-sm dark:text-slate-300">
+                            Komunikasi resmi sekolah ke orang tua berbasis data
+                            dengan tanda terima digital (acknowledgement),
+                            menghindari kesalahpahaman dan perdebatan informal
+                            di grup chat.
                         </p>
                     </div>
 
-                    <div className="flex items-center gap-2 self-start sm:self-center shrink-0">
+                    <div className="flex shrink-0 items-center gap-2 self-start sm:self-center">
                         <button
                             type="button"
                             onClick={() => openParentContactModal()}
-                            className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-white bg-blue-700 hover:bg-blue-800 rounded-lg shadow-sm transition-colors active:scale-95"
+                            className="inline-flex items-center gap-1.5 rounded-lg bg-blue-700 px-4 py-2 text-xs font-semibold text-white shadow-sm transition-colors hover:bg-blue-800 active:scale-95"
                         >
                             <Plus className="size-4" />
                             <span>Kirim Pesan Terstruktur</span>
@@ -60,52 +67,60 @@ export default function KomunikasiOrtu({
                 </div>
 
                 {/* Status KPI Summary */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                    <div className="p-4 rounded-xl bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-slate-800 shadow-xs flex items-center justify-between">
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+                    <div className="flex items-center justify-between rounded-xl border border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
                         <div>
-                            <span className="text-xs text-slate-500 font-medium">Total Pesan Resmi Terkirim</span>
-                            <div className="text-2xl font-bold text-slate-900 dark:text-white mt-0.5">
+                            <span className="text-xs font-medium text-slate-500">
+                                Total Pesan Resmi Terkirim
+                            </span>
+                            <div className="mt-0.5 text-2xl font-bold text-slate-900 dark:text-white">
                                 {parentUpdates.length}
                             </div>
                         </div>
-                        <div className="p-2.5 rounded-lg bg-blue-50 dark:bg-blue-950 text-blue-600">
+                        <div className="rounded-lg bg-blue-50 p-2.5 text-blue-600 dark:bg-blue-950">
                             <MessageSquare className="size-5" />
                         </div>
                     </div>
 
-                    <div className="p-4 rounded-xl bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-slate-800 shadow-xs flex items-center justify-between">
+                    <div className="flex items-center justify-between rounded-xl border border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
                         <div>
-                            <span className="text-xs text-slate-500 font-medium">Telah Dikonfirmasi Ortu</span>
-                            <div className="text-2xl font-bold text-emerald-600 mt-0.5">
+                            <span className="text-xs font-medium text-slate-500">
+                                Telah Dikonfirmasi Ortu
+                            </span>
+                            <div className="mt-0.5 text-2xl font-bold text-emerald-600">
                                 {readCount}
                             </div>
                         </div>
-                        <div className="p-2.5 rounded-lg bg-emerald-50 dark:bg-emerald-950 text-emerald-600">
+                        <div className="rounded-lg bg-emerald-50 p-2.5 text-emerald-600 dark:bg-emerald-950">
                             <CheckCircle2 className="size-5" />
                         </div>
                     </div>
 
-                    <div className="p-4 rounded-xl bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-slate-800 shadow-xs flex items-center justify-between">
+                    <div className="flex items-center justify-between rounded-xl border border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
                         <div>
-                            <span className="text-xs text-slate-500 font-medium">Menunggu Respon / Koordinasi</span>
-                            <div className="text-2xl font-bold text-amber-600 mt-0.5">
+                            <span className="text-xs font-medium text-slate-500">
+                                Menunggu Respon / Koordinasi
+                            </span>
+                            <div className="mt-0.5 text-2xl font-bold text-amber-600">
                                 {pendingCount}
                             </div>
                         </div>
-                        <div className="p-2.5 rounded-lg bg-amber-50 dark:bg-amber-950 text-amber-600">
+                        <div className="rounded-lg bg-amber-50 p-2.5 text-amber-600 dark:bg-amber-950">
                             <Clock className="size-5" />
                         </div>
                     </div>
                 </div>
 
                 {/* List of Messages */}
-                <div className="p-5 rounded-2xl bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-slate-800 shadow-xs space-y-4">
-                    <div className="pb-3 border-b border-slate-200 dark:border-slate-800">
+                <div className="space-y-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
+                    <div className="border-b border-slate-200 pb-3 dark:border-slate-800">
                         <h2 className="text-base font-bold text-slate-900 dark:text-white">
                             Riwayat Notifikasi & Percakapan Resmi
                         </h2>
-                        <p className="text-xs text-slate-500 mt-0.5">
-                            Setiap pesan tercatat waktu kirim, nomor tujuan, kategori masalah, dan tanda bukti konfirmasi orang tua.
+                        <p className="mt-0.5 text-xs text-slate-500">
+                            Setiap pesan tercatat waktu kirim, nomor tujuan,
+                            kategori masalah, dan tanda bukti konfirmasi orang
+                            tua.
                         </p>
                     </div>
 
@@ -113,47 +128,59 @@ export default function KomunikasiOrtu({
                         {parentUpdates.map((msg) => (
                             <div
                                 key={msg.id}
-                                className="p-4 rounded-xl bg-slate-50/70 dark:bg-[#111c30] border border-slate-200 dark:border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4 text-xs transition-colors hover:border-blue-300"
+                                className="flex flex-col justify-between gap-4 rounded-xl border border-slate-200 bg-slate-50/70 p-4 text-xs transition-colors hover:border-blue-300 md:flex-row md:items-center dark:border-slate-800 dark:bg-[#111c30]"
                             >
-                                <div className="space-y-1.5 flex-1">
+                                <div className="flex-1 space-y-1.5">
                                     <div className="flex flex-wrap items-center gap-2">
-                                        <span className="font-bold text-slate-900 dark:text-white text-sm">
+                                        <span className="text-sm font-bold text-slate-900 dark:text-white">
                                             {msg.studentName}
                                         </span>
-                                        <span className="text-slate-400">• Wali: {msg.parentName}</span>
-                                        <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-blue-50 dark:bg-blue-950 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-900">
+                                        <span className="text-slate-400">
+                                            • Wali: {msg.parentName}
+                                        </span>
+                                        <span className="rounded border border-blue-200 bg-blue-50 px-2 py-0.5 text-[10px] font-semibold text-blue-700 dark:border-blue-900 dark:bg-blue-950 dark:text-blue-300">
                                             {msg.category}
                                         </span>
-                                        <span className="text-slate-400 text-[11px]">• {msg.date}</span>
+                                        <span className="text-[11px] text-slate-400">
+                                            • {msg.date}
+                                        </span>
                                     </div>
 
-                                    <p className="text-slate-700 dark:text-slate-300 bg-white dark:bg-[#070b14] p-3 rounded-lg border border-slate-200 dark:border-slate-800 leading-relaxed font-normal">
+                                    <p className="rounded-lg border border-slate-200 bg-white p-3 leading-relaxed font-normal text-slate-700 dark:border-slate-800 dark:bg-[#070b14] dark:text-slate-300">
                                         {msg.message}
                                     </p>
 
                                     <div className="text-[11px] text-slate-500">
-                                        Saluran: <strong className="text-slate-700 dark:text-slate-300 font-medium">{msg.status}</strong>
+                                        Saluran:{' '}
+                                        <strong className="font-medium text-slate-700 dark:text-slate-300">
+                                            {msg.status}
+                                        </strong>
                                     </div>
                                 </div>
 
-                                <div className="shrink-0 flex flex-col items-start md:items-end gap-1.5 self-start md:self-center">
-                                    <span className="text-[10px] text-slate-400 font-medium">Status Tanggapan Ortu:</span>
+                                <div className="flex shrink-0 flex-col items-start gap-1.5 self-start md:items-end md:self-center">
+                                    <span className="text-[10px] font-medium text-slate-400">
+                                        Status Tanggapan Ortu:
+                                    </span>
                                     <span
                                         className={cn(
-                                            'px-3 py-1 text-xs font-semibold rounded-full border',
-                                            msg.acknowledgement === 'Sudah membaca'
-                                                ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800'
-                                                : 'bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-300 border-amber-200 dark:border-amber-900'
+                                            'rounded-full border px-3 py-1 text-xs font-semibold',
+                                            msg.acknowledgement ===
+                                                'Sudah membaca'
+                                                ? 'border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-800 dark:bg-emerald-950 dark:text-emerald-300'
+                                                : 'border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-900 dark:bg-amber-950 dark:text-amber-300',
                                         )}
                                     >
-                                        {msg.acknowledgement === 'Sudah membaca' ? '✓ Sudah Membaca' : 'Menunggu Konfirmasi'}
+                                        {msg.acknowledgement === 'Sudah membaca'
+                                            ? '✓ Sudah Membaca'
+                                            : 'Menunggu Konfirmasi'}
                                     </span>
                                 </div>
                             </div>
                         ))}
 
                         {parentUpdates.length === 0 && (
-                            <div className="py-8 text-center text-slate-400 text-xs">
+                            <div className="py-8 text-center text-xs text-slate-400">
                                 Belum ada pesan komunikasi resmi yang dikirim.
                             </div>
                         )}

@@ -22,76 +22,92 @@ export default function EarlyWarning({
     stats,
     priorityFeed: initialPriorityFeed = [],
 }: EarlyWarningProps) {
-    const { openFollowupModal, openParentContactModal, openStudent360Modal } = useActionModals();
-    const [feedRiskFilter, setFeedRiskFilter] = useState<'all' | 'high' | 'medium'>('all');
+    const { openFollowupModal, openParentContactModal, openStudent360Modal } =
+        useActionModals();
+    const [feedRiskFilter, setFeedRiskFilter] = useState<
+        'all' | 'high' | 'medium'
+    >('all');
     const [searchQuery, setSearchQuery] = useState('');
 
     const filteredAlerts = initialPriorityFeed.filter((item) => {
-        const matchesFilter = feedRiskFilter === 'all' || item.riskLevel === feedRiskFilter;
+        const matchesFilter =
+            feedRiskFilter === 'all' || item.riskLevel === feedRiskFilter;
         const matchesSearch =
-            item.studentName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            item.studentName
+                .toLowerCase()
+                .includes(searchQuery.toLowerCase()) ||
             item.class.toLowerCase().includes(searchQuery.toLowerCase()) ||
             item.summary.toLowerCase().includes(searchQuery.toLowerCase());
         return matchesFilter && matchesSearch;
     });
 
-    const highRiskCount = initialPriorityFeed.filter((item) => item.riskLevel === 'high').length;
-    const mediumRiskCount = initialPriorityFeed.filter((item) => item.riskLevel === 'medium').length;
+    const highRiskCount = initialPriorityFeed.filter(
+        (item) => item.riskLevel === 'high',
+    ).length;
+    const mediumRiskCount = initialPriorityFeed.filter(
+        (item) => item.riskLevel === 'medium',
+    ).length;
 
     return (
         <FlowbiteTanggapinLayout activeTab="early-warning">
             <Head title="Early Warning System — TANGGAPIN" />
 
-            <div className="space-y-6 max-w-7xl mx-auto">
+            <div className="mx-auto max-w-7xl space-y-6">
                 {/* Header Module */}
-                <div className="p-5 sm:p-6 rounded-2xl bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="flex flex-col justify-between gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs sm:flex-row sm:items-center sm:p-6 dark:border-slate-800 dark:bg-[#0f172a]">
                     <div className="space-y-1">
                         <div className="flex items-center gap-2">
-                            <div className="p-1.5 rounded-lg bg-red-100 dark:bg-red-950/60 text-red-600 dark:text-red-400">
+                            <div className="rounded-lg bg-red-100 p-1.5 text-red-600 dark:bg-red-950/60 dark:text-red-400">
                                 <AlertTriangle className="size-5" />
                             </div>
-                            <h1 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
+                            <h1 className="text-xl font-bold tracking-tight text-slate-900 sm:text-2xl dark:text-white">
                                 Early Warning System
                             </h1>
                         </div>
-                        <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300">
-                            Mengenali sinyal penurunan kondisi siswa sebelum menjadi masalah besar. Menampilkan indikator obyektif, bukan vonis.
+                        <p className="text-xs text-slate-600 sm:text-sm dark:text-slate-300">
+                            Mengenali sinyal penurunan kondisi siswa sebelum
+                            menjadi masalah besar. Menampilkan indikator
+                            obyektif, bukan vonis.
                         </p>
                     </div>
 
-                    <div className="flex items-center gap-2 self-start sm:self-center shrink-0">
-                        <span className="text-xs font-bold px-3 py-1.5 rounded-full bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-300 border border-red-200 dark:border-red-900 flex items-center gap-1.5">
-                            <span className="size-2 rounded-full bg-red-500 animate-pulse" />
-                            {stats?.studentsNeedingAttention ?? initialPriorityFeed.length} Siswa Dalam Pantauan
+                    <div className="flex shrink-0 items-center gap-2 self-start sm:self-center">
+                        <span className="flex items-center gap-1.5 rounded-full border border-red-200 bg-red-50 px-3 py-1.5 text-xs font-bold text-red-700 dark:border-red-900 dark:bg-red-950 dark:text-red-300">
+                            <span className="size-2 animate-pulse rounded-full bg-red-500" />
+                            {stats?.studentsNeedingAttention ??
+                                initialPriorityFeed.length}{' '}
+                            Siswa Dalam Pantauan
                         </span>
                     </div>
                 </div>
 
                 {/* Main Table Card */}
-                <div className="p-5 rounded-2xl bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-slate-800 shadow-xs space-y-4">
+                <div className="space-y-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
                     {/* Controls Bar: Search & Filter Pills */}
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-200 dark:border-slate-800">
+                    <div className="flex flex-col justify-between gap-3 border-b border-slate-200 pb-3 sm:flex-row sm:items-center dark:border-slate-800">
                         <div className="relative w-full sm:w-72">
-                            <Search className="absolute left-3 top-2.5 size-4 text-slate-400" />
+                            <Search className="absolute top-2.5 left-3 size-4 text-slate-400" />
                             <input
                                 type="text"
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                                 placeholder="Cari nama siswa, kelas, sinyal..."
-                                className="w-full pl-9 pr-3 py-1.5 text-xs rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#070b14] text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-600/30"
+                                className="w-full rounded-lg border border-slate-200 bg-slate-50 py-1.5 pr-3 pl-9 text-xs text-slate-900 focus:ring-2 focus:ring-blue-600/30 focus:outline-none dark:border-slate-700 dark:bg-[#070b14] dark:text-white"
                             />
                         </div>
 
                         <div className="flex items-center gap-1.5 self-start sm:self-center">
-                            <span className="text-xs text-slate-400 me-1 hidden md:inline">Filter Risiko:</span>
+                            <span className="me-1 hidden text-xs text-slate-400 md:inline">
+                                Filter Risiko:
+                            </span>
                             <button
                                 type="button"
                                 onClick={() => setFeedRiskFilter('all')}
                                 className={cn(
-                                    'px-3 py-1 text-xs rounded-lg font-medium transition-colors',
+                                    'rounded-lg px-3 py-1 text-xs font-medium transition-colors',
                                     feedRiskFilter === 'all'
-                                        ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900 font-semibold'
-                                        : 'text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800'
+                                        ? 'bg-slate-900 font-semibold text-white dark:bg-white dark:text-slate-900'
+                                        : 'text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800',
                                 )}
                             >
                                 Semua ({initialPriorityFeed.length})
@@ -100,10 +116,10 @@ export default function EarlyWarning({
                                 type="button"
                                 onClick={() => setFeedRiskFilter('high')}
                                 className={cn(
-                                    'px-3 py-1 text-xs rounded-lg font-medium transition-colors',
+                                    'rounded-lg px-3 py-1 text-xs font-medium transition-colors',
                                     feedRiskFilter === 'high'
-                                        ? 'bg-red-600 text-white font-semibold'
-                                        : 'text-slate-500 hover:bg-red-50 hover:text-red-700 dark:hover:bg-red-950/40'
+                                        ? 'bg-red-600 font-semibold text-white'
+                                        : 'text-slate-500 hover:bg-red-50 hover:text-red-700 dark:hover:bg-red-950/40',
                                 )}
                             >
                                 Kritis ({highRiskCount})
@@ -112,10 +128,10 @@ export default function EarlyWarning({
                                 type="button"
                                 onClick={() => setFeedRiskFilter('medium')}
                                 className={cn(
-                                    'px-3 py-1 text-xs rounded-lg font-medium transition-colors',
+                                    'rounded-lg px-3 py-1 text-xs font-medium transition-colors',
                                     feedRiskFilter === 'medium'
-                                        ? 'bg-amber-600 text-white font-semibold'
-                                        : 'text-slate-500 hover:bg-amber-50 hover:text-amber-700 dark:hover:bg-amber-950/40'
+                                        ? 'bg-amber-600 font-semibold text-white'
+                                        : 'text-slate-500 hover:bg-amber-50 hover:text-amber-700 dark:hover:bg-amber-950/40',
                                 )}
                             >
                                 Perlu Diperhatikan ({mediumRiskCount})
@@ -125,40 +141,50 @@ export default function EarlyWarning({
 
                     {/* Table View */}
                     <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
-                        <table className="w-full text-xs text-left text-slate-700 dark:text-slate-300">
-                            <thead className="text-[11px] font-bold text-slate-600 dark:text-slate-300 uppercase bg-slate-50 dark:bg-[#111c30] border-b border-slate-200 dark:border-slate-800">
+                        <table className="w-full text-left text-xs text-slate-700 dark:text-slate-300">
+                            <thead className="border-b border-slate-200 bg-slate-50 text-[11px] font-bold text-slate-600 uppercase dark:border-slate-800 dark:bg-[#111c30] dark:text-slate-300">
                                 <tr>
                                     <th className="px-4 py-3">Siswa & Kelas</th>
                                     <th className="px-4 py-3">Pemicu Sinyal</th>
-                                    <th className="px-4 py-3">Konteks & Ringkasan</th>
+                                    <th className="px-4 py-3">
+                                        Konteks & Ringkasan
+                                    </th>
                                     <th className="px-4 py-3">Wali Kelas</th>
                                     <th className="px-4 py-3">Orang Tua</th>
-                                    <th className="px-4 py-3 text-center">Tindakan Cepat</th>
+                                    <th className="px-4 py-3 text-center">
+                                        Tindakan Cepat
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
                                 {filteredAlerts.length > 0 ? (
                                     filteredAlerts.map((item) => (
-                                        <tr key={item.id} className="hover:bg-slate-50/80 dark:hover:bg-[#162238]/60 transition-colors">
-                                            <td className="px-4 py-3.5 font-bold text-slate-900 dark:text-white whitespace-nowrap">
+                                        <tr
+                                            key={item.id}
+                                            className="transition-colors hover:bg-slate-50/80 dark:hover:bg-[#162238]/60"
+                                        >
+                                            <td className="px-4 py-3.5 font-bold whitespace-nowrap text-slate-900 dark:text-white">
                                                 <div>{item.studentName}</div>
-                                                <div className="text-[11px] font-normal text-slate-500">{item.class}</div>
+                                                <div className="text-[11px] font-normal text-slate-500">
+                                                    {item.class}
+                                                </div>
                                             </td>
                                             <td className="px-4 py-3.5 whitespace-nowrap">
                                                 <span
                                                     className={cn(
-                                                        'px-2 py-0.5 rounded text-[10px] font-bold border',
-                                                        item.riskLevel === 'high'
-                                                            ? 'bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-300 border-red-200 dark:border-red-900'
-                                                            : 'bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-300 border-amber-200 dark:border-amber-900'
+                                                        'rounded border px-2 py-0.5 text-[10px] font-bold',
+                                                        item.riskLevel ===
+                                                            'high'
+                                                            ? 'border-red-200 bg-red-50 text-red-700 dark:border-red-900 dark:bg-red-950 dark:text-red-300'
+                                                            : 'border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-900 dark:bg-amber-950 dark:text-amber-300',
                                                     )}
                                                 >
                                                     {item.triggerType}
                                                 </span>
                                             </td>
-                                            <td className="px-4 py-3.5 max-w-xs text-[11px] leading-relaxed">
+                                            <td className="max-w-xs px-4 py-3.5 text-[11px] leading-relaxed">
                                                 {item.summary}
-                                                <div className="text-[10px] text-slate-400 mt-0.5">
+                                                <div className="mt-0.5 text-[10px] text-slate-400">
                                                     Terdeteksi {item.timestamp}
                                                 </div>
                                             </td>
@@ -166,15 +192,23 @@ export default function EarlyWarning({
                                                 {item.homeroomTeacher}
                                             </td>
                                             <td className="px-4 py-3.5 text-[11px] whitespace-nowrap">
-                                                <div className="font-medium text-slate-900 dark:text-white">{item.parentName}</div>
-                                                <div className="text-slate-400">{item.parentPhone}</div>
+                                                <div className="font-medium text-slate-900 dark:text-white">
+                                                    {item.parentName}
+                                                </div>
+                                                <div className="text-slate-400">
+                                                    {item.parentPhone}
+                                                </div>
                                             </td>
                                             <td className="px-4 py-3.5 text-center whitespace-nowrap">
                                                 <div className="flex items-center justify-center gap-1.5">
                                                     <button
                                                         type="button"
-                                                        onClick={() => openStudent360Modal(item)}
-                                                        className="px-2.5 py-1 text-[11px] font-semibold text-blue-700 dark:text-blue-300 bg-blue-50 dark:bg-blue-950/60 hover:bg-blue-100 dark:hover:bg-blue-900/60 rounded-lg border border-blue-200 dark:border-blue-900 transition-colors inline-flex items-center gap-1"
+                                                        onClick={() =>
+                                                            openStudent360Modal(
+                                                                item,
+                                                            )
+                                                        }
+                                                        className="inline-flex items-center gap-1 rounded-lg border border-blue-200 bg-blue-50 px-2.5 py-1 text-[11px] font-semibold text-blue-700 transition-colors hover:bg-blue-100 dark:border-blue-900 dark:bg-blue-950/60 dark:text-blue-300 dark:hover:bg-blue-900/60"
                                                     >
                                                         <Eye className="size-3" />
                                                         <span>Profil 360°</span>
@@ -183,13 +217,16 @@ export default function EarlyWarning({
                                                         type="button"
                                                         onClick={() => {
                                                             openFollowupModal({
-                                                                studentId: item.studentId || item.id,
+                                                                studentId:
+                                                                    item.studentId ||
+                                                                    item.id,
                                                                 studentName: `${item.studentName} (${item.class})`,
-                                                                studentPhone: item.parentPhone,
+                                                                studentPhone:
+                                                                    item.parentPhone,
                                                                 note: `Tindak lanjut pemicu risiko: ${item.summary}`,
                                                             });
                                                         }}
-                                                        className="px-2.5 py-1 text-[11px] font-semibold text-white bg-blue-700 hover:bg-blue-800 rounded-lg transition-colors shadow-2xs inline-flex items-center gap-1"
+                                                        className="inline-flex items-center gap-1 rounded-lg bg-blue-700 px-2.5 py-1 text-[11px] font-semibold text-white shadow-2xs transition-colors hover:bg-blue-800"
                                                     >
                                                         <Plus className="size-3" />
                                                         <span>Follow-up</span>
@@ -197,14 +234,19 @@ export default function EarlyWarning({
                                                     <button
                                                         type="button"
                                                         onClick={() => {
-                                                            openParentContactModal({
-                                                                studentId: item.studentId || item.id,
-                                                                studentName: `${item.studentName} (${item.class})`,
-                                                                studentPhone: item.parentPhone,
-                                                                message: `Yth. Bapak/Ibu ${item.parentName}, kami dari sekolah menginformasikan perkembangan ananda ${item.studentName}. ${item.summary}. Mohon berkenan berkoordinasi dengan pihak sekolah.`,
-                                                            });
+                                                            openParentContactModal(
+                                                                {
+                                                                    studentId:
+                                                                        item.studentId ||
+                                                                        item.id,
+                                                                    studentName: `${item.studentName} (${item.class})`,
+                                                                    studentPhone:
+                                                                        item.parentPhone,
+                                                                    message: `Yth. Bapak/Ibu ${item.parentName}, kami dari sekolah menginformasikan perkembangan ananda ${item.studentName}. ${item.summary}. Mohon berkenan berkoordinasi dengan pihak sekolah.`,
+                                                                },
+                                                            );
                                                         }}
-                                                        className="p-1.5 text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-950/50 rounded-lg border border-slate-200 dark:border-slate-800 transition-colors"
+                                                        className="rounded-lg border border-slate-200 p-1.5 text-emerald-600 transition-colors hover:bg-emerald-50 dark:border-slate-800 dark:hover:bg-emerald-950/50"
                                                         title="Kirim pesan resmi ke orang tua"
                                                     >
                                                         <PhoneCall className="size-3.5" />
@@ -215,8 +257,12 @@ export default function EarlyWarning({
                                     ))
                                 ) : (
                                     <tr>
-                                        <td colSpan={6} className="px-4 py-8 text-center text-slate-400">
-                                            Tidak ada data sinyal risiko yang sesuai filter.
+                                        <td
+                                            colSpan={6}
+                                            className="px-4 py-8 text-center text-slate-400"
+                                        >
+                                            Tidak ada data sinyal risiko yang
+                                            sesuai filter.
                                         </td>
                                     </tr>
                                 )}

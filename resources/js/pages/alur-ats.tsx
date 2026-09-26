@@ -21,20 +21,25 @@ interface AlurAtsProps {
     atsList?: AtsItem[];
 }
 
-export default function AlurAts({ atsList: initialAtsList = [] }: AlurAtsProps) {
+export default function AlurAts({
+    atsList: initialAtsList = [],
+}: AlurAtsProps) {
     const [atsList, setAtsList] = useState<AtsItem[]>(initialAtsList);
     const { openFollowupModal } = useActionModals();
 
     const handleUpdateVisit = (ats: AtsItem) => {
-        toast.success(`Hasil verifikasi lapangan ananda ${ats.studentName} berhasil diperbarui!`, {
-            description: `Status: Terverifikasi oleh ${ats.officer}`,
-        });
+        toast.success(
+            `Hasil verifikasi lapangan ananda ${ats.studentName} berhasil diperbarui!`,
+            {
+                description: `Status: Terverifikasi oleh ${ats.officer}`,
+            },
+        );
         setAtsList((prev) =>
             prev.map((item) =>
                 item.id === ats.id
                     ? { ...item, status: 'Kunjungan Selesai & Terverifikasi' }
-                    : item
-            )
+                    : item,
+            ),
         );
     };
 
@@ -42,94 +47,107 @@ export default function AlurAts({ atsList: initialAtsList = [] }: AlurAtsProps) 
         <FlowbiteTanggapinLayout activeTab="ats">
             <Head title="Alur Lapangan ATS — TANGGAPIN" />
 
-            <div className="space-y-6 max-w-7xl mx-auto">
+            <div className="mx-auto max-w-7xl space-y-6">
                 {/* Header Module */}
-                <div className="p-5 sm:p-6 rounded-2xl bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="flex flex-col justify-between gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs sm:flex-row sm:items-center sm:p-6 dark:border-slate-800 dark:bg-[#0f172a]">
                     <div className="space-y-1">
                         <div className="flex items-center gap-2">
-                            <div className="p-1.5 rounded-lg bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400">
+                            <div className="rounded-lg bg-emerald-100 p-1.5 text-emerald-600 dark:bg-emerald-950/60 dark:text-emerald-400">
                                 <UserCheck className="size-5" />
                             </div>
-                            <h1 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
+                            <h1 className="text-xl font-bold tracking-tight text-slate-900 sm:text-2xl dark:text-white">
                                 Alur Lapangan ATS (Anak Tidak Sekolah)
                             </h1>
                         </div>
-                        <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300">
-                            Workflow penanganan verifikasi lapangan & intervensi: Ditugaskan → Kunjungan Rumah → Terverifikasi → Rencana Solusi → Kembali Sekolah.
+                        <p className="text-xs text-slate-600 sm:text-sm dark:text-slate-300">
+                            Workflow penanganan verifikasi lapangan &
+                            intervensi: Ditugaskan → Kunjungan Rumah →
+                            Terverifikasi → Rencana Solusi → Kembali Sekolah.
                         </p>
                     </div>
 
-                    <div className="flex items-center gap-2 self-start sm:self-center shrink-0">
-                        <span className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 flex items-center gap-1.5">
-                            <span className="size-2 rounded-full bg-emerald-500 animate-pulse" />
+                    <div className="flex shrink-0 items-center gap-2 self-start sm:self-center">
+                        <span className="flex items-center gap-1.5 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-700 dark:border-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">
+                            <span className="size-2 animate-pulse rounded-full bg-emerald-500" />
                             Tim Satgas ATS Terpadu
                         </span>
                     </div>
                 </div>
 
                 {/* Workflow Status Steps Indicator */}
-                <div className="p-4 rounded-xl bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-slate-800 shadow-xs">
-                    <div className="grid grid-cols-2 md:grid-cols-5 gap-2 text-center text-xs">
-                        <div className="p-2.5 rounded-lg bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-900 text-blue-700 dark:text-blue-300 font-semibold">
+                <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
+                    <div className="grid grid-cols-2 gap-2 text-center text-xs md:grid-cols-5">
+                        <div className="rounded-lg border border-blue-200 bg-blue-50 p-2.5 font-semibold text-blue-700 dark:border-blue-900 dark:bg-blue-950/40 dark:text-blue-300">
                             1. Sinyal Absensi Kritis
                         </div>
-                        <div className="p-2.5 rounded-lg bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900 text-amber-700 dark:text-amber-300 font-semibold">
+                        <div className="rounded-lg border border-amber-200 bg-amber-50 p-2.5 font-semibold text-amber-700 dark:border-amber-900 dark:bg-amber-950/40 dark:text-amber-300">
                             2. Penugasan Kunjungan
                         </div>
-                        <div className="p-2.5 rounded-lg bg-purple-50 dark:bg-purple-950/40 border border-purple-200 dark:border-purple-900 text-purple-700 dark:text-purple-300 font-semibold">
+                        <div className="rounded-lg border border-purple-200 bg-purple-50 p-2.5 font-semibold text-purple-700 dark:border-purple-900 dark:bg-purple-950/40 dark:text-purple-300">
                             3. Home Visit Lapangan
                         </div>
-                        <div className="p-2.5 rounded-lg bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-900 text-indigo-700 dark:text-indigo-300 font-semibold">
+                        <div className="rounded-lg border border-indigo-200 bg-indigo-50 p-2.5 font-semibold text-indigo-700 dark:border-indigo-900 dark:bg-indigo-950/40 dark:text-indigo-300">
                             4. Solusi & Intervensi
                         </div>
-                        <div className="p-2.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-300 font-semibold col-span-2 md:col-span-1">
+                        <div className="col-span-2 rounded-lg border border-emerald-200 bg-emerald-50 p-2.5 font-semibold text-emerald-700 md:col-span-1 dark:border-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-300">
                             5. Kembali ke Sekolah ✓
                         </div>
                     </div>
                 </div>
 
                 {/* Cards Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                <div className="grid grid-cols-1 gap-4 text-xs md:grid-cols-2">
                     {atsList.map((ats) => (
                         <div
                             key={ats.id}
-                            className="p-5 rounded-2xl bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-slate-800 shadow-xs hover:border-emerald-300 transition-all space-y-3.5"
+                            className="space-y-3.5 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs transition-all hover:border-emerald-300 dark:border-slate-800 dark:bg-[#0f172a]"
                         >
                             <div className="flex items-center justify-between">
                                 <div>
-                                    <h3 className="font-bold text-slate-900 dark:text-white text-base">
+                                    <h3 className="text-base font-bold text-slate-900 dark:text-white">
                                         {ats.studentName}
                                     </h3>
-                                    <span className="text-xs text-blue-700 dark:text-blue-400 font-semibold">
+                                    <span className="text-xs font-semibold text-blue-700 dark:text-blue-400">
                                         Kelas Terakhir: {ats.lastClass}
                                     </span>
                                 </div>
 
-                                <span className="text-[10px] font-bold px-2.5 py-1 rounded-full bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-300 border border-amber-200 dark:border-amber-900">
+                                <span className="rounded-full border border-amber-200 bg-amber-50 px-2.5 py-1 text-[10px] font-bold text-amber-700 dark:border-amber-900 dark:bg-amber-950 dark:text-amber-300">
                                     {ats.status}
                                 </span>
                             </div>
 
-                            <div className="text-[11px] text-slate-600 dark:text-slate-300 flex items-start gap-1.5 p-2 rounded-lg bg-slate-50 dark:bg-[#111c30] border border-slate-100 dark:border-slate-800">
-                                <MapPin className="size-4 text-red-500 shrink-0 mt-0.5" />
-                                <span>Alamat Domisili: <strong className="font-medium text-slate-900 dark:text-white">{ats.address}</strong></span>
+                            <div className="flex items-start gap-1.5 rounded-lg border border-slate-100 bg-slate-50 p-2 text-[11px] text-slate-600 dark:border-slate-800 dark:bg-[#111c30] dark:text-slate-300">
+                                <MapPin className="mt-0.5 size-4 shrink-0 text-red-500" />
+                                <span>
+                                    Alamat Domisili:{' '}
+                                    <strong className="font-medium text-slate-900 dark:text-white">
+                                        {ats.address}
+                                    </strong>
+                                </span>
                             </div>
 
-                            <div className="p-3 rounded-xl bg-slate-50/70 dark:bg-[#111c30] border border-slate-200 dark:border-slate-800 space-y-1">
-                                <span className="text-[10px] text-slate-400 font-semibold block uppercase tracking-wider">
+                            <div className="space-y-1 rounded-xl border border-slate-200 bg-slate-50/70 p-3 dark:border-slate-800 dark:bg-[#111c30]">
+                                <span className="block text-[10px] font-semibold tracking-wider text-slate-400 uppercase">
                                     Identifikasi Faktor Hambatan Belajar:
                                 </span>
-                                <div className="font-medium text-slate-800 dark:text-slate-200 leading-relaxed">
+                                <div className="leading-relaxed font-medium text-slate-800 dark:text-slate-200">
                                     {ats.reason}
                                 </div>
                             </div>
 
-                            <div className="flex items-center justify-between pt-1 border-t border-slate-100 dark:border-slate-800 text-[11px]">
+                            <div className="flex items-center justify-between border-t border-slate-100 pt-1 text-[11px] dark:border-slate-800">
                                 <span className="text-slate-500">
-                                    Petugas: <strong className="text-slate-700 dark:text-slate-300 font-medium">{ats.officer}</strong>
+                                    Petugas:{' '}
+                                    <strong className="font-medium text-slate-700 dark:text-slate-300">
+                                        {ats.officer}
+                                    </strong>
                                 </span>
                                 <span className="text-slate-500">
-                                    Jadwal: <strong className="text-slate-700 dark:text-slate-300 font-medium">{ats.scheduledVisit}</strong>
+                                    Jadwal:{' '}
+                                    <strong className="font-medium text-slate-700 dark:text-slate-300">
+                                        {ats.scheduledVisit}
+                                    </strong>
                                 </span>
                             </div>
 
@@ -137,7 +155,7 @@ export default function AlurAts({ atsList: initialAtsList = [] }: AlurAtsProps) 
                                 <button
                                     type="button"
                                     onClick={() => handleUpdateVisit(ats)}
-                                    className="w-full py-2 px-3 text-xs font-semibold bg-emerald-700 hover:bg-emerald-800 text-white rounded-lg shadow-2xs transition-colors text-center"
+                                    className="w-full rounded-lg bg-emerald-700 px-3 py-2 text-center text-xs font-semibold text-white shadow-2xs transition-colors hover:bg-emerald-800"
                                 >
                                     Verifikasi Kunjungan
                                 </button>
@@ -149,7 +167,7 @@ export default function AlurAts({ atsList: initialAtsList = [] }: AlurAtsProps) 
                                             note: `Tindak lanjut kunjungan lapangan ATS: ${ats.reason}`,
                                         });
                                     }}
-                                    className="w-full py-2 px-3 text-xs font-semibold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-800 dark:text-slate-200 rounded-lg border border-slate-200 dark:border-slate-700 transition-colors text-center"
+                                    className="w-full rounded-lg border border-slate-200 bg-slate-100 px-3 py-2 text-center text-xs font-semibold text-slate-800 transition-colors hover:bg-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
                                 >
                                     Buat Rencana Intervensi
                                 </button>

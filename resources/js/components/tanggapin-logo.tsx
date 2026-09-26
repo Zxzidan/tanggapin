@@ -99,14 +99,6 @@ export default function TanggapinLogo({
                     >
                         TANGGAPIN
                     </span>
-                    <span
-                        className={cn(
-                            'rounded-md border border-blue-200 bg-blue-50 font-semibold tracking-wide text-blue-700 dark:border-blue-800/80 dark:bg-blue-950/80 dark:text-blue-300',
-                            sizeConfig.badge,
-                        )}
-                    >
-                        EdTech
-                    </span>
                 </div>
                 {showDescriptor && (
                     <span
