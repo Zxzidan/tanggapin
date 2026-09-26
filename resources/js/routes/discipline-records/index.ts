@@ -59,7 +59,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
  * @see app/Http/Controllers/DashboardController.php:1015
  * @route '/discipline-records/{record}/followup'
  */
-export const followup = (args: { record: number | { id: number } } | [record: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+export const followup = (args: { record: string | number | { id: string | number } } | [record: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: followup.url(args, options),
     method: 'post',
 })
@@ -74,7 +74,7 @@ followup.definition = {
  * @see app/Http/Controllers/DashboardController.php:1015
  * @route '/discipline-records/{record}/followup'
  */
-followup.url = (args: { record: number | { id: number } } | [record: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+followup.url = (args: { record: string | number | { id: string | number } } | [record: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { record: args }
     }
@@ -107,7 +107,7 @@ followup.url = (args: { record: number | { id: number } } | [record: number | { 
  * @see app/Http/Controllers/DashboardController.php:1015
  * @route '/discipline-records/{record}/followup'
  */
-followup.post = (args: { record: number | { id: number } } | [record: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+followup.post = (args: { record: string | number | { id: string | number } } | [record: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: followup.url(args, options),
     method: 'post',
 })
@@ -117,7 +117,7 @@ followup.post = (args: { record: number | { id: number } } | [record: number | {
  * @see app/Http/Controllers/DashboardController.php:1015
  * @route '/discipline-records/{record}/followup'
  */
-    const followupForm = (args: { record: number | { id: number } } | [record: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const followupForm = (args: { record: string | number | { id: string | number } } | [record: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: followup.url(args, options),
         method: 'post',
     })
@@ -127,7 +127,7 @@ followup.post = (args: { record: number | { id: number } } | [record: number | {
  * @see app/Http/Controllers/DashboardController.php:1015
  * @route '/discipline-records/{record}/followup'
  */
-        followupForm.post = (args: { record: number | { id: number } } | [record: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        followupForm.post = (args: { record: string | number | { id: string | number } } | [record: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: followup.url(args, options),
             method: 'post',
         })
