@@ -33,6 +33,7 @@ import {
 import React, { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
 import { useActionModals } from '@/components/action-modals';
+import AiAssistantWidget from '@/components/ai-assistant-widget';
 import TanggapinLogo from '@/components/tanggapin-logo';
 import { useAppearance } from '@/hooks/use-appearance';
 import {
@@ -890,6 +891,12 @@ export default function FlowbiteTanggapinLayout({
             <main className="mt-16 min-h-[calc(100vh-4rem)] p-5 sm:ml-64 sm:p-8 lg:p-10">
                 {children}
             </main>
+
+            {/* Interactive School AI Assistant Widget */}
+            <AiAssistantWidget
+                currentRole={activeRole}
+                userName={authUser?.name || activeRoleConfig.userName}
+            />
         </div>
     );
 }
