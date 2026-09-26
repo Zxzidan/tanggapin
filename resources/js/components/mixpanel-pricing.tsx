@@ -286,10 +286,10 @@ export function MixpanelPricing({ onSelectPlan }: MixpanelPricingProps) {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto mb-14">
           <PricingCard
             title="Paket Perintis"
-            subtitle="Ideal untuk sekolah skala dasar/perintis dengan kebutuhan sistem pendampingan awal."
-            price="Gratis Uji Coba"
-            priceDetail="Kapasitas s.d. 300 siswa & 10 rombel. Modul sinyal dan konseling dasar."
-            buttonText="Mulai Gratis"
+            subtitle="Ideal untuk sekolah skala dasar dengan kebutuhan sistem pendampingan awal."
+            price="Rp 360.000"
+            priceDetail="per bulan ditagih tahunan. Kapasitas s.d. 300 siswa & 10 rombel. Efisien untuk dana BOS."
+            buttonText="Pilih Paket Perintis"
             buttonVariant="secondary"
             onButtonClick={() => onSelectPlan && onSelectPlan('perintis')}
             features={[
@@ -322,8 +322,9 @@ export function MixpanelPricing({ onSelectPlan }: MixpanelPricingProps) {
           <PricingCard
             title="Yayasan & Dinas"
             subtitle="Pengawasan multi-unit terpusat untuk Yayasan Pendidikan atau Cabang Dinas."
-            priceDetail="Kapasitas siswa & rombel tanpa batas di atas 800 Siswa. Dashboard yayasan terpusat, konsolidasi residu Dapodik & statistik ATS lintas unit."
-            buttonText="Konsultasi Tim"
+            price="Rp 1.480.000"
+            priceDetail="per bulan ditagih tahunan. Kapasitas siswa & rombel tanpa batas di atas 800 Siswa. Dashboard yayasan terpusat."
+            buttonText="Pilih Paket Yayasan"
             buttonVariant="secondary"
             onButtonClick={() => onSelectPlan && onSelectPlan('yayasan')}
             features={[
@@ -344,20 +345,20 @@ export function MixpanelPricing({ onSelectPlan }: MixpanelPricingProps) {
         >
           <div className="inline-flex items-center gap-2 rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300 border border-blue-200 dark:border-blue-800 px-3 py-1 text-xs font-bold mb-3">
             <Building2 className="size-3.5" />
-            Program Afirmasi & Sekolah Rintisan
+            Program Kemitraan Khusus & Sekolah Afirmasi
           </div>
           <h3 className="text-xl sm:text-2xl font-bold mb-2 text-slate-900 dark:text-white">
-            Sekolah Rintisan & Wilayah 3T: Akses Pendampingan Gratis
+            Sekolah Rintisan & Wilayah 3T: Skema Pembiayaan Afirmasi BOSP
           </h3>
           <p className="text-slate-600 dark:text-slate-300 text-xs sm:text-sm mb-5 max-w-2xl mx-auto leading-relaxed">
-            Sekolah dengan status rintisan atau kategori afirmasi berhak memperoleh pendampingan implementasi, bimtek pencegahan kekerasan TPPK Permendikbud 46/2023, serta uji coba sistem tanpa biaya di termin pertama.
+            Sekolah dengan status rintisan atau kategori afirmasi berhak memperoleh pendampingan implementasi intensif, bimtek pencegahan kekerasan TPPK Permendikbud 46/2023, serta skema termin fleksibel mengikuti pencairan kas daerah.
           </p>
           <button
             type="button"
             onClick={() => onSelectPlan && onSelectPlan('perintis')}
             className="bg-white hover:bg-slate-50 text-blue-700 border border-blue-200 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-white dark:border-slate-700 px-6 py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all inline-flex items-center gap-2 mx-auto cursor-pointer shadow-xs"
           >
-            Daftar Program Pendampingan Sekolah <ChevronRight className="w-4 h-4" />
+            Konsultasi Penganggaran Afirmasi <ChevronRight className="w-4 h-4" />
           </button>
         </motion.div>
 

@@ -185,7 +185,7 @@ const PRICING_FAQS = [
     },
     {
         q: 'Apakah ada biaya tersembunyi atau biaya per siswa tambahan?',
-        a: 'Tidak ada. Biaya langganan bersifat flat per paket. Tidak ada biaya server, tidak ada biaya lisensi per guru, dan seluruh pembaruan fitur diberikan gratis selama masa aktif.',
+        a: 'Tidak ada. Biaya langganan bersifat flat per paket. Tidak ada biaya server, tidak ada biaya lisensi per guru, dan seluruh pembaruan fitur sudah termasuk tanpa biaya tambahan selama masa aktif berlangganan.',
     },
     {
         q: 'Bagaimana dengan privasi data siswa dan kerahasiaan konseling guru BK?',
