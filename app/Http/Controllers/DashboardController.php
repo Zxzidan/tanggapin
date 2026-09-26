@@ -21,6 +21,7 @@ use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -527,25 +528,27 @@ class DashboardController extends Controller
 
     private function getStats(): array
     {
-        $studentsNeedingAttention = RiskAlert::where('is_action_taken', false)->count();
-        $activeCases = StudentCase::where('stage', '!=', 'resolved')->count();
-        $overdueCases = StudentCase::where('stage', '!=', 'resolved')
-            ->where('created_at', '<', now()->subHours(48))
-            ->count();
-        $dataCheckIssues = DapodikIssue::where('status', 'open')->count();
-        $duePayments = SchoolPayment::whereIn('status', ['Belum Bayar', 'Menunggu Verifikasi', 'Terlambat'])->count();
-        $activeIncidents = Incident::where('status', '!=', 'Selesai')->count();
-        $resolvedCount = StudentCase::where('stage', 'resolved')->count() + Followup::where('status', 'completed')->count() + 18;
+        return Cache::remember('tanggapin_dashboard_stats', 10, function (): array {
+            $studentsNeedingAttention = RiskAlert::where('is_action_taken', false)->count();
+            $activeCases = StudentCase::where('stage', '!=', 'resolved')->count();
+            $overdueCases = StudentCase::where('stage', '!=', 'resolved')
+                ->where('created_at', '<', now()->subHours(48))
+                ->count();
+            $dataCheckIssues = DapodikIssue::where('status', 'open')->count();
+            $duePayments = SchoolPayment::whereIn('status', ['Belum Bayar', 'Menunggu Verifikasi', 'Terlambat'])->count();
+            $activeIncidents = Incident::where('status', '!=', 'Selesai')->count();
+            $resolvedCount = StudentCase::where('stage', 'resolved')->count() + Followup::where('status', 'completed')->count() + 18;
 
-        return [
-            'studentsNeedingAttention' => $studentsNeedingAttention,
-            'activeCases' => $activeCases,
-            'overdueCases' => $overdueCases,
-            'dataCheckIssues' => $dataCheckIssues,
-            'duePayments' => $duePayments,
-            'activeIncidents' => $activeIncidents,
-            'resolvedThisMonth' => $resolvedCount,
-        ];
+            return [
+                'studentsNeedingAttention' => $studentsNeedingAttention,
+                'activeCases' => $activeCases,
+                'overdueCases' => $overdueCases,
+                'dataCheckIssues' => $dataCheckIssues,
+                'duePayments' => $duePayments,
+                'activeIncidents' => $activeIncidents,
+                'resolvedThisMonth' => $resolvedCount,
+            ];
+        });
     }
 
     private function getPriorityFeed(): array
@@ -592,11 +595,14 @@ class DashboardController extends Controller
             $query->where('id', $user->school_class_id);
         }
 
-        return $query->get()->map(function (SchoolClass $cls): array {
-            $pendingCount = Followup::whereHas('student', fn ($q) => $q->where('school_class_id', $cls->id))
-                ->where('status', 'pending')
-                ->count();
+        $pendingCounts = Followup::where('followups.status', 'pending')
+            ->join('students', 'followups.student_id', '=', 'students.id')
+            ->selectRaw('students.school_class_id, count(*) as count')
+            ->groupBy('students.school_class_id')
+            ->pluck('count', 'students.school_class_id')
+            ->toArray();
 
+        return $query->get()->map(function (SchoolClass $cls) use ($pendingCounts): array {
             return [
                 'id' => (string) $cls->id,
                 'name' => $cls->name,
@@ -605,7 +611,7 @@ class DashboardController extends Controller
                 'totalStudents' => $cls->total_students,
                 'attendanceRate' => $cls->attendance_rate,
                 'studentsAtRisk' => $cls->students_at_risk,
-                'pendingFollowups' => $pendingCount,
+                'pendingFollowups' => (int) ($pendingCounts[$cls->id] ?? 0),
                 'healthStatus' => $cls->health_status,
             ];
         })->toArray();

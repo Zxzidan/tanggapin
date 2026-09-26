@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 class SchoolSetting extends Model
 {
@@ -11,21 +12,29 @@ class SchoolSetting extends Model
 
     protected $guarded = [];
 
+    protected static function booted(): void
+    {
+        static::saved(fn () => Cache::forget('school_setting_singleton'));
+        static::deleted(fn () => Cache::forget('school_setting_singleton'));
+    }
+
     /**
      * Get the active school setting singleton.
      */
     public static function current(): self
     {
-        return self::firstOrCreate(
-            ['id' => 1],
-            [
-                'school_name' => 'SMK Negeri Terpadu Tanggapin',
-                'npsn' => '20219876',
-                'subscription_plan' => 'unggulan',
-                'max_classes' => 35,
-                'academic_year' => '2025/2026 Ganjil',
-            ]
-        );
+        return Cache::remember('school_setting_singleton', 60, function () {
+            return self::firstOrCreate(
+                ['id' => 1],
+                [
+                    'school_name' => 'SMK Negeri Terpadu Tanggapin',
+                    'npsn' => '20219876',
+                    'subscription_plan' => 'unggulan',
+                    'max_classes' => 35,
+                    'academic_year' => '2025/2026 Ganjil',
+                ]
+            );
+        });
     }
 
     /**
