@@ -22,7 +22,6 @@ import {
     Sun,
     User,
     UserCheck,
-    Users,
     WalletCards,
     X,
 } from 'lucide-react';
@@ -50,7 +49,7 @@ export default function FlowbiteTanggapinLayout({
     activeTab,
     onTabChange,
     currentRole: controlledRole,
-    onRoleChange,
+    onRoleChange: _onRoleChange,
     onTriggerActionModal,
 }: FlowbiteLayoutProps) {
     const page = usePage<{

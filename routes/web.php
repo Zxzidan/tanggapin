@@ -7,15 +7,49 @@ use Illuminate\Support\Facades\Route;
 
 Route::inertia('/', 'welcome')->name('home');
 
-Route::get('/demo-login', function () {
-    $user = User::first() ?? User::factory()->create([
-        'name' => 'Neil Sims - Kepala Sekolah',
-        'email' => 'neil.sims@tanggapin.sch.id',
-    ]);
+use Illuminate\Http\Request;
+
+Route::get('/demo-login', function (Request $request) {
+    $role = $request->query('role', 'kepala_sekolah');
+    $validRoles = ['kepala_sekolah', 'operator', 'wali_kelas', 'guru_bk', 'bendahara'];
+    if (! in_array($role, $validRoles, true)) {
+        $role = 'kepala_sekolah';
+    }
+
+    $roleEmails = [
+        'kepala_sekolah' => 'kepsek@smk1harapan.sch.id',
+        'operator' => 'operator@smk1harapan.sch.id',
+        'wali_kelas' => 'walikelas@smk1harapan.sch.id',
+        'guru_bk' => 'gurubk@smk1harapan.sch.id',
+        'bendahara' => 'bendahara@smk1harapan.sch.id',
+    ];
+
+    $roleNames = [
+        'kepala_sekolah' => 'Drs. H. Mulyadi, M.Pd',
+        'operator' => 'Harun Ar-Rasyid',
+        'wali_kelas' => 'Hendra Setiawan, S.Pd',
+        'guru_bk' => 'Rahmawati, S.Pd',
+        'bendahara' => 'Siti Fatimah, S.E',
+    ];
+
+    $email = $roleEmails[$role] ?? 'kepsek@smk1harapan.sch.id';
+    $name = $roleNames[$role] ?? 'Drs. H. Mulyadi, M.Pd';
+
+    $user = User::where('email', $email)->first()
+        ?? User::where('role', $role)->first()
+        ?? User::create([
+            'name' => $name,
+            'email' => $email,
+            'role' => $role,
+            'password' => bcrypt('password'),
+            'email_verified_at' => now(),
+        ]);
+
     if (! $user->email_verified_at) {
         $user->email_verified_at = now();
         $user->save();
     }
+
     Auth::login($user);
 
     return redirect()->route('dashboard');

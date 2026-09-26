@@ -17,35 +17,35 @@ class DatabaseSeeder extends Seeder
     {
         $defaultUsers = [
             [
-                'name' => 'Drs. H. Mulyadi, M.Pd (Kepsek)',
+                'name' => 'Drs. H. Mulyadi, M.Pd',
                 'email' => 'kepsek@smk1harapan.sch.id',
                 'role' => 'kepala_sekolah',
                 'password' => bcrypt('password'),
                 'email_verified_at' => now(),
             ],
             [
-                'name' => 'Harun Ar-Rasyid (Operator)',
+                'name' => 'Harun Ar-Rasyid',
                 'email' => 'operator@smk1harapan.sch.id',
                 'role' => 'operator',
                 'password' => bcrypt('password'),
                 'email_verified_at' => now(),
             ],
             [
-                'name' => 'Hendra Setiawan, S.Pd (Wali Kelas)',
+                'name' => 'Hendra Setiawan, S.Pd',
                 'email' => 'walikelas@smk1harapan.sch.id',
                 'role' => 'wali_kelas',
                 'password' => bcrypt('password'),
                 'email_verified_at' => now(),
             ],
             [
-                'name' => 'Rahmawati, S.Pd (Guru BK)',
+                'name' => 'Rahmawati, S.Pd',
                 'email' => 'gurubk@smk1harapan.sch.id',
                 'role' => 'guru_bk',
                 'password' => bcrypt('password'),
                 'email_verified_at' => now(),
             ],
             [
-                'name' => 'Siti Fatimah, S.E (Bendahara)',
+                'name' => 'Siti Fatimah, S.E',
                 'email' => 'bendahara@smk1harapan.sch.id',
                 'role' => 'bendahara',
                 'password' => bcrypt('password'),

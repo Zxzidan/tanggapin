@@ -34,23 +34,23 @@ const DEMO_PERSONAS: DemoPersona[] = [
     {
         role: 'kepala_sekolah',
         shortTitle: 'Kepsek',
-        label: 'Drs. H. Mulyadi, M.Pd (Kepala Sekolah)',
+        label: 'Drs. H. Mulyadi, M.Pd — Kepala Sekolah',
         email: 'kepsek@smk1harapan.sch.id',
-        scope: 'Akses Penuh (11 Modul)',
+        scope: 'Akses Penuh 11 Modul',
         isFullAccess: true,
     },
     {
         role: 'operator',
         shortTitle: 'Operator',
-        label: 'Harun Ar-Rasyid (Operator Dapodik & Admin)',
+        label: 'Harun Ar-Rasyid — Operator Dapodik & Admin',
         email: 'operator@smk1harapan.sch.id',
-        scope: 'Akses Penuh (Dapodik & Admin)',
+        scope: 'Akses Penuh Dapodik & Admin',
         isFullAccess: true,
     },
     {
         role: 'wali_kelas',
         shortTitle: 'Wali Kelas',
-        label: 'Hendra Setiawan, S.Pd (Wali Kelas XI RPL 2)',
+        label: 'Hendra Setiawan, S.Pd — Wali Kelas XI RPL 2',
         email: 'walikelas@smk1harapan.sch.id',
         scope: 'Tupoksi Rombel XI RPL 2',
         isFullAccess: false,
@@ -58,7 +58,7 @@ const DEMO_PERSONAS: DemoPersona[] = [
     {
         role: 'bendahara',
         shortTitle: 'Bendahara',
-        label: 'Siti Fatimah, S.E (Bendahara Sekolah)',
+        label: 'Siti Fatimah, S.E — Bendahara Sekolah',
         email: 'bendahara@smk1harapan.sch.id',
         scope: 'Tupoksi Keuangan & SPP',
         isFullAccess: false,
@@ -66,7 +66,7 @@ const DEMO_PERSONAS: DemoPersona[] = [
     {
         role: 'guru_bk',
         shortTitle: 'Guru BK',
-        label: 'Rahmawati, S.Pd (Guru BK & Konseling)',
+        label: 'Rahmawati, S.Pd — Guru BK & Konseling',
         email: 'gurubk@smk1harapan.sch.id',
         scope: 'Tupoksi Kasus & Mediasi',
         isFullAccess: false,
@@ -115,35 +115,30 @@ export default function Login({ status, canResetPassword }: Props) {
 
             <PasskeyVerify />
 
-            {/* Role Switcher Pills Bar */}
+            {/* Role Switcher Grid */}
             <div className="space-y-2">
-                <div className="flex flex-wrap items-center justify-center gap-1.5 rounded-xl border border-slate-200 bg-slate-100/80 p-1.5 dark:border-slate-700 dark:bg-[#162238]">
-                    <span className="px-2 text-[11px] font-semibold text-slate-500">
-                        Peran:
+                <div className="flex items-center justify-between">
+                    <Label className="text-xs font-semibold text-slate-700 dark:text-slate-300">
+                        Pilih Peran Akun
+                    </Label>
+                    <span className="text-[11px] font-medium text-blue-700 dark:text-blue-400">
+                        5 Peran Tersedia
                     </span>
-                    {(
-                        [
-                            'kepala_sekolah',
-                            'operator',
-                            'wali_kelas',
-                            'bendahara',
-                            'guru_bk',
-                        ] as RoleType[]
-                    ).map((r) => {
-                        const persona = DEMO_PERSONAS.find(
-                            (p) => p.role === r,
-                        )!;
-                        const isCurrent = selectedRole === r;
+                </div>
+
+                <div className="grid grid-cols-5 gap-1 rounded-xl border border-slate-200 bg-slate-100/80 p-1 dark:border-slate-700 dark:bg-slate-900/60">
+                    {DEMO_PERSONAS.map((persona) => {
+                        const isCurrent = selectedRole === persona.role;
                         return (
                             <button
-                                key={r}
+                                key={persona.role}
                                 type="button"
-                                onClick={() => handleSelectRole(r)}
+                                onClick={() => handleSelectRole(persona.role)}
                                 className={cn(
-                                    'rounded-lg px-2.5 py-1 text-xs font-medium transition-all',
+                                    'truncate rounded-lg px-1 py-2 text-center text-[11px] font-medium transition-all',
                                     isCurrent
                                         ? 'bg-blue-700 font-semibold text-white shadow-xs'
-                                        : 'text-slate-600 hover:bg-slate-200/60 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-700 dark:hover:text-white',
+                                        : 'text-slate-600 hover:bg-slate-200/70 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white',
                                 )}
                             >
                                 {persona.shortTitle}
@@ -153,14 +148,16 @@ export default function Login({ status, canResetPassword }: Props) {
                 </div>
 
                 {/* Brief Persona Scope Notification */}
-                <div className="flex items-center justify-between rounded-xl border border-blue-100 bg-blue-50/70 px-3 py-2 text-[11px] dark:border-blue-900/40 dark:bg-blue-950/30">
-                    <span className="me-2 truncate text-slate-600 dark:text-slate-300">
-                        Akun:{' '}
-                        <strong className="font-semibold text-blue-700 dark:text-blue-400">
+                <div className="flex items-center justify-between gap-2 rounded-xl border border-blue-200/70 bg-blue-50/70 px-3.5 py-2.5 text-[11px] dark:border-blue-900/40 dark:bg-blue-950/30">
+                    <div className="min-w-0 flex-1">
+                        <p className="truncate text-xs font-bold text-slate-900 dark:text-white">
                             {activePersona.label}
-                        </strong>
-                    </span>
-                    <span className="shrink-0 rounded border border-blue-200 bg-blue-50 px-2 py-0.5 text-[10px] font-bold text-blue-700 dark:border-blue-900 dark:bg-blue-950 dark:text-blue-300">
+                        </p>
+                        <p className="mt-0.5 truncate text-[11px] text-slate-500 dark:text-slate-400">
+                            {activePersona.email}
+                        </p>
+                    </div>
+                    <span className="shrink-0 rounded border border-blue-200 bg-white px-2 py-0.5 text-[10px] font-bold text-blue-700 dark:border-blue-800 dark:bg-slate-900 dark:text-blue-300">
                         {activePersona.scope}
                     </span>
                 </div>

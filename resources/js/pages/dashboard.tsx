@@ -154,7 +154,7 @@ export default function Dashboard({
                 </div>
 
                 {/* 2. RINGKASAN KONDISI SISWA (4 Kartu Metrik Utama - Single Accent Palette) */}
-                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 sm:gap-6">
+                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
                     {/* Metric 1: Siswa Butuh Perhatian */}
                     <Link
                         href="/early-warning"

@@ -9,11 +9,55 @@ import {
     Shield,
     ShieldAlert,
     Users,
+    X,
 } from 'lucide-react';
 import React, { useState } from 'react';
 import TanggapinLogo from '@/components/tanggapin-logo';
 import { cn } from '@/lib/utils';
 import { dashboard, login, register } from '@/routes';
+
+const DEMO_ROLES = [
+    {
+        id: 'kepala_sekolah',
+        title: 'Kepala Sekolah',
+        name: 'Drs. H. Mulyadi, M.Pd',
+        desc: 'Akses penuh eksekutif 11 modul, koordinasi darurat & evaluasi sekolah.',
+        badge: 'Pengambil Kebijakan',
+        icon: Shield,
+    },
+    {
+        id: 'wali_kelas',
+        title: 'Wali Kelas — XI RPL 2',
+        name: 'Hendra Setiawan, S.Pd',
+        desc: 'Monitoring absensi harian, pembinaan siswa & kontak wali murid rombel.',
+        badge: 'Garis Depan Kelas',
+        icon: GraduationCap,
+    },
+    {
+        id: 'guru_bk',
+        title: 'Guru BK & Konseling',
+        name: 'Rahmawati, S.Pd',
+        desc: 'Layanan konseling empatik, penanganan kasus mediasi & mitigasi ATS.',
+        badge: 'Manajer Kasus',
+        icon: ShieldAlert,
+    },
+    {
+        id: 'bendahara',
+        title: 'Bendahara Sekolah',
+        name: 'Siti Fatimah, S.E',
+        desc: 'Rekonsiliasi SPP, verifikasi bukti bayar & bantuan afirmasi siswa.',
+        badge: 'Keuangan & SPP',
+        icon: Users,
+    },
+    {
+        id: 'operator',
+        title: 'Operator Dapodik',
+        name: 'Harun Ar-Rasyid',
+        desc: 'Verifikasi residu data Dapodik, SK pengampu guru & sinkronisasi data.',
+        badge: 'Integritas Data',
+        icon: CheckCircle2,
+    },
+];
 
 export default function Welcome() {
     const { auth } = usePage<{ auth: { user: { name: string } | null } }>()
@@ -24,6 +68,14 @@ export default function Welcome() {
         'early_warning' | 'class_health' | 'cases' | 'communication'
     >('early_warning');
     const [interactiveActionDone, setInteractiveActionDone] = useState(false);
+    const [isDemoRoleModalOpen, setIsDemoRoleModalOpen] = useState(false);
+
+    const handleSelectDemoRole = (roleId: string) => {
+        if (typeof window !== 'undefined') {
+            localStorage.setItem('tanggapin_current_role', roleId);
+            window.location.href = `/demo-login?role=${roleId}`;
+        }
+    };
 
     const bentoFeatures = [
         {
@@ -129,13 +181,16 @@ export default function Welcome() {
                                 </Link>
                             ) : (
                                 <>
-                                    <a
-                                        href="/demo-login"
+                                    <button
+                                        type="button"
+                                        onClick={() =>
+                                            setIsDemoRoleModalOpen(true)
+                                        }
                                         className="inline-flex items-center gap-1.5 rounded-xl bg-blue-700 px-4 py-2 text-xs font-semibold text-white shadow-xs transition-all hover:bg-blue-800 active:scale-98"
                                     >
                                         <span>Coba Demo Langsung</span>
                                         <ArrowRight className="size-3.5" />
-                                    </a>
+                                    </button>
                                     <Link
                                         href={login()}
                                         className="rounded-xl px-3.5 py-2 text-xs font-semibold text-slate-700 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
@@ -185,13 +240,14 @@ export default function Welcome() {
 
                             {/* Primary Interactive CTA Area */}
                             <div className="flex flex-wrap items-center justify-center gap-3.5 pt-4">
-                                <a
-                                    href="/demo-login"
+                                <button
+                                    type="button"
+                                    onClick={() => setIsDemoRoleModalOpen(true)}
                                     className="inline-flex items-center gap-2 rounded-xl bg-blue-700 px-6 py-3.5 text-xs font-bold text-white shadow-xs transition-all hover:bg-blue-800 active:scale-98 sm:text-sm"
                                 >
                                     Eksplorasi Dashboard Interaktif
                                     <ArrowRight className="size-4" />
-                                </a>
+                                </button>
                                 <a
                                     href="#preview"
                                     className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-3.5 text-xs font-semibold text-slate-800 shadow-xs transition-colors hover:bg-slate-50 sm:text-sm dark:border-slate-800 dark:bg-[#0f172a] dark:text-slate-200 dark:hover:bg-slate-800"
@@ -381,12 +437,17 @@ export default function Welcome() {
                                                                 ? 'Tindak Lanjut Tercatat'
                                                                 : '+ Tindak Lanjut'}
                                                         </button>
-                                                        <a
-                                                            href="/demo-login"
+                                                        <button
+                                                            type="button"
+                                                            onClick={() =>
+                                                                setIsDemoRoleModalOpen(
+                                                                    true,
+                                                                )
+                                                            }
                                                             className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
                                                         >
                                                             Hubungi Ortu
-                                                        </a>
+                                                        </button>
                                                     </div>
                                                 </div>
 
@@ -406,7 +467,7 @@ export default function Welcome() {
                                                 <div className="space-y-1">
                                                     <div className="flex items-center gap-2">
                                                         <span className="font-bold text-slate-900 dark:text-white">
-                                                            Ahmad Fauzan - X TKJ
+                                                            Ahmad Fauzan — X TKJ
                                                             1
                                                         </span>
                                                         <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-[10px] font-bold text-slate-700 dark:bg-slate-800 dark:text-slate-300">
@@ -428,13 +489,18 @@ export default function Welcome() {
                                                         BK
                                                     </div>
                                                 </div>
-                                                <a
-                                                    href="/demo-login"
+                                                <button
+                                                    type="button"
+                                                    onClick={() =>
+                                                        setIsDemoRoleModalOpen(
+                                                            true,
+                                                        )
+                                                    }
                                                     className="inline-flex items-center gap-1 text-xs font-semibold text-blue-700 hover:underline dark:text-blue-400"
                                                 >
                                                     Tangani di Dashboard
                                                     <ArrowRight className="size-3" />
-                                                </a>
+                                                </button>
                                             </div>
                                         </div>
                                     )}
@@ -850,13 +916,14 @@ export default function Welcome() {
                                 pendampingan yang tepat waktu dan terkoordinasi.
                             </p>
                             <div className="pt-2">
-                                <a
-                                    href="/demo-login"
+                                <button
+                                    type="button"
+                                    onClick={() => setIsDemoRoleModalOpen(true)}
                                     className="inline-flex items-center gap-2 rounded-xl bg-blue-700 px-6 py-3.5 text-xs font-bold text-white shadow-xs transition-all hover:bg-blue-800 active:scale-98 sm:text-sm"
                                 >
                                     Buka Demo Dashboard Operasional
                                     <ArrowRight className="size-4" />
-                                </a>
+                                </button>
                             </div>
                         </div>
                     </section>
@@ -871,6 +938,93 @@ export default function Welcome() {
                         <div>Deteksi lebih cepat. Tindak lebih tepat.</div>
                     </div>
                 </footer>
+
+                {/* Demo Role Selection Modal */}
+                {isDemoRoleModalOpen && (
+                    <div
+                        className="fixed inset-0 z-50 flex animate-in items-center justify-center bg-slate-900/60 p-4 backdrop-blur-xs duration-150 fade-in"
+                        onClick={() => setIsDemoRoleModalOpen(false)}
+                    >
+                        <div
+                            className="relative w-full max-w-2xl overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl dark:border-slate-800 dark:bg-slate-900"
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <div className="flex items-center justify-between border-b border-slate-200 px-6 py-4 dark:border-slate-800">
+                                <div>
+                                    <h3 className="text-base font-bold text-slate-900 dark:text-white">
+                                        Pilih Peran Demo
+                                    </h3>
+                                    <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
+                                        Pilih peran untuk langsung masuk ke
+                                        dashboard operasional sesuai
+                                        kewenangannya.
+                                    </p>
+                                </div>
+                                <button
+                                    type="button"
+                                    onClick={() =>
+                                        setIsDemoRoleModalOpen(false)
+                                    }
+                                    className="rounded-lg p-1.5 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-slate-800 dark:hover:text-slate-200"
+                                    aria-label="Tutup"
+                                >
+                                    <X className="size-5" />
+                                </button>
+                            </div>
+
+                            <div className="max-h-[70vh] space-y-2.5 overflow-y-auto p-6">
+                                {DEMO_ROLES.map((role) => {
+                                    const IconComp = role.icon;
+                                    return (
+                                        <button
+                                            key={role.id}
+                                            type="button"
+                                            onClick={() =>
+                                                handleSelectDemoRole(role.id)
+                                            }
+                                            className="group flex w-full items-start gap-4 rounded-xl border border-slate-200 p-4 text-left transition-all hover:border-blue-700 hover:bg-blue-50/40 hover:shadow-xs dark:border-slate-800 dark:hover:border-blue-700 dark:hover:bg-blue-950/20"
+                                        >
+                                            <div className="flex size-11 shrink-0 items-center justify-center rounded-xl border border-blue-200 bg-blue-50 text-blue-700 transition-colors group-hover:border-blue-700 group-hover:bg-blue-700 group-hover:text-white dark:border-blue-900 dark:bg-blue-950/40 dark:text-blue-400">
+                                                <IconComp className="size-5" />
+                                            </div>
+                                            <div className="min-w-0 flex-1">
+                                                <div className="flex flex-wrap items-center justify-between gap-1.5">
+                                                    <span className="text-sm font-bold text-slate-900 transition-colors group-hover:text-blue-700 dark:text-white dark:group-hover:text-blue-400">
+                                                        {role.title}
+                                                    </span>
+                                                    <span className="rounded border border-blue-200 bg-blue-50 px-2 py-0.5 text-[10px] font-semibold text-blue-700 dark:border-blue-900/60 dark:bg-blue-950/60 dark:text-blue-400">
+                                                        {role.badge}
+                                                    </span>
+                                                </div>
+                                                <p className="mt-0.5 text-xs font-medium text-slate-700 dark:text-slate-300">
+                                                    {role.name}
+                                                </p>
+                                                <p className="mt-1 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
+                                                    {role.desc}
+                                                </p>
+                                            </div>
+                                            <div className="self-center pl-2 text-slate-300 transition-transform group-hover:translate-x-1 group-hover:text-blue-700 dark:text-slate-600 dark:group-hover:text-blue-400">
+                                                <ArrowRight className="size-4" />
+                                            </div>
+                                        </button>
+                                    );
+                                })}
+                            </div>
+
+                            <div className="border-t border-slate-200 bg-slate-50 px-6 py-3 text-right dark:border-slate-800 dark:bg-slate-900/50">
+                                <button
+                                    type="button"
+                                    onClick={() =>
+                                        setIsDemoRoleModalOpen(false)
+                                    }
+                                    className="rounded-lg border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-700 transition-colors hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+                                >
+                                    Batal
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )}
             </div>
         </>
     );
