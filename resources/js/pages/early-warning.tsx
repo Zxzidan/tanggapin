@@ -57,7 +57,7 @@ export default function EarlyWarning({
                 <div className="flex flex-col justify-between gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs sm:flex-row sm:items-center sm:p-6 dark:border-slate-800 dark:bg-[#0f172a]">
                     <div className="space-y-1">
                         <div className="flex items-center gap-2">
-                            <div className="rounded-lg bg-red-100 p-1.5 text-red-600 dark:bg-red-950/60 dark:text-red-400">
+                            <div className="rounded-lg bg-blue-50 p-1.5 text-blue-700 dark:bg-blue-950/60 dark:text-blue-400">
                                 <AlertTriangle className="size-5" />
                             </div>
                             <h1 className="text-xl font-bold tracking-tight text-slate-900 sm:text-2xl dark:text-white">
@@ -72,8 +72,8 @@ export default function EarlyWarning({
                     </div>
 
                     <div className="flex shrink-0 items-center gap-2 self-start sm:self-center">
-                        <span className="flex items-center gap-1.5 rounded-full border border-red-200 bg-red-50 px-3 py-1.5 text-xs font-bold text-red-700 dark:border-red-900 dark:bg-red-950 dark:text-red-300">
-                            <span className="size-2 animate-pulse rounded-full bg-red-500" />
+                        <span className="flex items-center gap-1.5 rounded-full border border-blue-200 bg-blue-50 px-3 py-1.5 text-xs font-bold text-blue-700 dark:border-blue-800 dark:bg-blue-950 dark:text-blue-300">
+                            <span className="size-2 rounded-full bg-blue-700 dark:bg-blue-400" />
                             {stats?.studentsNeedingAttention ??
                                 initialPriorityFeed.length}{' '}
                             Siswa Dalam Pantauan
@@ -106,11 +106,11 @@ export default function EarlyWarning({
                                 className={cn(
                                     'rounded-lg px-3 py-1 text-xs font-medium transition-colors',
                                     feedRiskFilter === 'all'
-                                        ? 'bg-slate-900 font-semibold text-white dark:bg-white dark:text-slate-900'
-                                        : 'text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800',
+                                        ? 'bg-blue-700 font-semibold text-white shadow-2xs'
+                                        : 'text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800',
                                 )}
                             >
-                                Semua ({initialPriorityFeed.length})
+                                Semua: {initialPriorityFeed.length}
                             </button>
                             <button
                                 type="button"
@@ -118,11 +118,11 @@ export default function EarlyWarning({
                                 className={cn(
                                     'rounded-lg px-3 py-1 text-xs font-medium transition-colors',
                                     feedRiskFilter === 'high'
-                                        ? 'bg-red-600 font-semibold text-white'
-                                        : 'text-slate-500 hover:bg-red-50 hover:text-red-700 dark:hover:bg-red-950/40',
+                                        ? 'bg-blue-700 font-semibold text-white shadow-2xs'
+                                        : 'text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800',
                                 )}
                             >
-                                Kritis ({highRiskCount})
+                                Kritis: {highRiskCount}
                             </button>
                             <button
                                 type="button"
@@ -130,11 +130,11 @@ export default function EarlyWarning({
                                 className={cn(
                                     'rounded-lg px-3 py-1 text-xs font-medium transition-colors',
                                     feedRiskFilter === 'medium'
-                                        ? 'bg-amber-600 font-semibold text-white'
-                                        : 'text-slate-500 hover:bg-amber-50 hover:text-amber-700 dark:hover:bg-amber-950/40',
+                                        ? 'bg-blue-700 font-semibold text-white shadow-2xs'
+                                        : 'text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800',
                                 )}
                             >
-                                Perlu Diperhatikan ({mediumRiskCount})
+                                Perlu Diperhatikan: {mediumRiskCount}
                             </button>
                         </div>
                     </div>
@@ -173,10 +173,9 @@ export default function EarlyWarning({
                                                 <span
                                                     className={cn(
                                                         'rounded border px-2 py-0.5 text-[10px] font-bold',
-                                                        item.riskLevel ===
-                                                            'high'
-                                                            ? 'border-red-200 bg-red-50 text-red-700 dark:border-red-900 dark:bg-red-950 dark:text-red-300'
-                                                            : 'border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-900 dark:bg-amber-950 dark:text-amber-300',
+                                                        item.riskLevel === 'high'
+                                                            ? 'border-blue-300 bg-blue-50 text-blue-700 dark:border-blue-800 dark:bg-blue-950 dark:text-blue-300'
+                                                            : 'border-slate-200 bg-slate-100 text-slate-700 dark:border-slate-800 dark:bg-slate-800 dark:text-slate-300',
                                                     )}
                                                 >
                                                     {item.triggerType}
@@ -220,7 +219,7 @@ export default function EarlyWarning({
                                                                 studentId:
                                                                     item.studentId ||
                                                                     item.id,
-                                                                studentName: `${item.studentName} (${item.class})`,
+                                                                studentName: `${item.studentName} — ${item.class}`,
                                                                 studentPhone:
                                                                     item.parentPhone,
                                                                 note: `Tindak lanjut pemicu risiko: ${item.summary}`,
@@ -239,14 +238,14 @@ export default function EarlyWarning({
                                                                     studentId:
                                                                         item.studentId ||
                                                                         item.id,
-                                                                    studentName: `${item.studentName} (${item.class})`,
+                                                                    studentName: `${item.studentName} — ${item.class}`,
                                                                     studentPhone:
                                                                         item.parentPhone,
                                                                     message: `Yth. Bapak/Ibu ${item.parentName}, kami dari sekolah menginformasikan perkembangan ananda ${item.studentName}. ${item.summary}. Mohon berkenan berkoordinasi dengan pihak sekolah.`,
                                                                 },
                                                             );
                                                         }}
-                                                        className="rounded-lg border border-slate-200 p-1.5 text-emerald-600 transition-colors hover:bg-emerald-50 dark:border-slate-800 dark:hover:bg-emerald-950/50"
+                                                        className="rounded-lg border border-slate-200 p-1.5 text-slate-600 transition-colors hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700 dark:border-slate-800 dark:text-slate-400 dark:hover:bg-blue-950/50 dark:hover:text-blue-300"
                                                         title="Kirim pesan resmi ke orang tua"
                                                     >
                                                         <PhoneCall className="size-3.5" />

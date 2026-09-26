@@ -301,7 +301,7 @@ export function ActionModalsProvider({
                     <div className="w-full max-w-lg space-y-4 rounded-2xl border border-slate-200 bg-white p-5 text-xs shadow-2xl dark:border-slate-800 dark:bg-[#0f172a]">
                         <div className="flex items-center justify-between border-b border-slate-200 pb-3 dark:border-slate-800">
                             <div className="flex items-center gap-2">
-                                <AlertTriangle className="size-4 text-amber-500" />
+                                <AlertTriangle className="size-4 text-blue-700 dark:text-blue-400" />
                                 <h3 className="text-sm font-bold text-slate-900 dark:text-white">
                                     Buat Tindak Lanjut / Follow-up Siswa
                                 </h3>
@@ -432,7 +432,7 @@ export function ActionModalsProvider({
                     <div className="w-full max-w-lg space-y-4 rounded-2xl border border-slate-200 bg-white p-5 text-xs shadow-2xl dark:border-slate-800 dark:bg-[#0f172a]">
                         <div className="flex items-center justify-between border-b border-slate-200 pb-3 dark:border-slate-800">
                             <div className="flex items-center gap-2">
-                                <PhoneCall className="size-4 text-emerald-600" />
+                                <PhoneCall className="size-4 text-blue-700 dark:text-blue-400" />
                                 <h3 className="text-sm font-bold text-slate-900 dark:text-white">
                                     Kirim Pesan Resmi Sekolah ke Orang Tua
                                 </h3>
@@ -525,7 +525,7 @@ export function ActionModalsProvider({
                                 </button>
                                 <button
                                     type="submit"
-                                    className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-700 px-4 py-1.5 text-xs font-semibold text-white shadow-sm hover:bg-emerald-800"
+                                    className="inline-flex items-center gap-1.5 rounded-lg bg-blue-700 px-4 py-1.5 text-xs font-semibold text-white shadow-2xs hover:bg-blue-800"
                                 >
                                     <Send className="size-3.5" />
                                     Kirim Pesan Resmi

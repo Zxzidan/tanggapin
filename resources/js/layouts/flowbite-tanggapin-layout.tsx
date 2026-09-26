@@ -147,11 +147,9 @@ export default function FlowbiteTanggapinLayout({
             items: [
                 {
                     id: 'overview',
-                    title: 'Ikhtisar & Tindakan',
+                    title: 'Ikhtisar',
                     icon: Home,
                     href: '/dashboard',
-                    badge: null,
-                    badgeColor: '',
                 },
             ],
         },
@@ -160,30 +158,21 @@ export default function FlowbiteTanggapinLayout({
             items: [
                 {
                     id: 'early-warning',
-                    title: 'Early Warning Siswa',
+                    title: 'Early Warning',
                     icon: AlertTriangle,
                     href: '/early-warning',
-                    badge: '12',
-                    badgeColor:
-                        'text-blue-700 bg-blue-50 dark:text-blue-300 dark:bg-blue-950/70 border border-blue-200 dark:border-blue-900',
                 },
                 {
                     id: 'class-monitoring',
                     title: 'Kondisi Kelas',
                     icon: GraduationCap,
                     href: '/kondisi-kelas',
-                    badge: '4 Rombel',
-                    badgeColor:
-                        'text-slate-700 bg-slate-100 dark:text-slate-300 dark:bg-slate-800 border border-slate-200 dark:border-slate-700',
                 },
                 {
                     id: 'discipline',
-                    title: 'Pembinaan Disiplin',
+                    title: 'Disiplin Siswa',
                     icon: Scale,
                     href: '/early-warning',
-                    badge: 'Catatan',
-                    badgeColor:
-                        'text-slate-700 bg-slate-100 dark:text-slate-300 dark:bg-slate-800 border border-slate-200 dark:border-slate-700',
                 },
             ],
         },
@@ -192,30 +181,21 @@ export default function FlowbiteTanggapinLayout({
             items: [
                 {
                     id: 'cases',
-                    title: 'Manajemen Kasus BK',
+                    title: 'Kasus BK',
                     icon: ShieldAlert,
                     href: '/manajemen-kasus',
-                    badge: '4',
-                    badgeColor:
-                        'text-blue-700 bg-blue-50 dark:text-blue-300 dark:bg-blue-950/70 border border-blue-200 dark:border-blue-800',
                 },
                 {
                     id: 'communication',
-                    title: 'Komunikasi Ortu',
+                    title: 'Kontak Ortu',
                     icon: PhoneCall,
                     href: '/komunikasi-ortu',
-                    badge: '2',
-                    badgeColor:
-                        'text-blue-700 bg-blue-50 dark:text-blue-300 dark:bg-blue-950/70 border border-blue-200 dark:border-blue-800',
                 },
                 {
                     id: 'ats',
-                    title: 'Alur Lapangan ATS',
+                    title: 'Mitigasi ATS',
                     icon: HeartPulse,
                     href: '/alur-ats',
-                    badge: '3',
-                    badgeColor:
-                        'text-slate-700 bg-slate-100 dark:text-slate-300 dark:bg-slate-800 border border-slate-200 dark:border-slate-700',
                 },
             ],
         },
@@ -224,39 +204,27 @@ export default function FlowbiteTanggapinLayout({
             items: [
                 {
                     id: 'data-check',
-                    title: 'Cek Data Dapodik',
+                    title: 'Data Dapodik',
                     icon: CheckCircle2,
                     href: '/dapodik',
-                    badge: '7 Isu',
-                    badgeColor:
-                        'text-slate-700 bg-slate-100 dark:text-slate-300 dark:bg-slate-800 border border-slate-200 dark:border-slate-700',
                 },
                 {
                     id: 'payments',
-                    title: 'Pembayaran & SPP',
+                    title: 'Keuangan SPP',
                     icon: WalletCards,
                     href: '/pembayaran',
-                    badge: '18',
-                    badgeColor:
-                        'text-slate-700 bg-slate-100 dark:text-slate-300 dark:bg-slate-800 border border-slate-200 dark:border-slate-700',
                 },
                 {
                     id: 'documents',
-                    title: 'Dokumen Kinerja Guru',
+                    title: 'Dokumen Guru',
                     icon: FileText,
                     href: '/dokumen-guru',
-                    badge: '25 Berkas',
-                    badgeColor:
-                        'text-slate-700 bg-slate-100 dark:text-slate-300 dark:bg-slate-800 border border-slate-200 dark:border-slate-700',
                 },
                 {
                     id: 'incidents',
                     title: 'Tanggap Darurat',
                     icon: Siren,
                     href: '/respons-insiden',
-                    badge: 'Siaga',
-                    badgeColor:
-                        'text-blue-700 bg-blue-50 dark:text-blue-300 dark:bg-blue-950/70 border border-blue-200 dark:border-blue-800',
                 },
             ],
         },
@@ -275,10 +243,6 @@ export default function FlowbiteTanggapinLayout({
                     return {
                         ...item,
                         title: override?.title || item.title,
-                        badge:
-                            override?.badge !== undefined
-                                ? override.badge
-                                : item.badge,
                     };
                 }),
         }))
@@ -852,11 +816,10 @@ export default function FlowbiteTanggapinLayout({
                             </div>
                             <div className="mt-2 flex items-center justify-between border-t border-slate-200/60 pt-2 dark:border-slate-800">
                                 <span className="text-[10px] text-slate-500">
-                                    Peran Aktif:
+                                    Peran:
                                 </span>
-                                <span className="rounded border border-blue-200 bg-blue-50 px-1.5 py-0.5 text-[10px] font-semibold text-blue-700 dark:border-blue-800 dark:bg-blue-950 dark:text-blue-300">
-                                    {activeRoleConfig.shortTitle} •{' '}
-                                    {activeRoleConfig.scopeBadge}
+                                <span className="rounded border border-blue-200 bg-blue-50 px-2 py-0.5 text-[10px] font-semibold text-blue-700 dark:border-blue-800 dark:bg-blue-950 dark:text-blue-300">
+                                    {activeRoleConfig.title}
                                 </span>
                             </div>
                         </div>
@@ -902,22 +865,9 @@ export default function FlowbiteTanggapinLayout({
                                                                     : 'text-slate-500 dark:text-slate-400',
                                                             )}
                                                         />
-                                                        <span className="ms-2.5 flex-1 truncate">
+                                                        <span className="ms-2.5 flex-1 font-medium whitespace-nowrap">
                                                             {item.title}
                                                         </span>
-                                                        {item.badge && (
-                                                            <span
-                                                                className={cn(
-                                                                    'py-0.2 ms-2 rounded px-1.5 text-[10px] font-semibold',
-                                                                    isActive
-                                                                        ? 'bg-white/20 text-white'
-                                                                        : item.badgeColor ||
-                                                                              'border border-slate-200 bg-slate-100 text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300',
-                                                                )}
-                                                            >
-                                                                {item.badge}
-                                                            </span>
-                                                        )}
                                                     </Link>
                                                 </li>
                                             );

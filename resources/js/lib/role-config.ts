@@ -80,10 +80,9 @@ export const ROLE_CONFIGS: Record<RoleType, RoleConfig> = {
             'Prinsip Operator: Deteksi Anomali → Tindak Lanjut Residu → Validasi Berkas → Sinkronisasi Server.',
         tabOverrides: {
             'data-check': {
-                title: 'Cek Data Dapodik — Prioritas',
-                badge: '7 Isu',
+                title: 'Data Dapodik',
             },
-            documents: { title: 'Verifikasi Dokumen Guru' },
+            documents: { title: 'Dokumen Guru' },
         },
     },
     wali_kelas: {
@@ -113,12 +112,12 @@ export const ROLE_CONFIGS: Record<RoleType, RoleConfig> = {
         overviewPrinciple:
             'Prinsip Wali Kelas: Deteksi Absensi Menurun → Kontak Wali Murid → Pembinaan Disiplin → Koordinasi BK.',
         tabOverrides: {
-            overview: { title: 'Ikhtisar Kelas XI RPL 2' },
-            'early-warning': { title: 'Early Warning Kelas', badge: '3 Siswa' },
-            'class-monitoring': { title: 'Kondisi Kelas XI RPL 2' },
-            communication: { title: 'Komunikasi Ortu Siswa', badge: 'WA' },
-            cases: { title: 'Rujukan Kasus BK Siswa' },
-            documents: { title: 'Perangkat Ajar Saya' },
+            overview: { title: 'Ikhtisar Kelas' },
+            'early-warning': { title: 'Early Warning' },
+            'class-monitoring': { title: 'Kondisi Kelas' },
+            communication: { title: 'Kontak Ortu' },
+            cases: { title: 'Rujukan Kasus BK' },
+            documents: { title: 'Perangkat Ajar' },
         },
     },
     bendahara: {
@@ -140,16 +139,14 @@ export const ROLE_CONFIGS: Record<RoleType, RoleConfig> = {
         overviewPrinciple:
             'Prinsip Bendahara: Pantau Jatuh Tempo → Verifikasi Bukti Bayar → Kirim Reminder WhatsApp → Catat Kas.',
         tabOverrides: {
-            overview: { title: 'Ikhtisar Keuangan & SPP' },
+            overview: { title: 'Ikhtisar Keuangan' },
             payments: {
-                title: 'Pembayaran & Tagihan SPP',
-                badge: '18 Tagihan',
+                title: 'Keuangan SPP',
             },
             communication: {
-                title: 'Reminder Tagihan Ortu',
-                badge: 'WA Kasir',
+                title: 'Reminder Ortu',
             },
-            'early-warning': { title: 'Siswa Kendala Biaya', badge: '4 Siswa' },
+            'early-warning': { title: 'Kendala Biaya' },
         },
     },
     guru_bk: {
@@ -178,15 +175,14 @@ export const ROLE_CONFIGS: Record<RoleType, RoleConfig> = {
         overviewPrinciple:
             'Prinsip BK: Asesmen Kebutuhan Siswa → Konseling Empatik → Kolaborasi Wali & Ortu → Pemulihan Solutif.',
         tabOverrides: {
-            overview: { title: 'Ikhtisar Konseling BK' },
-            cases: { title: 'Manajemen Kasus Siswa', badge: '4 Aktif' },
+            overview: { title: 'Ikhtisar Konseling' },
+            cases: { title: 'Kasus Siswa' },
             'early-warning': {
-                title: 'Early Warning Siswa',
-                badge: '12 Siswa',
+                title: 'Early Warning',
             },
-            discipline: { title: 'Catatan Pembinaan Disiplin' },
-            communication: { title: 'Panggilan & Mediasi Ortu' },
-            ats: { title: 'Pemantauan Rawan ATS' },
+            discipline: { title: 'Disiplin Siswa' },
+            communication: { title: 'Mediasi Ortu' },
+            ats: { title: 'Rawan ATS' },
         },
     },
 };
