@@ -181,14 +181,6 @@ export default function FlowbiteTanggapinLayout({
                     badge: '4 Rombel',
                     badgeColor: 'text-blue-700 bg-blue-50 dark:text-blue-300 dark:bg-blue-950/70 border border-blue-200 dark:border-blue-900',
                 },
-                {
-                    id: 'discipline',
-                    title: 'Kedisiplinan & Poin',
-                    icon: Scale,
-                    href: '/dashboard?tab=discipline',
-                    badge: null,
-                    badgeColor: '',
-                },
             ],
         },
         {
