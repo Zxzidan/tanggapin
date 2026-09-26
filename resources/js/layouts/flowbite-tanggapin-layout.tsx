@@ -70,7 +70,6 @@ export default function FlowbiteTanggapinLayout({
 
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-    const [isRoleDropdownOpen, setIsRoleDropdownOpen] = useState(false);
     const [isQuickActionOpen, setIsQuickActionOpen] = useState(false);
     const [isNotificationOpen, setIsNotificationOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
@@ -110,7 +109,6 @@ export default function FlowbiteTanggapinLayout({
         ROLE_CONFIGS[activeRole] || ROLE_CONFIGS.kepala_sekolah;
 
     const userDropdownRef = useRef<HTMLDivElement>(null);
-    const roleDropdownRef = useRef<HTMLDivElement>(null);
     const quickActionRef = useRef<HTMLDivElement>(null);
     const notificationRef = useRef<HTMLDivElement>(null);
 
@@ -123,12 +121,6 @@ export default function FlowbiteTanggapinLayout({
                 !userDropdownRef.current.contains(target)
             ) {
                 setIsUserMenuOpen(false);
-            }
-            if (
-                roleDropdownRef.current &&
-                !roleDropdownRef.current.contains(target)
-            ) {
-                setIsRoleDropdownOpen(false);
             }
             if (
                 quickActionRef.current &&
@@ -148,17 +140,6 @@ export default function FlowbiteTanggapinLayout({
         return () =>
             document.removeEventListener('mousedown', handleClickOutside);
     }, []);
-
-    const handleRoleSelect = (role: RoleType) => {
-        setLocalRole(role);
-        if (onRoleChange) {
-            onRoleChange(role);
-        }
-        if (typeof window !== 'undefined') {
-            localStorage.setItem('tanggapin_current_role', role);
-        }
-        setIsRoleDropdownOpen(false);
-    };
 
     // Navigation sections definition
     const allNavSections = [
@@ -322,9 +303,9 @@ export default function FlowbiteTanggapinLayout({
     return (
         <div className="min-h-screen bg-slate-50/50 text-slate-900 transition-colors duration-200 dark:bg-[#070b14] dark:text-slate-100">
             {/* Top Navigation Bar */}
-            <nav className="fixed top-0 z-50 w-full border-b border-slate-200 bg-white shadow-2xs dark:border-slate-800 dark:bg-[#0f172a]">
-                <div className="px-3 py-2.5 lg:px-5 lg:pl-3">
-                    <div className="flex items-center justify-between">
+            <nav className="fixed top-0 z-50 w-full border-b border-slate-200/80 bg-white/95 shadow-2xs backdrop-blur-md dark:border-slate-800/80 dark:bg-[#0f172a]/95">
+                <div className="px-4 py-3 sm:px-6 lg:px-8">
+                    <div className="flex items-center justify-between gap-4">
                         {/* Left: Mobile Toggle & Brand Logo */}
                         <div className="flex items-center justify-start gap-2">
                             <button
@@ -421,81 +402,8 @@ export default function FlowbiteTanggapinLayout({
                             )}
                         </div>
 
-                        {/* Right: Role Switcher, Quick Actions, Appearance & User */}
-                        <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
-                            {/* Role Switcher Simulator Dropdown */}
-                            <div className="relative" ref={roleDropdownRef}>
-                                <button
-                                    type="button"
-                                    onClick={() =>
-                                        setIsRoleDropdownOpen(
-                                            !isRoleDropdownOpen,
-                                        )
-                                    }
-                                    className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-xs font-medium text-slate-700 transition-colors hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
-                                    title="Ganti Simulasi Peran Pengguna"
-                                >
-                                    <Users className="size-3.5 text-blue-700 dark:text-blue-400" />
-                                    <span className="hidden font-semibold lg:inline-block">
-                                        {activeRoleConfig.title}
-                                    </span>
-                                    <span className="font-semibold lg:hidden">
-                                        {activeRoleConfig.shortTitle}
-                                    </span>
-                                    <ChevronDown className="size-3 text-slate-400" />
-                                </button>
-
-                                {isRoleDropdownOpen && (
-                                    <div className="absolute right-0 z-50 mt-2 w-72 animate-in rounded-xl border border-slate-200 bg-white p-2 text-xs shadow-xl zoom-in-95 fade-in dark:border-slate-700 dark:bg-[#111c30]">
-                                        <div className="mb-1 border-b border-slate-100 px-2 py-1 text-[11px] font-bold text-slate-400 dark:border-slate-800">
-                                            Simulasi Hak Akses Pengguna
-                                        </div>
-                                        {(
-                                            Object.keys(
-                                                ROLE_CONFIGS,
-                                            ) as RoleType[]
-                                        ).map((r) => (
-                                            <button
-                                                key={r}
-                                                type="button"
-                                                onClick={() =>
-                                                    handleRoleSelect(r)
-                                                }
-                                                className={cn(
-                                                    'flex w-full items-start gap-2.5 rounded-lg p-2 text-left transition-colors',
-                                                    activeRole === r
-                                                        ? 'bg-blue-50 font-semibold text-blue-700 dark:bg-blue-950/70 dark:text-blue-300'
-                                                        : 'text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800',
-                                                )}
-                                            >
-                                                <div className="flex-1">
-                                                    <div className="flex items-center justify-between">
-                                                        <span className="font-semibold text-slate-900 dark:text-white">
-                                                            {
-                                                                ROLE_CONFIGS[r]
-                                                                    .title
-                                                            }
-                                                        </span>
-                                                        <span className="rounded border border-slate-200 bg-slate-100 px-1.5 py-0.5 text-[10px] text-slate-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
-                                                            {
-                                                                ROLE_CONFIGS[r]
-                                                                    .badge
-                                                            }
-                                                        </span>
-                                                    </div>
-                                                    <p className="mt-0.5 text-[11px] leading-snug text-slate-500">
-                                                        {
-                                                            ROLE_CONFIGS[r]
-                                                                .roleDesc
-                                                        }
-                                                    </p>
-                                                </div>
-                                            </button>
-                                        ))}
-                                    </div>
-                                )}
-                            </div>
-
+                        {/* Right: Quick Actions, Appearance & User */}
+                        <div className="flex shrink-0 items-center gap-2.5 sm:gap-3.5">
                             {/* Role-tailored Quick Actions Button */}
                             <div className="relative" ref={quickActionRef}>
                                 <button
@@ -503,7 +411,7 @@ export default function FlowbiteTanggapinLayout({
                                     onClick={() =>
                                         setIsQuickActionOpen(!isQuickActionOpen)
                                     }
-                                    className="hidden items-center gap-1.5 rounded-lg bg-blue-700 px-2.5 py-1.5 text-xs font-semibold text-white shadow-2xs transition-colors hover:bg-blue-800 active:scale-95 sm:inline-flex"
+                                    className="hidden items-center gap-2 rounded-xl bg-blue-700 px-3.5 py-2 text-xs font-semibold text-white shadow-2xs transition-all hover:bg-blue-800 active:scale-95 sm:inline-flex"
                                 >
                                     <Plus className="size-3.5" />
                                     <span>Tindakan</span>
@@ -915,7 +823,7 @@ export default function FlowbiteTanggapinLayout({
             </aside>
 
             {/* Main Content Area */}
-            <main className="mt-14 min-h-[calc(100vh-3.5rem)] p-4 sm:ml-64 sm:p-6 lg:p-8">
+            <main className="mt-16 min-h-[calc(100vh-4rem)] p-5 sm:ml-64 sm:p-8 lg:p-10">
                 {children}
             </main>
         </div>

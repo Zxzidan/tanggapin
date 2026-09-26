@@ -8,6 +8,7 @@ import {
     GraduationCap,
     PhoneCall,
     Plus,
+    Shield,
     ShieldAlert,
     Siren,
 } from 'lucide-react';
@@ -106,10 +107,10 @@ export default function Dashboard({
         >
             <Head title="Ikhtisar & Tindakan — TANGGAPIN" />
 
-            <div className="mx-auto max-w-7xl space-y-8">
+            <div className="mx-auto max-w-7xl space-y-8 sm:space-y-10">
                 {/* 1. OPERATIONAL CONTEXT HEADER */}
-                <div className="flex flex-col justify-between gap-5 rounded-2xl border border-slate-200 bg-white p-6 shadow-xs sm:p-7 lg:flex-row lg:items-center dark:border-slate-800 dark:bg-[#0f172a]">
-                    <div className="space-y-1.5">
+                <div className="flex flex-col justify-between gap-6 rounded-2xl border border-slate-200/90 bg-white p-6 shadow-xs sm:p-8 lg:flex-row lg:items-center dark:border-slate-800 dark:bg-[#0f172a]">
+                    <div className="space-y-2">
                         <div className="flex flex-wrap items-center gap-2">
                             <span className="inline-flex items-center rounded-md bg-blue-700 px-2.5 py-0.5 text-[11px] font-bold text-white shadow-2xs">
                                 TANGGAPIN
@@ -143,31 +144,17 @@ export default function Dashboard({
                         </p>
                     </div>
 
-                    {/* Role Switcher */}
-                    <div className="flex shrink-0 flex-wrap items-center gap-1.5 self-start rounded-xl border border-slate-200 bg-slate-100/80 p-1.5 lg:self-center dark:border-slate-700 dark:bg-[#162238]">
-                        <span className="px-2 text-[11px] font-semibold text-slate-500">
-                            Peran:
+                    {/* Role Status Badge */}
+                    <div className="flex shrink-0 items-center gap-2 self-start lg:self-center">
+                        <span className="inline-flex items-center gap-1.5 rounded-xl border border-blue-200 bg-blue-50 px-3.5 py-1.5 text-xs font-semibold text-blue-700 dark:border-blue-800 dark:bg-blue-950/60 dark:text-blue-300">
+                            <Shield className="size-3.5" />
+                            Peran: {activeRoleConfig.title}
                         </span>
-                        {(Object.keys(ROLE_CONFIGS) as RoleType[]).map((r) => (
-                            <button
-                                key={r}
-                                type="button"
-                                onClick={() => handleRoleChange(r)}
-                                className={cn(
-                                    'rounded-lg px-2.5 py-1 text-xs font-medium transition-all',
-                                    currentRole === r
-                                        ? 'bg-blue-700 font-semibold text-white shadow-2xs'
-                                        : 'text-slate-600 hover:bg-slate-200/60 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-700 dark:hover:text-white',
-                                )}
-                            >
-                                {ROLE_CONFIGS[r].shortTitle}
-                            </button>
-                        ))}
                     </div>
                 </div>
 
                 {/* 2. RINGKASAN KONDISI SISWA (4 Kartu Metrik Utama - Single Accent Palette) */}
-                <div className="grid grid-cols-2 gap-4 sm:gap-5 md:grid-cols-4">
+                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 sm:gap-6">
                     {/* Metric 1: Siswa Butuh Perhatian */}
                     <Link
                         href="/early-warning"
