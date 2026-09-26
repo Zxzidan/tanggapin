@@ -14,6 +14,7 @@ import {
 import React, { useState } from 'react';
 import { useActionModals } from '@/components/action-modals';
 import FlowbiteTanggapinLayout from '@/layouts/flowbite-tanggapin-layout';
+import { ROLE_CONFIGS } from '@/lib/role-config';
 import { cn } from '@/lib/utils';
 import type { DashboardPageProps, RoleType } from '@/types/tanggapin';
 
@@ -22,6 +23,9 @@ export default function Dashboard({
     priorityFeed,
     classes,
     cases,
+    paymentList,
+    dapodikIssues,
+    documents,
 }: DashboardPageProps) {
     const {
         openFollowupModal,
@@ -42,27 +46,24 @@ export default function Dashboard({
     const feed = priorityFeed ?? [];
     const classList = classes ?? [];
     const caseList = cases ?? [];
+    const payments = paymentList ?? [];
+    const dapodikList = dapodikIssues ?? [];
+    const docList = documents ?? [];
 
     const [currentRole, setCurrentRole] = useState<RoleType>(() => {
         if (typeof window !== 'undefined') {
             const saved = localStorage.getItem(
                 'tanggapin_current_role',
             ) as RoleType;
-            if (
-                saved &&
-                [
-                    'kepala_sekolah',
-                    'wali_kelas',
-                    'guru_bk',
-                    'bendahara',
-                    'operator',
-                ].includes(saved)
-            ) {
+            if (saved && Object.keys(ROLE_CONFIGS).includes(saved)) {
                 return saved;
             }
         }
         return 'kepala_sekolah';
     });
+
+    const activeRoleConfig =
+        ROLE_CONFIGS[currentRole] || ROLE_CONFIGS.kepala_sekolah;
 
     const [feedRiskFilter, setFeedRiskFilter] = useState<
         'all' | 'high' | 'medium'
@@ -73,23 +74,6 @@ export default function Dashboard({
         if (typeof window !== 'undefined') {
             localStorage.setItem('tanggapin_current_role', role);
         }
-    };
-
-    const roleContexts: Record<RoleType, { name: string; position: string }> = {
-        kepala_sekolah: { name: 'Bpk. Neil Sims', position: 'Kepala Sekolah' },
-        wali_kelas: {
-            name: 'Bpk. Hendra Setiawan, S.Pd',
-            position: 'Wali Kelas XI RPL 2',
-        },
-        guru_bk: {
-            name: 'Ibu Rahmawati, S.Pd',
-            position: 'Koordinator BK & Konseling',
-        },
-        bendahara: {
-            name: 'Bpk. Joko Purwanto',
-            position: 'Bendahara Sekolah',
-        },
-        operator: { name: 'Ibu Dian Pratiwi', position: 'Operator Dapodik' },
     };
 
     const filteredPriorityFeed = feed.filter((item) => {
@@ -120,18 +104,18 @@ export default function Dashboard({
                                 •
                             </span>
                             <span className="hidden text-xs font-medium text-slate-500 sm:inline">
-                                Pusat Operasional Sekolah
+                                {activeRoleConfig.scopeBadge}
                             </span>
                         </div>
 
                         <h1 className="pt-1 text-xl font-bold tracking-tight text-slate-900 sm:text-2xl dark:text-white">
-                            Selamat bertugas, {roleContexts[currentRole]?.name}
+                            Selamat bertugas, {activeRoleConfig.userName}
                         </h1>
 
                         <p className="text-xs text-slate-600 sm:text-sm dark:text-slate-300">
                             Masuk sebagai{' '}
                             <strong className="font-semibold text-blue-700 dark:text-blue-400">
-                                {roleContexts[currentRole]?.position}
+                                {activeRoleConfig.title}
                             </strong>
                             . Terdeteksi{' '}
                             <strong className="font-semibold text-slate-900 dark:text-white">
@@ -147,15 +131,7 @@ export default function Dashboard({
                         <span className="px-2 text-[11px] font-semibold text-slate-500">
                             Peran:
                         </span>
-                        {(
-                            [
-                                'kepala_sekolah',
-                                'wali_kelas',
-                                'guru_bk',
-                                'bendahara',
-                                'operator',
-                            ] as RoleType[]
-                        ).map((r) => (
+                        {(Object.keys(ROLE_CONFIGS) as RoleType[]).map((r) => (
                             <button
                                 key={r}
                                 type="button"
@@ -167,15 +143,7 @@ export default function Dashboard({
                                         : 'text-slate-600 hover:bg-slate-200/60 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-700 dark:hover:text-white',
                                 )}
                             >
-                                {r === 'kepala_sekolah'
-                                    ? 'Kepsek'
-                                    : r === 'wali_kelas'
-                                      ? 'Wali Kelas'
-                                      : r === 'guru_bk'
-                                        ? 'Guru BK'
-                                        : r === 'bendahara'
-                                          ? 'Bendahara'
-                                          : 'Operator'}
+                                {ROLE_CONFIGS[r].shortTitle}
                             </button>
                         ))}
                     </div>
@@ -485,186 +453,360 @@ export default function Dashboard({
                     </div>
                 </div>
 
-                {/* 4. DUA KOLOM OPERASIONAL: KONDISI KELAS & ALUR KASUS BK */}
+                {/* 4. DUA KOLOM OPERASIONAL BERDASARKAN PERAN (Role-tailored Spotlight) */}
                 <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-                    {/* Class Health Monitoring */}
-                    <div className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
-                        <div className="flex items-center justify-between border-b border-slate-200 pb-3 dark:border-slate-800">
-                            <div>
-                                <h3 className="text-sm font-bold text-slate-900 dark:text-white">
-                                    Indikator Kondisi Kelas
-                                </h3>
-                                <p className="text-[11px] text-slate-500">
-                                    Pantauan kelas yang memerlukan dukungan
-                                    koordinasi guru.
-                                </p>
+                    {/* Primary Left Widget */}
+                    {currentRole === 'bendahara' ? (
+                        <div className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
+                            <div className="flex items-center justify-between border-b border-slate-200 pb-3 dark:border-slate-800">
+                                <div>
+                                    <h3 className="text-sm font-bold text-slate-900 dark:text-white">
+                                        Daftar Tagihan & Verifikasi SPP
+                                    </h3>
+                                    <p className="text-[11px] text-slate-500">
+                                        Monitoring tunggakan dan verifikasi
+                                        bukti transfer ortu.
+                                    </p>
+                                </div>
+                                <Link
+                                    href="/pembayaran"
+                                    className="flex items-center gap-1 text-xs font-semibold text-blue-700 hover:underline dark:text-blue-400"
+                                >
+                                    Semua Tagihan{' '}
+                                    <ChevronRight className="size-3.5" />
+                                </Link>
                             </div>
-                            <Link
-                                href="/kondisi-kelas"
-                                className="flex items-center gap-1 text-xs font-semibold text-blue-700 hover:underline dark:text-blue-400"
-                            >
-                                Semua Rombel{' '}
-                                <ChevronRight className="size-3.5" />
-                            </Link>
-                        </div>
-
-                        <div className="space-y-3">
-                            {classList.slice(0, 3).map((cls) => {
-                                const isCritical =
-                                    cls.healthStatus === 'critical';
-                                const isWarning =
-                                    cls.healthStatus === 'warning';
-
-                                return (
+                            <div className="space-y-3">
+                                {payments.slice(0, 3).map((p) => (
                                     <div
-                                        key={cls.id}
-                                        className="space-y-2.5 rounded-xl border border-slate-200 bg-slate-50/70 p-4 transition-colors hover:border-blue-300 dark:border-slate-800 dark:bg-[#111c30]"
+                                        key={p.id}
+                                        className="space-y-2 rounded-xl border border-slate-200 bg-slate-50/70 p-4 text-xs dark:border-slate-800 dark:bg-[#111c30]"
                                     >
                                         <div className="flex items-center justify-between">
-                                            <div>
-                                                <span className="me-2 text-sm font-bold text-slate-900 dark:text-white">
-                                                    {cls.name}
-                                                </span>
-                                                <span className="text-xs text-slate-500">
-                                                    {cls.major} •{' '}
-                                                    {cls.totalStudents} siswa
-                                                </span>
-                                            </div>
-                                            <span
-                                                className={cn(
-                                                    'rounded border px-2 py-0.5 text-[10px] font-semibold',
-                                                    isCritical
-                                                        ? 'border-slate-300 bg-slate-200 text-slate-900 dark:border-slate-600 dark:bg-slate-700 dark:text-white'
-                                                        : isWarning
-                                                          ? 'border-slate-200 bg-white text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300'
-                                                          : 'border-slate-200 bg-white text-slate-500 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-400',
-                                                )}
-                                            >
-                                                {isCritical
-                                                    ? 'Perlu Intervensi'
-                                                    : isWarning
-                                                      ? 'Perlu Perhatian'
-                                                      : 'Kondisi Baik'}
+                                            <span className="font-bold text-slate-900 dark:text-white">
+                                                {p.studentName}
+                                            </span>
+                                            <span className="rounded border border-slate-200 bg-white px-2 py-0.5 text-[10px] font-semibold text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
+                                                {p.status}
                                             </span>
                                         </div>
+                                        <div className="flex items-center justify-between text-slate-500">
+                                            <span>
+                                                {p.class} • {p.dueDate}
+                                            </span>
+                                            <span className="font-semibold text-slate-900 dark:text-white">
+                                                Rp {p.amount.toLocaleString('id-ID')}
+                                            </span>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    ) : currentRole === 'operator' ? (
+                        <div className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
+                            <div className="flex items-center justify-between border-b border-slate-200 pb-3 dark:border-slate-800">
+                                <div>
+                                    <h3 className="text-sm font-bold text-slate-900 dark:text-white">
+                                        Anomali Data Dapodik & Residu
+                                    </h3>
+                                    <p className="text-[11px] text-slate-500">
+                                        Validasi NISN, NIK, dan pemetaan rombel
+                                        pembelajaran.
+                                    </p>
+                                </div>
+                                <Link
+                                    href="/dapodik"
+                                    className="flex items-center gap-1 text-xs font-semibold text-blue-700 hover:underline dark:text-blue-400"
+                                >
+                                    Semua Isu{' '}
+                                    <ChevronRight className="size-3.5" />
+                                </Link>
+                            </div>
+                            <div className="space-y-3">
+                                {dapodikList.slice(0, 3).map((d) => (
+                                    <div
+                                        key={d.id}
+                                        className="space-y-1.5 rounded-xl border border-slate-200 bg-slate-50/70 p-4 text-xs dark:border-slate-800 dark:bg-[#111c30]"
+                                    >
+                                        <div className="flex items-center justify-between">
+                                            <span className="font-bold text-slate-900 dark:text-white">
+                                                {d.targetName}
+                                            </span>
+                                            <span className="rounded border border-slate-200 bg-white px-2 py-0.5 text-[10px] font-semibold text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
+                                                {d.category}
+                                            </span>
+                                        </div>
+                                        <p className="text-[11px] text-slate-600 dark:text-slate-400">
+                                            {d.description}
+                                        </p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    ) : (
+                        <div className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
+                            <div className="flex items-center justify-between border-b border-slate-200 pb-3 dark:border-slate-800">
+                                <div>
+                                    <h3 className="text-sm font-bold text-slate-900 dark:text-white">
+                                        Indikator Kondisi Kelas
+                                    </h3>
+                                    <p className="text-[11px] text-slate-500">
+                                        Pantauan kelas yang memerlukan dukungan
+                                        koordinasi guru.
+                                    </p>
+                                </div>
+                                <Link
+                                    href="/kondisi-kelas"
+                                    className="flex items-center gap-1 text-xs font-semibold text-blue-700 hover:underline dark:text-blue-400"
+                                >
+                                    Semua Rombel{' '}
+                                    <ChevronRight className="size-3.5" />
+                                </Link>
+                            </div>
 
-                                        <div className="grid grid-cols-3 gap-2 py-1 text-xs">
-                                            <div>
-                                                <span className="block text-[10px] font-medium text-slate-400">
-                                                    Kehadiran
-                                                </span>
-                                                <span className="font-bold text-slate-800 dark:text-slate-200">
-                                                    {cls.attendanceRate}%
+                            <div className="space-y-3">
+                                {classList.slice(0, 3).map((cls) => {
+                                    const isCritical =
+                                        cls.healthStatus === 'critical';
+                                    const isWarning =
+                                        cls.healthStatus === 'warning';
+
+                                    return (
+                                        <div
+                                            key={cls.id}
+                                            className="space-y-2.5 rounded-xl border border-slate-200 bg-slate-50/70 p-4 transition-colors hover:border-blue-300 dark:border-slate-800 dark:bg-[#111c30]"
+                                        >
+                                            <div className="flex items-center justify-between">
+                                                <div>
+                                                    <span className="me-2 text-sm font-bold text-slate-900 dark:text-white">
+                                                        {cls.name}
+                                                    </span>
+                                                    <span className="text-xs text-slate-500">
+                                                        {cls.major} •{' '}
+                                                        {cls.totalStudents}{' '}
+                                                        siswa
+                                                    </span>
+                                                </div>
+                                                <span
+                                                    className={cn(
+                                                        'rounded border px-2 py-0.5 text-[10px] font-semibold',
+                                                        isCritical
+                                                            ? 'border-slate-300 bg-slate-200 text-slate-900 dark:border-slate-600 dark:bg-slate-700 dark:text-white'
+                                                            : isWarning
+                                                              ? 'border-slate-200 bg-white text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300'
+                                                              : 'border-slate-200 bg-white text-slate-500 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-400',
+                                                    )}
+                                                >
+                                                    {isCritical
+                                                        ? 'Perlu Intervensi'
+                                                        : isWarning
+                                                          ? 'Perlu Perhatian'
+                                                          : 'Kondisi Baik'}
                                                 </span>
                                             </div>
-                                            <div>
-                                                <span className="block text-[10px] font-medium text-slate-400">
-                                                    Perlu Perhatian
+
+                                            <div className="grid grid-cols-3 gap-2 py-1 text-xs">
+                                                <div>
+                                                    <span className="block text-[10px] font-medium text-slate-400">
+                                                        Kehadiran
+                                                    </span>
+                                                    <span className="font-bold text-slate-800 dark:text-slate-200">
+                                                        {cls.attendanceRate}%
+                                                    </span>
+                                                </div>
+                                                <div>
+                                                    <span className="block text-[10px] font-medium text-slate-400">
+                                                        Perlu Perhatian
+                                                    </span>
+                                                    <span className="font-bold text-slate-900 dark:text-white">
+                                                        {cls.studentsAtRisk}{' '}
+                                                        siswa
+                                                    </span>
+                                                </div>
+                                                <div>
+                                                    <span className="block text-[10px] font-medium text-slate-400">
+                                                        Tindak Lanjut Pending
+                                                    </span>
+                                                    <span className="font-bold text-slate-700 dark:text-slate-300">
+                                                        {cls.pendingFollowups}{' '}
+                                                        pending
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <div className="flex items-center justify-between border-t border-slate-200/60 pt-2 text-[11px] text-slate-500 dark:border-slate-800">
+                                                <span>
+                                                    Wali: {cls.homeroomTeacher}
+                                                </span>
+                                                <Link
+                                                    href="/kondisi-kelas"
+                                                    className="font-semibold text-blue-700 hover:underline dark:text-blue-400"
+                                                >
+                                                    Detail Rombel →
+                                                </Link>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Secondary Right Widget */}
+                    {currentRole === 'bendahara' ? (
+                        <div className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
+                            <div className="flex items-center justify-between border-b border-slate-200 pb-3 dark:border-slate-800">
+                                <div>
+                                    <h3 className="text-sm font-bold text-slate-900 dark:text-white">
+                                        Komunikasi & Reminder Pembayaran
+                                    </h3>
+                                    <p className="text-[11px] text-slate-500">
+                                        Koordinasi dengan wali murid terkait
+                                        dispensasi SPP.
+                                    </p>
+                                </div>
+                                <Link
+                                    href="/komunikasi-ortu"
+                                    className="text-xs font-semibold text-blue-700 hover:underline dark:text-blue-400"
+                                >
+                                    Pesan Ortu →
+                                </Link>
+                            </div>
+                            <div className="space-y-3">
+                                {feed.slice(0, 3).map((f) => (
+                                    <div
+                                        key={f.id}
+                                        className="space-y-1.5 rounded-xl border border-slate-200 bg-slate-50/70 p-4 text-xs dark:border-slate-800 dark:bg-[#111c30]"
+                                    >
+                                        <div className="flex items-center justify-between">
+                                            <span className="font-bold text-slate-900 dark:text-white">
+                                                {f.studentName}
+                                            </span>
+                                            <span className="text-[11px] text-slate-500">
+                                                {f.parentName}
+                                            </span>
+                                        </div>
+                                        <p className="text-[11px] text-slate-600 dark:text-slate-400">
+                                            {f.summary}
+                                        </p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    ) : currentRole === 'operator' ? (
+                        <div className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
+                            <div className="flex items-center justify-between border-b border-slate-200 pb-3 dark:border-slate-800">
+                                <div>
+                                    <h3 className="text-sm font-bold text-slate-900 dark:text-white">
+                                        Verifikasi Dokumen Guru
+                                    </h3>
+                                    <p className="text-[11px] text-slate-500">
+                                        Kelengkapan SK, silabus, dan perangkat
+                                        ajar pengajar.
+                                    </p>
+                                </div>
+                                <Link
+                                    href="/dokumen-guru"
+                                    className="text-xs font-semibold text-blue-700 hover:underline dark:text-blue-400"
+                                >
+                                    Semua Berkas →
+                                </Link>
+                            </div>
+                            <div className="space-y-3">
+                                {docList.slice(0, 3).map((doc) => (
+                                    <div
+                                        key={doc.id}
+                                        className="space-y-1.5 rounded-xl border border-slate-200 bg-slate-50/70 p-4 text-xs dark:border-slate-800 dark:bg-[#111c30]"
+                                    >
+                                        <div className="flex items-center justify-between">
+                                            <span className="font-bold text-slate-900 dark:text-white">
+                                                {doc.title}
+                                            </span>
+                                            <span className="rounded border border-slate-200 bg-white px-2 py-0.5 text-[10px] font-semibold text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
+                                                {doc.status}
+                                            </span>
+                                        </div>
+                                        <p className="text-[11px] text-slate-600 dark:text-slate-400">
+                                            Pengajar: {doc.teacher} • Periode:{' '}
+                                            {doc.period}
+                                        </p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    ) : (
+                        <div className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
+                            <div className="flex items-center justify-between border-b border-slate-200 pb-3 dark:border-slate-800">
+                                <div>
+                                    <h3 className="text-sm font-bold text-slate-900 dark:text-white">
+                                        Progres Penanganan Kasus Terstruktur
+                                    </h3>
+                                    <p className="text-[11px] text-slate-500">
+                                        Alur tahapan: Baru → Ditugaskan →
+                                        Ditangani → Selesai
+                                    </p>
+                                </div>
+                                <button
+                                    type="button"
+                                    onClick={() => openNewCaseModal()}
+                                    className="inline-flex items-center gap-1.5 rounded-lg bg-blue-700 px-3 py-1.5 text-xs font-semibold text-white shadow-2xs transition-colors hover:bg-blue-800 active:scale-95"
+                                >
+                                    <Plus className="size-3.5" />
+                                    Buka Kasus
+                                </button>
+                            </div>
+
+                            <div className="space-y-3">
+                                {caseList.slice(0, 3).map((c) => (
+                                    <div
+                                        key={c.id}
+                                        className="space-y-2 rounded-xl border border-slate-200 bg-slate-50/70 p-4 text-xs dark:border-slate-800 dark:bg-[#111c30]"
+                                    >
+                                        <div className="flex items-center justify-between">
+                                            <div className="flex items-center gap-2">
+                                                <span className="font-mono text-xs font-bold text-blue-700 dark:text-blue-400">
+                                                    {c.code}
                                                 </span>
                                                 <span className="font-bold text-slate-900 dark:text-white">
-                                                    {cls.studentsAtRisk} siswa
+                                                    {c.studentName}
+                                                </span>
+                                                <span className="text-[11px] text-slate-400">
+                                                    • {c.class}
                                                 </span>
                                             </div>
-                                            <div>
-                                                <span className="block text-[10px] font-medium text-slate-400">
-                                                    Tindak Lanjut Pending
-                                                </span>
-                                                <span className="font-bold text-slate-700 dark:text-slate-300">
-                                                    {cls.pendingFollowups}{' '}
-                                                    pending
-                                                </span>
-                                            </div>
+                                            <span className="rounded border border-slate-200 bg-white px-2 py-0.5 text-[10px] font-semibold text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
+                                                Prioritas: {c.priority}
+                                            </span>
                                         </div>
 
-                                        <div className="flex items-center justify-between border-t border-slate-200/60 pt-2 text-[11px] text-slate-500 dark:border-slate-800">
+                                        <p className="rounded-lg border border-slate-200 bg-white p-3 leading-relaxed font-normal text-slate-700 dark:border-slate-800 dark:bg-[#070b14] dark:text-slate-300">
+                                            {c.lastActivity}
+                                        </p>
+
+                                        <div className="flex items-center justify-between pt-1 text-[11px] text-slate-500">
                                             <span>
-                                                Wali: {cls.homeroomTeacher}
+                                                PIC:{' '}
+                                                <strong className="font-medium text-slate-700 dark:text-slate-300">
+                                                    {c.assignee}
+                                                </strong>
                                             </span>
-                                            <Link
-                                                href="/kondisi-kelas"
-                                                className="font-semibold text-blue-700 hover:underline dark:text-blue-400"
-                                            >
-                                                Detail Rombel →
-                                            </Link>
+                                            <span className="font-semibold text-blue-700 dark:text-blue-400">
+                                                Tahap: {c.stageLabel}
+                                            </span>
                                         </div>
                                     </div>
-                                );
-                            })}
-                        </div>
-                    </div>
+                                ))}
 
-                    {/* Case Workflow Summary */}
-                    <div className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-xs dark:border-slate-800 dark:bg-[#0f172a]">
-                        <div className="flex items-center justify-between border-b border-slate-200 pb-3 dark:border-slate-800">
-                            <div>
-                                <h3 className="text-sm font-bold text-slate-900 dark:text-white">
-                                    Progres Penanganan Kasus Terstruktur
-                                </h3>
-                                <p className="text-[11px] text-slate-500">
-                                    Alur tahapan: Baru → Ditugaskan → Ditangani
-                                    → Selesai
-                                </p>
-                            </div>
-                            <button
-                                type="button"
-                                onClick={() => openNewCaseModal()}
-                                className="inline-flex items-center gap-1.5 rounded-lg bg-blue-700 px-3 py-1.5 text-xs font-semibold text-white shadow-2xs transition-colors hover:bg-blue-800 active:scale-95"
-                            >
-                                <Plus className="size-3.5" />
-                                Buka Kasus
-                            </button>
-                        </div>
-
-                        <div className="space-y-3">
-                            {caseList.slice(0, 3).map((c) => (
-                                <div
-                                    key={c.id}
-                                    className="space-y-2 rounded-xl border border-slate-200 bg-slate-50/70 p-4 text-xs dark:border-slate-800 dark:bg-[#111c30]"
+                                <Link
+                                    href="/manajemen-kasus"
+                                    className="block w-full rounded-lg border border-dashed border-slate-300 py-2.5 text-center text-xs font-semibold text-blue-700 transition-colors hover:bg-slate-50 dark:border-slate-700 dark:text-blue-400 dark:hover:bg-slate-800/40"
                                 >
-                                    <div className="flex items-center justify-between">
-                                        <div className="flex items-center gap-2">
-                                            <span className="font-mono text-xs font-bold text-blue-700 dark:text-blue-400">
-                                                {c.code}
-                                            </span>
-                                            <span className="font-bold text-slate-900 dark:text-white">
-                                                {c.studentName}
-                                            </span>
-                                            <span className="text-[11px] text-slate-400">
-                                                • {c.class}
-                                            </span>
-                                        </div>
-                                        <span className="rounded border border-slate-200 bg-white px-2 py-0.5 text-[10px] font-semibold text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
-                                            Prioritas: {c.priority}
-                                        </span>
-                                    </div>
-
-                                    <p className="rounded-lg border border-slate-200 bg-white p-3 leading-relaxed font-normal text-slate-700 dark:border-slate-800 dark:bg-[#070b14] dark:text-slate-300">
-                                        {c.lastActivity}
-                                    </p>
-
-                                    <div className="flex items-center justify-between pt-1 text-[11px] text-slate-500">
-                                        <span>
-                                            PIC:{' '}
-                                            <strong className="font-medium text-slate-700 dark:text-slate-300">
-                                                {c.assignee}
-                                            </strong>
-                                        </span>
-                                        <span className="font-semibold text-blue-700 dark:text-blue-400">
-                                            Tahap: {c.stageLabel}
-                                        </span>
-                                    </div>
-                                </div>
-                            ))}
-
-                            <Link
-                                href="/manajemen-kasus"
-                                className="block w-full rounded-lg border border-dashed border-slate-300 py-2.5 text-center text-xs font-semibold text-blue-700 transition-colors hover:bg-slate-50 dark:border-slate-700 dark:text-blue-400 dark:hover:bg-slate-800/40"
-                            >
-                                Buka Papan Kanban Kasus Lengkap —{' '}
-                                {caseList.length} Kasus →
-                            </Link>
+                                    Buka Papan Kanban Kasus Lengkap —{' '}
+                                    {caseList.length} Kasus →
+                                </Link>
+                            </div>
                         </div>
-                    </div>
+                    )}
                 </div>
 
                 {/* 5. AKSES PINTASAN MODUL (Single Blue Accent) */}

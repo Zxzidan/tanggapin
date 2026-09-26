@@ -1,4 +1,4 @@
-import { Link, router, usePage } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import {
     AlertTriangle,
     Bell,
@@ -8,8 +8,6 @@ import {
     GraduationCap,
     HeartPulse,
     Home,
-    Layers,
-    LifeBuoy,
     LogOut,
     Menu,
     Moon,
@@ -22,18 +20,17 @@ import {
     ShieldAlert,
     Siren,
     Sun,
+    User,
     UserCheck,
     Users,
     WalletCards,
     X,
 } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
-import {
-    ActionModalsProvider,
-    useActionModals,
-} from '@/components/action-modals';
+import { useActionModals } from '@/components/action-modals';
 import TanggapinLogo from '@/components/tanggapin-logo';
 import { useAppearance } from '@/hooks/use-appearance';
+import { ROLE_CONFIGS } from '@/lib/role-config';
 import { cn } from '@/lib/utils';
 import type { RoleType } from '@/types/tanggapin';
 
@@ -43,7 +40,9 @@ interface FlowbiteLayoutProps {
     onTabChange?: (tab: string) => void;
     currentRole?: RoleType;
     onRoleChange?: (role: RoleType) => void;
-    onTriggerActionModal?: (actionType: string, studentName?: string) => void;
+    onTriggerActionModal?: (
+        modalType: 'followup' | 'parent_contact' | 'new_case' | 'discipline',
+    ) => void;
 }
 
 export default function FlowbiteTanggapinLayout({
@@ -55,11 +54,9 @@ export default function FlowbiteTanggapinLayout({
     onTriggerActionModal,
 }: FlowbiteLayoutProps) {
     const page = usePage<{ auth: { user: { name: string; email: string } } }>();
-    const auth = page.props?.auth;
     const currentPath = page.url.split('?')[0];
 
-    const { appearance, resolvedAppearance, updateAppearance } =
-        useAppearance();
+    const { resolvedAppearance, updateAppearance } = useAppearance();
     const {
         openFollowupModal,
         openParentContactModal,
@@ -69,117 +66,82 @@ export default function FlowbiteTanggapinLayout({
 
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+    const [isRoleDropdownOpen, setIsRoleDropdownOpen] = useState(false);
     const [isQuickActionOpen, setIsQuickActionOpen] = useState(false);
     const [isNotificationOpen, setIsNotificationOpen] = useState(false);
-    const [isRoleDropdownOpen, setIsRoleDropdownOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [isSearchFocused, setIsSearchFocused] = useState(false);
 
-    const [selectedRole, setSelectedRole] = useState<RoleType>(() => {
+    const [localRole, setLocalRole] = useState<RoleType>(() => {
         if (controlledRole) return controlledRole;
         if (typeof window !== 'undefined') {
             const saved = localStorage.getItem(
                 'tanggapin_current_role',
             ) as RoleType;
-            if (
-                saved &&
-                [
-                    'kepala_sekolah',
-                    'wali_kelas',
-                    'guru_bk',
-                    'bendahara',
-                    'operator',
-                ].includes(saved)
-            ) {
+            if (saved && Object.keys(ROLE_CONFIGS).includes(saved)) {
                 return saved;
             }
         }
         return 'kepala_sekolah';
     });
 
-    const activeRole = controlledRole || selectedRole;
-
-    const handleRoleSelect = (role: RoleType) => {
-        setSelectedRole(role);
-        if (typeof window !== 'undefined') {
-            localStorage.setItem('tanggapin_current_role', role);
-        }
-        setIsRoleDropdownOpen(false);
-        if (onRoleChange) {
-            onRoleChange(role);
-        }
-    };
+    const activeRole = controlledRole || localRole;
+    const activeRoleConfig =
+        ROLE_CONFIGS[activeRole] || ROLE_CONFIGS.kepala_sekolah;
 
     const userDropdownRef = useRef<HTMLDivElement>(null);
+    const roleDropdownRef = useRef<HTMLDivElement>(null);
     const quickActionRef = useRef<HTMLDivElement>(null);
     const notificationRef = useRef<HTMLDivElement>(null);
-    const roleDropdownRef = useRef<HTMLDivElement>(null);
 
     // Close dropdowns on outside click
     useEffect(() => {
-        function handleClickOutside(event: MouseEvent) {
+        const handleClickOutside = (event: MouseEvent) => {
+            const target = event.target as Node;
             if (
                 userDropdownRef.current &&
-                !userDropdownRef.current.contains(event.target as Node)
+                !userDropdownRef.current.contains(target)
             ) {
                 setIsUserMenuOpen(false);
             }
             if (
+                roleDropdownRef.current &&
+                !roleDropdownRef.current.contains(target)
+            ) {
+                setIsRoleDropdownOpen(false);
+            }
+            if (
                 quickActionRef.current &&
-                !quickActionRef.current.contains(event.target as Node)
+                !quickActionRef.current.contains(target)
             ) {
                 setIsQuickActionOpen(false);
             }
             if (
                 notificationRef.current &&
-                !notificationRef.current.contains(event.target as Node)
+                !notificationRef.current.contains(target)
             ) {
                 setIsNotificationOpen(false);
             }
-            if (
-                roleDropdownRef.current &&
-                !roleDropdownRef.current.contains(event.target as Node)
-            ) {
-                setIsRoleDropdownOpen(false);
-            }
-        }
+        };
+
         document.addEventListener('mousedown', handleClickOutside);
         return () =>
             document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
-    const roleLabels: Record<
-        RoleType,
-        { title: string; badge: string; desc: string }
-    > = {
-        kepala_sekolah: {
-            title: 'Kepala Sekolah',
-            badge: 'Decision Maker',
-            desc: 'Pemantauan komprehensif sekolah',
-        },
-        wali_kelas: {
-            title: 'Wali Kelas XI RPL 2',
-            badge: 'Garda Depan',
-            desc: 'Deteksi & intervensi kelas',
-        },
-        guru_bk: {
-            title: 'Guru BK & Konseling',
-            badge: 'Case Manager',
-            desc: 'Penanganan kasus & pendampingan',
-        },
-        bendahara: {
-            title: 'Bendahara Sekolah',
-            badge: 'Keuangan',
-            desc: 'Monitoring SPP & tagihan',
-        },
-        operator: {
-            title: 'Operator Dapodik',
-            badge: 'Data Verifier',
-            desc: 'Validasi & sinkronisasi data',
-        },
+    const handleRoleSelect = (role: RoleType) => {
+        setLocalRole(role);
+        if (onRoleChange) {
+            onRoleChange(role);
+        }
+        if (typeof window !== 'undefined') {
+            localStorage.setItem('tanggapin_current_role', role);
+        }
+        setIsRoleDropdownOpen(false);
     };
 
-    const navSections = [
+    // Navigation sections definition
+    const allNavSections = [
         {
             section: 'UTAMA',
             items: [
@@ -194,47 +156,48 @@ export default function FlowbiteTanggapinLayout({
             ],
         },
         {
-            section: 'SISWA',
+            section: 'EARLY WARNING & KELAS',
             items: [
                 {
                     id: 'early-warning',
-                    title: 'Early Warning',
+                    title: 'Early Warning Siswa',
                     icon: AlertTriangle,
                     href: '/early-warning',
                     badge: '12',
                     badgeColor:
-                        'text-red-700 bg-red-50 dark:text-red-300 dark:bg-red-950/70 border border-red-200 dark:border-red-900',
+                        'text-blue-700 bg-blue-50 dark:text-blue-300 dark:bg-blue-950/70 border border-blue-200 dark:border-blue-900',
                 },
                 {
                     id: 'class-monitoring',
                     title: 'Kondisi Kelas',
                     icon: GraduationCap,
                     href: '/kondisi-kelas',
-                    badge: null,
-                    badgeColor: '',
+                    badge: '4 Rombel',
+                    badgeColor:
+                        'text-slate-700 bg-slate-100 dark:text-slate-300 dark:bg-slate-800 border border-slate-200 dark:border-slate-700',
                 },
                 {
-                    id: 'ats',
-                    title: 'Alur Lapangan ATS',
-                    icon: UserCheck,
-                    href: '/alur-ats',
-                    badge: 'Baru',
+                    id: 'discipline',
+                    title: 'Pembinaan Disiplin',
+                    icon: Scale,
+                    href: '/early-warning',
+                    badge: 'Catatan',
                     badgeColor:
-                        'text-emerald-700 bg-emerald-50 dark:text-emerald-300 dark:bg-emerald-950/70 border border-emerald-200 dark:border-emerald-800',
+                        'text-slate-700 bg-slate-100 dark:text-slate-300 dark:bg-slate-800 border border-slate-200 dark:border-slate-700',
                 },
             ],
         },
         {
-            section: 'PENDAMPINGAN',
+            section: 'KONSULTASI & KASUS',
             items: [
                 {
                     id: 'cases',
-                    title: 'Manajemen Kasus',
+                    title: 'Manajemen Kasus BK',
                     icon: ShieldAlert,
                     href: '/manajemen-kasus',
                     badge: '4',
                     badgeColor:
-                        'text-amber-700 bg-amber-50 dark:text-amber-300 dark:bg-amber-950/70 border border-amber-200 dark:border-amber-800',
+                        'text-blue-700 bg-blue-50 dark:text-blue-300 dark:bg-blue-950/70 border border-blue-200 dark:border-blue-800',
                 },
                 {
                     id: 'communication',
@@ -245,19 +208,28 @@ export default function FlowbiteTanggapinLayout({
                     badgeColor:
                         'text-blue-700 bg-blue-50 dark:text-blue-300 dark:bg-blue-950/70 border border-blue-200 dark:border-blue-800',
                 },
+                {
+                    id: 'ats',
+                    title: 'Alur Lapangan ATS',
+                    icon: HeartPulse,
+                    href: '/alur-ats',
+                    badge: '3',
+                    badgeColor:
+                        'text-slate-700 bg-slate-100 dark:text-slate-300 dark:bg-slate-800 border border-slate-200 dark:border-slate-700',
+                },
             ],
         },
         {
-            section: 'OPERASIONAL',
+            section: 'ADMINISTRASI & OPERASIONAL',
             items: [
                 {
                     id: 'data-check',
                     title: 'Cek Data Dapodik',
                     icon: CheckCircle2,
                     href: '/dapodik',
-                    badge: '7',
+                    badge: '7 Isu',
                     badgeColor:
-                        'text-orange-700 bg-orange-50 dark:text-orange-300 dark:bg-orange-950/70 border border-orange-200 dark:border-orange-800',
+                        'text-slate-700 bg-slate-100 dark:text-slate-300 dark:bg-slate-800 border border-slate-200 dark:border-slate-700',
                 },
                 {
                     id: 'payments',
@@ -266,35 +238,58 @@ export default function FlowbiteTanggapinLayout({
                     href: '/pembayaran',
                     badge: '18',
                     badgeColor:
-                        'text-purple-700 bg-purple-50 dark:text-purple-300 dark:bg-purple-950/70 border border-purple-200 dark:border-purple-800',
+                        'text-slate-700 bg-slate-100 dark:text-slate-300 dark:bg-slate-800 border border-slate-200 dark:border-slate-700',
                 },
                 {
                     id: 'documents',
-                    title: 'Dokumen Guru',
+                    title: 'Dokumen Kinerja Guru',
                     icon: FileText,
                     href: '/dokumen-guru',
-                    badge: null,
-                    badgeColor: '',
+                    badge: '25 Berkas',
+                    badgeColor:
+                        'text-slate-700 bg-slate-100 dark:text-slate-300 dark:bg-slate-800 border border-slate-200 dark:border-slate-700',
                 },
                 {
                     id: 'incidents',
-                    title: 'Respons Insiden',
+                    title: 'Tanggap Darurat',
                     icon: Siren,
                     href: '/respons-insiden',
                     badge: 'Siaga',
                     badgeColor:
-                        'text-red-700 bg-red-100 dark:text-red-300 dark:bg-red-950 border border-red-300 dark:border-red-800',
+                        'text-blue-700 bg-blue-50 dark:text-blue-300 dark:bg-blue-950/70 border border-blue-200 dark:border-blue-800',
                 },
             ],
         },
     ];
 
+    // Filter navigation sections based on active role permissions
+    const visibleNavSections = allNavSections
+        .map((sec) => ({
+            ...sec,
+            items: sec.items
+                .filter((item) =>
+                    activeRoleConfig.allowedTabs.includes(item.id),
+                )
+                .map((item) => {
+                    const override = activeRoleConfig.tabOverrides?.[item.id];
+                    return {
+                        ...item,
+                        title: override?.title || item.title,
+                        badge:
+                            override?.badge !== undefined
+                                ? override.badge
+                                : item.badge,
+                    };
+                }),
+        }))
+        .filter((sec) => sec.items.length > 0);
+
     const isRouteActive = (item: { id: string; href: string }) => {
         if (activeTab) {
             return activeTab === item.id;
         }
-        if (item.href === '/dashboard') {
-            return currentPath === '/dashboard' || currentPath === '/';
+        if (currentPath === '/dashboard' && item.href === '/dashboard') {
+            return true;
         }
         return (
             currentPath === item.href || currentPath.startsWith(item.href + '/')
@@ -304,52 +299,54 @@ export default function FlowbiteTanggapinLayout({
     const searchResults = [
         {
             type: 'Siswa Berisiko',
-            title: 'Brian Aditya - XI RPL 2',
+            name: 'Brian Aditya — XI RPL 2',
             desc: 'Kehadiran turun 28% dalam 14 hari',
             href: '/early-warning',
         },
         {
             type: 'Kasus Aktif',
-            title: 'CS-2025-089 - Rian Pratama',
-            desc: 'Kedisiplinan berulang - Tahap Konseling BK',
+            name: 'KS-2025-001 — Ahmad Fauzi',
+            desc: 'Kedisiplinan berulang • Tahap Konseling BK',
             href: '/manajemen-kasus',
         },
         {
             type: 'Anomali Data',
-            title: 'SK Tugas Tambahan Drs. Subagyo',
+            name: 'NISN Ganda • Citra Lestari',
             desc: 'Belum terpetakan pada semester ganjil',
             href: '/dapodik',
         },
         {
             type: 'Tagihan SPP',
-            title: 'Reza Pahlevi - XI RPL 2',
-            desc: 'Jatuh tempo 10 Sep 2025 - Rp 350.000',
+            name: 'Doni Pratama — X TKJ 1',
+            desc: 'Jatuh tempo 10 Sep 2025 • Rp 350.000',
             href: '/pembayaran',
         },
         {
             type: 'Kunjungan Lapangan',
-            title: 'Deni Saputra - XI TKR 3',
+            name: 'Eko Wahyudi — Home Visit ATS',
             desc: 'Verifikasi tim ATS terjadwal',
             href: '/alur-ats',
         },
     ].filter(
         (item) =>
-            item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            item.desc.toLowerCase().includes(searchQuery.toLowerCase()),
+            searchQuery.trim() !== '' &&
+            (item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                item.desc.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                item.type.toLowerCase().includes(searchQuery.toLowerCase())),
     );
 
     return (
-        <div className="bg-neutral-secondary-soft text-body min-h-screen font-sans antialiased dark:bg-[#070b14]">
+        <div className="min-h-screen bg-slate-50/50 text-slate-900 transition-colors duration-200 dark:bg-[#070b14] dark:text-slate-100">
             {/* Top Navigation Bar */}
-            <nav className="border-default fixed top-0 z-50 w-full border-b bg-white/95 shadow-xs backdrop-blur-md transition-colors dark:bg-[#0b1120]/95">
-                <div className="px-3 py-2.5 lg:px-6">
+            <nav className="fixed top-0 z-50 w-full border-b border-slate-200 bg-white shadow-2xs dark:border-slate-800 dark:bg-[#0f172a]">
+                <div className="px-3 py-2.5 lg:px-5 lg:pl-3">
                     <div className="flex items-center justify-between">
-                        {/* Left Side: Mobile Toggle + Brand */}
+                        {/* Left: Mobile Toggle & Brand Logo */}
                         <div className="flex items-center justify-start gap-2">
                             <button
                                 type="button"
                                 onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                                className="text-heading hover:bg-neutral-secondary-medium rounded-lg p-2 transition-colors sm:hidden"
+                                className="rounded-lg p-2 text-slate-500 hover:bg-slate-100 sm:hidden dark:text-slate-400 dark:hover:bg-slate-800"
                                 aria-label="Toggle sidebar"
                             >
                                 <Menu className="size-5" />
@@ -357,54 +354,50 @@ export default function FlowbiteTanggapinLayout({
 
                             <Link
                                 href="/dashboard"
-                                className="group me-2 flex items-center md:me-8"
+                                className="ms-1 flex items-center md:me-12"
                             >
-                                <TanggapinLogo
-                                    size="md"
-                                    showDescriptor={true}
-                                />
+                                <TanggapinLogo />
                             </Link>
                         </div>
 
-                        {/* Middle: Clean Global Search Bar with Keyboard Shortcut */}
-                        <div className="relative hidden w-72 md:block lg:w-96">
-                            <div className="text-fg-disabled pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3">
-                                <Search className="h-4 w-4" />
-                            </div>
-                            <input
-                                type="text"
-                                value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
-                                onFocus={() => setIsSearchFocused(true)}
-                                placeholder="Cari siswa, kasus, dokumen, data... (/)"
-                                className="text-heading border-default bg-neutral-secondary-soft/70 block w-full rounded-lg border py-1.5 ps-9 pe-10 text-xs transition-all outline-none focus:border-blue-600 focus:bg-white focus:ring-2 focus:ring-blue-600/30 dark:focus:bg-[#0f172a]"
-                            />
-                            <div className="pointer-events-none absolute inset-y-0 end-0 flex items-center pe-2.5">
-                                <kbd className="text-fg-disabled bg-neutral-secondary-medium border-default-medium rounded border px-1.5 py-0.5 text-[10px] font-semibold">
-                                    /
-                                </kbd>
+                        {/* Middle: Universal Search Bar */}
+                        <div className="relative mx-4 hidden max-w-md flex-1 md:block">
+                            <div className="relative">
+                                <div className="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3 text-slate-400">
+                                    <Search className="size-4" />
+                                </div>
+                                <input
+                                    type="text"
+                                    value={searchQuery}
+                                    onChange={(e) =>
+                                        setSearchQuery(e.target.value)
+                                    }
+                                    onFocus={() => setIsSearchFocused(true)}
+                                    onBlur={() =>
+                                        setTimeout(
+                                            () => setIsSearchFocused(false),
+                                            200,
+                                        )
+                                    }
+                                    className="block w-full rounded-xl border border-slate-200 bg-slate-100/70 p-2 ps-9 text-xs text-slate-900 placeholder:text-slate-400 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                                    placeholder="Cari siswa, kasus, kelas, tagihan SPP, NISN..."
+                                />
+                                {searchQuery && (
+                                    <button
+                                        type="button"
+                                        onClick={() => setSearchQuery('')}
+                                        className="absolute inset-y-0 end-0 flex items-center pe-2.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+                                    >
+                                        <X className="size-3.5" />
+                                    </button>
+                                )}
                             </div>
 
-                            {/* Live Search Popup */}
-                            {isSearchFocused && searchQuery.length > 0 && (
-                                <div
-                                    onMouseDown={(e) => e.preventDefault()}
-                                    className="bg-neutral-primary-medium border-default absolute right-0 left-0 z-50 mt-2 rounded-xl border p-2 text-xs shadow-lg"
-                                >
-                                    <div className="border-default text-fg-disabled mb-1.5 flex items-center justify-between border-b px-1 pb-1.5 text-[11px]">
-                                        <span>
-                                            Hasil Pencarian (
-                                            {searchResults.length})
-                                        </span>
-                                        <button
-                                            type="button"
-                                            onClick={() =>
-                                                setIsSearchFocused(false)
-                                            }
-                                            className="hover:text-heading"
-                                        >
-                                            <X className="h-3.5 w-3.5" />
-                                        </button>
+                            {/* Search Results Dropdown */}
+                            {isSearchFocused && searchQuery && (
+                                <div className="absolute top-full left-0 z-50 mt-1.5 w-full animate-in rounded-xl border border-slate-200 bg-white p-2 shadow-xl zoom-in-95 fade-in dark:border-slate-700 dark:bg-[#111c30]">
+                                    <div className="mb-1 border-b border-slate-100 px-2 py-1 text-[11px] font-semibold text-slate-400 dark:border-slate-800">
+                                        Hasil Pencarian Cepat
                                     </div>
                                     {searchResults.length > 0 ? (
                                         <div className="space-y-1">
@@ -418,16 +411,16 @@ export default function FlowbiteTanggapinLayout({
                                                         );
                                                         setSearchQuery('');
                                                     }}
-                                                    className="hover:bg-neutral-tertiary group flex w-full items-start gap-2.5 rounded-lg p-2 text-left transition-colors"
+                                                    className="flex w-full items-start gap-2.5 rounded-lg p-2 text-left transition-colors hover:bg-slate-50 dark:hover:bg-slate-800/60"
                                                 >
-                                                    <span className="mt-0.5 shrink-0 rounded border border-blue-200 bg-blue-50 px-1.5 py-0.5 text-[10px] font-semibold text-blue-600 dark:border-blue-900 dark:bg-blue-950 dark:text-blue-400">
+                                                    <span className="mt-0.5 rounded bg-blue-50 px-1.5 py-0.5 text-[10px] font-semibold text-blue-700 dark:bg-blue-950 dark:text-blue-300">
                                                         {item.type}
                                                     </span>
-                                                    <div>
-                                                        <div className="text-heading group-hover:text-fg-brand font-semibold">
-                                                            {item.title}
+                                                    <div className="min-w-0 flex-1">
+                                                        <div className="truncate text-xs font-semibold text-slate-900 dark:text-white">
+                                                            {item.name}
                                                         </div>
-                                                        <div className="text-body text-[11px]">
+                                                        <div className="truncate text-[11px] text-slate-500">
                                                             {item.desc}
                                                         </div>
                                                     </div>
@@ -435,8 +428,8 @@ export default function FlowbiteTanggapinLayout({
                                             ))}
                                         </div>
                                     ) : (
-                                        <div className="text-fg-disabled py-4 text-center text-xs">
-                                            Tidak ditemukan hasil untuk "
+                                        <div className="p-3 text-center text-xs text-slate-500">
+                                            Tidak ada data cocok dengan "
                                             {searchQuery}"
                                         </div>
                                     )}
@@ -444,9 +437,9 @@ export default function FlowbiteTanggapinLayout({
                             )}
                         </div>
 
-                        {/* Right Header: Role Simulator + Quick Actions + Notifications + Appearance + User */}
-                        <div className="flex items-center gap-1.5 sm:gap-2">
-                            {/* Role Switcher Simulator */}
+                        {/* Right: Role Switcher, Quick Actions, Appearance & User */}
+                        <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
+                            {/* Role Switcher Simulator Dropdown */}
                             <div className="relative" ref={roleDropdownRef}>
                                 <button
                                     type="button"
@@ -455,29 +448,27 @@ export default function FlowbiteTanggapinLayout({
                                             !isRoleDropdownOpen,
                                         )
                                     }
-                                    className="text-heading bg-neutral-secondary-medium hover:bg-neutral-tertiary border-default inline-flex items-center gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs font-medium transition-colors"
-                                    title="Ganti Tampilan Peran (Simulator Tanggapin)"
+                                    className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-xs font-medium text-slate-700 transition-colors hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+                                    title="Ganti Simulasi Peran Pengguna"
                                 >
-                                    <Users className="h-3.5 w-3.5 text-blue-600 dark:text-blue-400" />
+                                    <Users className="size-3.5 text-blue-700 dark:text-blue-400" />
                                     <span className="hidden font-semibold lg:inline-block">
-                                        {roleLabels[activeRole]?.title}
+                                        {activeRoleConfig.title}
                                     </span>
                                     <span className="font-semibold lg:hidden">
-                                        {activeRole === 'kepala_sekolah'
-                                            ? 'Kepsek'
-                                            : activeRole.replace('_', ' ')}
+                                        {activeRoleConfig.shortTitle}
                                     </span>
-                                    <ChevronDown className="text-fg-disabled h-3 w-3" />
+                                    <ChevronDown className="size-3 text-slate-400" />
                                 </button>
 
                                 {isRoleDropdownOpen && (
-                                    <div className="border-default absolute right-0 z-50 mt-2 w-72 animate-in rounded-xl border bg-white p-2 text-xs shadow-xl zoom-in-95 fade-in dark:bg-[#111c30]">
-                                        <div className="text-fg-disabled border-default mb-1 border-b px-2 py-1 text-[11px] font-bold">
+                                    <div className="absolute right-0 z-50 mt-2 w-72 animate-in rounded-xl border border-slate-200 bg-white p-2 text-xs shadow-xl zoom-in-95 fade-in dark:border-slate-700 dark:bg-[#111c30]">
+                                        <div className="mb-1 border-b border-slate-100 px-2 py-1 text-[11px] font-bold text-slate-400 dark:border-slate-800">
                                             Simulasi Hak Akses Pengguna
                                         </div>
                                         {(
                                             Object.keys(
-                                                roleLabels,
+                                                ROLE_CONFIGS,
                                             ) as RoleType[]
                                         ).map((r) => (
                                             <button
@@ -490,26 +481,29 @@ export default function FlowbiteTanggapinLayout({
                                                     'flex w-full items-start gap-2.5 rounded-lg p-2 text-left transition-colors',
                                                     activeRole === r
                                                         ? 'bg-blue-50 font-semibold text-blue-700 dark:bg-blue-950/70 dark:text-blue-300'
-                                                        : 'hover:bg-neutral-tertiary text-body',
+                                                        : 'text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800',
                                                 )}
                                             >
                                                 <div className="flex-1">
                                                     <div className="flex items-center justify-between">
-                                                        <span className="text-heading font-semibold">
+                                                        <span className="font-semibold text-slate-900 dark:text-white">
                                                             {
-                                                                roleLabels[r]
+                                                                ROLE_CONFIGS[r]
                                                                     .title
                                                             }
                                                         </span>
-                                                        <span className="bg-neutral-secondary-medium text-fg-disabled border-default rounded border px-1.5 py-0.5 text-[10px]">
+                                                        <span className="rounded border border-slate-200 bg-slate-100 px-1.5 py-0.5 text-[10px] text-slate-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
                                                             {
-                                                                roleLabels[r]
+                                                                ROLE_CONFIGS[r]
                                                                     .badge
                                                             }
                                                         </span>
                                                     </div>
-                                                    <p className="text-body mt-0.5 text-[11px] leading-snug">
-                                                        {roleLabels[r].desc}
+                                                    <p className="mt-0.5 text-[11px] leading-snug text-slate-500">
+                                                        {
+                                                            ROLE_CONFIGS[r]
+                                                                .roleDesc
+                                                        }
                                                     </p>
                                                 </div>
                                             </button>
@@ -518,66 +512,90 @@ export default function FlowbiteTanggapinLayout({
                                 )}
                             </div>
 
-                            {/* Quick Action Dropdown */}
+                            {/* Role-tailored Quick Actions Button */}
                             <div className="relative" ref={quickActionRef}>
                                 <button
                                     type="button"
                                     onClick={() =>
                                         setIsQuickActionOpen(!isQuickActionOpen)
                                     }
-                                    className="hidden items-center gap-1.5 rounded-lg bg-blue-700 px-2.5 py-1.5 text-xs font-semibold text-white shadow-sm transition-colors hover:bg-blue-800 sm:inline-flex"
+                                    className="hidden items-center gap-1.5 rounded-lg bg-blue-700 px-2.5 py-1.5 text-xs font-semibold text-white shadow-2xs transition-colors hover:bg-blue-800 active:scale-95 sm:inline-flex"
                                 >
                                     <Plus className="size-3.5" />
-                                    <span>Aksi Cepat</span>
+                                    <span>Tindakan</span>
                                     <ChevronDown className="size-3 opacity-80" />
                                 </button>
 
                                 {isQuickActionOpen && (
-                                    <div className="border-default absolute right-0 z-50 mt-2 w-56 animate-in rounded-xl border bg-white py-1 text-xs shadow-xl zoom-in-95 fade-in dark:bg-[#111c30]">
+                                    <div className="absolute right-0 z-50 mt-2 w-56 animate-in rounded-xl border border-slate-200 bg-white py-1 text-xs shadow-xl zoom-in-95 fade-in dark:border-slate-700 dark:bg-[#111c30]">
                                         <button
                                             type="button"
                                             onClick={() => {
                                                 setIsQuickActionOpen(false);
-                                                openFollowupModal();
+                                                if (onTriggerActionModal) {
+                                                    onTriggerActionModal(
+                                                        'followup',
+                                                    );
+                                                } else {
+                                                    openFollowupModal();
+                                                }
                                             }}
-                                            className="hover:bg-neutral-tertiary text-heading flex w-full items-center gap-2 px-3 py-2 text-left transition-colors"
+                                            className="flex w-full items-center gap-2 px-3 py-2 text-left text-slate-700 transition-colors hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
                                         >
-                                            <UserCheck className="h-3.5 w-3.5 text-blue-600" />
+                                            <UserCheck className="size-3.5 text-blue-700 dark:text-blue-400" />
                                             <span>Buat Follow-up Siswa</span>
                                         </button>
                                         <button
                                             type="button"
                                             onClick={() => {
                                                 setIsQuickActionOpen(false);
-                                                openParentContactModal();
+                                                if (onTriggerActionModal) {
+                                                    onTriggerActionModal(
+                                                        'parent_contact',
+                                                    );
+                                                } else {
+                                                    openParentContactModal();
+                                                }
                                             }}
-                                            className="hover:bg-neutral-tertiary text-heading flex w-full items-center gap-2 px-3 py-2 text-left transition-colors"
+                                            className="flex w-full items-center gap-2 px-3 py-2 text-left text-slate-700 transition-colors hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
                                         >
-                                            <PhoneCall className="h-3.5 w-3.5 text-emerald-600" />
+                                            <PhoneCall className="size-3.5 text-slate-500" />
                                             <span>Hubungi Orang Tua</span>
                                         </button>
                                         <button
                                             type="button"
                                             onClick={() => {
                                                 setIsQuickActionOpen(false);
-                                                openDisciplineModal();
+                                                if (onTriggerActionModal) {
+                                                    onTriggerActionModal(
+                                                        'discipline',
+                                                    );
+                                                } else {
+                                                    openDisciplineModal();
+                                                }
                                             }}
-                                            className="hover:bg-neutral-tertiary text-heading flex w-full items-center gap-2 px-3 py-2 text-left transition-colors"
+                                            className="flex w-full items-center gap-2 px-3 py-2 text-left text-slate-700 transition-colors hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
                                         >
-                                            <Scale className="h-3.5 w-3.5 text-amber-600" />
+                                            <Scale className="size-3.5 text-slate-500" />
                                             <span>
-                                                Catat Pelanggaran / Poin
+                                                Catat Pelanggaran & Poin
                                             </span>
                                         </button>
                                         <button
                                             type="button"
                                             onClick={() => {
                                                 setIsQuickActionOpen(false);
-                                                openNewCaseModal();
+                                                if (onTriggerActionModal) {
+                                                    onTriggerActionModal(
+                                                        'new_case',
+                                                    );
+                                                } else {
+                                                    openNewCaseModal();
+                                                }
                                             }}
-                                            className="hover:bg-neutral-tertiary text-heading flex w-full items-center gap-2 px-3 py-2 text-left transition-colors"
+                                            className="flex w-full items-center gap-2 px-3 py-2 text-left text-slate-700 transition-colors hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
                                         >
-                                            <ShieldAlert className="h-3.5 w-3.5 text-blue-600" />
+                                            <ShieldAlert className="size-3.5 text-blue-700 dark:text-blue-400" />
                                             <span>Eskalasi ke Kasus BK</span>
                                         </button>
                                         <Link
@@ -585,9 +603,9 @@ export default function FlowbiteTanggapinLayout({
                                             onClick={() =>
                                                 setIsQuickActionOpen(false)
                                             }
-                                            className="hover:bg-neutral-tertiary text-heading border-default flex w-full items-center gap-2 border-t px-3 py-2 text-left text-red-600 transition-colors dark:text-red-400"
+                                            className="flex w-full items-center gap-2 border-t border-slate-100 px-3 py-2 text-left text-slate-700 transition-colors hover:bg-slate-100 dark:border-slate-800 dark:text-slate-200 dark:hover:bg-slate-800"
                                         >
-                                            <Siren className="h-3.5 w-3.5 text-red-500" />
+                                            <Siren className="size-3.5 text-blue-700 dark:text-blue-400" />
                                             <span>
                                                 Laporkan Situasi Darurat
                                             </span>
@@ -596,7 +614,7 @@ export default function FlowbiteTanggapinLayout({
                                 )}
                             </div>
 
-                            {/* Notifications Bell */}
+                            {/* Notifications Dropdown */}
                             <div className="relative" ref={notificationRef}>
                                 <button
                                     type="button"
@@ -605,22 +623,21 @@ export default function FlowbiteTanggapinLayout({
                                             !isNotificationOpen,
                                         )
                                     }
-                                    className="text-body hover:bg-neutral-secondary-medium hover:text-heading relative rounded-lg p-2 transition-colors"
-                                    title="Notifikasi Operasional"
+                                    className="relative rounded-lg p-2 text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
+                                    aria-label="Pemberitahuan"
                                 >
-                                    <Bell className="h-4 w-4" />
-                                    <span className="absolute top-1.5 right-1.5 flex h-2 w-2">
-                                        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75" />
-                                        <span className="relative inline-flex h-2 w-2 rounded-full bg-red-500" />
-                                    </span>
+                                    <Bell className="size-4" />
+                                    <span className="absolute end-1.5 top-1.5 size-2 rounded-full bg-blue-700 ring-2 ring-white dark:bg-blue-400 dark:ring-slate-900" />
                                 </button>
 
                                 {isNotificationOpen && (
-                                    <div className="border-default absolute right-0 z-50 mt-2 w-80 animate-in rounded-xl border bg-white p-2.5 text-xs shadow-xl zoom-in-95 fade-in dark:bg-[#111c30]">
-                                        <div className="border-default text-heading mb-2 flex items-center justify-between border-b pb-2 font-semibold">
-                                            <span>Notifikasi Operasional</span>
-                                            <span className="text-fg-disabled text-[10px] font-normal">
-                                                3 baru
+                                    <div className="absolute right-0 z-50 mt-2 w-80 animate-in rounded-xl border border-slate-200 bg-white p-3 text-xs shadow-xl zoom-in-95 fade-in dark:border-slate-700 dark:bg-[#111c30]">
+                                        <div className="mb-2 flex items-center justify-between border-b border-slate-100 pb-2 dark:border-slate-800">
+                                            <span className="font-bold text-slate-900 dark:text-white">
+                                                Pemberitahuan Sistem
+                                            </span>
+                                            <span className="rounded bg-blue-50 px-1.5 py-0.5 text-[10px] font-semibold text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+                                                3 Baru
                                             </span>
                                         </div>
                                         <div className="space-y-1.5">
@@ -629,17 +646,19 @@ export default function FlowbiteTanggapinLayout({
                                                 onClick={() =>
                                                     setIsNotificationOpen(false)
                                                 }
-                                                className="hover:bg-neutral-secondary-soft hover:border-default block cursor-pointer rounded-lg border border-transparent p-2 transition-colors"
+                                                className="block cursor-pointer rounded-lg border border-transparent p-2 transition-colors hover:bg-slate-50 dark:hover:bg-slate-800/60"
                                             >
-                                                <div className="flex items-center gap-1.5 text-[11px] font-semibold text-red-600">
-                                                    <AlertTriangle className="size-3" />
+                                                <div className="flex items-center gap-1.5 text-[11px] font-semibold text-slate-900 dark:text-white">
+                                                    <AlertTriangle className="size-3 text-blue-700 dark:text-blue-400" />
                                                     <span>
-                                                        Early Warning: Brian
-                                                        Aditya (XI RPL 2)
+                                                        Sinyal Absensi Kritis
+                                                    </span>
+                                                    <span className="ms-auto text-[10px] text-slate-400">
+                                                        10m lalu
                                                     </span>
                                                 </div>
-                                                <p className="text-body mt-0.5 text-[11px] leading-snug">
-                                                    Kehadiran turun 28% dalam 14
+                                                <p className="mt-1 text-[11px] text-slate-600 dark:text-slate-300">
+                                                    Brian Aditya tidak hadir 4
                                                     hari terakhir. Perlu
                                                     follow-up wali kelas.
                                                 </p>
@@ -649,17 +668,17 @@ export default function FlowbiteTanggapinLayout({
                                                 onClick={() =>
                                                     setIsNotificationOpen(false)
                                                 }
-                                                className="hover:bg-neutral-secondary-soft hover:border-default block cursor-pointer rounded-lg border border-transparent p-2 transition-colors"
+                                                className="block cursor-pointer rounded-lg border border-transparent p-2 transition-colors hover:bg-slate-50 dark:hover:bg-slate-800/60"
                                             >
-                                                <div className="flex items-center gap-1.5 text-[11px] font-semibold text-amber-600">
-                                                    <ShieldAlert className="size-3" />
-                                                    <span>
-                                                        Kasus CS-2025-089
-                                                        Menunggu Verifikasi
+                                                <div className="flex items-center gap-1.5 text-[11px] font-semibold text-slate-900 dark:text-white">
+                                                    <ShieldAlert className="size-3 text-blue-700 dark:text-blue-400" />
+                                                    <span>Kasus Selesai</span>
+                                                    <span className="ms-auto text-[10px] text-slate-400">
+                                                        1j lalu
                                                     </span>
                                                 </div>
-                                                <p className="text-body mt-0.5 text-[11px] leading-snug">
-                                                    Rian Pratama telah
+                                                <p className="mt-1 text-[11px] text-slate-600 dark:text-slate-300">
+                                                    Kasus KS-2025-003 telah
                                                     menyelesaikan konseling sesi
                                                     2 bersama Guru BK.
                                                 </p>
@@ -669,17 +688,17 @@ export default function FlowbiteTanggapinLayout({
                                                 onClick={() =>
                                                     setIsNotificationOpen(false)
                                                 }
-                                                className="hover:bg-neutral-secondary-soft hover:border-default block cursor-pointer rounded-lg border border-transparent p-2 transition-colors"
+                                                className="block cursor-pointer rounded-lg border border-transparent p-2 transition-colors hover:bg-slate-50 dark:hover:bg-slate-800/60"
                                             >
-                                                <div className="flex items-center gap-1.5 text-[11px] font-semibold text-blue-600">
-                                                    <CheckCircle2 className="size-3" />
-                                                    <span>
-                                                        Cek Data Dapodik: 7
-                                                        Anomali
+                                                <div className="flex items-center gap-1.5 text-[11px] font-semibold text-slate-900 dark:text-white">
+                                                    <CheckCircle2 className="size-3 text-blue-700 dark:text-blue-400" />
+                                                    <span>Residu Dapodik</span>
+                                                    <span className="ms-auto text-[10px] text-slate-400">
+                                                        3j lalu
                                                     </span>
                                                 </div>
-                                                <p className="text-body mt-0.5 text-[11px] leading-snug">
-                                                    SK penugasan guru
+                                                <p className="mt-1 text-[11px] text-slate-600 dark:text-slate-300">
+                                                    7 anomali data siswa
                                                     membutuhkan perbaikan
                                                     sebelum jadwal cut-off.
                                                 </p>
@@ -689,7 +708,7 @@ export default function FlowbiteTanggapinLayout({
                                 )}
                             </div>
 
-                            {/* Appearance Toggle */}
+                            {/* Dark/Light Mode Toggle */}
                             <button
                                 type="button"
                                 onClick={() =>
@@ -699,115 +718,94 @@ export default function FlowbiteTanggapinLayout({
                                             : 'dark',
                                     )
                                 }
-                                className="rounded-base bg-neutral-secondary-soft hover:bg-neutral-secondary-medium text-heading border-default inline-flex items-center gap-1.5 border px-2.5 py-1.5 text-xs font-semibold shadow-2xs transition-colors"
-                                title={
-                                    resolvedAppearance === 'dark'
-                                        ? 'Beralih ke Mode Terang'
-                                        : 'Beralih ke Mode Gelap'
-                                }
+                                className="rounded-lg p-2 text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
+                                aria-label="Ganti Tema Tampilan"
                             >
                                 {resolvedAppearance === 'dark' ? (
-                                    <>
-                                        <Sun className="h-3.5 w-3.5 shrink-0 text-amber-400" />
-                                        <span className="hidden sm:inline">
-                                            Terang
-                                        </span>
-                                    </>
+                                    <Sun className="size-4 text-amber-400" />
                                 ) : (
-                                    <>
-                                        <Moon className="h-3.5 w-3.5 shrink-0 text-slate-700 dark:text-slate-300" />
-                                        <span className="hidden sm:inline">
-                                            Gelap
-                                        </span>
-                                    </>
+                                    <Moon className="size-4 text-slate-600" />
                                 )}
                             </button>
 
                             {/* User Profile Menu */}
-                            <div
-                                className="relative ms-1 flex items-center"
-                                ref={userDropdownRef}
-                            >
+                            <div className="relative" ref={userDropdownRef}>
                                 <button
                                     type="button"
                                     onClick={() =>
                                         setIsUserMenuOpen(!isUserMenuOpen)
                                     }
-                                    className="hover:bg-neutral-secondary-medium flex items-center gap-2 rounded-lg p-1 transition-colors"
-                                    aria-expanded={isUserMenuOpen}
+                                    className="flex items-center gap-2 rounded-full ring-2 ring-slate-200 transition-all hover:ring-blue-600 dark:ring-slate-700"
+                                    aria-label="Menu Pengguna"
                                 >
-                                    <div className="flex size-8 items-center justify-center rounded-full border border-blue-300 bg-blue-100 text-xs font-bold text-blue-700 shadow-xs dark:border-blue-800 dark:bg-blue-950 dark:text-blue-300">
-                                        {(auth?.user?.name || 'NS')
-                                            .split(' ')
-                                            .map((n) => n[0])
-                                            .slice(0, 2)
-                                            .join('')}
-                                    </div>
-                                    <ChevronDown className="text-fg-disabled hidden h-3 w-3 sm:block" />
+                                    <img
+                                        className="size-7.5 rounded-full object-cover"
+                                        src={activeRoleConfig.avatar}
+                                        alt={activeRoleConfig.userName}
+                                    />
                                 </button>
 
                                 {isUserMenuOpen && (
-                                    <div className="border-default absolute top-11 right-0 z-50 w-60 animate-in rounded-xl border bg-white py-1.5 shadow-xl zoom-in-95 fade-in dark:bg-[#111c30]">
-                                        <div className="border-default border-b px-4 py-2.5">
-                                            <p className="text-heading truncate text-xs font-bold">
-                                                {auth?.user?.name ||
-                                                    'Neil Sims'}
+                                    <div className="absolute right-0 z-50 mt-2 w-56 animate-in rounded-xl border border-slate-200 bg-white py-1.5 text-xs shadow-xl zoom-in-95 fade-in dark:border-slate-700 dark:bg-[#111c30]">
+                                        <div className="border-b border-slate-100 px-3 py-2 dark:border-slate-800">
+                                            <p className="font-bold text-slate-900 dark:text-white">
+                                                {activeRoleConfig.userName}
                                             </p>
-                                            <p className="text-body truncate text-[11px]">
-                                                {auth?.user?.email ||
-                                                    'neil.sims@tanggapin.sch.id'}
+                                            <p className="truncate text-[11px] text-slate-500">
+                                                {activeRoleConfig.userEmail}
                                             </p>
                                             <div className="mt-1.5 inline-block rounded border border-blue-200 bg-blue-50 px-2 py-0.5 text-[10px] font-semibold text-blue-700 dark:border-blue-800 dark:bg-blue-950 dark:text-blue-300">
-                                                Peran:{' '}
-                                                {roleLabels[activeRole]?.title}
+                                                Peran: {activeRoleConfig.title}
                                             </div>
                                         </div>
-                                        <ul className="text-body space-y-0.5 p-1.5 text-xs font-medium">
+                                        <ul className="space-y-0.5 p-1.5 text-xs font-medium text-slate-700 dark:text-slate-300">
                                             <li>
                                                 <Link
                                                     href="/dashboard"
                                                     onClick={() =>
                                                         setIsUserMenuOpen(false)
                                                     }
-                                                    className="hover:bg-neutral-tertiary hover:text-heading inline-flex w-full items-center rounded-lg p-2 transition-colors"
+                                                    className="inline-flex w-full items-center rounded-lg p-2 transition-colors hover:bg-slate-100 dark:hover:bg-slate-800"
                                                 >
-                                                    <Home className="text-fg-disabled me-2 h-3.5 w-3.5" />
-                                                    Dashboard Tanggapin
+                                                    <Home className="me-2 size-3.5 text-slate-400" />
+                                                    <span>Dashboard Utama</span>
                                                 </Link>
                                             </li>
                                             <li>
                                                 <Link
                                                     href="/settings/profile"
-                                                    className="hover:bg-neutral-tertiary hover:text-heading inline-flex w-full items-center rounded-lg p-2 transition-colors"
                                                     onClick={() =>
                                                         setIsUserMenuOpen(false)
                                                     }
+                                                    className="inline-flex w-full items-center rounded-lg p-2 transition-colors hover:bg-slate-100 dark:hover:bg-slate-800"
                                                 >
-                                                    <Settings className="text-fg-disabled me-2 h-3.5 w-3.5" />
-                                                    Pengaturan Profil
+                                                    <User className="me-2 size-3.5 text-slate-400" />
+                                                    <span>Profil Akun</span>
                                                 </Link>
                                             </li>
                                             <li>
                                                 <Link
-                                                    href="/settings/security"
-                                                    className="hover:bg-neutral-tertiary hover:text-heading inline-flex w-full items-center rounded-lg p-2 transition-colors"
+                                                    href="/settings/appearance"
                                                     onClick={() =>
                                                         setIsUserMenuOpen(false)
                                                     }
+                                                    className="inline-flex w-full items-center rounded-lg p-2 transition-colors hover:bg-slate-100 dark:hover:bg-slate-800"
                                                 >
-                                                    <Shield className="text-fg-disabled me-2 h-3.5 w-3.5" />
-                                                    Keamanan Akun
+                                                    <Settings className="me-2 size-3.5 text-slate-400" />
+                                                    <span>
+                                                        Pengaturan Tampilan
+                                                    </span>
                                                 </Link>
                                             </li>
-                                            <li className="border-default mt-1 border-t pt-1">
+                                            <li className="border-t border-slate-100 pt-1 dark:border-slate-800">
                                                 <Link
                                                     href="/logout"
                                                     method="post"
                                                     as="button"
-                                                    className="inline-flex w-full items-center rounded-lg p-2 text-red-600 transition-colors hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-950/50"
+                                                    className="inline-flex w-full items-center rounded-lg p-2 text-slate-600 transition-colors hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
                                                 >
-                                                    <LogOut className="me-2 h-3.5 w-3.5" />
-                                                    Keluar Akun
+                                                    <LogOut className="me-2 size-3.5 text-slate-400" />
+                                                    <span>Keluar Sistem</span>
                                                 </Link>
                                             </li>
                                         </ul>
@@ -819,50 +817,58 @@ export default function FlowbiteTanggapinLayout({
                 </div>
             </nav>
 
-            {/* Mobile Sidebar Overlay Backdrop */}
+            {/* Mobile Sidebar Backdrop */}
             {isSidebarOpen && (
                 <div
                     onClick={() => setIsSidebarOpen(false)}
-                    className="fixed inset-0 z-40 bg-black/40 backdrop-blur-xs transition-opacity sm:hidden"
-                    aria-hidden="true"
+                    className="fixed inset-0 z-30 bg-slate-900/50 backdrop-blur-xs sm:hidden"
                 />
             )}
 
-            {/* Sidebar with Professional Educational Grouping (PRD Section 17) */}
+            {/* Sidebar Navigation */}
             <aside
                 className={cn(
-                    'border-default fixed top-0 left-0 z-40 h-full w-64 border-e bg-white pt-16 transition-transform sm:translate-x-0 dark:bg-[#0b1120]',
+                    'fixed top-0 left-0 z-40 h-full w-64 border-e border-slate-200 bg-white pt-16 transition-transform sm:translate-x-0 dark:border-slate-800 dark:bg-[#0b1120]',
                     isSidebarOpen ? 'translate-x-0' : '-translate-x-full',
                 )}
-                aria-label="Sidebar"
+                aria-label="Sidemenu"
             >
-                <div className="flex h-full flex-col justify-between overflow-y-auto px-3 py-3">
-                    <div>
-                        {/* School Context Card */}
-                        <div className="bg-neutral-secondary-soft border-default mb-3 rounded-lg border p-2.5">
-                            <div className="flex items-center gap-2">
-                                <div className="flex size-8 items-center justify-center rounded-lg bg-blue-700 text-xs font-bold text-white shadow-xs">
+                <div className="flex h-full flex-col justify-between overflow-y-auto px-3 py-4">
+                    <div className="space-y-4">
+                        {/* School Identity Card */}
+                        <div className="rounded-xl border border-slate-200 bg-slate-50/80 p-3 dark:border-slate-800 dark:bg-[#111c30]">
+                            <div className="flex items-center gap-2.5">
+                                <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-blue-700 text-xs font-bold text-white shadow-2xs">
                                     SMK
                                 </div>
-                                <div className="leading-tight">
-                                    <div className="text-heading text-xs font-bold">
+                                <div className="min-w-0 flex-1">
+                                    <div className="truncate text-xs font-bold text-slate-900 dark:text-white">
                                         SMK Negeri 1 Harapan
                                     </div>
-                                    <div className="text-fg-disabled text-[10px]">
+                                    <div className="truncate text-[10px] text-slate-500">
                                         T.A. 2025/2026 • Ganjil
                                     </div>
                                 </div>
                             </div>
+                            <div className="mt-2 flex items-center justify-between border-t border-slate-200/60 pt-2 dark:border-slate-800">
+                                <span className="text-[10px] text-slate-500">
+                                    Peran Aktif:
+                                </span>
+                                <span className="rounded border border-blue-200 bg-blue-50 px-1.5 py-0.5 text-[10px] font-semibold text-blue-700 dark:border-blue-800 dark:bg-blue-950 dark:text-blue-300">
+                                    {activeRoleConfig.shortTitle} •{' '}
+                                    {activeRoleConfig.scopeBadge}
+                                </span>
+                            </div>
                         </div>
 
                         {/* Navigation Sections */}
-                        <div className="space-y-4">
-                            {navSections.map((sec) => (
+                        <ul className="space-y-4 font-medium">
+                            {visibleNavSections.map((sec) => (
                                 <div key={sec.section}>
-                                    <div className="text-fg-disabled px-2.5 pb-1 text-[10px] font-bold tracking-wider uppercase">
+                                    <div className="px-2.5 pb-1 text-[10px] font-bold tracking-wider text-slate-400 uppercase">
                                         {sec.section}
                                     </div>
-                                    <ul className="space-y-0.5">
+                                    <div className="space-y-0.5">
                                         {sec.items.map((item) => {
                                             const IconComponent = item.icon;
                                             const isActive =
@@ -884,26 +890,29 @@ export default function FlowbiteTanggapinLayout({
                                                         className={cn(
                                                             'flex w-full items-center rounded-lg px-2.5 py-1.5 text-left text-xs font-medium transition-all',
                                                             isActive
-                                                                ? 'bg-blue-50 font-semibold text-blue-700 shadow-xs dark:bg-blue-950/60 dark:text-blue-300'
-                                                                : 'text-body hover:bg-neutral-secondary-medium hover:text-heading',
+                                                                ? 'bg-blue-700 font-semibold text-white shadow-2xs'
+                                                                : 'text-slate-700 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white',
                                                         )}
                                                     >
                                                         <IconComponent
                                                             className={cn(
-                                                                'me-2.5 h-4 w-4 shrink-0 transition-colors',
+                                                                'size-4 shrink-0 transition-colors',
                                                                 isActive
-                                                                    ? 'text-blue-700 dark:text-blue-400'
-                                                                    : 'text-fg-disabled',
+                                                                    ? 'text-white'
+                                                                    : 'text-slate-500 dark:text-slate-400',
                                                             )}
                                                         />
-                                                        <span className="flex-1 truncate">
+                                                        <span className="ms-2.5 flex-1 truncate">
                                                             {item.title}
                                                         </span>
                                                         {item.badge && (
                                                             <span
                                                                 className={cn(
-                                                                    'py-0.2 inline-flex shrink-0 items-center justify-center rounded-md px-1.5 text-[10px] font-bold',
-                                                                    item.badgeColor,
+                                                                    'py-0.2 ms-2 rounded px-1.5 text-[10px] font-semibold',
+                                                                    isActive
+                                                                        ? 'bg-white/20 text-white'
+                                                                        : item.badgeColor ||
+                                                                              'border border-slate-200 bg-slate-100 text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300',
                                                                 )}
                                                             >
                                                                 {item.badge}
@@ -913,35 +922,28 @@ export default function FlowbiteTanggapinLayout({
                                                 </li>
                                             );
                                         })}
-                                    </ul>
+                                    </div>
                                 </div>
                             ))}
-                        </div>
+                        </ul>
                     </div>
 
-                    {/* Sidebar Footer Info */}
-                    <div className="border-default text-fg-disabled mt-4 border-t pt-3 text-[11px]">
-                        <div className="mb-1.5 flex items-center justify-between px-2">
-                            <span>Status Operasional</span>
-                            <span className="inline-flex items-center text-[10px] font-semibold text-emerald-600 dark:text-emerald-400">
-                                <span className="me-1.5 size-1.5 animate-pulse rounded-full bg-emerald-500" />
-                                Aktif & Sinkron
-                            </span>
+                    {/* Sidebar Footer Support Card */}
+                    <div className="mt-4 rounded-xl border border-slate-200 bg-slate-50/60 p-3 text-xs dark:border-slate-800 dark:bg-[#111c30]">
+                        <div className="flex items-center gap-2 font-bold text-slate-900 dark:text-white">
+                            <Shield className="size-3.5 text-blue-700 dark:text-blue-400" />
+                            <span>TANGGAPIN Core</span>
                         </div>
-                        <div className="bg-neutral-secondary-soft border-default text-body rounded-lg border p-2 text-[10px] leading-relaxed">
-                            <span className="text-heading block font-semibold">
-                                Alur Tanggapin:
-                            </span>
-                            <span className="text-slate-500">
-                                Sinyal → Tinjau → Tindak → Koordinasi → Hasil
-                            </span>
-                        </div>
+                        <p className="mt-1 text-[11px] text-slate-500">
+                            Sistem Informasi Terpadu Respons Cepat & Bimbingan
+                            Sekolah.
+                        </p>
                     </div>
                 </div>
             </aside>
 
-            {/* Main Content Area - Generous Breathing Spacing */}
-            <main className="mt-14 min-h-[calc(100vh-3.5rem)] p-4 sm:ml-64 sm:p-8">
+            {/* Main Content Area */}
+            <main className="mt-14 min-h-[calc(100vh-3.5rem)] p-4 sm:ml-64 sm:p-6 lg:p-8">
                 {children}
             </main>
         </div>
