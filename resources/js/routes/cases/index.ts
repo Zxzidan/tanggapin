@@ -59,7 +59,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
  * @see app/Http/Controllers/DashboardController.php:969
  * @route '/cases/{studentCase}/handle-bk'
  */
-export const handleBk = (args: { studentCase: string | number | { id: string | number } } | [studentCase: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+export const handleBk = (args: { studentCase: number | { id: number } } | [studentCase: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: handleBk.url(args, options),
     method: 'post',
 })
@@ -74,7 +74,7 @@ handleBk.definition = {
  * @see app/Http/Controllers/DashboardController.php:969
  * @route '/cases/{studentCase}/handle-bk'
  */
-handleBk.url = (args: { studentCase: string | number | { id: string | number } } | [studentCase: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+handleBk.url = (args: { studentCase: number | { id: number } } | [studentCase: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { studentCase: args }
     }
@@ -107,7 +107,7 @@ handleBk.url = (args: { studentCase: string | number | { id: string | number } }
  * @see app/Http/Controllers/DashboardController.php:969
  * @route '/cases/{studentCase}/handle-bk'
  */
-handleBk.post = (args: { studentCase: string | number | { id: string | number } } | [studentCase: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+handleBk.post = (args: { studentCase: number | { id: number } } | [studentCase: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: handleBk.url(args, options),
     method: 'post',
 })
@@ -117,7 +117,7 @@ handleBk.post = (args: { studentCase: string | number | { id: string | number } 
  * @see app/Http/Controllers/DashboardController.php:969
  * @route '/cases/{studentCase}/handle-bk'
  */
-    const handleBkForm = (args: { studentCase: string | number | { id: string | number } } | [studentCase: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const handleBkForm = (args: { studentCase: number | { id: number } } | [studentCase: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: handleBk.url(args, options),
         method: 'post',
     })
@@ -127,7 +127,7 @@ handleBk.post = (args: { studentCase: string | number | { id: string | number } 
  * @see app/Http/Controllers/DashboardController.php:969
  * @route '/cases/{studentCase}/handle-bk'
  */
-        handleBkForm.post = (args: { studentCase: string | number | { id: string | number } } | [studentCase: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        handleBkForm.post = (args: { studentCase: number | { id: number } } | [studentCase: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: handleBk.url(args, options),
             method: 'post',
         })

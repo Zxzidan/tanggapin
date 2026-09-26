@@ -59,7 +59,7 @@ generate.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
  * @see app/Http/Controllers/DashboardController.php:1222
  * @route '/student-reports/{report}/send'
  */
-export const send = (args: { report: string | number | { id: string | number } } | [report: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+export const send = (args: { report: number | { id: number } } | [report: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: send.url(args, options),
     method: 'post',
 })
@@ -74,7 +74,7 @@ send.definition = {
  * @see app/Http/Controllers/DashboardController.php:1222
  * @route '/student-reports/{report}/send'
  */
-send.url = (args: { report: string | number | { id: string | number } } | [report: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+send.url = (args: { report: number | { id: number } } | [report: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { report: args }
     }
@@ -107,7 +107,7 @@ send.url = (args: { report: string | number | { id: string | number } } | [repor
  * @see app/Http/Controllers/DashboardController.php:1222
  * @route '/student-reports/{report}/send'
  */
-send.post = (args: { report: string | number | { id: string | number } } | [report: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+send.post = (args: { report: number | { id: number } } | [report: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: send.url(args, options),
     method: 'post',
 })
@@ -117,7 +117,7 @@ send.post = (args: { report: string | number | { id: string | number } } | [repo
  * @see app/Http/Controllers/DashboardController.php:1222
  * @route '/student-reports/{report}/send'
  */
-    const sendForm = (args: { report: string | number | { id: string | number } } | [report: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const sendForm = (args: { report: number | { id: number } } | [report: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: send.url(args, options),
         method: 'post',
     })
@@ -127,7 +127,7 @@ send.post = (args: { report: string | number | { id: string | number } } | [repo
  * @see app/Http/Controllers/DashboardController.php:1222
  * @route '/student-reports/{report}/send'
  */
-        sendForm.post = (args: { report: string | number | { id: string | number } } | [report: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        sendForm.post = (args: { report: number | { id: number } } | [report: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: send.url(args, options),
             method: 'post',
         })
