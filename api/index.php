@@ -34,6 +34,10 @@ if (empty($_ENV['APP_MAINTENANCE_DRIVER']) && empty(getenv('APP_MAINTENANCE_DRIV
     putenv('APP_MAINTENANCE_DRIVER=array');
     $_ENV['APP_MAINTENANCE_DRIVER'] = 'array';
 }
+if (empty($_ENV['BCRYPT_ROUNDS']) || (int) $_ENV['BCRYPT_ROUNDS'] < 4 || (int) $_ENV['BCRYPT_ROUNDS'] > 31) {
+    putenv('BCRYPT_ROUNDS=12');
+    $_ENV['BCRYPT_ROUNDS'] = '12';
+}
 
 // Redirect storage and bootstrap caches to writable /tmp
 putenv('APP_STORAGE_PATH='.$storagePath);
