@@ -141,3 +141,114 @@
         @apply bg-background text-foreground;
     }
 }
+
+@layer utilities {
+    .bg-neutral-primary-soft {
+        background-color: #ffffff;
+    }
+    .dark .bg-neutral-primary-soft {
+        background-color: #111827;
+    }
+    .bg-neutral-primary-medium {
+        background-color: #ffffff;
+    }
+    .dark .bg-neutral-primary-medium {
+        background-color: #1f2937;
+    }
+    .bg-neutral-secondary-soft {
+        background-color: #f9fafb;
+    }
+    .dark .bg-neutral-secondary-soft {
+        background-color: #1f2937;
+    }
+    .bg-neutral-secondary-medium {
+        background-color: #f3f4f6;
+    }
+    .dark .bg-neutral-secondary-medium {
+        background-color: #374151;
+    }
+    .bg-neutral-tertiary {
+        background-color: #f3f4f6;
+    }
+    .dark .bg-neutral-tertiary {
+        background-color: #374151;
+    }
+    .bg-neutral-tertiary-medium {
+        background-color: #e5e7eb;
+    }
+    .dark .bg-neutral-tertiary-medium {
+        background-color: #4b5563;
+    }
+    .border-default {
+        border-color: #e5e7eb;
+    }
+    .dark .border-default {
+        border-color: #374151;
+    }
+    .border-default-medium {
+        border-color: #d1d5db;
+    }
+    .dark .border-default-medium {
+        border-color: #4b5563;
+    }
+    .text-heading {
+        color: #111827;
+    }
+    .dark .text-heading {
+        color: #f9fafb;
+    }
+    .text-body {
+        color: #4b5563;
+    }
+    .dark .text-body {
+        color: #9ca3af;
+    }
+    .text-fg-disabled {
+        color: #9ca3af;
+    }
+    .dark .text-fg-disabled {
+        color: #6b7280;
+    }
+    .text-fg-brand {
+        color: #2563eb;
+    }
+    .dark .text-fg-brand {
+        color: #60a5fa;
+    }
+    .hover\:text-fg-brand:hover {
+        color: #2563eb;
+    }
+    .dark .hover\:text-fg-brand:hover {
+        color: #60a5fa;
+    }
+    .group:hover .group-hover\:text-fg-brand {
+        color: #2563eb;
+    }
+    .dark .group:hover .group-hover\:text-fg-brand {
+        color: #60a5fa;
+    }
+    .text-fg-danger-strong {
+        color: #b91c1c;
+    }
+    .dark .text-fg-danger-strong {
+        color: #f87171;
+    }
+    .bg-danger-soft {
+        background-color: #fef2f2;
+    }
+    .dark .bg-danger-soft {
+        background-color: #450a0a;
+    }
+    .border-danger-subtle {
+        border-color: #fecaca;
+    }
+    .dark .border-danger-subtle {
+        border-color: #7f1d1d;
+    }
+    .rounded-base {
+        border-radius: 0.5rem;
+    }
+    .border-1 {
+        border-width: 1px;
+    }
+}
