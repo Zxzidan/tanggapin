@@ -1,6 +1,7 @@
 import { Head, Link, usePage } from '@inertiajs/react';
 import {
     ArrowRight,
+    ArrowUp,
     Building2,
     Calculator,
     Check,
@@ -33,6 +34,7 @@ import {
     Zap,
 } from 'lucide-react';
 import React, { useState, useEffect } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { toast } from 'sonner';
 import TanggapinLogo from '@/components/tanggapin-logo';
 import AuroraCharacterBackground from '@/components/aurora-character-background';
@@ -205,17 +207,47 @@ export default function Welcome() {
     const { auth } = usePage<{ auth: { user: { name: string } | null } }>()
         .props;
 
-    // Shrinking Sticky Header State (100px scroll threshold)
+    // Shrinking Sticky Header & Scroll-to-Top State
     const [isScrolled, setIsScrolled] = useState(false);
+    const [showScrollTop, setShowScrollTop] = useState(false);
 
     useEffect(() => {
         const handleScroll = () => {
-            setIsScrolled(window.scrollY > 100);
+            const scrollY = window.scrollY;
+            setIsScrolled(scrollY > 100);
+            setShowScrollTop(scrollY > 350);
         };
         handleScroll();
         window.addEventListener('scroll', handleScroll, { passive: true });
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
+
+    const scrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+        });
+    };
+
+    const handleSmoothScroll = (
+        e: React.MouseEvent<HTMLAnchorElement>,
+        targetId: string,
+    ) => {
+        e.preventDefault();
+        const id = targetId.replace('#', '');
+        const element = document.getElementById(id);
+        if (element) {
+            const headerOffset = 84;
+            const elementPosition = element.getBoundingClientRect().top;
+            const offsetPosition =
+                elementPosition + window.pageYOffset - headerOffset;
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth',
+            });
+        }
+        setIsMobileMenuOpen(false);
+    };
 
     const [isDemoRoleModalOpen, setIsDemoRoleModalOpen] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -403,30 +435,35 @@ Hotline Layanan BOS: +62 812-9988-7766
                         <nav className="hidden lg:flex items-center justify-center flex-1 mx-8 gap-8 text-[13px] font-semibold text-slate-600 dark:text-slate-300">
                             <a
                                 href="#fitur"
+                                onClick={(e) => handleSmoothScroll(e, '#fitur')}
                                 className="transition-colors hover:text-blue-700 dark:hover:text-blue-400"
                             >
                                 Alur Fitur
                             </a>
                             <a
                                 href="#preview"
+                                onClick={(e) => handleSmoothScroll(e, '#preview')}
                                 className="transition-colors hover:text-blue-700 dark:hover:text-blue-400"
                             >
                                 Simulasi
                             </a>
                             <a
                                 href="#peran"
+                                onClick={(e) => handleSmoothScroll(e, '#peran')}
                                 className="transition-colors hover:text-blue-700 dark:hover:text-blue-400"
                             >
                                 Pengguna
                             </a>
                             <a
                                 href="#perbandingan"
+                                onClick={(e) => handleSmoothScroll(e, '#perbandingan')}
                                 className="transition-colors hover:text-blue-700 dark:hover:text-blue-400"
                             >
                                 Perbandingan
                             </a>
                             <a
                                 href="#harga"
+                                onClick={(e) => handleSmoothScroll(e, '#harga')}
                                 className="flex items-center gap-1.5 rounded-full bg-blue-50/80 px-3 py-1 font-bold text-blue-700 transition-colors hover:bg-blue-100 dark:bg-blue-950/60 dark:text-blue-300 dark:hover:bg-blue-900/60"
                             >
                                 <Coins className="size-3.5" />
@@ -434,6 +471,7 @@ Hotline Layanan BOS: +62 812-9988-7766
                             </a>
                             <a
                                 href="#faq"
+                                onClick={(e) => handleSmoothScroll(e, '#faq')}
                                 className="transition-colors hover:text-blue-700 dark:hover:text-blue-400"
                             >
                                 FAQ BOS
@@ -499,7 +537,7 @@ Hotline Layanan BOS: +62 812-9988-7766
                             <nav className="flex flex-col gap-2.5 text-sm font-medium text-slate-700 dark:text-slate-200">
                                 <a
                                     href="#fitur"
-                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    onClick={(e) => handleSmoothScroll(e, '#fitur')}
                                     className="flex items-center justify-between rounded-xl px-3.5 py-2.5 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition-colors"
                                 >
                                     <span>Alur Fitur</span>
@@ -507,7 +545,7 @@ Hotline Layanan BOS: +62 812-9988-7766
                                 </a>
                                 <a
                                     href="#preview"
-                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    onClick={(e) => handleSmoothScroll(e, '#preview')}
                                     className="flex items-center justify-between rounded-xl px-3.5 py-2.5 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition-colors"
                                 >
                                     <span>Simulasi Dashboard</span>
@@ -515,7 +553,7 @@ Hotline Layanan BOS: +62 812-9988-7766
                                 </a>
                                 <a
                                     href="#peran"
-                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    onClick={(e) => handleSmoothScroll(e, '#peran')}
                                     className="flex items-center justify-between rounded-xl px-3.5 py-2.5 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition-colors"
                                 >
                                     <span>Pengguna & Peran</span>
@@ -523,7 +561,7 @@ Hotline Layanan BOS: +62 812-9988-7766
                                 </a>
                                 <a
                                     href="#perbandingan"
-                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    onClick={(e) => handleSmoothScroll(e, '#perbandingan')}
                                     className="flex items-center justify-between rounded-xl px-3.5 py-2.5 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition-colors"
                                 >
                                     <span>Perbandingan Tanggapin</span>
@@ -531,7 +569,7 @@ Hotline Layanan BOS: +62 812-9988-7766
                                 </a>
                                 <a
                                     href="#harga"
-                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    onClick={(e) => handleSmoothScroll(e, '#harga')}
                                     className="flex items-center justify-between rounded-xl bg-blue-50 px-3.5 py-2.5 font-bold text-blue-700 dark:bg-blue-950/60 dark:text-blue-300 transition-colors"
                                 >
                                     <span className="flex items-center gap-2">
@@ -542,7 +580,7 @@ Hotline Layanan BOS: +62 812-9988-7766
                                 </a>
                                 <a
                                     href="#faq"
-                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    onClick={(e) => handleSmoothScroll(e, '#faq')}
                                     className="flex items-center justify-between rounded-xl px-3.5 py-2.5 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition-colors"
                                 >
                                     <span>FAQ BOS Sekolah</span>
@@ -641,6 +679,7 @@ Hotline Layanan BOS: +62 812-9988-7766
                                 </button>
                                 <a
                                     href="#preview"
+                                    onClick={(e) => handleSmoothScroll(e, '#preview')}
                                     className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-3.5 text-xs font-semibold text-slate-800 shadow-xs transition-colors hover:bg-slate-50 sm:text-sm dark:border-slate-800 dark:bg-[#0f172a] dark:text-slate-200 dark:hover:bg-slate-800"
                                 >
                                     <Eye className="size-4 text-slate-500" />
@@ -648,6 +687,7 @@ Hotline Layanan BOS: +62 812-9988-7766
                                 </a>
                                 <a
                                     href="#harga"
+                                    onClick={(e) => handleSmoothScroll(e, '#harga')}
                                     className="inline-flex items-center gap-2 rounded-xl border border-blue-200 bg-blue-50/60 px-5 py-3.5 text-xs font-bold text-blue-700 shadow-xs transition-colors hover:bg-blue-100 sm:text-sm dark:border-blue-800 dark:bg-blue-950/40 dark:text-blue-300 dark:hover:bg-blue-900/40"
                                 >
                                     <Coins className="size-4 text-blue-700 dark:text-blue-400" />
@@ -677,7 +717,7 @@ Hotline Layanan BOS: +62 812-9988-7766
                     {/* 2. Feature Flow with AnimatedStepper Showcase & Bento Grid */}
                     <section
                         id="fitur"
-                        className="mx-auto max-w-7xl px-4 py-14 sm:py-16 sm:px-6 lg:px-8"
+                        className="mx-auto max-w-7xl px-4 py-14 sm:py-16 sm:px-6 lg:px-8 scroll-mt-24"
                     >
                         <div className="mx-auto mb-10 max-w-3xl text-center">
                             <span className="text-xs font-bold tracking-wider text-blue-700 uppercase dark:text-blue-400">
@@ -799,7 +839,7 @@ Hotline Layanan BOS: +62 812-9988-7766
                     {/* 3. Interactive Live Dashboard Video Simulation */}
                     <section
                         id="preview"
-                        className="border-y border-slate-200/80 bg-slate-50/50 backdrop-blur-xs py-14 sm:py-20 dark:border-slate-800/80 dark:bg-[#0b1120]"
+                        className="border-y border-slate-200/80 bg-slate-50/50 backdrop-blur-xs py-14 sm:py-20 dark:border-slate-800/80 dark:bg-[#0b1120] scroll-mt-24"
                     >
                         <DashboardVideoPreview
                             onExploreDemo={() => setIsDemoRoleModalOpen(true)}
@@ -809,7 +849,7 @@ Hotline Layanan BOS: +62 812-9988-7766
                     {/* 4. Target User Roles Section */}
                     <section
                         id="peran"
-                        className="mx-auto max-w-7xl px-4 py-14 sm:py-16 sm:px-6 lg:px-8"
+                        className="mx-auto max-w-7xl px-4 py-14 sm:py-16 sm:px-6 lg:px-8 scroll-mt-24"
                     >
                         <div className="mx-auto mb-10 sm:mb-12 max-w-3xl text-center">
                             <span className="text-xs font-bold tracking-wider text-blue-700 uppercase dark:text-blue-400">
@@ -856,7 +896,7 @@ Hotline Layanan BOS: +62 812-9988-7766
                     {/* 5. Editorial Comparison - The Tanggapin Difference */}
                     <section
                         id="perbandingan"
-                        className="border-y border-slate-200/80 bg-slate-50/50 backdrop-blur-xs py-14 sm:py-16 dark:border-slate-800/80 dark:bg-[#0b1120]"
+                        className="border-y border-slate-200/80 bg-slate-50/50 backdrop-blur-xs py-14 sm:py-16 dark:border-slate-800/80 dark:bg-[#0b1120] scroll-mt-24"
                     >
                         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                             <div className="mx-auto mb-10 sm:mb-12 max-w-3xl text-center">
@@ -995,7 +1035,7 @@ Hotline Layanan BOS: +62 812-9988-7766
                     {/* 8. FAQ Biaya & Pengadaan BOS Section */}
                     <section
                         id="faq"
-                        className="border-t border-slate-200/80 bg-slate-50/70 py-14 sm:py-16 dark:border-slate-800/80 dark:bg-[#0b1120]"
+                        className="border-t border-slate-200/80 bg-slate-50/70 py-14 sm:py-16 dark:border-slate-800/80 dark:bg-[#0b1120] scroll-mt-24"
                     >
                         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
                             <div className="mx-auto mb-10 text-center">
@@ -1017,35 +1057,59 @@ Hotline Layanan BOS: +62 812-9988-7766
                                 </p>
                             </div>
 
-                            {/* FAQ Accordion */}
+                            {/* FAQ Accordion with Fluid Motion Animation */}
                             <div className="space-y-3.5">
                                 {PRICING_FAQS.map((faq, index) => {
                                     const isOpen = faqOpenIndex === index;
                                     return (
-                                        <div
+                                        <motion.div
                                             key={index}
-                                            className="overflow-hidden rounded-xl border border-slate-200/80 bg-white transition-colors hover:border-slate-300 dark:border-slate-800 dark:bg-[#0f172a]"
+                                            layout
+                                            className={cn(
+                                                'overflow-hidden rounded-xl border bg-white transition-all duration-200 dark:bg-[#0f172a]',
+                                                isOpen
+                                                    ? 'border-blue-300 shadow-xs dark:border-blue-800/80'
+                                                    : 'border-slate-200/80 hover:border-slate-300 dark:border-slate-800 dark:hover:border-slate-700'
+                                            )}
                                         >
                                             <button
                                                 type="button"
                                                 onClick={() => setFaqOpenIndex(isOpen ? null : index)}
-                                                className="flex w-full items-center justify-between p-5 text-left text-xs font-bold text-slate-900 sm:text-sm dark:text-white"
+                                                className="flex w-full items-center justify-between p-5 text-left text-xs font-bold sm:text-sm cursor-pointer select-none"
                                             >
-                                                <span>{faq.q}</span>
-                                                <div className="ml-4 flex size-7 shrink-0 items-center justify-center rounded-lg bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-400">
-                                                    {isOpen ? (
-                                                        <ChevronUp className="size-4" />
-                                                    ) : (
-                                                        <ChevronDown className="size-4" />
+                                                <span className={cn('transition-colors', isOpen ? 'text-blue-700 dark:text-blue-400' : 'text-slate-900 dark:text-white')}>
+                                                    {faq.q}
+                                                </span>
+                                                <motion.div
+                                                    animate={{ rotate: isOpen ? 180 : 0 }}
+                                                    transition={{ duration: 0.25, ease: 'easeInOut' }}
+                                                    className={cn(
+                                                        'ml-4 flex size-7 shrink-0 items-center justify-center rounded-lg transition-colors',
+                                                        isOpen
+                                                            ? 'bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300'
+                                                            : 'bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-400'
                                                     )}
-                                                </div>
+                                                >
+                                                    <ChevronDown className="size-4" />
+                                                </motion.div>
                                             </button>
-                                            {isOpen && (
-                                                <div className="border-t border-slate-100 px-5 pt-3 pb-5 text-xs leading-relaxed text-slate-600 dark:border-slate-800/80 dark:text-slate-300">
-                                                    {faq.a}
-                                                </div>
-                                            )}
-                                        </div>
+                                            <AnimatePresence initial={false}>
+                                                {isOpen && (
+                                                    <motion.div
+                                                        key="content"
+                                                        initial={{ opacity: 0, height: 0 }}
+                                                        animate={{ opacity: 1, height: 'auto' }}
+                                                        exit={{ opacity: 0, height: 0 }}
+                                                        transition={{ duration: 0.28, ease: [0.04, 0.62, 0.23, 0.98] }}
+                                                        className="overflow-hidden border-t border-slate-100 dark:border-slate-800/80"
+                                                    >
+                                                        <div className="px-5 pt-3 pb-5 text-xs leading-relaxed text-slate-600 dark:text-slate-300">
+                                                            {faq.a}
+                                                        </div>
+                                                    </motion.div>
+                                                )}
+                                            </AnimatePresence>
+                                        </motion.div>
                                     );
                                 })}
                             </div>
@@ -1109,22 +1173,22 @@ Hotline Layanan BOS: +62 812-9988-7766
                                 </div>
                                 <ul className="space-y-2.5 text-xs text-slate-300">
                                     <li>
-                                        <a href="#fitur" className="hover:text-white transition-colors">Alur Fitur</a>
+                                        <a href="#fitur" onClick={(e) => handleSmoothScroll(e, '#fitur')} className="hover:text-white transition-colors">Alur Fitur</a>
                                     </li>
                                     <li>
-                                        <a href="#preview" className="hover:text-white transition-colors">Simulasi Interaktif</a>
+                                        <a href="#preview" onClick={(e) => handleSmoothScroll(e, '#preview')} className="hover:text-white transition-colors">Simulasi Interaktif</a>
                                     </li>
                                     <li>
-                                        <a href="#peran" className="hover:text-white transition-colors">Pengguna Sekolah</a>
+                                        <a href="#peran" onClick={(e) => handleSmoothScroll(e, '#peran')} className="hover:text-white transition-colors">Pengguna Sekolah</a>
                                     </li>
                                     <li>
-                                        <a href="#perbandingan" className="hover:text-white transition-colors">Perbandingan</a>
+                                        <a href="#perbandingan" onClick={(e) => handleSmoothScroll(e, '#perbandingan')} className="hover:text-white transition-colors">Perbandingan</a>
                                     </li>
                                     <li>
-                                        <a href="#harga" className="hover:text-white transition-colors">Biaya & Paket BOS</a>
+                                        <a href="#harga" onClick={(e) => handleSmoothScroll(e, '#harga')} className="hover:text-white transition-colors">Biaya & Paket BOS</a>
                                     </li>
                                     <li>
-                                        <a href="#faq" className="hover:text-white transition-colors">FAQ BOS</a>
+                                        <a href="#faq" onClick={(e) => handleSmoothScroll(e, '#faq')} className="hover:text-white transition-colors">FAQ BOS</a>
                                     </li>
                                 </ul>
                             </div>
@@ -1440,6 +1504,26 @@ Hotline Layanan BOS: +62 812-9988-7766
                         </div>
                     </div>
                 )}
+                {/* Floating Scroll-Up Button with Smooth Framer Motion Entrance */}
+                <AnimatePresence>
+                    {showScrollTop && (
+                        <motion.button
+                            type="button"
+                            onClick={scrollToTop}
+                            initial={{ opacity: 0, y: 16, scale: 0.85 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            exit={{ opacity: 0, y: 16, scale: 0.85 }}
+                            transition={{ duration: 0.22, ease: 'easeOut' }}
+                            whileHover={{ scale: 1.08 }}
+                            whileTap={{ scale: 0.92 }}
+                            aria-label="Kembali ke atas"
+                            title="Kembali ke atas"
+                            className="fixed bottom-6 right-6 z-40 flex size-11 items-center justify-center rounded-full border border-blue-200/90 bg-white/95 text-blue-700 shadow-lg backdrop-blur-md transition-colors hover:border-blue-600 hover:bg-blue-600 hover:text-white dark:border-blue-900/70 dark:bg-slate-900/95 dark:text-blue-400 dark:hover:border-blue-500 dark:hover:bg-blue-600 dark:hover:text-white cursor-pointer"
+                        >
+                            <ArrowUp className="size-5" />
+                        </motion.button>
+                    )}
+                </AnimatePresence>
             </div>
         </>
     );

@@ -263,7 +263,7 @@ export function MixpanelPricing({ onSelectPlan }: MixpanelPricingProps) {
   };
 
   return (
-    <section id="harga" className="relative w-full border-t border-slate-200/80 bg-slate-50/60 dark:border-slate-800/80 dark:bg-[#080d1a] py-14 sm:py-16 text-slate-900 dark:text-white font-sans transition-colors">
+    <section id="harga" className="relative w-full border-t border-slate-200/80 bg-slate-50/60 dark:border-slate-800/80 dark:bg-[#080d1a] py-14 sm:py-16 text-slate-900 dark:text-white font-sans transition-colors scroll-mt-24">
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12 sm:mb-14 max-w-3xl mx-auto">
