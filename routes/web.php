@@ -52,6 +52,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('komunikasi-ortu', [DashboardController::class, 'komunikasiOrtu'])->name('communication');
     Route::get('dapodik', [DashboardController::class, 'dapodik'])->name('dapodik');
     Route::get('pembayaran', [DashboardController::class, 'pembayaran'])->name('payments');
+    Route::get('analisis-keuangan', [DashboardController::class, 'analisisKeuangan'])->name('finance.ai');
+    Route::get('laporan-keuangan', [DashboardController::class, 'laporanKeuangan'])->name('finance.reports');
+    Route::get('reminder-spp', [DashboardController::class, 'reminderSpp'])->name('finance.reminder');
     Route::get('dokumen-guru', [DashboardController::class, 'dokumenGuru'])->name('documents');
     Route::get('respons-insiden', [DashboardController::class, 'responsInsiden'])->name('incidents');
     Route::get('rapor-siswa', [DashboardController::class, 'raporSiswa'])->name('reports');

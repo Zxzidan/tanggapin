@@ -122,17 +122,31 @@ export const ROLE_CONFIGS: Record<RoleType, RoleConfig> = {
         userEmail: 'bendahara@sekolah.sch.id',
         avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80',
         roleDesc:
-            'Akses sistem difokuskan khusus pada modul Keuangan & SPP: pencatatan kas masuk, verifikasi bukti transfer bank, dan rekonsiliasi tagihan siswa.',
-        allowedTabs: ['payments'],
+            'Akses sistem mencakup pengelolaan keuangan sekolah: pembayaran SPP, analisis AI arus kas, Buku Kas Umum (BKU), dan pengingat tagihan santun ke orang tua.',
+        allowedTabs: [
+            'payments',
+            'ai-finance',
+            'financial-reports',
+            'finance-reminder',
+        ],
         overviewTitle:
             'Pusat Kendali Keuangan Sekolah & Rekonsiliasi SPP',
         overviewSubtitle:
-            'Bendahara Sekolah • Pengelolaan Kas, Verifikasi Pembayaran & Rekapitulasi SPP.',
+            'Bendahara Sekolah • Pengelolaan Kas, Analisis AI Finansial & Rekapitulasi SPP.',
         overviewPrinciple:
-            'Prinsip Keuangan: Pantau Jatuh Tempo → Verifikasi Bukti Bayar → Rekonsiliasi Kas Masuk → Catat Pembukuan.',
+            'Prinsip Keuangan: Pantau Jatuh Tempo → Analisis AI Arus Kas → Rekonsiliasi Kas Masuk → Pembukuan BKU.',
         tabOverrides: {
             payments: {
                 title: 'Pembayaran & SPP',
+            },
+            'ai-finance': {
+                title: 'AI Analisis Finansial',
+            },
+            'financial-reports': {
+                title: 'Buku Kas & Laporan',
+            },
+            'finance-reminder': {
+                title: 'Reminder Tagihan Ortu',
             },
         },
     },

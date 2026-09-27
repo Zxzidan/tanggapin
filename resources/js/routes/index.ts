@@ -1063,7 +1063,7 @@ payments.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     payments.form = paymentsForm
 /**
 * @see \App\Http\Controllers\DashboardController::documents
- * @see app/Http/Controllers/DashboardController.php:508
+ * @see app/Http/Controllers/DashboardController.php:580
  * @route '/dokumen-guru'
  */
 export const documents = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -1078,7 +1078,7 @@ documents.definition = {
 
 /**
 * @see \App\Http\Controllers\DashboardController::documents
- * @see app/Http/Controllers/DashboardController.php:508
+ * @see app/Http/Controllers/DashboardController.php:580
  * @route '/dokumen-guru'
  */
 documents.url = (options?: RouteQueryOptions) => {
@@ -1087,7 +1087,7 @@ documents.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\DashboardController::documents
- * @see app/Http/Controllers/DashboardController.php:508
+ * @see app/Http/Controllers/DashboardController.php:580
  * @route '/dokumen-guru'
  */
 documents.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -1096,7 +1096,7 @@ documents.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\DashboardController::documents
- * @see app/Http/Controllers/DashboardController.php:508
+ * @see app/Http/Controllers/DashboardController.php:580
  * @route '/dokumen-guru'
  */
 documents.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -1106,7 +1106,7 @@ documents.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\DashboardController::documents
- * @see app/Http/Controllers/DashboardController.php:508
+ * @see app/Http/Controllers/DashboardController.php:580
  * @route '/dokumen-guru'
  */
     const documentsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -1116,7 +1116,7 @@ documents.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\DashboardController::documents
- * @see app/Http/Controllers/DashboardController.php:508
+ * @see app/Http/Controllers/DashboardController.php:580
  * @route '/dokumen-guru'
  */
         documentsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -1125,7 +1125,7 @@ documents.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\DashboardController::documents
- * @see app/Http/Controllers/DashboardController.php:508
+ * @see app/Http/Controllers/DashboardController.php:580
  * @route '/dokumen-guru'
  */
         documentsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -1141,7 +1141,7 @@ documents.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     documents.form = documentsForm
 /**
 * @see \App\Http\Controllers\DashboardController::incidents
- * @see app/Http/Controllers/DashboardController.php:526
+ * @see app/Http/Controllers/DashboardController.php:598
  * @route '/respons-insiden'
  */
 export const incidents = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -1156,7 +1156,7 @@ incidents.definition = {
 
 /**
 * @see \App\Http\Controllers\DashboardController::incidents
- * @see app/Http/Controllers/DashboardController.php:526
+ * @see app/Http/Controllers/DashboardController.php:598
  * @route '/respons-insiden'
  */
 incidents.url = (options?: RouteQueryOptions) => {
@@ -1165,7 +1165,7 @@ incidents.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\DashboardController::incidents
- * @see app/Http/Controllers/DashboardController.php:526
+ * @see app/Http/Controllers/DashboardController.php:598
  * @route '/respons-insiden'
  */
 incidents.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -1174,7 +1174,7 @@ incidents.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\DashboardController::incidents
- * @see app/Http/Controllers/DashboardController.php:526
+ * @see app/Http/Controllers/DashboardController.php:598
  * @route '/respons-insiden'
  */
 incidents.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -1184,7 +1184,7 @@ incidents.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\DashboardController::incidents
- * @see app/Http/Controllers/DashboardController.php:526
+ * @see app/Http/Controllers/DashboardController.php:598
  * @route '/respons-insiden'
  */
     const incidentsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -1194,7 +1194,7 @@ incidents.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\DashboardController::incidents
- * @see app/Http/Controllers/DashboardController.php:526
+ * @see app/Http/Controllers/DashboardController.php:598
  * @route '/respons-insiden'
  */
         incidentsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -1203,7 +1203,7 @@ incidents.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\DashboardController::incidents
- * @see app/Http/Controllers/DashboardController.php:526
+ * @see app/Http/Controllers/DashboardController.php:598
  * @route '/respons-insiden'
  */
         incidentsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -1219,7 +1219,7 @@ incidents.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     incidents.form = incidentsForm
 /**
 * @see \App\Http\Controllers\DashboardController::reports
- * @see app/Http/Controllers/DashboardController.php:544
+ * @see app/Http/Controllers/DashboardController.php:616
  * @route '/rapor-siswa'
  */
 export const reports = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -1234,7 +1234,7 @@ reports.definition = {
 
 /**
 * @see \App\Http\Controllers\DashboardController::reports
- * @see app/Http/Controllers/DashboardController.php:544
+ * @see app/Http/Controllers/DashboardController.php:616
  * @route '/rapor-siswa'
  */
 reports.url = (options?: RouteQueryOptions) => {
@@ -1243,7 +1243,7 @@ reports.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\DashboardController::reports
- * @see app/Http/Controllers/DashboardController.php:544
+ * @see app/Http/Controllers/DashboardController.php:616
  * @route '/rapor-siswa'
  */
 reports.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -1252,7 +1252,7 @@ reports.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\DashboardController::reports
- * @see app/Http/Controllers/DashboardController.php:544
+ * @see app/Http/Controllers/DashboardController.php:616
  * @route '/rapor-siswa'
  */
 reports.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -1262,7 +1262,7 @@ reports.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\DashboardController::reports
- * @see app/Http/Controllers/DashboardController.php:544
+ * @see app/Http/Controllers/DashboardController.php:616
  * @route '/rapor-siswa'
  */
     const reportsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -1272,7 +1272,7 @@ reports.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\DashboardController::reports
- * @see app/Http/Controllers/DashboardController.php:544
+ * @see app/Http/Controllers/DashboardController.php:616
  * @route '/rapor-siswa'
  */
         reportsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -1281,7 +1281,7 @@ reports.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\DashboardController::reports
- * @see app/Http/Controllers/DashboardController.php:544
+ * @see app/Http/Controllers/DashboardController.php:616
  * @route '/rapor-siswa'
  */
         reportsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

@@ -503,6 +503,78 @@ class DashboardController extends Controller
     }
 
     /**
+     * Modul Bendahara: Analisis Finansial & Prediksi Arus Kas Berbasis AI
+     */
+    public function analisisKeuangan(): Response|RedirectResponse
+    {
+        if (auth()->user()?->role === 'kepala_sekolah') {
+            return redirect()->route('dashboard')->with('status', 'Role Kepala Sekolah difokuskan pada Dashboard Monitoring Eksekutif Sekolah.');
+        }
+
+        $payments = $this->getPayments();
+        $classes = $this->getClasses();
+        $students = Student::with('schoolClass')->orderBy('name')->get(['id', 'name', 'nisn', 'parent_name', 'parent_phone', 'attendance_rate', 'risk_level', 'school_class_id'])->map(fn ($s) => [
+            'id' => (string) $s->id,
+            'name' => $s->name,
+            'nisn' => $s->nisn,
+            'className' => $s->schoolClass?->name ?? '-',
+            'parentName' => $s->parent_name ?? 'Wali Murid',
+            'parentPhone' => $s->parent_phone ?? '-',
+            'attendanceRate' => (int) $s->attendance_rate,
+            'riskLevel' => $s->risk_level,
+        ])->toArray();
+
+        return Inertia::render('analisis-keuangan', [
+            'paymentList' => $payments,
+            'classes' => $classes,
+            'students' => $students,
+            'stats' => $this->getStats(),
+        ]);
+    }
+
+    /**
+     * Modul Bendahara: Buku Kas Umum (BKU) & Laporan Pertanggungjawaban Keuangan
+     */
+    public function laporanKeuangan(): Response|RedirectResponse
+    {
+        if (auth()->user()?->role === 'kepala_sekolah') {
+            return redirect()->route('dashboard')->with('status', 'Role Kepala Sekolah difokuskan pada Dashboard Monitoring Eksekutif Sekolah.');
+        }
+
+        return Inertia::render('laporan-keuangan', [
+            'paymentList' => $this->getPayments(),
+            'classes' => $this->getClasses(),
+            'stats' => $this->getStats(),
+        ]);
+    }
+
+    /**
+     * Modul Bendahara: Pengingat Tagihan SPP & Koordinasi Komunikasi Ortu
+     */
+    public function reminderSpp(): Response|RedirectResponse
+    {
+        if (auth()->user()?->role === 'kepala_sekolah') {
+            return redirect()->route('dashboard')->with('status', 'Role Kepala Sekolah difokuskan pada Dashboard Monitoring Eksekutif Sekolah.');
+        }
+
+        $students = Student::with('schoolClass')->orderBy('name')->get(['id', 'name', 'nisn', 'parent_name', 'parent_phone', 'attendance_rate', 'risk_level', 'school_class_id'])->map(fn ($s) => [
+            'id' => (string) $s->id,
+            'name' => $s->name,
+            'nisn' => $s->nisn,
+            'className' => $s->schoolClass?->name ?? '-',
+            'parentName' => $s->parent_name ?? 'Wali Murid',
+            'parentPhone' => $s->parent_phone ?? '-',
+            'attendanceRate' => (int) $s->attendance_rate,
+            'riskLevel' => $s->risk_level,
+        ])->toArray();
+
+        return Inertia::render('reminder-spp', [
+            'paymentList' => $this->getPayments(),
+            'students' => $students,
+        ]);
+    }
+
+    /**
      * Modul 08: Dokumen Guru (Kelengkapan Administrasi & Portofolio)
      */
     public function dokumenGuru(): Response|RedirectResponse

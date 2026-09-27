@@ -242,9 +242,27 @@ export default function FlowbiteTanggapinLayout({
                 },
                 {
                     id: 'payments',
-                    title: 'Keuangan SPP',
+                    title: 'Pembayaran & SPP',
                     icon: WalletCards,
                     href: '/pembayaran',
+                },
+                {
+                    id: 'ai-finance',
+                    title: 'AI Analisis Finansial',
+                    icon: Sparkles,
+                    href: '/analisis-keuangan',
+                },
+                {
+                    id: 'financial-reports',
+                    title: 'Buku Kas & Laporan',
+                    icon: BarChart3,
+                    href: '/laporan-keuangan',
+                },
+                {
+                    id: 'finance-reminder',
+                    title: 'Reminder Tagihan Ortu',
+                    icon: PhoneCall,
+                    href: '/reminder-spp',
                 },
                 {
                     id: 'documents',
@@ -534,30 +552,38 @@ export default function FlowbiteTanggapinLayout({
 
                                 {isQuickActionOpen && (
                                     activeRoleConfig.id === 'bendahara' ? (
-                                        <div className="absolute right-0 z-50 mt-2 w-56 animate-in rounded-xl border border-slate-200 bg-white py-1 text-xs shadow-xl zoom-in-95 fade-in dark:border-slate-700 dark:bg-[#111c30]">
+                                        <div className="absolute right-0 z-50 mt-2 w-60 animate-in rounded-xl border border-slate-200 bg-white py-1 text-xs shadow-xl zoom-in-95 fade-in dark:border-slate-700 dark:bg-[#111c30]">
                                             <Link
                                                 href="/pembayaran"
                                                 onClick={() => setIsQuickActionOpen(false)}
                                                 className="flex w-full items-center gap-2 px-3 py-2 text-left text-slate-700 transition-colors hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
                                             >
                                                 <WalletCards className="size-3.5 text-blue-700 dark:text-blue-400" />
-                                                <span>Rekonsiliasi Kas & SPP</span>
+                                                <span>Pembayaran & SPP</span>
                                             </Link>
                                             <Link
-                                                href="/pembayaran"
+                                                href="/analisis-keuangan"
                                                 onClick={() => setIsQuickActionOpen(false)}
                                                 className="flex w-full items-center gap-2 px-3 py-2 text-left text-slate-700 transition-colors hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
                                             >
-                                                <CheckCircle2 className="size-3.5 text-blue-700 dark:text-blue-400" />
-                                                <span>Verifikasi Bukti Transfer</span>
+                                                <Sparkles className="size-3.5 text-blue-700 dark:text-blue-400" />
+                                                <span>AI Analisis & Prediksi Kas</span>
                                             </Link>
                                             <Link
-                                                href="/pembayaran"
+                                                href="/laporan-keuangan"
                                                 onClick={() => setIsQuickActionOpen(false)}
                                                 className="flex w-full items-center gap-2 px-3 py-2 text-left text-slate-700 transition-colors hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
                                             >
-                                                <Clock className="size-3.5 text-slate-500" />
-                                                <span>Pantau Tagihan Terlambat</span>
+                                                <BarChart3 className="size-3.5 text-blue-700 dark:text-blue-400" />
+                                                <span>Buku Kas & Laporan (BKU)</span>
+                                            </Link>
+                                            <Link
+                                                href="/reminder-spp"
+                                                onClick={() => setIsQuickActionOpen(false)}
+                                                className="flex w-full items-center gap-2 px-3 py-2 text-left text-slate-700 transition-colors hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
+                                            >
+                                                <PhoneCall className="size-3.5 text-slate-500" />
+                                                <span>Reminder Tagihan Ortu</span>
                                             </Link>
                                         </div>
                                     ) : activeRoleConfig.id === 'kepala_sekolah' ? (
