@@ -677,7 +677,7 @@ export default function FlowbiteTanggapinLayout({
                                                 onClick={() => setIsQuickActionOpen(false)}
                                                 className="flex w-full items-center gap-2 px-3 py-2 text-left text-slate-700 transition-colors hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
                                             >
-                                                <ShieldCheck className="size-3.5 text-emerald-600 dark:text-emerald-400" />
+                                                <ShieldCheck className="size-3.5 text-blue-600 dark:text-blue-400" />
                                                 <span>Pusat Persetujuan & Disposisi</span>
                                             </Link>
                                             <div className="my-1 border-t border-slate-200 dark:border-slate-800" />

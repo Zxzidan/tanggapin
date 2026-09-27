@@ -196,7 +196,7 @@ export default function LaporanKeuangan({
                                 Laporan Pertanggungjawaban & Rekonsiliasi Kas Sekolah
                             </span>
                             <span className="hidden text-slate-300 sm:inline dark:text-slate-700">•</span>
-                            <span className="text-xs font-medium text-emerald-600 dark:text-emerald-400">
+                            <span className="text-xs font-semibold text-blue-700 dark:text-blue-400">
                                 Status Pembukuan: Seimbang & Terverifikasi
                             </span>
                         </div>
@@ -238,7 +238,7 @@ export default function LaporanKeuangan({
                             <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-500">
                                 Penerimaan Kas Masuk
                             </span>
-                            <div className="rounded-lg bg-emerald-50 p-2 text-emerald-600 dark:bg-emerald-950/60 dark:text-emerald-400">
+                            <div className="rounded-lg bg-blue-50 p-2 text-blue-700 dark:bg-blue-950/60 dark:text-blue-300">
                                 <ArrowDownLeft className="size-4" />
                             </div>
                         </div>
@@ -247,7 +247,7 @@ export default function LaporanKeuangan({
                         </div>
                         <div className="mt-1 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
                             <span>SPP & Iuran Sekolah</span>
-                            <span className="text-emerald-600 dark:text-emerald-400 font-semibold">+100% Tercatat</span>
+                            <span className="text-blue-700 dark:text-blue-400 font-semibold">+100% Tercatat</span>
                         </div>
                     </div>
 
@@ -257,7 +257,7 @@ export default function LaporanKeuangan({
                             <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-500">
                                 Pengeluaran Operasional
                             </span>
-                            <div className="rounded-lg bg-rose-50 p-2 text-rose-600 dark:bg-rose-950/60 dark:text-rose-400">
+                            <div className="rounded-lg bg-slate-100 p-2 text-slate-600 dark:bg-slate-800 dark:text-slate-300">
                                 <ArrowUpRight className="size-4" />
                             </div>
                         </div>
@@ -266,7 +266,7 @@ export default function LaporanKeuangan({
                         </div>
                         <div className="mt-1 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
                             <span>ATK, Listrik, Lab & Sarana</span>
-                            <span className="text-rose-600 dark:text-rose-400 font-semibold">Terdokumentasi</span>
+                            <span className="text-slate-600 dark:text-slate-400 font-semibold">Terdokumentasi</span>
                         </div>
                     </div>
 
@@ -356,12 +356,9 @@ export default function LaporanKeuangan({
                                             <td className="py-3 px-3.5">{cls.homeroomTeacher}</td>
                                             <td className="py-3 px-3.5 text-center font-semibold">{totalStudents}</td>
                                             <td className="py-3 px-3.5 text-right font-medium">{formatRupiah(target)}</td>
-                                            <td className="py-3 px-3.5 text-right font-bold text-emerald-600 dark:text-emerald-400">{formatRupiah(collected)}</td>
+                                            <td className="py-3 px-3.5 text-right font-bold text-slate-900 dark:text-white">{formatRupiah(collected)}</td>
                                             <td className="py-3 px-3.5 text-center">
-                                                <span className={cn(
-                                                    'inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-bold',
-                                                    percentage >= 90 ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300' : 'bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300'
-                                                )}>
+                                                <span className="inline-flex items-center rounded-full border border-blue-200 bg-blue-50 px-2 py-0.5 text-[10px] font-bold text-blue-700 dark:border-blue-900/60 dark:bg-blue-950 dark:text-blue-300">
                                                     {percentage}%
                                                 </span>
                                             </td>
@@ -451,10 +448,10 @@ export default function LaporanKeuangan({
                                                     {e.category}
                                                 </span>
                                             </td>
-                                            <td className="py-3 px-3.5 text-right font-bold text-emerald-600 dark:text-emerald-400">
+                                            <td className="py-3 px-3.5 text-right font-bold text-slate-900 dark:text-white">
                                                 {e.type === 'in' ? formatRupiah(e.amount) : '-'}
                                             </td>
-                                            <td className="py-3 px-3.5 text-right font-bold text-rose-600 dark:text-rose-400">
+                                            <td className="py-3 px-3.5 text-right font-semibold text-slate-600 dark:text-slate-400">
                                                 {e.type === 'out' ? formatRupiah(e.amount) : '-'}
                                             </td>
                                             <td className="py-3 px-3.5 font-mono text-[10px] text-slate-500">{e.receiptNo}</td>

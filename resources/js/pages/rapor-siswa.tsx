@@ -724,7 +724,7 @@ export default function RaporSiswa({
                                     </p>
                                     <div className="mt-2.5 flex items-center justify-between border-t border-slate-100 pt-2 text-xs text-slate-500 dark:border-slate-700/60 dark:text-slate-400">
                                         <span>Status Evaluasi TP:</span>
-                                        <span className="font-semibold text-emerald-600 dark:text-emerald-400">
+                                        <span className="font-semibold text-blue-600 dark:text-blue-400">
                                             {guruStats.tuntasRate}% Tuntas KKM
                                         </span>
                                     </div>
@@ -763,7 +763,7 @@ export default function RaporSiswa({
                             <div className="mt-2 text-2xl font-bold text-slate-900 dark:text-white">
                                 {guruStats.avgFinalScore} / 100
                             </div>
-                            <p className="mt-1 text-xs text-emerald-600 dark:text-emerald-400 font-medium">
+                            <p className="mt-1 text-xs text-blue-600 dark:text-blue-400 font-medium">
                                 Predikat B+ • Di atas batas KKM (75)
                             </p>
                         </div>
@@ -773,11 +773,11 @@ export default function RaporSiswa({
                                 <span className="text-xs font-medium text-slate-500 dark:text-slate-400">
                                     Ketuntasan KKM (≥ 75)
                                 </span>
-                                <div className="rounded-lg bg-emerald-50 p-2 text-emerald-600 dark:bg-emerald-950/60 dark:text-emerald-400">
+                                <div className="rounded-lg bg-blue-50 p-2 text-blue-600 dark:bg-blue-950/60 dark:text-blue-400">
                                     <CheckCircle2 className="size-5" />
                                 </div>
                             </div>
-                            <div className="mt-2 text-2xl font-bold text-emerald-600 dark:text-emerald-400">
+                            <div className="mt-2 text-2xl font-bold text-blue-600 dark:text-blue-400">
                                 {guruStats.tuntasRate}% Siswa
                             </div>
                             <p className="mt-1 text-xs text-slate-500">
@@ -807,11 +807,11 @@ export default function RaporSiswa({
                                 <span className="text-xs font-medium text-slate-500 dark:text-slate-400">
                                     Perlu Remedial / Bimbingan
                                 </span>
-                                <div className="rounded-lg bg-amber-50 p-2 text-amber-600 dark:bg-amber-950/60 dark:text-amber-400">
+                                <div className="rounded-lg bg-slate-50 p-2 text-slate-600 dark:bg-blue-950/60 dark:text-slate-400">
                                     <AlertCircle className="size-5" />
                                 </div>
                             </div>
-                            <div className="mt-2 text-2xl font-bold text-amber-600 dark:text-amber-400">
+                            <div className="mt-2 text-2xl font-bold text-slate-600 dark:text-slate-400">
                                 {guruStats.needRemedial} Siswa
                             </div>
                             <p className="mt-1 text-xs text-slate-500">
@@ -1015,10 +1015,10 @@ export default function RaporSiswa({
                                                                 className={cn(
                                                                     'inline-flex items-center rounded-md px-2 py-0.5 text-[10px] font-bold border',
                                                                     (assessment?.finalScore ?? 85) >= 88
-                                                                        ? 'border-emerald-200 bg-emerald-50 text-emerald-800 dark:border-emerald-900/60 dark:bg-emerald-950/60 dark:text-emerald-300'
+                                                                        ? 'border-blue-200 bg-blue-50 text-blue-800 dark:border-blue-900/60 dark:bg-blue-950/60 dark:text-blue-300'
                                                                         : (assessment?.finalScore ?? 85) >= 75
                                                                           ? 'border-blue-200 bg-blue-50 text-blue-800 dark:border-blue-900/60 dark:bg-blue-950/60 dark:text-blue-300'
-                                                                          : 'border-rose-200 bg-rose-50 text-rose-800 dark:border-rose-900/60 dark:bg-rose-950/60 dark:text-rose-300',
+                                                                          : 'border-slate-200 bg-slate-50 text-slate-800 dark:border-slate-900/60 dark:bg-slate-950/60 dark:text-slate-300',
                                                                 )}
                                                             >
                                                                 {assessment?.predicate ?? 'A'}
@@ -1049,10 +1049,10 @@ export default function RaporSiswa({
                                                                         className={cn(
                                                                             'rounded px-1.5 py-0.2 text-[10px] font-semibold shrink-0',
                                                                             tp.status === 'Tercapai Optimal'
-                                                                                ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300'
+                                                                                ? 'bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300'
                                                                                 : tp.status === 'Tercapai'
                                                                                   ? 'bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300'
-                                                                                  : 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300',
+                                                                                  : 'bg-slate-100 text-slate-800 dark:bg-blue-950 dark:text-slate-300',
                                                                         )}
                                                                     >
                                                                         {tp.score} ({tp.status})
@@ -1090,8 +1090,8 @@ export default function RaporSiswa({
                                                     <td className="px-5 py-4 max-w-xs">
                                                         <div className="space-y-1.5">
                                                             <div className="flex items-center gap-1.5">
-                                                                <span className="inline-flex items-center gap-1 rounded-md bg-indigo-50 border border-indigo-200 px-2 py-0.5 text-[10px] font-bold text-indigo-700 dark:border-indigo-900/60 dark:bg-indigo-950/60 dark:text-indigo-300">
-                                                                    <Sparkles className="size-3 text-indigo-600 dark:text-indigo-400" />
+                                                                <span className="inline-flex items-center gap-1 rounded-md bg-blue-50 border border-blue-200 px-2 py-0.5 text-[10px] font-bold text-blue-700 dark:border-blue-900/60 dark:bg-blue-950/60 dark:text-blue-300">
+                                                                    <Sparkles className="size-3 text-blue-600 dark:text-blue-400" />
                                                                     Kesiapan: {assessment?.aiAnalysis.readinessScore}%
                                                                 </span>
                                                                 <span className="text-[10px] text-slate-400">
@@ -1110,7 +1110,7 @@ export default function RaporSiswa({
                                                             <button
                                                                 type="button"
                                                                 onClick={() => handleOpenGradeInput(student)}
-                                                                className="inline-flex items-center gap-1.5 rounded-lg border border-emerald-300 bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-800 shadow-xs transition-colors hover:bg-emerald-100 dark:border-emerald-900 dark:bg-emerald-950/60 dark:text-emerald-300"
+                                                                className="inline-flex items-center gap-1.5 rounded-lg border border-blue-300 bg-blue-50 px-3 py-1.5 text-xs font-semibold text-blue-800 shadow-xs transition-colors hover:bg-blue-100 dark:border-blue-900 dark:bg-blue-950/60 dark:text-blue-300"
                                                             >
                                                                 <Edit3 className="size-3.5" />
                                                                 <span>Input Nilai</span>
@@ -1129,7 +1129,7 @@ export default function RaporSiswa({
                                                                 type="button"
                                                                 onClick={() => handleRunAiAnalysisForSubject(student)}
                                                                 disabled={isGenerating}
-                                                                className="inline-flex items-center gap-1 rounded-lg border border-indigo-200 bg-indigo-50 px-2.5 py-1.5 text-xs font-semibold text-indigo-700 transition-colors hover:bg-indigo-100 disabled:opacity-50 dark:border-indigo-900 dark:bg-indigo-950/60 dark:text-indigo-300"
+                                                                className="inline-flex items-center gap-1 rounded-lg border border-blue-200 bg-blue-50 px-2.5 py-1.5 text-xs font-semibold text-blue-700 transition-colors hover:bg-blue-100 disabled:opacity-50 dark:border-blue-900 dark:bg-blue-950/60 dark:text-blue-300"
                                                                 title="Perbarui Analisis AI Diferensiasi"
                                                             >
                                                                 {isGenerating ? (
@@ -1280,15 +1280,15 @@ export default function RaporSiswa({
                                                                 <div className="flex items-center gap-2">
                                                                     <span className={cn(
                                                                         'text-base font-extrabold',
-                                                                        (student.academicAverage ?? 0) >= 75 ? 'text-emerald-700 dark:text-emerald-400' : 'text-rose-700 dark:text-rose-400'
+                                                                        (student.academicAverage ?? 0) >= 75 ? 'text-blue-700 dark:text-blue-400' : 'text-slate-700 dark:text-slate-400'
                                                                     )}>
                                                                         {(student.academicAverage ?? 0).toFixed(1)}
                                                                     </span>
                                                                     <span className={cn(
                                                                         'rounded-full px-2 py-0.5 text-[10px] font-bold border',
                                                                         (student.failingSubjectCount ?? 0) === 0
-                                                                            ? 'border-emerald-200 bg-emerald-50 text-emerald-800 dark:border-emerald-900 dark:bg-emerald-950/60 dark:text-emerald-300'
-                                                                            : 'border-rose-200 bg-rose-50 text-rose-800 dark:border-rose-900 dark:bg-rose-950/60 dark:text-rose-300'
+                                                                            ? 'border-blue-200 bg-blue-50 text-blue-800 dark:border-blue-900 dark:bg-blue-950/60 dark:text-blue-300'
+                                                                            : 'border-slate-200 bg-slate-50 text-slate-800 dark:border-slate-900 dark:bg-slate-950/60 dark:text-slate-300'
                                                                     )}>
                                                                         {(student.failingSubjectCount ?? 0) === 0 ? 'Tuntas Semua' : `${student.failingSubjectCount} Remedial`}
                                                                     </span>
@@ -1301,10 +1301,10 @@ export default function RaporSiswa({
                                                                             className={cn(
                                                                                 'inline-flex items-center rounded px-1.5 py-0.5 text-[10px] font-bold',
                                                                                 sg.finalScore >= 88
-                                                                                    ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300'
+                                                                                    ? 'bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300'
                                                                                     : sg.finalScore >= 75
                                                                                       ? 'bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300'
-                                                                                      : 'bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300'
+                                                                                      : 'bg-slate-100 text-slate-800 dark:bg-slate-950 dark:text-slate-300'
                                                                             )}
                                                                         >
                                                                             {sg.subjectCode.split('-')[0]}: {sg.finalScore}
@@ -1425,7 +1425,7 @@ export default function RaporSiswa({
                                                                 <button
                                                                     type="button"
                                                                     onClick={() => handleOpenJournalModal(student)}
-                                                                    className="inline-flex items-center gap-1 rounded-lg border border-purple-200 bg-purple-50 px-2.5 py-1 text-[10px] font-semibold text-purple-800 hover:bg-purple-100 dark:border-purple-900 dark:bg-purple-950/60 dark:text-purple-300"
+                                                                    className="inline-flex items-center gap-1 rounded-lg border border-blue-200 bg-blue-50 px-2.5 py-1 text-[10px] font-semibold text-blue-800 hover:bg-blue-100 dark:border-blue-900 dark:bg-blue-950/60 dark:text-blue-300"
                                                                     title="Catat Jurnal Pembinaan Anak Wali"
                                                                 >
                                                                     <MessageCircle className="size-3" />
@@ -1434,7 +1434,7 @@ export default function RaporSiswa({
                                                                 <button
                                                                     type="button"
                                                                     onClick={() => handleOpenInviteModal(student)}
-                                                                    className="inline-flex items-center gap-1 rounded-lg border border-amber-200 bg-amber-50 px-2.5 py-1 text-[10px] font-semibold text-amber-800 hover:bg-amber-100 dark:border-amber-900 dark:bg-amber-950/60 dark:text-amber-300"
+                                                                    className="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold text-slate-800 hover:bg-slate-100 dark:border-slate-900 dark:bg-blue-950/60 dark:text-slate-300"
                                                                     title="Terbitkan Surat Undangan Konsultasi Orang Tua"
                                                                 >
                                                                     <PhoneCall className="size-3" />
@@ -1456,7 +1456,7 @@ export default function RaporSiswa({
                                     <div className="p-6 space-y-4">
                                         <div className="flex items-center justify-between">
                                             <div className="flex items-center gap-2">
-                                                <div className="rounded-lg bg-indigo-100 p-2 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300">
+                                                <div className="rounded-lg bg-blue-100 p-2 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
                                                     <TrendingUp className="size-5" />
                                                 </div>
                                                 <div>
@@ -1464,7 +1464,7 @@ export default function RaporSiswa({
                                                     <p className="text-xs text-slate-500">AI Promotion Readiness Evaluator — Semester Ganjil 2025/2026</p>
                                                 </div>
                                             </div>
-                                            <span className="inline-flex items-center gap-1.5 rounded-full bg-indigo-100 px-3 py-1 text-xs font-bold text-indigo-800 dark:bg-indigo-950 dark:text-indigo-300">
+                                            <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-100 px-3 py-1 text-xs font-bold text-blue-800 dark:bg-blue-950 dark:text-blue-300">
                                                 <Sparkles className="size-3.5" />
                                                 {waliStats.readyToPromoteRate}% Layak Naik Kelas
                                             </span>
@@ -1496,17 +1496,17 @@ export default function RaporSiswa({
                                                                     <div className="text-[10px] text-slate-400">Kelas {student.class}</div>
                                                                 </td>
                                                                 <td className="px-4 py-3 text-center">
-                                                                    <span className={cn('rounded-full px-2 py-0.5 text-[10px] font-bold', attendanceOk ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300' : 'bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300')}>
+                                                                    <span className={cn('rounded-full px-2 py-0.5 text-[10px] font-bold', attendanceOk ? 'bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300' : 'bg-slate-100 text-slate-800 dark:bg-slate-950 dark:text-slate-300')}>
                                                                         {student.attendanceRate}%
                                                                     </span>
                                                                 </td>
                                                                 <td className="px-4 py-3 text-center">
-                                                                    <span className={cn('rounded-full px-2 py-0.5 text-[10px] font-bold', academicOk ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300' : 'bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300')}>
+                                                                    <span className={cn('rounded-full px-2 py-0.5 text-[10px] font-bold', academicOk ? 'bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300' : 'bg-slate-100 text-slate-800 dark:bg-slate-950 dark:text-slate-300')}>
                                                                         {(student.failingSubjectCount ?? 0) === 0 ? 'Tuntas Semua' : `${student.failingSubjectCount} Remedial`}
                                                                     </span>
                                                                 </td>
                                                                 <td className="px-4 py-3 text-center">
-                                                                    <span className={cn('rounded-full px-2 py-0.5 text-[10px] font-bold', disciplineOk ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300' : 'bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300')}>
+                                                                    <span className={cn('rounded-full px-2 py-0.5 text-[10px] font-bold', disciplineOk ? 'bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300' : 'bg-slate-100 text-slate-800 dark:bg-slate-950 dark:text-slate-300')}>
                                                                         {student.latestReport?.disciplinePoints ?? 0} poin
                                                                     </span>
                                                                 </td>
@@ -1516,7 +1516,7 @@ export default function RaporSiswa({
                                                                     </span>
                                                                 </td>
                                                                 <td className="px-4 py-3 text-center">
-                                                                    <span className={cn('inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-bold border', allOk ? 'border-emerald-300 bg-emerald-50 text-emerald-900 dark:border-emerald-800 dark:bg-emerald-950 dark:text-emerald-200' : 'border-rose-300 bg-rose-50 text-rose-900 dark:border-rose-800 dark:bg-rose-950 dark:text-rose-200')}>
+                                                                    <span className={cn('inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-bold border', allOk ? 'border-blue-300 bg-blue-50 text-blue-900 dark:border-blue-800 dark:bg-blue-950 dark:text-blue-200' : 'border-slate-300 bg-slate-50 text-slate-900 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-200')}>
                                                                         {allOk ? <ShieldCheck className="size-3" /> : <ShieldAlert className="size-3" />}
                                                                         {allOk ? 'Layak Naik Kelas' : 'Perlu Evaluasi'}
                                                                     </span>
@@ -1528,7 +1528,7 @@ export default function RaporSiswa({
                                             </table>
                                         </div>
                                         <p className="text-[11px] text-slate-500 text-center">
-                                            <Sparkles className="inline size-3 mr-1 text-indigo-500" />
+                                            <Sparkles className="inline size-3 mr-1 text-blue-500" />
                                             Kriteria AI: Presensi ≥85%, Maks. 1 Mapel Remedial, Poin Pelanggaran ≤45, Sikap Minimal Baik
                                         </p>
                                     </div>
@@ -1538,7 +1538,7 @@ export default function RaporSiswa({
                                 {waliSubTab === 'jurnal' && (
                                     <div className="p-6 space-y-4">
                                         <div className="flex items-center gap-2">
-                                            <div className="rounded-lg bg-purple-100 p-2 text-purple-700 dark:bg-purple-950 dark:text-purple-300">
+                                            <div className="rounded-lg bg-blue-100 p-2 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
                                                 <MessageCircle className="size-5" />
                                             </div>
                                             <div>
@@ -1561,14 +1561,14 @@ export default function RaporSiswa({
                                                             <div className="flex-1">
                                                                 <div className="flex items-center gap-2 flex-wrap">
                                                                     <span className="font-bold text-slate-900 dark:text-white text-sm">{j.studentName}</span>
-                                                                    <span className="rounded-full bg-purple-100 px-2 py-0.5 text-[10px] font-semibold text-purple-800 dark:bg-purple-950 dark:text-purple-300">{j.category}</span>
+                                                                    <span className="rounded-full bg-blue-100 px-2 py-0.5 text-[10px] font-semibold text-blue-800 dark:bg-blue-950 dark:text-blue-300">{j.category}</span>
                                                                     <span className={cn(
                                                                         'rounded-full px-2 py-0.5 text-[10px] font-bold border',
                                                                         j.status === 'Tuntas Berkembang'
-                                                                            ? 'border-emerald-300 bg-emerald-50 text-emerald-900 dark:border-emerald-800 dark:bg-emerald-950 dark:text-emerald-300'
+                                                                            ? 'border-blue-300 bg-blue-50 text-blue-900 dark:border-blue-800 dark:bg-blue-950 dark:text-blue-300'
                                                                             : j.status === 'Dirujuk ke Guru BK'
-                                                                              ? 'border-rose-300 bg-rose-50 text-rose-900 dark:border-rose-800 dark:bg-rose-950 dark:text-rose-300'
-                                                                              : 'border-amber-300 bg-amber-50 text-amber-900 dark:border-amber-800 dark:bg-amber-950 dark:text-amber-300'
+                                                                              ? 'border-slate-300 bg-slate-50 text-slate-900 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-300'
+                                                                              : 'border-slate-300 bg-slate-50 text-slate-900 dark:border-slate-800 dark:bg-blue-950 dark:text-slate-300'
                                                                     )}>{j.status}</span>
                                                                 </div>
                                                                 <p className="mt-1 text-sm font-semibold text-slate-700 dark:text-slate-300">{j.title}</p>
@@ -1577,7 +1577,7 @@ export default function RaporSiswa({
                                                             <div className="text-right shrink-0">
                                                                 <div className="text-[10px] text-slate-400">{j.journalDate}</div>
                                                                 {j.parentNotifiedAt && (
-                                                                    <div className="mt-1 inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-semibold text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">
+                                                                    <div className="mt-1 inline-flex items-center gap-1 rounded-full bg-blue-100 px-2 py-0.5 text-[10px] font-semibold text-blue-800 dark:bg-blue-950 dark:text-blue-300">
                                                                         <Check className="size-2.5" />
                                                                         Ortu Dinotifikasi
                                                                     </div>
@@ -1830,9 +1830,9 @@ export default function RaporSiswa({
                                                         {activeStudent.subjectAssessment?.finalScore ?? 85}
                                                     </div>
                                                 </div>
-                                                <div className="rounded-xl border border-emerald-200 bg-emerald-50/50 p-3 text-center dark:border-emerald-900/60 dark:bg-emerald-950/30">
-                                                    <span className="text-[11px] text-emerald-700 dark:text-emerald-300 font-medium">Predikat Kelulusan</span>
-                                                    <div className="mt-1 text-base font-bold text-emerald-700 dark:text-emerald-400">
+                                                <div className="rounded-xl border border-blue-200 bg-blue-50/50 p-3 text-center dark:border-blue-900/60 dark:bg-blue-950/30">
+                                                    <span className="text-[11px] text-blue-700 dark:text-blue-300 font-medium">Predikat Kelulusan</span>
+                                                    <div className="mt-1 text-base font-bold text-blue-700 dark:text-blue-400">
                                                         {activeStudent.subjectAssessment?.predicate ?? 'A (Sangat Baik)'}
                                                     </div>
                                                 </div>
@@ -1866,10 +1866,10 @@ export default function RaporSiswa({
                                                                         className={cn(
                                                                             'inline-flex items-center rounded-md px-2 py-0.5 text-[10px] font-bold',
                                                                             tp.status === 'Tercapai Optimal'
-                                                                                ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300'
+                                                                                ? 'bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300'
                                                                                 : tp.status === 'Tercapai'
                                                                                   ? 'bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300'
-                                                                                  : 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300',
+                                                                                  : 'bg-slate-100 text-slate-800 dark:bg-blue-950 dark:text-slate-300',
                                                                         )}
                                                                     >
                                                                         {tp.status}
@@ -1928,18 +1928,18 @@ export default function RaporSiswa({
                                         <div className="mt-6 space-y-3">
                                             <div className="flex items-center justify-between border-b border-slate-200 pb-2 text-xs font-bold uppercase tracking-wider text-slate-800 dark:border-slate-800 dark:text-slate-200">
                                                 <div className="flex items-center gap-2">
-                                                    <Sparkles className="size-4 text-indigo-600 dark:text-indigo-400" />
+                                                    <Sparkles className="size-4 text-blue-600 dark:text-blue-400" />
                                                     <span>III. Hasil Analisis AI & Rekomendasi Pembelajaran Berdiferensiasi</span>
                                                 </div>
-                                                <span className="rounded-full bg-indigo-100 px-2.5 py-0.5 text-[10px] font-bold text-indigo-800 dark:bg-indigo-950 dark:text-indigo-300">
+                                                <span className="rounded-full bg-blue-100 px-2.5 py-0.5 text-[10px] font-bold text-blue-800 dark:bg-blue-950 dark:text-blue-300">
                                                     AI Diagnostic Engine
                                                 </span>
                                             </div>
 
-                                            <div className="rounded-2xl border border-indigo-200 bg-gradient-to-br from-indigo-50/60 via-blue-50/40 to-white p-5 text-xs text-slate-800 dark:border-indigo-900/60 dark:from-indigo-950/30 dark:via-slate-900 dark:to-slate-900 dark:text-slate-200 space-y-4">
+                                            <div className="rounded-2xl border border-blue-200 bg-gradient-to-br from-blue-50/60 via-blue-50/40 to-white p-5 text-xs text-slate-800 dark:border-blue-900/60 dark:from-blue-950/30 dark:via-slate-900 dark:to-slate-900 dark:text-slate-200 space-y-4">
                                                 <div>
-                                                    <div className="flex items-center gap-2 font-bold text-indigo-950 dark:text-indigo-200 text-xs">
-                                                        <Search className="size-3.5 text-indigo-600 dark:text-indigo-400" />
+                                                    <div className="flex items-center gap-2 font-bold text-blue-950 dark:text-blue-200 text-xs">
+                                                        <Search className="size-3.5 text-blue-600 dark:text-blue-400" />
                                                         <span>1. Diagnosis Penguasaan Materi (AI Diagnostic Insight)</span>
                                                     </div>
                                                     <p className="mt-1 leading-relaxed text-[11px] text-slate-700 dark:text-slate-300 pl-5">
@@ -1948,8 +1948,8 @@ export default function RaporSiswa({
                                                 </div>
 
                                                 <div>
-                                                    <div className="flex items-center gap-2 font-bold text-indigo-950 dark:text-indigo-200 text-xs">
-                                                        <Lightbulb className="size-3.5 text-indigo-600 dark:text-indigo-400" />
+                                                    <div className="flex items-center gap-2 font-bold text-blue-950 dark:text-blue-200 text-xs">
+                                                        <Lightbulb className="size-3.5 text-blue-600 dark:text-blue-400" />
                                                         <span>2. Rekomendasi Rencana Tindak Lanjut Diferensiasi</span>
                                                     </div>
                                                     <p className="mt-1 leading-relaxed text-[11px] text-slate-700 dark:text-slate-300 pl-5">
@@ -1959,29 +1959,29 @@ export default function RaporSiswa({
 
                                                 {activeStudent.subjectAssessment?.aiAnalysis.remedialFocus && (
                                                     <div>
-                                                        <div className="flex items-center gap-2 font-bold text-amber-900 dark:text-amber-300 text-xs">
-                                                            <AlertCircle className="size-3.5 text-amber-600 dark:text-amber-400" />
+                                                        <div className="flex items-center gap-2 font-bold text-slate-900 dark:text-slate-300 text-xs">
+                                                            <AlertCircle className="size-3.5 text-slate-600 dark:text-slate-400" />
                                                             <span>3. Fokus Modul Penguatan / Remedial</span>
                                                         </div>
-                                                        <p className="mt-1 leading-relaxed text-[11px] text-amber-800 dark:text-amber-300 pl-5">
+                                                        <p className="mt-1 leading-relaxed text-[11px] text-slate-800 dark:text-slate-300 pl-5">
                                                             {activeStudent.subjectAssessment?.aiAnalysis.remedialFocus}
                                                         </p>
                                                     </div>
                                                 )}
 
                                                 {/* Readiness Index Progress */}
-                                                <div className="border-t border-indigo-100 pt-3 dark:border-indigo-900/40">
+                                                <div className="border-t border-blue-100 pt-3 dark:border-blue-900/40">
                                                     <div className="flex items-center justify-between text-xs mb-1.5">
                                                         <span className="font-bold text-slate-800 dark:text-slate-200">
                                                             Indeks Kesiapan Portofolio Industri & UKK Kejuruan:
                                                         </span>
-                                                        <span className="font-extrabold text-indigo-700 dark:text-indigo-400">
+                                                        <span className="font-extrabold text-blue-700 dark:text-blue-400">
                                                             {activeStudent.subjectAssessment?.aiAnalysis.readinessScore}% ({activeStudent.subjectAssessment?.aiAnalysis.readinessStatus})
                                                         </span>
                                                     </div>
                                                     <div className="h-2 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800">
                                                         <div
-                                                            className="h-full rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 transition-all duration-500"
+                                                            className="h-full rounded-full bg-gradient-to-r from-blue-600 to-blue-600 transition-all duration-500"
                                                             style={{
                                                                 width: `${activeStudent.subjectAssessment?.aiAnalysis.readinessScore ?? 85}%`,
                                                             }}
@@ -1998,9 +1998,9 @@ export default function RaporSiswa({
                                                         {activeStudent.subjectAssessment?.aiAnalysis.recommendedActivities.map((act) => (
                                                             <span
                                                                 key={act}
-                                                                className="inline-flex items-center gap-1 rounded-md bg-white border border-indigo-200 px-2.5 py-1 text-[10px] font-semibold text-indigo-800 shadow-2xs dark:border-indigo-800 dark:bg-slate-800 dark:text-indigo-300"
+                                                                className="inline-flex items-center gap-1 rounded-md bg-white border border-blue-200 px-2.5 py-1 text-[10px] font-semibold text-blue-800 shadow-2xs dark:border-blue-800 dark:bg-slate-800 dark:text-blue-300"
                                                             >
-                                                                <Check className="size-3 text-emerald-600" />
+                                                                <Check className="size-3 text-blue-600" />
                                                                 {act}
                                                             </span>
                                                         ))}
@@ -2083,7 +2083,7 @@ export default function RaporSiswa({
                                                         <BarChart3 className="size-4 text-blue-600" />
                                                         <span>III. Rekapitulasi Capaian Seluruh Mata Pelajaran Semester</span>
                                                     </div>
-                                                    <span className={cn('rounded-full px-2.5 py-0.5 text-[10px] font-bold border', (activeStudent.failingSubjectCount ?? 0) === 0 ? 'border-emerald-300 bg-emerald-50 text-emerald-900' : 'border-rose-300 bg-rose-50 text-rose-900')}>
+                                                    <span className={cn('rounded-full px-2.5 py-0.5 text-[10px] font-bold border', (activeStudent.failingSubjectCount ?? 0) === 0 ? 'border-blue-300 bg-blue-50 text-blue-900' : 'border-slate-300 bg-slate-50 text-slate-900')}>
                                                         Rata-rata: {(activeStudent.academicAverage ?? 0).toFixed(1)}
                                                     </span>
                                                 </div>
@@ -2109,7 +2109,7 @@ export default function RaporSiswa({
                                                                     <td className="px-4 py-3 text-center text-slate-700 dark:text-slate-300">{sg.summativeScore}</td>
                                                                     <td className="px-4 py-3 text-center font-extrabold text-slate-900 dark:text-white">{sg.finalScore}</td>
                                                                     <td className="px-4 py-3 text-right">
-                                                                        <span className={cn('inline-flex items-center rounded-md px-2 py-0.5 text-[10px] font-bold', sg.finalScore >= 88 ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300' : sg.finalScore >= 75 ? 'bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300' : 'bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300')}>
+                                                                        <span className={cn('inline-flex items-center rounded-md px-2 py-0.5 text-[10px] font-bold', sg.finalScore >= 88 ? 'bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300' : sg.finalScore >= 75 ? 'bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300' : 'bg-slate-100 text-slate-800 dark:bg-slate-950 dark:text-slate-300')}>
                                                                             {sg.finalScore >= 88 ? 'A (Sangat Baik)' : sg.finalScore >= 75 ? 'B (Baik)' : 'C (Remedial)'}
                                                                         </span>
                                                                     </td>
@@ -2215,7 +2215,7 @@ export default function RaporSiswa({
                         <div className="flex flex-col items-center justify-between gap-3 border-t border-slate-200 bg-slate-50 px-6 py-4 sm:flex-row dark:border-slate-800 dark:bg-slate-800/80">
                             {reportViewMode === 'guru_mapel' ? (
                                 <div className="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-300">
-                                    <Sparkles className="size-4 text-indigo-600" />
+                                    <Sparkles className="size-4 text-blue-600" />
                                     <span>
                                         Analisis AI Terintegrasi Kurikulum Merdeka • Nilai Akhir:{' '}
                                         <strong className="text-slate-900 dark:text-white">
@@ -2297,7 +2297,7 @@ export default function RaporSiswa({
                     <div className="relative flex max-h-[92vh] w-full max-w-2xl flex-col overflow-hidden rounded-2xl bg-white shadow-2xl dark:bg-slate-900">
                         <div className="flex items-center justify-between border-b border-slate-200 bg-slate-50 px-6 py-4 dark:border-slate-800 dark:bg-slate-800/80">
                             <div className="flex items-center gap-2">
-                                <div className="rounded-lg bg-emerald-100 p-1.5 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">
+                                <div className="rounded-lg bg-blue-100 p-1.5 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
                                     <Edit3 className="size-4" />
                                 </div>
                                 <div>
@@ -2387,7 +2387,7 @@ export default function RaporSiswa({
                                 <button type="button" onClick={() => setIsGradeInputModalOpen(false)} className="rounded-lg border border-slate-300 bg-white px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200">
                                     Batal
                                 </button>
-                                <button type="submit" disabled={isSavingGrade} className="inline-flex items-center gap-2 rounded-lg bg-emerald-700 px-4 py-2 text-xs font-semibold text-white hover:bg-emerald-800 disabled:opacity-50">
+                                <button type="submit" disabled={isSavingGrade} className="inline-flex items-center gap-2 rounded-lg bg-blue-700 px-4 py-2 text-xs font-semibold text-white hover:bg-blue-800 disabled:opacity-50">
                                     {isSavingGrade ? <Loader2 className="size-4 animate-spin" /> : <CheckCircle2 className="size-4" />}
                                     {isSavingGrade ? 'Menyimpan...' : 'Simpan Nilai'}
                                 </button>
@@ -2405,7 +2405,7 @@ export default function RaporSiswa({
                     <div className="relative flex max-h-[92vh] w-full max-w-xl flex-col overflow-hidden rounded-2xl bg-white shadow-2xl dark:bg-slate-900">
                         <div className="flex items-center justify-between border-b border-slate-200 bg-slate-50 px-6 py-4 dark:border-slate-800 dark:bg-slate-800/80">
                             <div className="flex items-center gap-2">
-                                <div className="rounded-lg bg-purple-100 p-1.5 text-purple-700 dark:bg-purple-950 dark:text-purple-300">
+                                <div className="rounded-lg bg-blue-100 p-1.5 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
                                     <MessageCircle className="size-4" />
                                 </div>
                                 <div>
@@ -2425,7 +2425,7 @@ export default function RaporSiswa({
                                     <select
                                         value={journalStudentId}
                                         onChange={(e) => setJournalStudentId(e.target.value)}
-                                        className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-900 focus:border-purple-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                                        className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-900 focus:border-blue-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
                                     >
                                         {studentsList.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}
                                     </select>
@@ -2435,7 +2435,7 @@ export default function RaporSiswa({
                                     <select
                                         value={journalCategory}
                                         onChange={(e) => setJournalCategory(e.target.value)}
-                                        className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-900 focus:border-purple-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                                        className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-900 focus:border-blue-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
                                     >
                                         {['Akademik & Nilai Mapel', 'Kedisiplinan & Presensi', 'Sosial & Perilaku', 'Karir & Minat Bakat', 'Keluarga & Ekonomi'].map((c) => <option key={c} value={c}>{c}</option>)}
                                     </select>
@@ -2448,33 +2448,33 @@ export default function RaporSiswa({
                                     type="text" required
                                     value={journalTitle}
                                     onChange={(e) => setJournalTitle(e.target.value)}
-                                    className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 focus:border-purple-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                                    className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 focus:border-blue-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
                                 />
                             </div>
 
                             <div>
                                 <label className="block text-xs font-semibold text-slate-600 mb-1 dark:text-slate-400">Deskripsi Permasalahan</label>
                                 <textarea rows={2} value={journalIssue} onChange={(e) => setJournalIssue(e.target.value)}
-                                    className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-900 focus:border-purple-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white" />
+                                    className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-900 focus:border-blue-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white" />
                             </div>
 
                             <div>
                                 <label className="block text-xs font-semibold text-slate-600 mb-1 dark:text-slate-400">Pendekatan & Tindakan Wali Kelas</label>
                                 <textarea rows={2} value={journalApproach} onChange={(e) => setJournalApproach(e.target.value)}
-                                    className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-900 focus:border-purple-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white" />
+                                    className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-900 focus:border-blue-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white" />
                             </div>
 
                             <div>
                                 <label className="block text-xs font-semibold text-slate-600 mb-1 dark:text-slate-400">Komitmen Siswa</label>
                                 <input type="text" value={journalCommitment} onChange={(e) => setJournalCommitment(e.target.value)}
-                                    className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-900 focus:border-purple-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white" />
+                                    className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-900 focus:border-blue-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white" />
                             </div>
 
                             <div className="grid grid-cols-2 gap-3">
                                 <div>
                                     <label className="block text-xs font-semibold text-slate-600 mb-1 dark:text-slate-400">Status Tindak Lanjut</label>
                                     <select value={journalStatus} onChange={(e) => setJournalStatus(e.target.value as typeof journalStatus)}
-                                        className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-900 focus:border-purple-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white">
+                                        className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-900 focus:border-blue-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white">
                                         <option>Sedang Dipantau</option>
                                         <option>Tuntas Berkembang</option>
                                         <option>Dirujuk ke Guru BK</option>
@@ -2482,7 +2482,7 @@ export default function RaporSiswa({
                                 </div>
                                 <div className="flex items-end">
                                     <label className="flex items-center gap-2 cursor-pointer">
-                                        <input type="checkbox" checked={journalNotifyParent} onChange={(e) => setJournalNotifyParent(e.target.checked)} className="size-4 rounded accent-purple-600" />
+                                        <input type="checkbox" checked={journalNotifyParent} onChange={(e) => setJournalNotifyParent(e.target.checked)} className="size-4 rounded accent-blue-600" />
                                         <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">Notifikasi WhatsApp Orang Tua</span>
                                     </label>
                                 </div>
@@ -2490,7 +2490,7 @@ export default function RaporSiswa({
 
                             <div className="flex justify-end gap-2 border-t border-slate-200 pt-4 dark:border-slate-800">
                                 <button type="button" onClick={() => setIsJournalModalOpen(false)} className="rounded-lg border border-slate-300 bg-white px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200">Batal</button>
-                                <button type="submit" disabled={isSavingJournal} className="inline-flex items-center gap-2 rounded-lg bg-purple-700 px-4 py-2 text-xs font-semibold text-white hover:bg-purple-800 disabled:opacity-50">
+                                <button type="submit" disabled={isSavingJournal} className="inline-flex items-center gap-2 rounded-lg bg-blue-700 px-4 py-2 text-xs font-semibold text-white hover:bg-blue-800 disabled:opacity-50">
                                     {isSavingJournal ? <Loader2 className="size-4 animate-spin" /> : <FilePlus className="size-4" />}
                                     {isSavingJournal ? 'Menyimpan...' : 'Simpan Jurnal'}
                                 </button>
@@ -2506,9 +2506,9 @@ export default function RaporSiswa({
             {isInviteModalOpen && inviteStudent && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-4 backdrop-blur-xs">
                     <div className="relative flex max-h-[92vh] w-full max-w-xl flex-col overflow-hidden rounded-2xl bg-white shadow-2xl dark:bg-slate-900">
-                        <div className="flex items-center justify-between border-b border-slate-200 bg-amber-50 px-6 py-4 dark:border-slate-800 dark:bg-amber-950/40">
+                        <div className="flex items-center justify-between border-b border-slate-200 bg-slate-50 px-6 py-4 dark:border-slate-800 dark:bg-blue-950/40">
                             <div className="flex items-center gap-2">
-                                <div className="rounded-lg bg-amber-100 p-1.5 text-amber-700 dark:bg-amber-950 dark:text-amber-300">
+                                <div className="rounded-lg bg-slate-100 p-1.5 text-slate-700 dark:bg-blue-950 dark:text-slate-300">
                                     <PhoneCall className="size-4" />
                                 </div>
                                 <div>
@@ -2516,19 +2516,19 @@ export default function RaporSiswa({
                                     <p className="text-[11px] text-slate-500">Untuk orang tua: <strong>{inviteStudent.parentName}</strong> ({inviteStudent.parentPhone})</p>
                                 </div>
                             </div>
-                            <button type="button" onClick={() => setIsInviteModalOpen(false)} className="rounded-lg p-1.5 text-slate-400 hover:bg-amber-100 dark:hover:bg-slate-800">
+                            <button type="button" onClick={() => setIsInviteModalOpen(false)} className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">
                                 <X className="size-5" />
                             </button>
                         </div>
 
                         <form onSubmit={handleSubmitInvite} className="flex-1 overflow-y-auto p-6 space-y-4">
-                            <div className="rounded-xl border border-amber-200 bg-amber-50/60 px-4 py-3 text-xs text-amber-900 dark:border-amber-900 dark:bg-amber-950/30 dark:text-amber-200">
+                            <div className="rounded-xl border border-slate-200 bg-slate-50/60 px-4 py-3 text-xs text-slate-900 dark:border-slate-900 dark:bg-blue-950/30 dark:text-slate-200">
                                 <strong>Siswa:</strong> {inviteStudent.name} • Kelas {inviteStudent.class}
                                 {(inviteStudent.failingSubjectCount ?? 0) > 0 && (
-                                    <span className="ml-2 rounded-full bg-rose-100 px-2 py-0.5 text-[10px] font-bold text-rose-800">{inviteStudent.failingSubjectCount} Mapel Remedial</span>
+                                    <span className="ml-2 rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-bold text-slate-800">{inviteStudent.failingSubjectCount} Mapel Remedial</span>
                                 )}
                                 {inviteStudent.attendanceRate < 85 && (
-                                    <span className="ml-2 rounded-full bg-rose-100 px-2 py-0.5 text-[10px] font-bold text-rose-800">Presensi {inviteStudent.attendanceRate}%</span>
+                                    <span className="ml-2 rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-bold text-slate-800">Presensi {inviteStudent.attendanceRate}%</span>
                                 )}
                             </div>
 
@@ -2536,36 +2536,36 @@ export default function RaporSiswa({
                                 <div>
                                     <label className="block text-xs font-semibold text-slate-600 mb-1 dark:text-slate-400">Tanggal Pertemuan</label>
                                     <input type="date" required value={inviteMeetingDate} onChange={(e) => setInviteMeetingDate(e.target.value)}
-                                        className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 focus:border-amber-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white" />
+                                        className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 focus:border-slate-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white" />
                                 </div>
                                 <div>
                                     <label className="block text-xs font-semibold text-slate-600 mb-1 dark:text-slate-400">Pukul</label>
                                     <input type="time" required value={inviteMeetingTime} onChange={(e) => setInviteMeetingTime(e.target.value)}
-                                        className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 focus:border-amber-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white" />
+                                        className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 focus:border-slate-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white" />
                                 </div>
                             </div>
 
                             <div>
                                 <label className="block text-xs font-semibold text-slate-600 mb-1 dark:text-slate-400">Agenda / Topik Konsultasi</label>
                                 <input type="text" required value={inviteAgenda} onChange={(e) => setInviteAgenda(e.target.value)}
-                                    className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 focus:border-amber-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white" />
+                                    className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 focus:border-slate-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white" />
                             </div>
 
                             <div>
                                 <label className="block text-xs font-semibold text-slate-600 mb-1 dark:text-slate-400">Lokasi Pertemuan</label>
                                 <input type="text" required value={inviteLocation} onChange={(e) => setInviteLocation(e.target.value)}
-                                    className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 focus:border-amber-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white" />
+                                    className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 focus:border-slate-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white" />
                             </div>
 
                             <div>
                                 <label className="block text-xs font-semibold text-slate-600 mb-1 dark:text-slate-400">Catatan Tambahan untuk Orang Tua</label>
                                 <textarea rows={2} value={inviteNotes} onChange={(e) => setInviteNotes(e.target.value)}
-                                    className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-900 focus:border-amber-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white" />
+                                    className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-900 focus:border-slate-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white" />
                             </div>
 
                             <div className="flex justify-end gap-2 border-t border-slate-200 pt-4 dark:border-slate-800">
                                 <button type="button" onClick={() => setIsInviteModalOpen(false)} className="rounded-lg border border-slate-300 bg-white px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200">Batal</button>
-                                <button type="submit" disabled={isSavingInvite} className="inline-flex items-center gap-2 rounded-lg bg-amber-600 px-4 py-2 text-xs font-semibold text-white hover:bg-amber-700 disabled:opacity-50">
+                                <button type="submit" disabled={isSavingInvite} className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-xs font-semibold text-white hover:bg-blue-700 disabled:opacity-50">
                                     {isSavingInvite ? <Loader2 className="size-4 animate-spin" /> : <Send className="size-4" />}
                                     {isSavingInvite ? 'Menerbitkan...' : 'Terbitkan & Kirim WA'}
                                 </button>

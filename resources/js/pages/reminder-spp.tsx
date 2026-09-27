@@ -185,7 +185,7 @@ export default function ReminderSpp({
                                 Komunikasi & Pendampingan Finansial Orang Tua Siswa
                             </span>
                             <span className="hidden text-slate-300 sm:inline dark:text-slate-700">•</span>
-                            <span className="text-xs font-medium text-emerald-600 dark:text-emerald-400">
+                            <span className="text-xs font-semibold text-blue-700 dark:text-blue-400">
                                 WhatsApp Gateway: Terkoneksi
                             </span>
                         </div>
@@ -225,7 +225,7 @@ export default function ReminderSpp({
                             <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-500">
                                 Tagihan Jatuh Tempo
                             </span>
-                            <div className="rounded-lg bg-amber-50 p-2 text-amber-600 dark:bg-amber-950/60 dark:text-amber-400">
+                            <div className="rounded-lg bg-slate-100 p-2 text-slate-600 dark:bg-slate-800 dark:text-slate-300">
                                 <Clock className="size-4" />
                             </div>
                         </div>
@@ -259,7 +259,7 @@ export default function ReminderSpp({
                             <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-500">
                                 Kesepakatan Janji Bayar
                             </span>
-                            <div className="rounded-lg bg-emerald-50 p-2 text-emerald-600 dark:bg-emerald-950/60 dark:text-emerald-400">
+                            <div className="rounded-lg bg-blue-50 p-2 text-blue-700 dark:bg-blue-950/60 dark:text-blue-300">
                                 <Calendar className="size-4" />
                             </div>
                         </div>
@@ -376,12 +376,12 @@ export default function ReminderSpp({
                                             <td className="py-3 px-3.5 text-slate-500">{b.dueDate}</td>
                                             <td className="py-3 px-3.5">
                                                 <span className={cn(
-                                                    'inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold',
+                                                    'inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold border',
                                                     b.status === 'Lunas'
-                                                        ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300'
+                                                        ? 'border-blue-200 bg-blue-50 text-blue-700 dark:border-blue-900/60 dark:bg-blue-950 dark:text-blue-300'
                                                         : b.status === 'Terlambat'
-                                                          ? 'bg-rose-50 text-rose-700 dark:bg-rose-950 dark:text-rose-300'
-                                                          : 'bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-300'
+                                                          ? 'border-slate-300 bg-slate-100 text-slate-800 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200'
+                                                          : 'border-slate-200 bg-white text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300'
                                                 )}>
                                                     {b.status}
                                                 </span>
@@ -393,7 +393,7 @@ export default function ReminderSpp({
                                                     </span>
                                                 ) : b.reminderStatus === 'Sudah Diingatkan' ? (
                                                     <div>
-                                                        <span className="text-emerald-600 dark:text-emerald-400 font-semibold text-[10px]">
+                                                        <span className="text-blue-700 dark:text-blue-400 font-semibold text-[10px]">
                                                             ✓ Sudah Diingatkan
                                                         </span>
                                                         <span className="text-[9px] text-slate-400 block">{b.lastSentAt}</span>
@@ -443,7 +443,7 @@ export default function ReminderSpp({
                         <div className="w-full max-w-lg rounded-xl border border-slate-200 bg-white p-6 shadow-2xl dark:border-slate-800 dark:bg-[#0b1120]">
                             <div className="flex items-center justify-between border-b border-slate-200 pb-3 dark:border-slate-800">
                                 <div className="flex items-center gap-2">
-                                    <MessageSquare className="size-5 text-emerald-600" />
+                                    <MessageSquare className="size-5 text-blue-700 dark:text-blue-400" />
                                     <h3 className="font-bold text-slate-900 dark:text-white text-base">
                                         Kirim Pengingat Tagihan SPP
                                     </h3>
@@ -488,7 +488,7 @@ export default function ReminderSpp({
                                 <button
                                     type="button"
                                     onClick={handleSendWhatsApp}
-                                    className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-600 px-4 py-1.5 text-xs font-semibold text-white hover:bg-emerald-700 active:scale-95 cursor-pointer"
+                                    className="inline-flex items-center gap-1.5 rounded-lg bg-blue-700 px-4 py-1.5 text-xs font-semibold text-white hover:bg-blue-800 active:scale-95 cursor-pointer"
                                 >
                                     <Send className="size-3.5" />
                                     <span>Buka & Kirim via WhatsApp</span>

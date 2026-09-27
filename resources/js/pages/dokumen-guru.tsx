@@ -193,7 +193,7 @@ export default function DokumenGuru({
                             <span className="text-xs font-medium text-slate-500">
                                 Terverifikasi Kepala Sekolah
                             </span>
-                            <div className="mt-1 text-2xl font-bold text-emerald-600 dark:text-emerald-400">
+                            <div className="mt-1 text-2xl font-bold text-blue-700 dark:text-blue-400">
                                 {
                                     documents.filter(
                                         (d) =>
@@ -206,7 +206,7 @@ export default function DokumenGuru({
                                 Telah disupervisi & disahkan
                             </p>
                         </div>
-                        <div className="rounded-lg bg-emerald-50 p-2.5 text-emerald-600 dark:bg-emerald-950/60 dark:text-emerald-400">
+                        <div className="rounded-lg bg-blue-50 p-2.5 text-blue-700 dark:bg-blue-950/60 dark:text-blue-300">
                             <CheckCircle2 className="size-5" />
                         </div>
                     </div>
@@ -216,7 +216,7 @@ export default function DokumenGuru({
                             <span className="text-xs font-medium text-slate-500">
                                 Menunggu Supervisi
                             </span>
-                            <div className="mt-1 text-2xl font-bold text-amber-600 dark:text-amber-400">
+                            <div className="mt-1 text-2xl font-bold text-slate-700 dark:text-slate-300">
                                 {
                                     documents.filter(
                                         (d) =>
@@ -229,7 +229,7 @@ export default function DokumenGuru({
                                 Dalam antrean review pimpinan
                             </p>
                         </div>
-                        <div className="rounded-lg bg-amber-50 p-2.5 text-amber-600 dark:bg-amber-950/60 dark:text-amber-400">
+                        <div className="rounded-lg bg-slate-100 p-2.5 text-slate-600 dark:bg-slate-800 dark:text-slate-300">
                             <Award className="size-5" />
                         </div>
                     </div>
@@ -327,8 +327,8 @@ export default function DokumenGuru({
                                                     className={cn(
                                                         'rounded-full px-2.5 py-0.5 text-[10px] font-bold',
                                                         doc.status === 'Lengkap' || doc.status === 'Terverifikasi'
-                                                            ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/80 dark:text-emerald-300'
-                                                            : 'bg-amber-100 text-amber-800 dark:bg-amber-950/80 dark:text-amber-300',
+                                                            ? 'border border-blue-200 bg-blue-50 text-blue-700 dark:border-blue-900/60 dark:bg-blue-950 dark:text-blue-300'
+                                                            : 'border border-slate-200 bg-slate-100 text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300',
                                                     )}
                                                 >
                                                     {doc.status === 'Lengkap' ? '✓ Disahkan Kepala Sekolah' : doc.status}
@@ -500,10 +500,10 @@ export default function DokumenGuru({
                                             </span>
                                         </div>
                                         <div className="grid grid-cols-2 gap-1.5 text-[11px] text-slate-600 dark:text-slate-400">
-                                            <span className="flex items-center gap-1 text-emerald-600 font-medium">✓ CP & ATP Selaras</span>
-                                            <span className="flex items-center gap-1 text-emerald-600 font-medium">✓ Pembelajaran Berdiferensiasi</span>
-                                            <span className="flex items-center gap-1 text-emerald-600 font-medium">✓ Asesmen Formatif Otentik</span>
-                                            <span className="flex items-center gap-1 text-emerald-600 font-medium">✓ Dimensi Karakter P5</span>
+                                            <span className="flex items-center gap-1 text-blue-700 dark:text-blue-400 font-medium">✓ CP & ATP Selaras</span>
+                                            <span className="flex items-center gap-1 text-blue-700 dark:text-blue-400 font-medium">✓ Pembelajaran Berdiferensiasi</span>
+                                            <span className="flex items-center gap-1 text-blue-700 dark:text-blue-400 font-medium">✓ Asesmen Formatif Otentik</span>
+                                            <span className="flex items-center gap-1 text-blue-700 dark:text-blue-400 font-medium">✓ Dimensi Karakter P5</span>
                                         </div>
                                         <p className="text-[11px] text-slate-600 dark:text-slate-300 pt-1 leading-relaxed">
                                             {preAuditResult.notes}
@@ -562,12 +562,12 @@ export default function DokumenGuru({
                             </button>
                         </div>
 
-                        <div className="rounded-xl border border-emerald-200 bg-emerald-50/60 p-4 space-y-2.5 dark:border-emerald-900/50 dark:bg-emerald-950/20">
+                        <div className="rounded-xl border border-blue-200 bg-blue-50/60 p-4 space-y-2.5 dark:border-blue-900/50 dark:bg-blue-950/20">
                             <div className="flex items-center justify-between">
-                                <span className="text-xs font-bold text-emerald-900 dark:text-emerald-200 uppercase tracking-wider">
+                                <span className="text-xs font-bold text-blue-900 dark:text-blue-200 uppercase tracking-wider">
                                     Status Keselarasan Kurikulum Merdeka
                                 </span>
-                                <span className="rounded-full bg-emerald-600 px-2.5 py-0.5 text-xs font-bold text-white">
+                                <span className="rounded-full bg-blue-700 px-2.5 py-0.5 text-xs font-bold text-white">
                                     Skor: 92/100
                                 </span>
                             </div>

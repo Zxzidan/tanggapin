@@ -34,7 +34,7 @@ class DashboardController extends Controller
      */
     public function openOperator(Request $request): RedirectResponse
     {
-        return $this->switchRoleByTarget($request, 'operator', null, route('users.index'));
+        return $this->switchRoleByTarget($request, 'operator', null, route('dashboard'));
     }
 
     /**
@@ -42,7 +42,7 @@ class DashboardController extends Controller
      */
     public function openGuruBk(Request $request): RedirectResponse
     {
-        return $this->switchRoleByTarget($request, 'guru_bk', null, route('kondisi-kelas'));
+        return $this->switchRoleByTarget($request, 'guru_bk', null, route('dashboard'));
     }
 
     /**
@@ -50,7 +50,7 @@ class DashboardController extends Controller
      */
     public function openWaliKelas(Request $request): RedirectResponse
     {
-        return $this->switchRoleByTarget($request, 'wali_kelas', 'walikelas@sekolah.sch.id', route('kondisi-kelas'));
+        return $this->switchRoleByTarget($request, 'wali_kelas', 'walikelas@sekolah.sch.id', route('dashboard'));
     }
 
     /**
@@ -58,7 +58,7 @@ class DashboardController extends Controller
      */
     public function openWaliKelasTkj(Request $request): RedirectResponse
     {
-        return $this->switchRoleByTarget($request, 'wali_kelas', 'budi@sekolah.sch.id', route('kondisi-kelas'));
+        return $this->switchRoleByTarget($request, 'wali_kelas', 'budi@sekolah.sch.id', route('dashboard'));
     }
 
     /**
@@ -66,7 +66,7 @@ class DashboardController extends Controller
      */
     public function openGuru(Request $request): RedirectResponse
     {
-        return $this->switchRoleByTarget($request, 'guru', 'guru@sekolah.sch.id', route('documents'));
+        return $this->switchRoleByTarget($request, 'guru', 'guru@sekolah.sch.id', route('dashboard'));
     }
 
     /**
@@ -82,7 +82,7 @@ class DashboardController extends Controller
      */
     public function openBendahara(Request $request): RedirectResponse
     {
-        return $this->switchRoleByTarget($request, 'bendahara', null, route('payments'));
+        return $this->switchRoleByTarget($request, 'bendahara', null, route('dashboard'));
     }
 
     /**

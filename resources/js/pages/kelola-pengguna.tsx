@@ -327,7 +327,7 @@ export default function KelolaPengguna({
                 return {
                     label: 'Guru Mapel',
                     className:
-                        'border border-indigo-200 bg-indigo-50 text-indigo-800 dark:border-indigo-900/60 dark:bg-indigo-950/60 dark:text-indigo-300',
+                        'border border-blue-200 bg-blue-50/50 text-blue-800 dark:border-blue-900/50 dark:bg-blue-950/50 dark:text-blue-300',
                 };
             case 'wali_kelas':
                 return {

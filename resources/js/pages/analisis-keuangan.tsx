@@ -145,8 +145,8 @@ export default function AnalisisKeuangan({
                                 Asisten Cerdas Keuangan & Tata Kelola SPP
                             </span>
                             <span className="hidden text-slate-300 sm:inline dark:text-slate-700">•</span>
-                            <span className="inline-flex items-center gap-1 text-xs font-medium text-emerald-600 dark:text-emerald-400">
-                                <span className="size-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                            <span className="inline-flex items-center gap-1 text-xs font-semibold text-blue-700 dark:text-blue-400">
+                                <span className="size-1.5 rounded-full bg-blue-600 animate-pulse" />
                                 Model Prediksi Kas: Aktif
                             </span>
                         </div>
@@ -196,7 +196,7 @@ export default function AnalisisKeuangan({
                                 <span className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
                                     91.4
                                 </span>
-                                <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 flex items-center gap-0.5">
+                                <span className="text-xs font-semibold text-blue-700 dark:text-blue-400 flex items-center gap-0.5">
                                     <TrendingUp className="size-3" />
                                     Sangat Sehat
                                 </span>
@@ -265,7 +265,7 @@ export default function AnalisisKeuangan({
                                 <span className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
                                     {exemptionCandidates.length || 3} Siswa
                                 </span>
-                                <span className="text-xs font-semibold text-amber-600 dark:text-amber-400">
+                                <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">
                                     Prasejahtera
                                 </span>
                             </div>
@@ -279,7 +279,7 @@ export default function AnalisisKeuangan({
                                 <span className="font-semibold text-slate-700 dark:text-slate-300">Siap Ditindaklanjuti</span>
                             </div>
                             <div className="h-1.5 w-full rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
-                                <div className="h-full rounded-full bg-amber-500" style={{ width: '85%' }} />
+                                <div className="h-full rounded-full bg-blue-700" style={{ width: '85%' }} />
                             </div>
                         </div>
                     </div>
@@ -299,7 +299,7 @@ export default function AnalisisKeuangan({
                                 <span className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
                                     {collectionRate}%
                                 </span>
-                                <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400">
+                                <span className="text-xs font-semibold text-blue-700 dark:text-blue-400">
                                     {paidList.length} Lunas
                                 </span>
                             </div>
@@ -348,7 +348,7 @@ export default function AnalisisKeuangan({
                         >
                             <Sparkles className="size-4" />
                             <span>Rekomendasi Dispensasi & PIP</span>
-                            <span className="rounded-full bg-amber-100 px-1.5 py-0.5 text-[10px] font-bold text-amber-700 dark:bg-amber-950 dark:text-amber-300">
+                            <span className="rounded-full border border-blue-200 bg-blue-50 px-1.5 py-0.5 text-[10px] font-bold text-blue-700 dark:border-blue-900/60 dark:bg-blue-950 dark:text-blue-300">
                                 {exemptionCandidates.length || 3}
                             </span>
                         </button>
@@ -439,7 +439,7 @@ export default function AnalisisKeuangan({
                                                     <div
                                                         className={cn(
                                                             'h-full rounded-full',
-                                                            percent >= 90 ? 'bg-blue-600' : percent >= 75 ? 'bg-blue-500' : 'bg-amber-500'
+                                                            percent >= 90 ? 'bg-blue-700' : 'bg-blue-500'
                                                         )}
                                                         style={{ width: `${percent}%` }}
                                                     />
@@ -477,7 +477,7 @@ export default function AnalisisKeuangan({
                             <div className="flex flex-col justify-between gap-3 border-b border-slate-200/80 pb-4 sm:flex-row sm:items-center dark:border-slate-800">
                                 <div>
                                     <div className="flex items-center gap-2">
-                                        <Sparkles className="size-4 text-amber-500" />
+                                        <Sparkles className="size-4 text-blue-600 dark:text-blue-400" />
                                         <h2 className="text-sm font-bold text-slate-900 dark:text-white sm:text-base">
                                             Deteksi AI: Siswa Berpotensi Keringanan / Program Indonesia Pintar (PIP)
                                         </h2>
@@ -486,7 +486,7 @@ export default function AnalisisKeuangan({
                                         Sistem mengidentifikasi siswa dengan kehadiran tinggi namun mengalami kendala pembayaran, untuk mencegah putus sekolah karena faktor ekonomi.
                                     </p>
                                 </div>
-                                <span className="rounded-md border border-amber-200 bg-amber-50 px-2.5 py-1 text-xs font-semibold text-amber-700 dark:border-amber-900/60 dark:bg-amber-950 dark:text-amber-300">
+                                <span className="rounded-md border border-slate-200 bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
                                     3 Siswa Memerlukan Kebijakan
                                 </span>
                             </div>
@@ -505,7 +505,7 @@ export default function AnalisisKeuangan({
                                                 <span className="rounded border border-slate-200 bg-white px-2 py-0.5 text-[10px] font-semibold text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
                                                     {s.className}
                                                 </span>
-                                                <span className="rounded border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-[10px] font-semibold text-emerald-700 dark:border-emerald-900/60 dark:bg-emerald-950 dark:text-emerald-300">
+                                                <span className="rounded border border-blue-200 bg-blue-50 px-2 py-0.5 text-[10px] font-semibold text-blue-700 dark:border-blue-900/60 dark:bg-blue-950 dark:text-blue-300">
                                                     Presensi: {s.attendanceRate}% (Rajin)
                                                 </span>
                                             </div>
@@ -699,7 +699,7 @@ export default function AnalisisKeuangan({
 
                             {/* WhatsApp Chat Bubble Mockup */}
                             <div className="rounded-xl border border-slate-200/80 bg-slate-100/60 p-4 dark:border-slate-800 dark:bg-[#080d1a]">
-                                <div className="max-w-xl rounded-lg bg-emerald-50 border border-emerald-200 p-4 text-xs leading-relaxed text-slate-800 shadow-xs dark:bg-emerald-950/40 dark:border-emerald-900/60 dark:text-slate-100 whitespace-pre-wrap">
+                                <div className="max-w-xl rounded-lg bg-blue-50 border border-blue-200 p-4 text-xs leading-relaxed text-slate-800 shadow-xs dark:bg-blue-950/40 dark:border-blue-900/60 dark:text-slate-100 whitespace-pre-wrap">
                                     {getAiReminderMessage()}
                                 </div>
                             </div>
@@ -713,7 +713,7 @@ export default function AnalisisKeuangan({
                                 >
                                     {copied ? (
                                         <>
-                                            <Check className="size-3.5 text-emerald-600" />
+                                            <Check className="size-3.5 text-blue-700 dark:text-blue-400" />
                                             <span>Tersalin!</span>
                                         </>
                                     ) : (
@@ -727,7 +727,7 @@ export default function AnalisisKeuangan({
                                 <button
                                     type="button"
                                     onClick={handleSendWhatsApp}
-                                    className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-600 px-4 py-2 text-xs font-semibold text-white shadow-xs transition-colors hover:bg-emerald-700 active:scale-95 cursor-pointer"
+                                    className="inline-flex items-center gap-1.5 rounded-lg bg-blue-700 px-4 py-2 text-xs font-semibold text-white shadow-xs transition-colors hover:bg-blue-800 active:scale-95 cursor-pointer"
                                 >
                                     <Send className="size-3.5" />
                                     <span>Kirim via WhatsApp Resmi</span>
@@ -766,7 +766,7 @@ export default function AnalisisKeuangan({
                                 <div className="font-bold text-blue-800 dark:text-blue-300 text-xs">
                                     Skenario B: Insentif Pelunasan 1 Semester (Diskon 5%)
                                 </div>
-                                <div className="text-2xl font-extrabold text-emerald-600 dark:text-emerald-400">
+                                <div className="text-2xl font-extrabold text-blue-700 dark:text-blue-400">
                                     +Rp 18.5 Jt
                                 </div>
                                 <p className="text-[11px] text-slate-500 leading-relaxed">
@@ -778,7 +778,7 @@ export default function AnalisisKeuangan({
                                 <div className="font-bold text-slate-900 dark:text-white text-xs">
                                     Skenario C: Alokasi Subsidi Silang Komite
                                 </div>
-                                <div className="text-2xl font-extrabold text-amber-600 dark:text-amber-400">
+                                <div className="text-2xl font-extrabold text-slate-800 dark:text-slate-200">
                                     Rp 4.2 Jt
                                 </div>
                                 <p className="text-[11px] text-slate-500 leading-relaxed">

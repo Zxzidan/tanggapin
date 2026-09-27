@@ -251,8 +251,8 @@ export default function PersetujuanSekolah({
                                 Meja Kerja Kepala Sekolah • Tanggapin Intelligence
                             </span>
                             <span className="hidden text-slate-300 sm:inline dark:text-slate-700">•</span>
-                            <span className="inline-flex items-center gap-1 text-xs font-semibold text-amber-600 dark:text-amber-400">
-                                <span className="inline-block size-1.5 animate-pulse rounded-full bg-amber-500" />
+                            <span className="inline-flex items-center gap-1 text-xs font-semibold text-blue-700 dark:text-blue-400">
+                                <span className="inline-block size-1.5 animate-pulse rounded-full bg-blue-600" />
                                 {pendingDispensationsCount + pendingCasesCount} Permohonan Butuh Keputusan
                             </span>
                         </div>
@@ -286,7 +286,7 @@ export default function PersetujuanSekolah({
                                 <span className="text-[11px] font-semibold tracking-wider text-slate-500 uppercase">
                                     Antrean Menunggu Putusan
                                 </span>
-                                <div className="rounded-lg bg-amber-50 p-2 text-amber-600 dark:bg-amber-950/60 dark:text-amber-400">
+                                <div className="rounded-lg bg-slate-100 p-2 text-slate-600 dark:bg-slate-800 dark:text-slate-300">
                                     <Clock className="size-4" />
                                 </div>
                             </div>
@@ -294,7 +294,7 @@ export default function PersetujuanSekolah({
                                 <span className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
                                     {pendingDispensationsCount + pendingCasesCount}
                                 </span>
-                                <span className="text-xs font-semibold text-amber-600 dark:text-amber-400">
+                                <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">
                                     Perlu Tindakan
                                 </span>
                             </div>
@@ -303,7 +303,7 @@ export default function PersetujuanSekolah({
                             </p>
                         </div>
                         <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800">
-                            <div className="h-full rounded-full bg-amber-500" style={{ width: '60%' }} />
+                            <div className="h-full rounded-full bg-blue-700" style={{ width: '60%' }} />
                         </div>
                     </div>
 
@@ -313,7 +313,7 @@ export default function PersetujuanSekolah({
                                 <span className="text-[11px] font-semibold tracking-wider text-slate-500 uppercase">
                                     Keringanan Disetujui
                                 </span>
-                                <div className="rounded-lg bg-emerald-50 p-2 text-emerald-600 dark:bg-emerald-950/60 dark:text-emerald-400">
+                                <div className="rounded-lg bg-blue-50 p-2 text-blue-700 dark:bg-blue-950/60 dark:text-blue-300">
                                     <WalletCards className="size-4" />
                                 </div>
                             </div>
@@ -321,7 +321,7 @@ export default function PersetujuanSekolah({
                                 <span className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
                                     Rp 4,2 Jt
                                 </span>
-                                <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400">
+                                <span className="text-xs font-semibold text-blue-700 dark:text-blue-400">
                                     Tersalurkan
                                 </span>
                             </div>
@@ -330,7 +330,7 @@ export default function PersetujuanSekolah({
                             </p>
                         </div>
                         <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800">
-                            <div className="h-full rounded-full bg-emerald-500" style={{ width: '100%' }} />
+                            <div className="h-full rounded-full bg-blue-700" style={{ width: '100%' }} />
                         </div>
                     </div>
 
@@ -348,7 +348,7 @@ export default function PersetujuanSekolah({
                                 <span className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
                                     100%
                                 </span>
-                                <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400">
+                                <span className="text-xs font-semibold text-blue-700 dark:text-blue-400">
                                     Tertangani
                                 </span>
                             </div>
@@ -367,7 +367,7 @@ export default function PersetujuanSekolah({
                                 <span className="text-[11px] font-semibold tracking-wider text-slate-500 uppercase">
                                     Tanda Tangan Digital Rapor
                                 </span>
-                                <div className="rounded-lg bg-indigo-50 p-2 text-indigo-600 dark:bg-indigo-950/60 dark:text-indigo-400">
+                                <div className="rounded-lg bg-blue-50 p-2 text-blue-600 dark:bg-blue-950/60 dark:text-blue-400">
                                     <FileSignature className="size-4" />
                                 </div>
                             </div>
@@ -375,7 +375,7 @@ export default function PersetujuanSekolah({
                                 <span className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
                                     2 Rombel
                                 </span>
-                                <span className="text-xs font-semibold text-indigo-600 dark:text-indigo-400">
+                                <span className="text-xs font-semibold text-blue-600 dark:text-blue-400">
                                     Siap Legalisasi
                                 </span>
                             </div>
@@ -384,7 +384,7 @@ export default function PersetujuanSekolah({
                             </p>
                         </div>
                         <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800">
-                            <div className="h-full rounded-full bg-indigo-600" style={{ width: '80%' }} />
+                            <div className="h-full rounded-full bg-blue-600" style={{ width: '80%' }} />
                         </div>
                     </div>
                 </div>
@@ -404,7 +404,7 @@ export default function PersetujuanSekolah({
                         <WalletCards className="size-4" />
                         <span>Persetujuan Keringanan Biaya (PIP/SPP)</span>
                         {pendingDispensationsCount > 0 && (
-                            <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-bold text-amber-800 dark:bg-amber-950/80 dark:text-amber-300">
+                            <span className="rounded-full border border-blue-200 bg-blue-50 px-2 py-0.5 text-[10px] font-bold text-blue-700 dark:border-blue-900/60 dark:bg-blue-950 dark:text-blue-300">
                                 {pendingDispensationsCount} Baru
                             </span>
                         )}
@@ -423,7 +423,7 @@ export default function PersetujuanSekolah({
                         <ShieldAlert className="size-4" />
                         <span>Disposisi Kasus & Mediasi Orang Tua</span>
                         {pendingCasesCount > 0 && (
-                            <span className="rounded-full bg-red-100 px-2 py-0.5 text-[10px] font-bold text-red-800 dark:bg-red-950/80 dark:text-red-300">
+                            <span className="rounded-full bg-slate-200 px-2 py-0.5 text-[10px] font-bold text-slate-800 dark:bg-slate-800 dark:text-slate-200">
                                 {pendingCasesCount} Prioritas
                             </span>
                         )}
@@ -509,7 +509,7 @@ export default function PersetujuanSekolah({
                                                         <button
                                                             type="button"
                                                             onClick={() => handleApproveDispensation(item.id, true)}
-                                                            className="inline-flex cursor-pointer items-center gap-1 rounded-lg bg-emerald-600 px-3 py-1.5 text-xs font-bold text-white shadow-xs hover:bg-emerald-700 active:scale-95"
+                                                            className="inline-flex cursor-pointer items-center gap-1 rounded-lg bg-blue-700 px-3 py-1.5 text-xs font-bold text-white shadow-xs hover:bg-blue-800 active:scale-95"
                                                         >
                                                             <Check className="size-3.5" />
                                                             <span>Setujui</span>
@@ -526,10 +526,10 @@ export default function PersetujuanSekolah({
                                                 ) : (
                                                     <span
                                                         className={cn(
-                                                            'rounded-full px-2.5 py-1 text-xs font-bold',
+                                                            'rounded-full px-2.5 py-1 text-xs font-bold border',
                                                             item.status === 'Disetujui'
-                                                                ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/80 dark:text-emerald-300'
-                                                                : 'bg-rose-100 text-rose-800 dark:bg-rose-950/80 dark:text-rose-300',
+                                                                ? 'border-blue-200 bg-blue-50 text-blue-700 dark:border-blue-900/60 dark:bg-blue-950 dark:text-blue-300'
+                                                                : 'border-slate-300 bg-slate-100 text-slate-800 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200',
                                                         )}
                                                     >
                                                         {item.status}
@@ -568,7 +568,7 @@ export default function PersetujuanSekolah({
                                         <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-start">
                                             <div className="space-y-1.5">
                                                 <div className="flex flex-wrap items-center gap-2">
-                                                    <span className="rounded-md bg-red-100 px-2 py-0.5 text-[10px] font-bold text-red-700 dark:bg-red-900/60 dark:text-red-300">
+                                                    <span className="rounded-md bg-slate-200 px-2 py-0.5 text-[10px] font-bold text-slate-700 dark:bg-slate-800 dark:text-slate-300">
                                                         {cas.code}
                                                     </span>
                                                     <h4 className="text-xs font-bold text-slate-900 dark:text-white">
@@ -605,7 +605,7 @@ export default function PersetujuanSekolah({
                                                     </button>
                                                 ) : (
                                                     <div className="flex flex-col items-end gap-1">
-                                                        <span className="rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-bold text-emerald-800 dark:bg-emerald-950/80 dark:text-emerald-300">
+                                                        <span className="rounded-full border border-blue-200 bg-blue-50 px-2.5 py-0.5 text-xs font-bold text-blue-700 dark:border-blue-900/60 dark:bg-blue-950 dark:text-blue-300">
                                                             {cas.status}
                                                         </span>
                                                         <button
@@ -678,17 +678,17 @@ export default function PersetujuanSekolah({
                                                 </div>
                                                 <div className="flex justify-between">
                                                     <span className="text-slate-500">Rapor AI Ter-generate:</span>
-                                                    <span className="font-semibold text-emerald-600 dark:text-emerald-400">100% Siap</span>
+                                                    <span className="font-semibold text-blue-700 dark:text-blue-400">100% Siap</span>
                                                 </div>
                                                 <div className="flex justify-between">
                                                     <span className="text-slate-500">Status Legalisasi:</span>
                                                     <span className="font-bold text-slate-900 dark:text-white">
                                                         {status.certified ? (
-                                                            <span className="text-emerald-600 dark:text-emerald-400">
+                                                            <span className="text-blue-700 dark:text-blue-400">
                                                                 Telah Dilegalisasi ({status.certifiedAt})
                                                             </span>
                                                         ) : (
-                                                            <span className="text-amber-600 dark:text-amber-400">
+                                                            <span className="text-slate-600 dark:text-slate-400">
                                                                 Menunggu Otorisasi
                                                             </span>
                                                         )}
@@ -698,7 +698,7 @@ export default function PersetujuanSekolah({
 
                                             {status.certified ? (
                                                 <div className="flex items-center justify-between">
-                                                    <span className="flex items-center gap-1.5 text-xs font-semibold text-emerald-600 dark:text-emerald-400">
+                                                    <span className="flex items-center gap-1.5 text-xs font-semibold text-blue-700 dark:text-blue-400">
                                                         <CheckCircle2 className="size-4" />
                                                         Sertifikat Digital Valid
                                                     </span>

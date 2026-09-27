@@ -218,8 +218,8 @@ export default function SupervisiAkademik({
                                 T.A. 2025/2026 Ganjil • Tanggapin Intelligence
                             </span>
                             <span className="hidden text-slate-300 sm:inline dark:text-slate-700">•</span>
-                            <span className="inline-flex items-center gap-1 text-xs font-semibold text-emerald-600 dark:text-emerald-400">
-                                <span className="inline-block size-1.5 animate-pulse rounded-full bg-emerald-500" />
+                            <span className="inline-flex items-center gap-1 text-xs font-semibold text-blue-700 dark:text-blue-400">
+                                <span className="inline-block size-1.5 animate-pulse rounded-full bg-blue-600" />
                                 Kepatuhan GTK: 94.2% Lengkap
                             </span>
                         </div>
@@ -249,7 +249,7 @@ export default function SupervisiAkademik({
                             }}
                             className="inline-flex cursor-pointer items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-xs font-medium text-slate-700 transition-colors hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
                         >
-                            <Zap className="size-3.5 text-amber-500" />
+                            <Zap className="size-3.5 text-blue-600 dark:text-blue-400" />
                             <span>Scan Audit AI</span>
                         </button>
                     </div>
@@ -271,7 +271,7 @@ export default function SupervisiAkademik({
                                 <span className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
                                     94.2%
                                 </span>
-                                <span className="text-xs font-medium text-emerald-600 dark:text-emerald-400">
+                                <span className="text-xs font-medium text-blue-600 dark:text-blue-400">
                                     ↑ +4.1%
                                 </span>
                             </div>
@@ -290,7 +290,7 @@ export default function SupervisiAkademik({
                                 <span className="text-[11px] font-semibold tracking-wider text-slate-500 uppercase">
                                     Skor Rata-rata Mutu Ajar
                                 </span>
-                                <div className="rounded-lg bg-emerald-50 p-2 text-emerald-600 dark:bg-emerald-950/60 dark:text-emerald-400">
+                                <div className="rounded-lg bg-blue-50 p-2 text-blue-600 dark:bg-blue-950/60 dark:text-blue-400">
                                     <Award className="size-4" />
                                 </div>
                             </div>
@@ -305,7 +305,7 @@ export default function SupervisiAkademik({
                             </p>
                         </div>
                         <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800">
-                            <div className="h-full rounded-full bg-emerald-500" style={{ width: '89.4%' }} />
+                            <div className="h-full rounded-full bg-blue-600" style={{ width: '89.4%' }} />
                         </div>
                     </div>
 
@@ -315,7 +315,7 @@ export default function SupervisiAkademik({
                                 <span className="text-[11px] font-semibold tracking-wider text-slate-500 uppercase">
                                     Diferensiasi & P5
                                 </span>
-                                <div className="rounded-lg bg-indigo-50 p-2 text-indigo-600 dark:bg-indigo-950/60 dark:text-indigo-400">
+                                <div className="rounded-lg bg-slate-100 p-2 text-slate-700 dark:bg-slate-800 dark:text-slate-300">
                                     <Layers className="size-4" />
                                 </div>
                             </div>
@@ -323,7 +323,7 @@ export default function SupervisiAkademik({
                                 <span className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
                                     88.0%
                                 </span>
-                                <span className="text-xs font-medium text-emerald-600 dark:text-emerald-400">
+                                <span className="text-xs font-medium text-blue-600 dark:text-blue-400">
                                     Siap DUDI
                                 </span>
                             </div>
@@ -332,7 +332,7 @@ export default function SupervisiAkademik({
                             </p>
                         </div>
                         <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800">
-                            <div className="h-full rounded-full bg-indigo-600" style={{ width: '88%' }} />
+                            <div className="h-full rounded-full bg-blue-600" style={{ width: '88%' }} />
                         </div>
                     </div>
 
@@ -342,7 +342,7 @@ export default function SupervisiAkademik({
                                 <span className="text-[11px] font-semibold tracking-wider text-slate-500 uppercase">
                                     Supervisi Observasi
                                 </span>
-                                <div className="rounded-lg bg-amber-50 p-2 text-amber-600 dark:bg-amber-950/60 dark:text-amber-400">
+                                <div className="rounded-lg bg-blue-50 p-2 text-blue-600 dark:bg-blue-950/60 dark:text-blue-400">
                                     <ClipboardCheck className="size-4" />
                                 </div>
                             </div>
@@ -350,7 +350,7 @@ export default function SupervisiAkademik({
                                 <span className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
                                     100%
                                 </span>
-                                <span className="text-xs font-medium text-emerald-600 dark:text-emerald-400">
+                                <span className="text-xs font-medium text-blue-600 dark:text-blue-400">
                                     Tepat Waktu
                                 </span>
                             </div>
@@ -359,7 +359,7 @@ export default function SupervisiAkademik({
                             </p>
                         </div>
                         <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800">
-                            <div className="h-full rounded-full bg-amber-500" style={{ width: '100%' }} />
+                            <div className="h-full rounded-full bg-blue-600" style={{ width: '100%' }} />
                         </div>
                     </div>
                 </div>
@@ -495,8 +495,8 @@ export default function SupervisiAkademik({
                                                             className={cn(
                                                                 'rounded-full px-2 py-0.5 text-[9px] font-bold',
                                                                 doc.status === 'Lengkap'
-                                                                    ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/80 dark:text-emerald-300'
-                                                                    : 'bg-amber-100 text-amber-800 dark:bg-amber-950/80 dark:text-amber-300',
+                                                                    ? 'bg-blue-100 text-blue-800 dark:bg-blue-950/80 dark:text-blue-300'
+                                                                    : 'bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-300',
                                                             )}
                                                         >
                                                             {doc.status}
@@ -547,7 +547,7 @@ export default function SupervisiAkademik({
                                             type="button"
                                             onClick={() => handleRunAiAudit(activeDoc.id)}
                                             disabled={isAnalyzing}
-                                            className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2.5 text-xs font-semibold text-white shadow-md transition-all hover:opacity-95 active:scale-95 disabled:opacity-50"
+                                            className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-xs font-semibold text-white shadow-sm transition-all hover:bg-blue-700 active:scale-95 disabled:opacity-50"
                                         >
                                             {isAnalyzing ? (
                                                 <RefreshCw className="size-4 animate-spin" />
@@ -584,7 +584,7 @@ export default function SupervisiAkademik({
                                                         <button
                                                             type="button"
                                                             onClick={() => toast.success(`Dokumen "${activeDoc.title}" resmi disahkan oleh Kepala Sekolah.`)}
-                                                            className="inline-flex cursor-pointer items-center gap-1.5 rounded-lg bg-emerald-600 px-3 py-1.5 text-xs font-semibold text-white shadow-xs hover:bg-emerald-700 active:scale-95"
+                                                            className="inline-flex cursor-pointer items-center gap-1.5 rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-semibold text-white shadow-xs hover:bg-blue-700 active:scale-95"
                                                         >
                                                             <ShieldCheck className="size-3.5" />
                                                             <span>Sahkan Dokumen</span>
@@ -624,13 +624,13 @@ export default function SupervisiAkademik({
                                                             <span className="text-slate-700 dark:text-slate-300">
                                                                 2. Pembelajaran Berdiferensiasi
                                                             </span>
-                                                            <span className="text-indigo-600 dark:text-indigo-400">
+                                                            <span className="text-blue-600 dark:text-blue-400">
                                                                 {activeAudit.curriculumCheck.differentiation}%
                                                             </span>
                                                         </div>
                                                         <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-slate-700">
                                                             <div
-                                                                className="h-full rounded-full bg-indigo-600"
+                                                                className="h-full rounded-full bg-blue-600"
                                                                 style={{ width: `${activeAudit.curriculumCheck.differentiation}%` }}
                                                             />
                                                         </div>
@@ -644,13 +644,13 @@ export default function SupervisiAkademik({
                                                             <span className="text-slate-700 dark:text-slate-300">
                                                                 3. Asesmen Diagnostik & Formatif
                                                             </span>
-                                                            <span className="text-emerald-600 dark:text-emerald-400">
+                                                            <span className="text-blue-600 dark:text-blue-400">
                                                                 {activeAudit.curriculumCheck.formativeAssessment}%
                                                             </span>
                                                         </div>
                                                         <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-slate-700">
                                                             <div
-                                                                className="h-full rounded-full bg-emerald-600"
+                                                                className="h-full rounded-full bg-blue-600"
                                                                 style={{ width: `${activeAudit.curriculumCheck.formativeAssessment}%` }}
                                                             />
                                                         </div>
@@ -664,13 +664,13 @@ export default function SupervisiAkademik({
                                                             <span className="text-slate-700 dark:text-slate-300">
                                                                 4. Integrasi Karakter P5
                                                             </span>
-                                                            <span className="text-amber-600 dark:text-amber-400">
+                                                            <span className="text-slate-700 dark:text-slate-300">
                                                                 {activeAudit.curriculumCheck.p5Integration}%
                                                             </span>
                                                         </div>
                                                         <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-slate-700">
                                                             <div
-                                                                className="h-full rounded-full bg-amber-600"
+                                                                className="h-full rounded-full bg-slate-600 dark:bg-slate-500"
                                                                 style={{ width: `${activeAudit.curriculumCheck.p5Integration}%` }}
                                                             />
                                                         </div>
@@ -683,30 +683,30 @@ export default function SupervisiAkademik({
 
                                             {/* Strengths & Improvements */}
                                             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                                                <div className="rounded-xl border border-emerald-200 bg-emerald-50/50 p-4 dark:border-emerald-900/40 dark:bg-emerald-950/20">
-                                                    <h5 className="flex items-center gap-1.5 text-xs font-bold text-emerald-800 dark:text-emerald-300">
+                                                <div className="rounded-xl border border-blue-200 bg-blue-50/50 p-4 dark:border-blue-900/40 dark:bg-blue-950/20">
+                                                    <h5 className="flex items-center gap-1.5 text-xs font-bold text-blue-800 dark:text-blue-300">
                                                         <CheckCircle2 className="size-4" />
                                                         Kelebihan Teridentifikasi
                                                     </h5>
                                                     <ul className="mt-2 space-y-1.5 text-xs text-slate-700 dark:text-slate-300">
                                                         {activeAudit.strengths.map((str, idx) => (
                                                             <li key={idx} className="flex items-start gap-1.5">
-                                                                <span className="mt-1 text-emerald-600 font-bold">•</span>
+                                                                <span className="mt-1 text-blue-600 font-bold">•</span>
                                                                 <span>{str}</span>
                                                             </li>
                                                         ))}
                                                     </ul>
                                                 </div>
 
-                                                <div className="rounded-xl border border-amber-200 bg-amber-50/50 p-4 dark:border-amber-900/40 dark:bg-amber-950/20">
-                                                    <h5 className="flex items-center gap-1.5 text-xs font-bold text-amber-800 dark:text-amber-300">
+                                                <div className="rounded-xl border border-slate-200 bg-slate-50/50 p-4 dark:border-slate-800 dark:bg-slate-900/40">
+                                                    <h5 className="flex items-center gap-1.5 text-xs font-bold text-slate-800 dark:text-slate-200">
                                                         <Lightbulb className="size-4" />
                                                         Saran Penyempurnaan AI
                                                     </h5>
                                                     <ul className="mt-2 space-y-1.5 text-xs text-slate-700 dark:text-slate-300">
                                                         {activeAudit.improvements.map((imp, idx) => (
                                                             <li key={idx} className="flex items-start gap-1.5">
-                                                                <span className="mt-1 text-amber-600 font-bold">•</span>
+                                                                <span className="mt-1 text-slate-500 font-bold">•</span>
                                                                 <span>{imp}</span>
                                                             </li>
                                                         ))}
@@ -917,7 +917,7 @@ export default function SupervisiAkademik({
                                     Ringkasan Skor Observasi
                                 </h4>
 
-                                <div className="flex flex-col items-center justify-center rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50/50 p-6 text-center dark:from-blue-950/40 dark:to-indigo-950/30">
+                                <div className="flex flex-col items-center justify-center rounded-xl bg-blue-50/60 p-6 text-center dark:bg-blue-950/30">
                                     <span className="text-xs font-semibold text-blue-700 dark:text-blue-300">
                                         Total Skor Perolehan
                                     </span>
@@ -948,7 +948,7 @@ export default function SupervisiAkademik({
                                     </div>
                                 </div>
 
-                                <div className="rounded-xl border border-emerald-200 bg-emerald-50/50 p-3.5 text-xs text-emerald-900 dark:border-emerald-900/50 dark:bg-emerald-950/20 dark:text-emerald-200">
+                                <div className="rounded-xl border border-blue-200 bg-blue-50/50 p-3.5 text-xs text-blue-900 dark:border-blue-900/50 dark:bg-blue-950/20 dark:text-blue-200">
                                     <div className="flex items-center gap-1.5 font-bold">
                                         <Sparkles className="size-3.5" />
                                         <span>Apresiasi Otomatis AI</span>
@@ -1024,7 +1024,7 @@ export default function SupervisiAkademik({
                                                     {item.role}
                                                 </p>
                                             </div>
-                                            <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-bold text-emerald-800 dark:bg-emerald-950/80 dark:text-emerald-300">
+                                            <span className="rounded-full bg-blue-100 px-2 py-0.5 text-[10px] font-bold text-blue-800 dark:bg-blue-950/80 dark:text-blue-300">
                                                 Skor: {item.currentScore}
                                             </span>
                                         </div>

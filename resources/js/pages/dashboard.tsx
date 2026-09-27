@@ -667,7 +667,7 @@ export default function Dashboard({
                                     href="/persetujuan-sekolah"
                                     className="group rounded-xl border border-slate-200 bg-slate-50/50 p-4 text-center transition-colors hover:border-slate-300 hover:bg-slate-50 dark:border-slate-800 dark:bg-[#0f172a]/40 dark:hover:border-slate-700"
                                 >
-                                    <ShieldCheck className="size-3.5 text-blue-700 dark:text-blue-400" />
+                                    <ShieldCheck className="mx-auto mb-2 size-5 text-blue-700 dark:text-blue-400" />
                                     <div className="text-xs font-semibold text-slate-900 dark:text-white">
                                         Pusat Persetujuan
                                     </div>
