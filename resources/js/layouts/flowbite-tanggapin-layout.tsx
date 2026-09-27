@@ -507,9 +507,9 @@ export default function FlowbiteTanggapinLayout({
 
                             <Link
                                 href="/dashboard"
-                                className="ms-1 flex items-center md:me-10"
+                                className="ms-1 flex items-center md:me-8 focus:outline-none"
                             >
-                                <TanggapinLogo />
+                                <TanggapinLogo size="md" />
                             </Link>
                         </div>
 

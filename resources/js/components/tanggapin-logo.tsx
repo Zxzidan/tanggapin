@@ -1,145 +1,159 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
 
-interface TanggapinLogoProps {
+export interface TanggapinLogoProps {
     className?: string;
     size?: 'sm' | 'md' | 'lg' | 'xl';
     showDescriptor?: boolean;
     showTagline?: boolean;
     variant?: 'dark' | 'light' | 'auto';
+    iconOnly?: boolean;
+    centered?: boolean;
 }
 
 export default function TanggapinLogo({
     className,
     size = 'md',
-    showDescriptor = true,
+    showDescriptor = false,
     showTagline = false,
     variant = 'auto',
+    iconOnly = false,
+    centered = false,
 }: TanggapinLogoProps) {
+    // Sizing maps for height & width proportions
     const sizeConfig = {
         sm: {
-            icon: 'size-7',
-            svg: 'size-4',
-            title: 'text-sm',
-            descriptor: 'text-[9px]',
-            badge: 'text-[9px] px-1.5 py-0.2',
+            logoHeight: 'h-7 sm:h-8',
+            iconSize: 'size-7 sm:size-8',
+            descriptor: 'text-[10px]',
+            tagline: 'text-[10px]',
         },
         md: {
-            icon: 'size-9',
-            svg: 'size-5',
-            title: 'text-base',
-            descriptor: 'text-[10px]',
-            badge: 'text-[10px] px-2 py-0.5',
+            logoHeight: 'h-8 sm:h-9',
+            iconSize: 'size-8 sm:size-9',
+            descriptor: 'text-[11px]',
+            tagline: 'text-[11px]',
         },
         lg: {
-            icon: 'size-11',
-            svg: 'size-6',
-            title: 'text-xl',
+            logoHeight: 'h-10 sm:h-11',
+            iconSize: 'size-10 sm:size-11',
             descriptor: 'text-xs',
-            badge: 'text-xs px-2.5 py-0.5',
+            tagline: 'text-xs',
         },
         xl: {
-            icon: 'size-14',
-            svg: 'size-8',
-            title: 'text-3xl',
+            logoHeight: 'h-12 sm:h-14',
+            iconSize: 'size-12 sm:size-14',
             descriptor: 'text-sm',
-            badge: 'text-xs px-3 py-1',
+            tagline: 'text-sm',
         },
     }[size];
 
     return (
         <div
             className={cn(
-                'inline-flex items-center gap-2.5 select-none',
+                'inline-flex flex-col select-none justify-center',
+                centered ? 'items-center text-center' : 'items-start text-left',
                 className,
             )}
         >
-            {/* Geometric Dignified Emblem: Compassion & Vigilance / Proactive Follow-up */}
             <div
                 className={cn(
-                    'relative flex shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-blue-700 via-blue-800 to-blue-950 text-white shadow-sm ring-1 ring-blue-500/20',
-                    sizeConfig.icon,
+                    'flex items-center gap-2',
+                    centered && 'justify-center',
                 )}
             >
-                <svg
-                    className={sizeConfig.svg}
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                >
-                    {/* Outer structured shield arc */}
-                    <path
-                        d="M12 2L4 5.5V11.5C4 16.5 7.5 21 12 22C16.5 21 20 16.5 20 11.5V5.5L12 2Z"
-                        stroke="currentColor"
-                        strokeWidth="1.8"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="opacity-90"
-                    />
-                    {/* Inner Forward / Responsive Chevron (Tanggap) */}
-                    <path
-                        d="M8.5 12L11 14.5L15.5 9.5"
-                        stroke="currentColor"
-                        strokeWidth="2.2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                    />
-                </svg>
-                {/* Subtle indicator dot: Quick Recognition */}
-                <span
-                    className={cn(
-                        'absolute -top-0.5 -right-0.5 size-2 rounded-full bg-blue-400 ring-2',
-                        variant === 'light'
-                            ? 'ring-[#070b14]'
-                            : 'ring-white dark:ring-neutral-900',
-                    )}
-                />
+                {iconOnly ? (
+                    // Icon-only emblem variant
+                    <>
+                        {variant !== 'light' && (
+                            <img
+                                src="/images/tanggapin-icon.png"
+                                alt="Tanggapin"
+                                className={cn(
+                                    'object-contain shrink-0 drop-shadow-2xs transition-all duration-200',
+                                    sizeConfig.iconSize,
+                                    variant === 'auto' && 'dark:hidden',
+                                )}
+                                draggable={false}
+                                loading="eager"
+                            />
+                        )}
+                        {variant !== 'dark' && (
+                            <img
+                                src="/images/tanggapin-icon-dark.png"
+                                alt="Tanggapin"
+                                className={cn(
+                                    'object-contain shrink-0 drop-shadow-2xs transition-all duration-200',
+                                    sizeConfig.iconSize,
+                                    variant === 'auto' && 'hidden dark:block',
+                                )}
+                                draggable={false}
+                                loading="eager"
+                            />
+                        )}
+                    </>
+                ) : (
+                    // Full Logo with emblem + text
+                    <>
+                        {variant !== 'light' && (
+                            <img
+                                src="/images/tanggapin-logo-cropped.png"
+                                alt="Tanggapin"
+                                className={cn(
+                                    'w-auto object-contain shrink-0 drop-shadow-2xs transition-all duration-200',
+                                    sizeConfig.logoHeight,
+                                    variant === 'auto' && 'dark:hidden',
+                                )}
+                                draggable={false}
+                                loading="eager"
+                            />
+                        )}
+                        {variant !== 'dark' && (
+                            <img
+                                src="/images/tanggapin-logo-dark.png"
+                                alt="Tanggapin"
+                                className={cn(
+                                    'w-auto object-contain shrink-0 drop-shadow-2xs transition-all duration-200',
+                                    sizeConfig.logoHeight,
+                                    variant === 'auto' && 'hidden dark:block',
+                                )}
+                                draggable={false}
+                                loading="eager"
+                            />
+                        )}
+                    </>
+                )}
             </div>
 
-            <div className="flex flex-col">
-                <div className="flex items-center gap-1.5">
-                    <span
-                        className={cn(
-                            'font-bold tracking-tight uppercase',
-                            variant === 'light'
-                                ? 'text-white'
-                                : variant === 'dark'
-                                  ? 'text-slate-900'
-                                  : 'text-slate-900 dark:text-slate-100',
-                            sizeConfig.title,
-                        )}
-                    >
-                        TANGGAPIN
-                    </span>
-                </div>
-                {showDescriptor && (
-                    <span
-                        className={cn(
-                            'leading-tight font-medium',
-                            variant === 'light'
-                                ? 'text-slate-300'
-                                : variant === 'dark'
-                                  ? 'text-slate-600'
-                                  : 'text-slate-500 dark:text-slate-400',
-                            sizeConfig.descriptor,
-                        )}
-                    >
-                        Platform Tindak Lanjut Siswa
-                    </span>
-                )}
-                {showTagline && (
-                    <span
-                        className={cn(
-                            'mt-0.5 text-[11px] font-medium tracking-tight',
-                            variant === 'light'
-                                ? 'text-blue-300'
-                                : 'text-blue-600 dark:text-blue-400',
-                        )}
-                    >
-                        Kenali lebih cepat. Tanggapi lebih tepat.
-                    </span>
-                )}
-            </div>
+            {showDescriptor && !iconOnly && (
+                <span
+                    className={cn(
+                        'mt-1 font-medium tracking-tight',
+                        variant === 'light'
+                            ? 'text-slate-300'
+                            : variant === 'dark'
+                              ? 'text-slate-600'
+                              : 'text-slate-500 dark:text-slate-400',
+                        sizeConfig.descriptor,
+                    )}
+                >
+                    Platform Sistem Informasi &amp; Tindak Lanjut Guru
+                </span>
+            )}
+
+            {showTagline && (
+                <span
+                    className={cn(
+                        'mt-0.5 font-medium tracking-tight',
+                        variant === 'light'
+                            ? 'text-blue-300'
+                            : 'text-blue-600 dark:text-blue-400',
+                        sizeConfig.tagline,
+                    )}
+                >
+                    Kenali lebih cepat. Tanggapi lebih tepat.
+                </span>
+            )}
         </div>
     );
 }

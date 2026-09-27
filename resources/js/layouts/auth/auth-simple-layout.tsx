@@ -17,7 +17,7 @@ export default function AuthSimpleLayout({
                             href={home()}
                             className="flex flex-col items-center gap-2 font-medium"
                         >
-                            <TanggapinLogo size="lg" showDescriptor={true} />
+                            <TanggapinLogo size="lg" showDescriptor={true} centered={true} />
                             <span className="sr-only">{title}</span>
                         </Link>
 

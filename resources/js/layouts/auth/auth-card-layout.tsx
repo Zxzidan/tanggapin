@@ -24,9 +24,9 @@ export default function AuthCardLayout({
             <div className="flex w-full max-w-md flex-col gap-6">
                 <Link
                     href={home()}
-                    className="flex items-center gap-2 self-center font-medium"
+                    className="flex items-center justify-center self-center font-medium"
                 >
-                    <TanggapinLogo size="lg" showDescriptor={true} />
+                    <TanggapinLogo size="lg" showDescriptor={true} centered={true} />
                 </Link>
 
                 <div className="flex flex-col gap-6">

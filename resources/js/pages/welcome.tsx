@@ -435,8 +435,8 @@ Hotline Layanan BOS: +62 812-9988-7766
                     <div className="mx-auto flex h-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
                         {/* Logo Left */}
                         <div className="flex items-center shrink-0">
-                            <Link href="/" className="flex items-center">
-                                <TanggapinLogo size="md" showDescriptor={true} />
+                            <Link href="/" className="flex items-center focus:outline-none">
+                                <TanggapinLogo size="md" showDescriptor={false} />
                             </Link>
                         </div>
 
@@ -850,9 +850,24 @@ Hotline Layanan BOS: +62 812-9988-7766
                         id="preview"
                         className="border-y border-slate-200/80 bg-slate-50/50 backdrop-blur-xs py-14 sm:py-20 dark:border-slate-800/80 dark:bg-[#0b1120] scroll-mt-24"
                     >
-                        <DashboardVideoPreview
-                            onExploreDemo={() => setIsDemoRoleModalOpen(true)}
-                        />
+                        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                            <div className="mx-auto mb-10 max-w-3xl text-center">
+                                <span className="inline-flex items-center gap-1.5 rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700 dark:border-blue-900 dark:bg-blue-950/60 dark:text-blue-300">
+                                    <span className="size-1.5 rounded-full bg-blue-600 animate-pulse" />
+                                    Simulasi Interaktif 6 Peran
+                                </span>
+                                <h2 className="mt-3 text-2xl font-extrabold tracking-tight text-slate-900 sm:text-3xl lg:text-4xl dark:text-white">
+                                    Tampilan Dashboard Dinamis Seluruh Peran
+                                </h2>
+                                <p className="mt-3 text-xs leading-relaxed text-slate-600 sm:text-sm dark:text-slate-300">
+                                    Lihat bagaimana alur kerja Kepala Sekolah, Operator, Guru Mapel, Wali Kelas, Bendahara, dan Guru BK terintegrasi otomatis dalam satu ekosistem tanpa sekat.
+                                </p>
+                            </div>
+
+                            <DashboardVideoPreview
+                                onExploreDemo={() => setIsDemoRoleModalOpen(true)}
+                            />
+                        </div>
                     </section>
 
                     {/* 4. Target User Roles Section */}
@@ -1172,7 +1187,7 @@ Hotline Layanan BOS: +62 812-9988-7766
                                 </p>
                                 <div className="rounded-xl border border-slate-800/90 bg-slate-900/60 p-3.5 backdrop-blur-xs">
                                     <div className="flex items-center gap-2 text-xs font-semibold text-white">
-                                        <ShieldCheck className="size-4 text-emerald-400 shrink-0" />
+                                        <ShieldCheck className="size-4 text-blue-400 shrink-0" />
                                         <span>Standar BOSP Kemendikbudristek</span>
                                     </div>
                                     <p className="mt-1 text-[11px] leading-relaxed text-slate-400">
@@ -1261,7 +1276,7 @@ Hotline Layanan BOS: +62 812-9988-7766
                                         href="tel:+6281299887766"
                                         className="flex items-center gap-2 text-slate-300 hover:text-white transition-colors"
                                     >
-                                        <Phone className="size-3.5 text-emerald-400 shrink-0" />
+                                        <Phone className="size-3.5 text-blue-400 shrink-0" />
                                         <span>Hotline: +62 812-9988-7766</span>
                                     </a>
                                     <div className="flex items-center gap-2 text-slate-400 text-[11px]">
@@ -1270,8 +1285,8 @@ Hotline Layanan BOS: +62 812-9988-7766
                                     </div>
                                 </div>
                                 <div className="pt-1">
-                                    <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/25 bg-emerald-950/60 px-2.5 py-1 text-[11px] font-medium text-emerald-300">
-                                        <span className="size-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                                    <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/25 bg-blue-950/60 px-2.5 py-1 text-[11px] font-medium text-blue-300">
+                                        <span className="size-1.5 rounded-full bg-blue-400 animate-pulse" />
                                         Layanan Konsultasi BOS Siaga
                                     </div>
                                 </div>
