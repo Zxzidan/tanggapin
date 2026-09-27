@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronRight, Building2, ShieldCheck, Check } from 'lucide-react';
+import { ChevronRight, Check } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import CinematicHeadline from '@/components/cinematic-headline';
@@ -338,32 +338,6 @@ export function MixpanelPricing({ onSelectPlan }: MixpanelPricingProps) {
           />
         </div>
 
-        {/* Startups / Sekolah Afirmasi Program Banner */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="text-center py-10 px-6 max-w-4xl mx-auto rounded-3xl border border-blue-200/80 bg-blue-50/60 dark:border-slate-800 dark:bg-slate-900/80 shadow-xs mb-14"
-        >
-          <div className="inline-flex items-center gap-2 rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300 border border-blue-200 dark:border-blue-800 px-3 py-1 text-xs font-bold mb-3">
-            <Building2 className="size-3.5" />
-            Program Kemitraan Khusus & Sekolah Afirmasi
-          </div>
-          <h3 className="text-xl sm:text-2xl font-bold mb-2 text-slate-900 dark:text-white">
-            Sekolah Rintisan & Wilayah 3T: Skema Pembiayaan Afirmasi BOSP
-          </h3>
-          <p className="text-slate-600 dark:text-slate-300 text-xs sm:text-sm mb-5 max-w-2xl mx-auto leading-relaxed">
-            Sekolah dengan status rintisan atau kategori afirmasi berhak memperoleh pendampingan implementasi intensif, bimtek pencegahan kekerasan TPPK Permendikbud 46/2023, serta skema termin fleksibel mengikuti pencairan kas daerah.
-          </p>
-          <button
-            type="button"
-            onClick={() => onSelectPlan && onSelectPlan('perintis')}
-            className="bg-white hover:bg-slate-50 text-blue-700 border border-blue-200 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-white dark:border-slate-700 px-6 py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all inline-flex items-center gap-2 mx-auto cursor-pointer shadow-xs"
-          >
-            Konsultasi Penganggaran Afirmasi <ChevronRight className="w-4 h-4" />
-          </button>
-        </motion.div>
-
         {/* Calculator Section */}
         <div id="pricing-calculator" className="pt-8 pb-4">
           <div className="max-w-xl mx-auto text-center mb-6">
@@ -381,30 +355,6 @@ export function MixpanelPricing({ onSelectPlan }: MixpanelPricingProps) {
           <p className="text-center text-xs text-slate-500 dark:text-slate-400 mt-5">
             * Seluruh paket langganan Tanggapin dapat dibiayai menggunakan alokasi Dana BOS Reguler atau Kinerja BOSP.
           </p>
-        </div>
-
-        {/* SPJ Dana BOS Legal Compliance Banner */}
-        <div className="mt-12 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-900/70 p-6 sm:p-8 shadow-xs">
-          <div className="flex flex-col justify-between gap-6 md:flex-row md:items-center">
-            <div className="flex items-start gap-4">
-              <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-400 border border-blue-200 dark:border-blue-800">
-                <ShieldCheck className="size-6" />
-              </div>
-              <div className="space-y-1">
-                <div className="flex flex-wrap items-center gap-2">
-                  <h4 className="text-base font-bold text-slate-900 dark:text-white">
-                    Kelengkapan Administrasi SPJ Dana BOS 100% Terpenuhi
-                  </h4>
-                  <span className="rounded-md bg-blue-100 text-blue-800 dark:bg-blue-950/60 dark:text-blue-300 border border-blue-200 dark:border-blue-800 px-2 py-0.5 text-[10px] font-bold">
-                    Siap Audit BPK / Inspektorat
-                  </span>
-                </div>
-                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                  Pengadaan resmi disertai <strong>Surat Penawaran, BAST, PKS / SPK, E-Faktur PPN,</strong> dan <strong>Kuitansi Resmi</strong> yang sesuai juknis BOS Permendikbudristek No. 63/2023.
-                </p>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </section>

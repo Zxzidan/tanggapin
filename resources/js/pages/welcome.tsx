@@ -59,15 +59,15 @@ const DEMO_ROLES = [
     {
         id: 'wali_kelas',
         title: 'Wali Kelas',
-        desc: 'Monitoring presensi rombel, pembinaan siswa & koordinasi rujukan ke BK.',
+        desc: 'Monitoring presensi rombel, pembinaan karakter P5, dan rapor naratif AI.',
         badge: 'Garis Depan Kelas',
         icon: GraduationCap,
     },
     {
         id: 'guru_bk',
         title: 'Guru BK',
-        desc: 'Layanan bimbingan konseling, penanganan kasus rujukan & mitigasi risiko.',
-        badge: 'Layanan Konseling',
+        desc: 'Radar deteksi dini kerentanan, pendampingan etis, dan mediasi orang tua.',
+        badge: 'Layanan Siswa',
         icon: ShieldAlert,
     },
     {
@@ -188,8 +188,8 @@ const PRICING_FAQS = [
         a: 'Tidak ada. Biaya langganan bersifat flat per paket. Tidak ada biaya server, tidak ada biaya lisensi per guru, dan seluruh pembaruan fitur sudah termasuk tanpa biaya tambahan selama masa aktif berlangganan.',
     },
     {
-        q: 'Bagaimana dengan privasi data siswa dan kerahasiaan konseling guru BK?',
-        a: 'Tanggapin menerapkan enkripsi data dan pembatasan hak akses berbasis peran. Catatan rahasia konseling BK hanya dapat diakses oleh Guru BK bersangkutan dan Kepala Sekolah.',
+        q: 'Bagaimana dengan privasi data sekolah dan pembagian akses tiap peran?',
+        a: 'Tanggapin menerapkan kontrol akses berbasis peran (RBAC) dan enkripsi tingkat enterprise. Setiap peran (Kepala Sekolah, Operator, Guru Mapel, Wali Kelas, Bendahara, Guru BK) hanya dapat mengakses data sesuai otorisasi tugasnya.',
     },
     {
         q: 'Apakah sekolah mendapatkan pelatihan dan pendampingan untuk para guru?',
@@ -371,10 +371,10 @@ Hotline Layanan BOS: +62 812-9988-7766
         },
         {
             number: '03',
-            title: 'Layanan Konseling & Kasus Terarah',
-            desc: 'Guru BK menerima rujukan terstruktur, bimbingan konseling empatik, dan pencatatan komitmen.',
+            title: 'Bimbingan Siswa & Karakter P5',
+            desc: 'Guru BK dan wali kelas mendampingi siswa secara terarah dengan komitmen terukur dan etis.',
             icon: ShieldAlert,
-            badge: 'Konseling & Kasus',
+            badge: 'Bimbingan & Karakter',
         },
         {
             number: '04',
@@ -393,12 +393,12 @@ Hotline Layanan BOS: +62 812-9988-7766
         },
         {
             title: 'Wali Kelas',
-            desc: 'Pemantauan kesehatan rombel, presensi harian, pembinaan karakter, dan rujukan ke BK.',
+            desc: 'Pemantauan kesehatan rombel, presensi harian, pembinaan karakter P5, dan rapor naratif AI.',
             icon: GraduationCap,
         },
         {
             title: 'Guru BK & Konseling',
-            desc: 'Layanan bimbingan konseling, penanganan rujukan kasus terarah, dan mitigasi risiko siswa.',
+            desc: 'Radar deteksi kerentanan, pendampingan siswa empatik, dan mediasi orang tua ber-tanda terima.',
             icon: ShieldAlert,
         },
         {
@@ -420,7 +420,7 @@ Hotline Layanan BOS: +62 812-9988-7766
 
     return (
         <>
-            <Head title="Tanggapin - Platform Tindak Lanjut Siswa Sekolah" />
+            <Head title="Tanggapin — Platform Sistem Informasi & Operasional Terpadu Sekolah" />
 
             <div className="relative min-h-screen flex flex-col justify-between text-slate-900 transition-colors selection:bg-blue-600 selection:text-white dark:text-slate-100 overflow-x-hidden">
                 {/* 1. Shrinking Sticky Header: Centered & Spacious Navigation */}
@@ -658,7 +658,7 @@ Hotline Layanan BOS: +62 812-9988-7766
                             <div className="inline-flex items-center justify-center">
                                 <span className="inline-flex items-center gap-2 rounded-full border border-slate-200/90 bg-white/90 px-3.5 py-1 text-xs font-medium text-slate-700 shadow-2xs backdrop-blur-xs dark:border-slate-800 dark:bg-slate-900/90 dark:text-slate-300">
                                     <span className="size-1.5 rounded-full bg-blue-600" />
-                                    Platform Operasional Tindak Lanjut Siswa Sekolah
+                                    Platform Sistem Informasi & Operasional Terpadu Sekolah
                                 </span>
                             </div>
 
@@ -673,7 +673,7 @@ Hotline Layanan BOS: +62 812-9988-7766
 
                             {/* Human-Centered Plain Indonesian Subtext (Zero AI Slop) */}
                             <p className="mx-auto max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg dark:text-slate-300">
-                                Tanggapin menghubungkan modul ajar guru, presensi rombel wali kelas, layanan konseling BK, supervisi kepala sekolah, hingga validasi Dapodik dan SPP dalam satu platform terpadu.
+                                Tanggapin menghubungkan supervisi kepala sekolah, modul ajar guru, manajemen rombel wali kelas, pembukuan kas bendahara, validasi Dapodik operator, dan pendampingan siswa dalam satu ekosistem terpadu.
                             </p>
 
                             {/* Primary Interactive CTA Area */}
@@ -708,15 +708,15 @@ Hotline Layanan BOS: +62 812-9988-7766
                             <div className="flex flex-wrap items-center justify-center gap-6 pt-2 text-xs font-medium text-slate-500 dark:text-slate-400">
                                 <span className="flex items-center gap-2">
                                     <CheckCircle2 className="size-4 text-blue-600 dark:text-blue-400" />
-                                    Alur tindak lanjut terkoordinasi
+                                    Integrasi 6 Peran Sekolah
                                 </span>
                                 <span className="flex items-center gap-2">
                                     <CheckCircle2 className="size-4 text-blue-600 dark:text-blue-400" />
-                                    Komunikasi resmi ber-tanda terima
+                                    Otomasi Rapor AI &amp; Keuangan BOS
                                 </span>
                                 <span className="flex items-center gap-2">
                                     <CheckCircle2 className="size-4 text-blue-600 dark:text-blue-400" />
-                                    100% Sesuai Juknis BOS & TPPK
+                                    100% Selaras Juknis BOS &amp; Dapodik
                                 </span>
                             </div>
                         </div>
@@ -742,7 +742,7 @@ Hotline Layanan BOS: +62 812-9988-7766
                                 />
                             </div>
                             <p className="mt-2 text-xs text-slate-600 sm:text-sm dark:text-slate-400">
-                                Jelajahi bagaimana Tanggapin menghubungkan deteksi sinyal dini, telaah konteks siswa 360°, penugasan tindak lanjut, hingga pelaporan otomatis ke orang tua.
+                                Jelajahi bagaimana Tanggapin menyelaraskan perencanaan kurikulum, pemantauan rombel, tata kelola keuangan BOS, hingga pelaporan naratif siswa secara transparan.
                             </p>
                         </div>
 
@@ -779,9 +779,9 @@ Hotline Layanan BOS: +62 812-9988-7766
                                     </div>
                                 </Step>
 
-                                <Step title="Langkah 2: Konteks Siswa 360° & Konseling BK">
+                                <Step title="Langkah 2: Profil Siswa 360° & Riwayat Terpadu">
                                     <p className="mb-4">
-                                        Wali kelas dan Guru BK meninjau profil lengkap siswa sebelum mengambil keputusan: riwayat pembinaan, catatan keluarga, dan linimasa konseling berprivasi tinggi.
+                                        Wali kelas dan pendidik meninjau profil lengkap siswa secara menyeluruh: capaian akademik modul ajar, presensi harian, catatan karakter P5, dan riwayat bimbingan.
                                     </p>
                                     <div className="rounded-xl border border-slate-200/80 bg-slate-50/60 p-4 sm:p-5 dark:border-slate-800 dark:bg-slate-900/40">
                                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-center">
@@ -790,8 +790,8 @@ Hotline Layanan BOS: +62 812-9988-7766
                                                 <div className="text-[11px] text-slate-500">Tingkat Kehadiran</div>
                                             </div>
                                             <div className="rounded-lg border border-slate-200/60 bg-white p-3 shadow-2xs dark:border-slate-700/60 dark:bg-slate-800">
-                                                <div className="text-base font-bold text-slate-900 dark:text-slate-100">2 Sesi</div>
-                                                <div className="text-[11px] text-slate-500">Konseling BK</div>
+                                                <div className="text-base font-bold text-slate-900 dark:text-slate-100">Lengkap</div>
+                                                <div className="text-[11px] text-slate-500">Karakter P5 &amp; Rapor</div>
                                             </div>
                                             <div className="rounded-lg border border-slate-200/60 bg-white p-3 shadow-2xs dark:border-slate-700/60 dark:bg-slate-800">
                                                 <div className="text-base font-bold text-blue-700 dark:text-blue-400">Terkendali</div>
@@ -1023,11 +1023,9 @@ Hotline Layanan BOS: +62 812-9988-7766
                                             <CheckCircle2 className="size-4 shrink-0 text-blue-700 dark:text-blue-400" />
                                             <span>
                                                 <strong>
-                                                    Alur Kasus Rapi:
+                                                    Kolaborasi 6 Peran Rapi:
                                                 </strong>{' '}
-                                                Dari laporan, konseling BK,
-                                                komitmen siswa, hingga arsip
-                                                digital.
+                                                Dari modul ajar GTK, presensi rombel, evaluasi BKU BOS, hingga supervisi kepala sekolah.
                                             </span>
                                         </li>
                                         <li className="flex items-start gap-3">
@@ -1183,7 +1181,7 @@ Hotline Layanan BOS: +62 812-9988-7766
                             <div className="space-y-4 lg:col-span-4">
                                 <TanggapinLogo size="md" showDescriptor={true} variant="light" />
                                 <p className="max-w-sm text-xs leading-relaxed text-slate-400">
-                                    Platform operasional sekolah terpadu untuk deteksi dini risiko siswa, penanganan kasus BK beretika, pencegahan Anak Tidak Sekolah ATS, dan kepatuhan regulasi TPPK Kemendikbudristek.
+                                    Platform sistem informasi &amp; operasional sekolah terpadu yang menghubungkan supervisi kepala sekolah, modul ajar guru, manajemen rombel, pembukuan kas BOS, validasi Dapodik, dan pendampingan siswa.
                                 </p>
                                 <div className="rounded-xl border border-slate-800/90 bg-slate-900/60 p-3.5 backdrop-blur-xs">
                                     <div className="flex items-center gap-2 text-xs font-semibold text-white">
@@ -1235,7 +1233,7 @@ Hotline Layanan BOS: +62 812-9988-7766
                                     </li>
                                     <li className="flex items-center gap-2">
                                         <span className="size-1.5 rounded-full bg-blue-400/80" />
-                                        <span>Alur Linimasa Kasus BK</span>
+                                        <span>Supervisi Akademik &amp; Modul Ajar</span>
                                     </li>
                                     <li className="flex items-center gap-2">
                                         <span className="size-1.5 rounded-full bg-blue-400/80" />
