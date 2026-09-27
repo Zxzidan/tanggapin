@@ -86,7 +86,14 @@ export default function TanggapinLogo({
                     />
                 </svg>
                 {/* Subtle indicator dot: Quick Recognition */}
-                <span className="absolute -top-0.5 -right-0.5 size-2 rounded-full bg-blue-400 ring-2 ring-white dark:ring-neutral-900" />
+                <span
+                    className={cn(
+                        'absolute -top-0.5 -right-0.5 size-2 rounded-full bg-blue-400 ring-2',
+                        variant === 'light'
+                            ? 'ring-[#070b14]'
+                            : 'ring-white dark:ring-neutral-900',
+                    )}
+                />
             </div>
 
             <div className="flex flex-col">

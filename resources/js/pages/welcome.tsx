@@ -8,6 +8,7 @@ import {
     CheckCircle2,
     ChevronDown,
     ChevronUp,
+    Clock,
     Coins,
     Copy,
     Download,
@@ -19,8 +20,10 @@ import {
     HelpCircle,
     Info,
     Layers,
+    Mail,
     Menu,
     MessageSquare,
+    Phone,
     PhoneCall,
     Search,
     Shield,
@@ -1151,87 +1154,131 @@ Hotline Layanan BOS: +62 812-9988-7766
                     </section>
                 </main>
 
-                {/* 11. Rich Footer - High Contrast & Clearly Visible Text */}
-                <footer className="relative z-20 border-t border-slate-800 bg-[#070b14] py-12 sm:py-14 text-xs text-slate-300">
+                {/* 11. Rich Footer - Refined & Balanced Layout */}
+                <footer className="relative z-20 border-t border-slate-800 bg-[#070b14] pt-14 pb-8 text-xs text-slate-300">
                     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                        <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-5">
-                            {/* Brand & Mission */}
-                            <div className="space-y-4 lg:col-span-2">
+                        <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-12 lg:gap-8">
+                            {/* Brand, Mission & Compliance */}
+                            <div className="space-y-4 lg:col-span-4">
                                 <TanggapinLogo size="md" showDescriptor={true} variant="light" />
-                                <p className="max-w-sm text-xs leading-relaxed text-slate-300">
+                                <p className="max-w-sm text-xs leading-relaxed text-slate-400">
                                     Platform operasional sekolah terpadu untuk deteksi dini risiko siswa, penanganan kasus BK beretika, pencegahan Anak Tidak Sekolah ATS, dan kepatuhan regulasi TPPK Kemendikbudristek.
                                 </p>
-                                <div className="inline-block rounded-lg border border-slate-800 bg-slate-900/90 px-3 py-2 text-[11px] text-slate-300">
-                                    ✓ 100% Kompatibel dengan Petunjuk Teknis Dana BOSP Permendikbudristek No. 63/2023.
+                                <div className="rounded-xl border border-slate-800/90 bg-slate-900/60 p-3.5 backdrop-blur-xs">
+                                    <div className="flex items-center gap-2 text-xs font-semibold text-white">
+                                        <ShieldCheck className="size-4 text-emerald-400 shrink-0" />
+                                        <span>Standar BOSP Kemendikbudristek</span>
+                                    </div>
+                                    <p className="mt-1 text-[11px] leading-relaxed text-slate-400">
+                                        Sepenuhnya selaras dengan Petunjuk Teknis Dana BOSP Permendikbudristek No 63 Tahun 2023.
+                                    </p>
                                 </div>
                             </div>
 
                             {/* Navigasi Utama */}
-                            <div className="space-y-3">
+                            <div className="space-y-3 lg:col-span-2 lg:pl-3">
                                 <div className="text-sm font-bold text-white tracking-tight">
                                     Navigasi
                                 </div>
                                 <ul className="space-y-2.5 text-xs text-slate-300">
                                     <li>
-                                        <a href="#fitur" onClick={(e) => handleSmoothScroll(e, '#fitur')} className="hover:text-white transition-colors">Alur Fitur</a>
+                                        <a href="#fitur" onClick={(e) => handleSmoothScroll(e, '#fitur')} className="hover:text-white hover:translate-x-0.5 transition-all inline-block">Alur Fitur</a>
                                     </li>
                                     <li>
-                                        <a href="#preview" onClick={(e) => handleSmoothScroll(e, '#preview')} className="hover:text-white transition-colors">Simulasi Interaktif</a>
+                                        <a href="#preview" onClick={(e) => handleSmoothScroll(e, '#preview')} className="hover:text-white hover:translate-x-0.5 transition-all inline-block">Simulasi Interaktif</a>
                                     </li>
                                     <li>
-                                        <a href="#peran" onClick={(e) => handleSmoothScroll(e, '#peran')} className="hover:text-white transition-colors">Pengguna Sekolah</a>
+                                        <a href="#peran" onClick={(e) => handleSmoothScroll(e, '#peran')} className="hover:text-white hover:translate-x-0.5 transition-all inline-block">Pengguna Sekolah</a>
                                     </li>
                                     <li>
-                                        <a href="#perbandingan" onClick={(e) => handleSmoothScroll(e, '#perbandingan')} className="hover:text-white transition-colors">Perbandingan</a>
+                                        <a href="#perbandingan" onClick={(e) => handleSmoothScroll(e, '#perbandingan')} className="hover:text-white hover:translate-x-0.5 transition-all inline-block">Perbandingan</a>
                                     </li>
                                     <li>
-                                        <a href="#harga" onClick={(e) => handleSmoothScroll(e, '#harga')} className="hover:text-white transition-colors">Biaya & Paket BOS</a>
+                                        <a href="#harga" onClick={(e) => handleSmoothScroll(e, '#harga')} className="hover:text-white hover:translate-x-0.5 transition-all inline-block">Biaya & Paket BOS</a>
                                     </li>
                                     <li>
-                                        <a href="#faq" onClick={(e) => handleSmoothScroll(e, '#faq')} className="hover:text-white transition-colors">FAQ BOS</a>
+                                        <a href="#faq" onClick={(e) => handleSmoothScroll(e, '#faq')} className="hover:text-white hover:translate-x-0.5 transition-all inline-block">FAQ BOS</a>
                                     </li>
                                 </ul>
                             </div>
 
-                            {/* 11 Modul Terpadu */}
-                            <div className="space-y-3">
+                            {/* Modul Unggulan */}
+                            <div className="space-y-3 lg:col-span-3">
                                 <div className="text-sm font-bold text-white tracking-tight">
                                     Modul Unggulan
                                 </div>
-                                <ul className="space-y-2.5 text-xs text-slate-300">
-                                    <li>Early Warning Presensi Siswa</li>
-                                    <li>Alur Linimasa Kasus BK</li>
-                                    <li>Mitigasi Anak Tidak Sekolah ATS</li>
-                                    <li>Validasi Residu Dapodik</li>
-                                    <li>Tim Siaga TPPK & Insiden</li>
-                                    <li>Generator Rapor Karakter AI</li>
+                                <ul className="space-y-2.5 text-xs text-slate-400">
+                                    <li className="flex items-center gap-2">
+                                        <span className="size-1.5 rounded-full bg-blue-400/80" />
+                                        <span>Early Warning Presensi Siswa</span>
+                                    </li>
+                                    <li className="flex items-center gap-2">
+                                        <span className="size-1.5 rounded-full bg-blue-400/80" />
+                                        <span>Alur Linimasa Kasus BK</span>
+                                    </li>
+                                    <li className="flex items-center gap-2">
+                                        <span className="size-1.5 rounded-full bg-blue-400/80" />
+                                        <span>Mitigasi Anak Tidak Sekolah ATS</span>
+                                    </li>
+                                    <li className="flex items-center gap-2">
+                                        <span className="size-1.5 rounded-full bg-blue-400/80" />
+                                        <span>Validasi Residu Dapodik</span>
+                                    </li>
+                                    <li className="flex items-center gap-2">
+                                        <span className="size-1.5 rounded-full bg-blue-400/80" />
+                                        <span>Tim Siaga TPPK & Insiden</span>
+                                    </li>
+                                    <li className="flex items-center gap-2">
+                                        <span className="size-1.5 rounded-full bg-blue-400/80" />
+                                        <span>Generator Rapor Karakter AI</span>
+                                    </li>
                                 </ul>
                             </div>
 
-                            {/* Kontak & Legalitas */}
-                            <div className="space-y-3">
+                            {/* Kemitraan & Dukungan */}
+                            <div className="space-y-3 lg:col-span-3">
                                 <div className="text-sm font-bold text-white tracking-tight">
                                     Kemitraan & Dukungan
                                 </div>
-                                <p className="text-xs text-slate-400">
+                                <p className="text-xs text-slate-400 leading-relaxed">
                                     Konsultasi Rencana Anggaran Sekolah RKAS & Pengadaan SIPLah:
                                 </p>
-                                <div className="space-y-1.5 text-xs">
-                                    <div className="font-semibold text-white">
-                                        halo@tanggapin.sch.id
+                                <div className="space-y-2 text-xs">
+                                    <a
+                                        href="mailto:halo@tanggapin.sch.id"
+                                        className="flex items-center gap-2 font-semibold text-white hover:text-blue-400 transition-colors"
+                                    >
+                                        <Mail className="size-3.5 text-blue-400 shrink-0" />
+                                        <span>halo@tanggapin.sch.id</span>
+                                    </a>
+                                    <a
+                                        href="tel:+6281299887766"
+                                        className="flex items-center gap-2 text-slate-300 hover:text-white transition-colors"
+                                    >
+                                        <Phone className="size-3.5 text-emerald-400 shrink-0" />
+                                        <span>Hotline: +62 812-9988-7766</span>
+                                    </a>
+                                    <div className="flex items-center gap-2 text-slate-400 text-[11px]">
+                                        <Clock className="size-3.5 text-slate-500 shrink-0" />
+                                        <span>Senin – Jumat pukul 08.00 – 17.00 WIB</span>
                                     </div>
-                                    <div className="text-slate-300">Hotline: +62 812-9988-7766</div>
-                                    <div className="text-slate-400">Senin – Jumat pukul 08.00 – 17.00 WIB</div>
+                                </div>
+                                <div className="pt-1">
+                                    <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/25 bg-emerald-950/60 px-2.5 py-1 text-[11px] font-medium text-emerald-300">
+                                        <span className="size-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                                        Layanan Konsultasi BOS Siaga
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-slate-800/80 pt-6 sm:flex-row text-xs text-slate-400">
+                        {/* Bottom Bar: Clear separation and dedicated safe space for floating scroll button */}
+                        <div className="mt-12 flex flex-col items-start justify-between gap-4 border-t border-slate-800/80 pt-6 sm:flex-row sm:items-center sm:pr-24 text-xs text-slate-400">
                             <div>
                                 © {new Date().getFullYear()} TANGGAPIN. Hak Cipta Dilindungi Undang-Undang.
                             </div>
-                            <div className="flex items-center gap-4">
-                                <span className="text-slate-300 font-medium">Deteksi lebih cepat. Tindak lebih tepat.</span>
+                            <div className="flex items-center gap-4 text-xs text-slate-300 font-medium">
+                                <span>Deteksi lebih cepat, tindak lebih tepat.</span>
                             </div>
                         </div>
                     </div>
