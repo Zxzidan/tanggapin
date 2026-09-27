@@ -229,6 +229,43 @@ export interface StudentReportItem {
     homeroomTeacher: string;
 }
 
+export interface LearningObjectiveAssessment {
+    code: string;
+    title: string;
+    score: number;
+    status: 'Tercapai Optimal' | 'Tercapai' | 'Perlu Bimbingan';
+}
+
+export interface SubjectAttitudeAssessment {
+    bernalarKritis: string;
+    kemandirian: string;
+    gotongRoyong: string;
+    catatanObservasi: string;
+}
+
+export interface SubjectAiAnalysis {
+    competencyDiagnosis: string;
+    differentiationPlan: string;
+    remedialFocus?: string;
+    readinessScore: number;
+    readinessStatus: string;
+    recommendedActivities: string[];
+}
+
+export interface SubjectAssessmentItem {
+    subjectName: string;
+    subjectCode: string;
+    teacherName: string;
+    formativeScore: number;
+    summativeScore: number;
+    finalScore: number;
+    predicate: string;
+    kkm: number;
+    learningObjectives: LearningObjectiveAssessment[];
+    attitude: SubjectAttitudeAssessment;
+    aiAnalysis: SubjectAiAnalysis;
+}
+
 export interface StudentForReportItem {
     id: string;
     name: string;
@@ -242,4 +279,5 @@ export interface StudentForReportItem {
     hasReport: boolean;
     reportStatus: 'none' | 'draft' | 'generated' | 'sent';
     latestReport: StudentReportItem | null;
+    subjectAssessment?: SubjectAssessmentItem;
 }

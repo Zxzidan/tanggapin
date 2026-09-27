@@ -761,6 +761,83 @@ class DashboardController extends Controller
             ->map(function (Student $s): array {
                 $latestReport = $s->reports->first();
 
+                $seed = crc32($s->nisn ?? (string) $s->id);
+                $att = (int) $s->attendance_rate;
+                $isHigh = $att >= 90 && $s->risk_level === 'low';
+                $isLow = $att < 80 || $s->risk_level === 'high';
+
+                $tp1Score = $isHigh ? (90 + ($seed % 7)) : ($isLow ? (68 + ($seed % 6)) : (80 + ($seed % 7)));
+                $tp2Score = $isHigh ? (88 + ($seed % 7)) : ($isLow ? (64 + ($seed % 7)) : (77 + ($seed % 6)));
+                $tp3Score = $isHigh ? (87 + ($seed % 8)) : ($isLow ? (62 + ($seed % 8)) : (79 + ($seed % 7)));
+
+                $formative = (int) round(($tp1Score + $tp2Score) / 2);
+                $summative = (int) round(($tp2Score + $tp3Score) / 2);
+                $finalScore = (int) round(($formative * 0.4) + ($summative * 0.6));
+                $predicate = $finalScore >= 88 ? 'A (Sangat Baik)' : ($finalScore >= 75 ? 'B (Baik)' : 'C (Perlu Bimbingan)');
+
+                $tp1Status = $tp1Score >= 88 ? 'Tercapai Optimal' : ($tp1Score >= 75 ? 'Tercapai' : 'Perlu Bimbingan');
+                $tp2Status = $tp2Score >= 88 ? 'Tercapai Optimal' : ($tp2Score >= 75 ? 'Tercapai' : 'Perlu Bimbingan');
+                $tp3Status = $tp3Score >= 88 ? 'Tercapai Optimal' : ($tp3Score >= 75 ? 'Tercapai' : 'Perlu Bimbingan');
+
+                $subjectAssessment = [
+                    'subjectName' => 'Pemrograman Web & Perangkat Bergerak',
+                    'subjectCode' => 'PPLG-401',
+                    'teacherName' => 'Siti Aminah, M.Pd',
+                    'formativeScore' => $formative,
+                    'summativeScore' => $summative,
+                    'finalScore' => $finalScore,
+                    'predicate' => $predicate,
+                    'kkm' => 75,
+                    'learningObjectives' => [
+                        [
+                            'code' => 'TP.1',
+                            'title' => 'Rancang Bangun Komponen UI Responsif & State Management Modern',
+                            'score' => $tp1Score,
+                            'status' => $tp1Status,
+                        ],
+                        [
+                            'code' => 'TP.2',
+                            'title' => 'Integrasi Restful API Asinkron, Validasi Form & Autentikasi Sistem',
+                            'score' => $tp2Score,
+                            'status' => $tp2Status,
+                        ],
+                        [
+                            'code' => 'TP.3',
+                            'title' => 'Pengujian Unit, Debugging Logika Kompleks & Optimasi Render Aplikasi',
+                            'score' => $tp3Score,
+                            'status' => $tp3Status,
+                        ],
+                    ],
+                    'attitude' => [
+                        'bernalarKritis' => $isHigh
+                            ? 'Sangat Baik — Mampu menganalisis akar masalah bug sistem dan menawarkan solusi arsitektur efisien.'
+                            : ($isLow ? 'Cukup — Membutuhkan bimbingan intensif saat memecahkan runtime error bertingkat.' : 'Baik — Mandiri dalam menelusuri pesan galat dasar dan melakukan debugging terbimbing.'),
+                        'kemandirian' => $isHigh
+                            ? 'Sangat Baik — Menyelesaikan tantangan praktikum mandiri sebelum batas waktu dengan kode terstruktur rapi.'
+                            : ($isLow ? 'Perlu Pendampingan — Kerap menunda penuntasan jobsheet praktikum akibat kurangnya disiplin waktu.' : 'Baik — Menuntaskan lembar kerja lab tepat waktu dengan kepatuhan sintaks baik.'),
+                        'gotongRoyong' => $isHigh
+                            ? 'Sangat Baik — Menjadi motor penggerak kelompok dan aktif membantu rekan yang mengalami kendala teknis.'
+                            : ($isLow ? 'Cukup — Cenderung pasif dan membutuhkan dorongan untuk berinteraksi dalam diskusi tim.' : 'Baik — Bekerja sama dengan harmonis dan membagi peran tugas proyek secara adil.'),
+                        'catatanObservasi' => $isHigh
+                            ? "Ananda {$s->name} menunjukkan passion tinggi di bidang software engineering, teliti, dan memiliki etika komunikasi santun."
+                            : ($isLow ? "Ananda {$s->name} memiliki potensi teknis terpendam, namun perlu perbaikan konsistensi kehadiran dan disiplin lab." : "Ananda {$s->name} konsisten menunjukkan minat positif dan antusias saat eksplorasi antarmuka web."),
+                    ],
+                    'aiAnalysis' => [
+                        'competencyDiagnosis' => $isHigh
+                            ? 'Siswa menguasai kompetensi front-end dan API integration melampaui rata-rata kelas. Memiliki kepekaan tinggi terhadap clean code dan UX.'
+                            : ($isLow ? 'Terindikasi learning loss pada kompetensi asinkron (TP.2) akibat jam praktik yang terlewat. Membutuhkan penguatan fundamental JavaScript & API handling.' : 'Pemahaman konsep komponen dan data-flow sudah tuntas. Perlu pemantapan pada aspek edge-case error handling dan validasi form kompleks.'),
+                        'differentiationPlan' => $isHigh
+                            ? 'Fasilitasi dengan proyek pengayaan (Enrichment Track): integrasi WebSocket real-time dan arsitektur State tersentralisasi.'
+                            : ($isLow ? 'Fasilitasi dengan klinik remedial intensif (Scaffolding Track): berikan starter-kit code sederhana dan lembar panduan bertahap.' : 'Berikan studi kasus mini-project mandiri dengan kompleksitas moderat untuk mengasah kemandirian problem-solving.'),
+                        'remedialFocus' => $isLow ? 'Remedial Terarah: Penanganan response JSON dan integrasi Token Autentikasi.' : null,
+                        'readinessScore' => $isHigh ? (92 + ($seed % 5)) : ($isLow ? (65 + ($seed % 7)) : (81 + ($seed % 7))),
+                        'readinessStatus' => $isHigh ? 'Sangat Siap — Standar Portofolio Industri' : ($isLow ? 'Butuh Remedial & Penguatan Lab' : 'Siap — Memenuhi Standar Kompetensi'),
+                        'recommendedActivities' => $isHigh
+                            ? ['Penyusunan Portofolio Proyek Web Skala Penuh', 'Peer-Tutor Pendampingan Lab']
+                            : ($isLow ? ['Klinik Remedial 1-on-1 Pasca Pembelajaran', 'Latihan Mandiri Modul Ringkas Berulang'] : ['Eksplorasi Framework Lanjutan', 'Uji Coba Mini-Project Berpasangan']),
+                    ],
+                ];
+
                 return [
                     'id' => (string) $s->id,
                     'name' => $s->name,
@@ -773,6 +850,7 @@ class DashboardController extends Controller
                     'parentPhone' => $s->parent_phone ?? '-',
                     'hasReport' => $latestReport !== null,
                     'reportStatus' => $latestReport?->status ?? 'none',
+                    'subjectAssessment' => $subjectAssessment,
                     'latestReport' => $latestReport ? [
                         'id' => (string) $latestReport->id,
                         'reportCode' => $latestReport->report_code,
