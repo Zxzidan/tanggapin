@@ -52,11 +52,19 @@ const DEMO_PERSONAS: DemoPersona[] = [
         isFullAccess: true,
     },
     {
+        role: 'guru',
+        shortTitle: 'Guru Mapel',
+        label: 'Guru Mata Pelajaran (Modul Ajar)',
+        email: 'guru@sekolah.sch.id',
+        scope: 'Modul Ajar & Pra-Audit AI',
+        isFullAccess: false,
+    },
+    {
         role: 'wali_kelas',
         shortTitle: 'Wali Kelas',
-        label: 'Wali Kelas',
+        label: 'Wali Kelas (XI RPL 2)',
         email: 'walikelas@sekolah.sch.id',
-        scope: 'Tupoksi Rombongan Belajar',
+        scope: 'Tupoksi Anak Wali & Rombel',
         isFullAccess: false,
     },
     {
@@ -141,11 +149,11 @@ export default function Login({ status, canResetPassword, currentUser }: Props) 
                         Pilih Peran Akun
                     </Label>
                     <span className="text-[11px] font-medium text-blue-700 dark:text-blue-400">
-                        5 Peran Tersedia
+                        6 Peran Tersedia
                     </span>
                 </div>
 
-                <div className="grid grid-cols-5 gap-1 rounded-xl border border-slate-200 bg-slate-100/80 p-1 dark:border-slate-700 dark:bg-slate-900/60">
+                <div className="grid grid-cols-3 sm:grid-cols-6 gap-1 rounded-xl border border-slate-200 bg-slate-100/80 p-1 dark:border-slate-700 dark:bg-slate-900/60">
                     {DEMO_PERSONAS.map((persona) => {
                         const isCurrent = selectedRole === persona.role;
                         return (
@@ -275,7 +283,7 @@ export default function Login({ status, canResetPassword, currentUser }: Props) 
                             <span className="font-semibold text-slate-800 dark:text-slate-200">
                                 Akun Dikelola Terpusat:
                             </span>{' '}
-                            Pendaftaran publik dinonaktifkan. Seluruh akun Wali Kelas, Guru BK, Bendahara, dan Kepsek diterbitkan langsung oleh Operator Sekolah.
+                            Pendaftaran publik dinonaktifkan. Seluruh akun Guru Mata Pelajaran, Wali Kelas, Guru BK, Bendahara, dan Kepsek diterbitkan langsung oleh Operator Sekolah.
                         </div>
                     </>
                 )}
