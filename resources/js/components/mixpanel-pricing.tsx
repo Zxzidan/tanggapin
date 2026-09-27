@@ -286,16 +286,16 @@ export function MixpanelPricing({ onSelectPlan }: MixpanelPricingProps) {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto mb-14">
           <PricingCard
             title="Paket Perintis"
-            subtitle="Ideal untuk sekolah skala dasar dengan kebutuhan sistem pendampingan awal."
+            subtitle="Ideal untuk sekolah skala dasar dengan kebutuhan dashboard guru & pemantauan kelas terpadu."
             price="Rp 360.000"
             priceDetail="per bulan ditagih tahunan. Kapasitas s.d. 300 siswa & 10 rombel. Efisien untuk dana BOS."
             buttonText="Pilih Paket Perintis"
             buttonVariant="secondary"
             onButtonClick={() => onSelectPlan && onSelectPlan('perintis')}
             features={[
-              'Kapasitas s.d. 300 siswa & 10 rombel',
-              'Modul Deteksi Sinyal & Early Warning',
-              'Manajemen Kasus Konseling BK Dasar',
+              'Akses Guru Mapel, Wali Kelas, BK & Kepsek',
+              'Modul Ajar Guru & Pemantauan Murid',
+              'Presensi Rombel & Sinyal Siswa Terpadu',
               'Format BAST & Kwitansi Standar BOS',
             ]}
           />
@@ -303,7 +303,7 @@ export function MixpanelPricing({ onSelectPlan }: MixpanelPricingProps) {
           <PricingCard
             highlight
             title="Paket Unggulan"
-            subtitle="Solusi terlengkap 11 modul + AI Generator Rapor & WhatsApp Resmi ke Orang Tua."
+            subtitle="Solusi terlengkap 6 dashboard peran: Guru Mapel, Wali Kelas, BK, Kepsek, Operator & Bendahara."
             price="Rp 712.000"
             priceDetail="per bulan ditagih tahunan. Mengelola s.d. 800 siswa terpadu. Sesuai juknis BOS."
             buttonText="Pilih Paket Unggulan"
@@ -312,10 +312,11 @@ export function MixpanelPricing({ onSelectPlan }: MixpanelPricingProps) {
             onButtonClick={() => onSelectPlan && onSelectPlan('unggulan')}
             onLinkClick={scrollToCalculator}
             features={[
-              '11 Modul Operasional Tanggapin Lengkap',
-              'Fitur AI: Generator Rapor Perkembangan Otomatis',
-              'WhatsApp Official Gateway Tanda Terima Sah',
-              'Paket Lengkap SPJ BOS: Surat, BAST & E-Faktur',
+              'Akses Lengkap 6 Peran Guru & Staf Sekolah',
+              'Fitur AI: Pra-Audit Modul Ajar & Generator Rapor',
+              'Validasi Residu Dapodik & Rekonsiliasi SPP',
+              'WhatsApp Gateway Tanda Terima Resmi',
+              'Paket Lengkap SPJ BOS: BAST & E-Faktur',
             ]}
           />
 
@@ -328,10 +329,11 @@ export function MixpanelPricing({ onSelectPlan }: MixpanelPricingProps) {
             buttonVariant="secondary"
             onButtonClick={() => onSelectPlan && onSelectPlan('yayasan')}
             features={[
-              'Kapasitas Siswa & Rombel Tanpa Batas',
-              'Batch AI Generator Rapor Lintas Sekolah',
+              'Kapasitas Akun GTK & Siswa Tanpa Batas',
+              'Master Dashboard Multi-Sekolah Terpusat',
+              'Batch AI Generator Rapor & Supervisi GTK',
+              'Konsolidasi Dapodik & Keuangan Multi Unit',
               'Dedicated SLA 99.9% & Kunjungan On-Site',
-              'Bimtek Tim TPPK & Akreditasi Rapor Pendidikan',
             ]}
           />
         </div>

@@ -50,50 +50,55 @@ import { dashboard, login } from '@/routes';
 
 const DEMO_ROLES = [
     {
-        id: 'kepala_sekolah',
-        title: 'Kepala Sekolah',
-        desc: 'Akses penuh eksekutif 11 modul, koordinasi darurat & evaluasi sekolah.',
-        badge: 'Pengambil Kebijakan',
-        icon: Shield,
+        id: 'guru',
+        title: 'Guru Mata Pelajaran',
+        desc: 'Modul Ajar Kurikulum Merdeka, pra-audit AI & monitoring murid yang diajar.',
+        badge: 'Pendidik & Kurikulum',
+        icon: FileText,
     },
     {
         id: 'wali_kelas',
         title: 'Wali Kelas',
-        desc: 'Monitoring absensi harian, pembinaan siswa & kontak wali murid rombel.',
+        desc: 'Monitoring presensi rombel, pembinaan siswa & koordinasi rujukan ke BK.',
         badge: 'Garis Depan Kelas',
         icon: GraduationCap,
     },
     {
         id: 'guru_bk',
         title: 'Guru BK',
-        desc: 'Layanan konseling empatik, penanganan kasus mediasi & mitigasi ATS.',
-        badge: 'Layanan Bimbingan Konseling',
+        desc: 'Layanan bimbingan konseling, penanganan kasus rujukan & mitigasi risiko.',
+        badge: 'Layanan Konseling',
         icon: ShieldAlert,
     },
     {
-        id: 'bendahara',
-        title: 'Bendahara Sekolah',
-        desc: 'Rekonsiliasi SPP, verifikasi bukti bayar & bantuan afirmasi siswa.',
-        badge: 'Keuangan & SPP',
-        icon: Users,
+        id: 'kepala_sekolah',
+        title: 'Kepala Sekolah',
+        desc: 'Supervisi eksekutif mutu rombel, kepatuhan GTK & akuntabilitas sekolah.',
+        badge: 'Pengambil Kebijakan',
+        icon: Shield,
     },
     {
         id: 'operator',
         title: 'Operator Sekolah',
-        desc: 'Verifikasi residu data Dapodik, SK pengampu guru & sinkronisasi data.',
-        badge: 'Verifikasi Data & Admin',
+        desc: 'Administrasi akun GTK, kuota rombel, validasi Dapodik & berkas guru.',
+        badge: 'Operasional & Dapodik',
         icon: CheckCircle2,
     },
+    {
+        id: 'bendahara',
+        title: 'Bendahara Sekolah',
+        desc: 'Rekonsiliasi kas SPP, analisis arus kas & reminder santun orang tua.',
+        badge: 'Keuangan & SPP',
+        icon: Users,
+    },
 ];
-
-
 
 const PRICING_PLANS = [
     {
         id: 'perintis',
         name: 'Paket Perintis',
         badge: 'Sekolah Berkembang',
-        description: 'Ideal untuk sekolah skala dasar dengan kebutuhan pendampingan siswa.',
+        description: 'Ideal untuk sekolah skala dasar dengan kebutuhan dashboard guru & pemantauan kelas terpadu.',
         monthlyPrice: 450000,
         annualMonthlyEquivalent: 360000,
         annualTotal: 4320000,
@@ -101,14 +106,12 @@ const PRICING_PLANS = [
         targetAudience: 'SD / SMP / Madrasah di bawah 300 Siswa',
         features: [
             'Kapasitas s.d. 300 siswa & 10 rombel',
-            'Modul Deteksi Sinyal & Early Warning',
-            'Manajemen Kasus Konseling BK Dasar',
-            'Pantauan Kesehatan Kelas per Rombel',
-            'Notifikasi Komunikasi Orang Tua Dasar',
-            'Draf Ringkasan Evaluasi Siswa Standar',
+            'Dashboard Guru Mapel: Modul Ajar & Pemantauan Murid',
+            'Dashboard Wali Kelas: Presensi Rombel & Sinyal Siswa',
+            'Dashboard Guru BK: Layanan Konseling & Kasus Dasar',
+            'Dashboard Kepala Sekolah: Supervisi Eksekutif & Mutu',
+            'Notifikasi Komunikasi Resmi Orang Tua',
             'Ekspor Rekap Laporan Format Excel & PDF',
-            '3 Akun Akses: Kepala Sekolah, Wali Kelas, Guru BK',
-            'Dukungan Helpdesk via Email & Dokumentasi Lengkap',
             'Dokumen Kwitansi & BAST Standar BOS',
         ],
         highlight: false,
@@ -118,7 +121,7 @@ const PRICING_PLANS = [
         id: 'unggulan',
         name: 'Paket Unggulan',
         badge: 'Paling Diminati Sekolah',
-        description: 'Solusi lengkap 11 modul, AI Generator Rapor, dan pesan resmi orang tua.',
+        description: 'Solusi lengkap 6 dashboard peran: Guru Mapel, Wali Kelas, BK, Kepsek, Operator & Bendahara.',
         monthlyPrice: 890000,
         annualMonthlyEquivalent: 712000,
         annualTotal: 8544000,
@@ -126,21 +129,17 @@ const PRICING_PLANS = [
         targetAudience: 'SMP / SMA / SMK Mandiri hingga 800 Siswa',
         features: [
             'Semua fitur Paket Perintis tercakup',
-            'Mengelola s.d. 35 Rombel Kelas Aktif',
-            'Pusat Kontrol Operator: Akun Wali Kelas, Bendahara, Kepsek',
-            'Fitur AI: Generator Rapor Perkembangan Siswa Otomatis',
-            'Kirim Rapor Langsung ke WhatsApp Ortu Tanda Terima Sah',
-            'Sintesis AI: Narasi Karakter & Rekomendasi Pendampingan',
-            'Kapasitas s.d. 800 Siswa Terintegrasi',
-            '11 Modul Operasional Tanggapin Lengkap',
-            'Modul Alur ATS Anak Tidak Sekolah & Satgas Kunjungan',
-            'Deteksi Residu Data & Validasi Dapodik',
-            'WhatsApp Official Gateway Tanda Terima Terverifikasi',
-            'Rekonsiliasi SPP Terpadu & Proteksi Siswa Afirmasi',
+            'Mengelola s.d. 35 Rombel & 800 Siswa Terpadu',
+            '6 Akses Peran: Kepsek, Guru Mapel, Wali Kelas, BK, Operator, Bendahara',
+            'Fitur AI: Pra-Audit Mandiri Modul Ajar Kurikulum Merdeka',
+            'Fitur AI: Generator Rapor Perkembangan Karakter Siswa',
+            'Fitur AI: Analisis Finansial & Proyeksi Arus Kas Sekolah',
+            'WhatsApp Official Gateway Tanda Terima Resmi ke Orang Tua',
+            'Pusat Kontrol Operator: Residu Dapodik & Verifikasi Berkas GTK',
+            'Keuangan SPP Terpadu & Proteksi Siswa Afirmasi',
             'Modul Kesiapsiagaan Insiden & Tim TPPK Permendikbud 46/2023',
-            '5 Akun Peran termasuk Operator Dapodik & Bendahara Sekolah',
-            '1 Sesi Pelatihan Online Tim Sekolah 2 Jam Interaktif',
-            'Prioritas Support WhatsApp Fast-Response',
+            '1 Sesi Pelatihan Online Tim Guru & Staf Sekolah',
+            'Prioritas Support Helpdesk Fast-Response',
             'Paket Lengkap SPJ BOS: Surat Penawaran, BAST & E-Faktur',
         ],
         highlight: true,
@@ -150,7 +149,7 @@ const PRICING_PLANS = [
         id: 'yayasan',
         name: 'Paket Yayasan & Dinas',
         badge: 'Multi-Sekolah & Korporasi',
-        description: 'Pengawasan terpusat multi unit untuk Yayasan, Pesantren, atau Dinas.',
+        description: 'Pengawasan terpusat multi-unit untuk Yayasan Pendidikan, Pesantren, atau Dinas.',
         monthlyPrice: 1850000,
         annualMonthlyEquivalent: 1480000,
         annualTotal: 17760000,
@@ -158,16 +157,12 @@ const PRICING_PLANS = [
         targetAudience: 'Grup Yayasan atau Multi Kampus di atas 800 Siswa',
         features: [
             'Semua fitur Paket Unggulan tercakup',
-            'Kapasitas Kelas dan Rombel Tanpa Batas',
-            'Kapasitas Siswa Tanpa Batas di atas 800 Siswa',
-            'Fitur AI: Batch Generator Rapor Siswa Seluruh Unit',
-            'Distribusi Rapor Massal Terjadwal ke WhatsApp Orang Tua',
+            'Kapasitas Akun Guru, Rombel & Siswa Tanpa Batas',
             'Master Dashboard Pengawasan Multi Sekolah Terpusat',
-            'Konsolidasi Residu Dapodik & Statistik ATS Lintas Unit',
+            'Batch AI Generator Rapor & Supervisi GTK Lintas Unit',
+            'Konsolidasi Residu Dapodik & Keuangan Multi Unit',
             'Kustomisasi SOP & Alur Penanganan Insiden Sekolah',
-            'Opsi Integrasi Presensi Mesin RFID atau Kartu Pintar',
-            'Dedicated Account Manager & Pendampingan On-site',
-            'Perjanjian Kerahasiaan Data NDA & Jaminan SLA 99.9%',
+            'Dedicated Account Manager & SLA 99.9%',
             'Bimbingan Teknis Standarisasi TPPK & Sertifikat Kesiapsiagaan',
         ],
         highlight: false,
@@ -269,6 +264,7 @@ export default function Welcome() {
     };
 
     const directRoleMap: Record<string, string> = {
+        guru: '/guru',
         operator: '/operator',
         guru_bk: '/guru-bk',
         wali_kelas: '/wali-kelas',
@@ -361,54 +357,64 @@ Hotline Layanan BOS: +62 812-9988-7766
     const bentoFeatures = [
         {
             number: '01',
-            title: 'Deteksi Sinyal Otomatis',
-            desc: 'Sistem merangkum data absensi, nilai produktif, dan pola ketertiban tanpa rekap manual berulang.',
-            icon: ShieldAlert,
-            badge: 'Peringatan Dini',
+            title: 'Modul Ajar & Kurikulum GTK',
+            desc: 'Penyusunan Modul Ajar Kurikulum Merdeka dan pra-audit AI mandiri sebelum supervisi.',
+            icon: FileText,
+            badge: 'Modul Ajar Guru',
         },
         {
             number: '02',
-            title: 'Konteks Siswa 360 Derajat',
-            desc: 'Wali kelas dan guru BK melihat kondisi riil siswa secara menyeluruh dan bermartabat sebelum bertindak.',
-            icon: Search,
-            badge: 'Profil Lengkap',
+            title: 'Deteksi Sinyal & Presensi Rombel',
+            desc: 'Wali kelas memantau presensi dan deteksi risiko siswa secara otomatis tanpa rekap manual.',
+            icon: GraduationCap,
+            badge: 'Pemantauan Rombel',
         },
         {
             number: '03',
-            title: 'Tindak Lanjut & Penugasan PIC',
-            desc: 'Langkah pendampingan terbagi jelas: konseling individu, bimbingan belajar, atau kunjungan rumah.',
-            icon: CheckCircle2,
-            badge: 'Target Jelas',
+            title: 'Layanan Konseling & Kasus Terarah',
+            desc: 'Guru BK menerima rujukan terstruktur, bimbingan konseling empatik, dan pencatatan komitmen.',
+            icon: ShieldAlert,
+            badge: 'Konseling & Kasus',
         },
         {
             number: '04',
-            title: 'Komunikasi Ber-Tanda Terima',
-            desc: 'Pemberitahuan resmi terkirim ke wali murid dengan status konfirmasi baca demi kepastian koordinasi.',
-            icon: PhoneCall,
-            badge: 'Konfirmasi Terukur',
+            title: 'Supervisi Mutu & Tata Kelola SPP',
+            desc: 'Kepala sekolah dan staf memantau performa GTK, residu Dapodik, serta rekonsiliasi kas SPP.',
+            icon: ShieldCheck,
+            badge: 'Supervisi Eksekutif',
         },
     ];
 
     const roles = [
         {
+            title: 'Guru Mata Pelajaran',
+            desc: 'Penyusunan Modul Ajar Kurikulum Merdeka, pra-audit AI, dan evaluasi capaian asesmen murid.',
+            icon: FileText,
+        },
+        {
             title: 'Wali Kelas',
-            desc: 'Memantau kesehatan rombel dan mengambil inisiatif pendampingan seawal mungkin.',
+            desc: 'Pemantauan kesehatan rombel, presensi harian, pembinaan karakter, dan rujukan ke BK.',
             icon: GraduationCap,
         },
         {
             title: 'Guru BK & Konseling',
-            desc: 'Mengelola linimasa kasus dari laporan masuk, sesi konseling, komitmen siswa, hingga tuntas.',
+            desc: 'Layanan bimbingan konseling, penanganan rujukan kasus terarah, dan mitigasi risiko siswa.',
             icon: ShieldAlert,
         },
         {
-            title: 'Kesiswaan & Pembinaan',
-            desc: 'Mencatat rekapitulasi poin tata tertib dan mengoordinasikan langkah pembinaan secara objektif.',
+            title: 'Kepala Sekolah',
+            desc: 'Supervisi mutu rombel, evaluasi kinerja GTK, otorisasi persetujuan, dan akuntabilitas sekolah.',
             icon: Shield,
         },
         {
-            title: 'Kepala Sekolah',
-            desc: 'Melihat efektivitas penanganan kasus dan kesiapsiagaan operasional seluruh sekolah.',
-            icon: Users,
+            title: 'Operator Sekolah',
+            desc: 'Pengelolaan akun GTK, validasi residu Dapodik, sinkronisasi rombel, dan verifikasi berkas.',
+            icon: CheckCircle2,
+        },
+        {
+            title: 'Bendahara Sekolah',
+            desc: 'Penerimaan SPP, analisis AI arus kas, pembukuan kas umum, dan reminder tagihan ortu.',
+            icon: WalletCards,
         },
     ];
 
@@ -667,7 +673,7 @@ Hotline Layanan BOS: +62 812-9988-7766
 
                             {/* Human-Centered Plain Indonesian Subtext (Zero AI Slop) */}
                             <p className="mx-auto max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg dark:text-slate-300">
-                                Tanggapin menghubungkan catatan presensi harian, kendala belajar, dan penanganan BK menjadi langkah pendampingan nyata yang terkoordinasi jelas antara wali kelas, guru BK, dan orang tua.
+                                Tanggapin menghubungkan modul ajar guru, presensi rombel wali kelas, layanan konseling BK, supervisi kepala sekolah, hingga validasi Dapodik dan SPP dalam satu platform terpadu.
                             </p>
 
                             {/* Primary Interactive CTA Area */}
@@ -873,7 +879,7 @@ Hotline Layanan BOS: +62 812-9988-7766
                             </p>
                         </div>
 
-                        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+                        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
                             {roles.map((r) => {
                                 const IconComponent = r.icon;
                                 return (

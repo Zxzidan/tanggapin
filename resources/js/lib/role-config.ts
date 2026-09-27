@@ -23,25 +23,25 @@ export const ROLE_CONFIGS: Record<RoleType, RoleConfig> = {
         title: 'Kepala Sekolah',
         shortTitle: 'Kepsek',
         badge: 'Pengambil Kebijakan',
-        scopeBadge: 'Monitoring Perkembangan Sekolah',
+        scopeBadge: 'Supervisi & Perkembangan Sekolah',
         userName: 'Drs. H. Mulyadi, M.Pd',
         userEmail: 'kepsek@sekolah.sch.id',
         avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80',
         roleDesc:
-            'Akses dashboard monitoring eksekutif untuk memantau perkembangan sekolah secara menyeluruh: kesehatan rombel, kedisiplinan siswa, kinerja GTK, dan akuntabilitas keuangan.',
+            'Supervisi eksekutif: pantau mutu rombel, kedisiplinan siswa, kepatuhan GTK, dan akuntabilitas keuangan.',
         allowedTabs: [
             'overview',
             'academic-supervision',
             'school-evaluation',
             'executive-approvals',
         ],
-        overviewTitle: 'Dashboard Monitoring Perkembangan Sekolah',
+        overviewTitle: 'Dashboard Supervisi & Monitoring Sekolah',
         overviewSubtitle:
-            'Supervisi Eksekutif Kepala Sekolah • Pantau indikator mutu, perkembangan kelas, kedisiplinan, dan akuntabilitas sekolah.',
+            'Pantau indikator mutu, perkembangan kelas, kinerja GTK, dan akuntabilitas sekolah.',
         overviewPrinciple:
-            'Prinsip Kepala Sekolah: Pantau Indikator Mutu → Evaluasi Kinerja GTK → Berikan Arahan Manajerial → Dorong Peningkatan Mutu.',
+            'Indikator Mutu → Kinerja GTK → Arahan Manajerial',
         tabOverrides: {
-            overview: { title: 'Dashboard Monitoring' },
+            overview: { title: 'Dashboard Supervisi' },
             'academic-supervision': {
                 title: 'AI Supervisi GTK',
                 badge: 'AI Kurikulum',
@@ -66,7 +66,7 @@ export const ROLE_CONFIGS: Record<RoleType, RoleConfig> = {
         userEmail: 'operator@sekolah.sch.id',
         avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80',
         roleDesc:
-            'Akses khusus bagian administrasi dan operasional: kelola akun guru & staf, kuota rombel, data Dapodik, keuangan SPP, dokumen guru, dan kesiapsiagaan sekolah.',
+            'Kelola akun guru & staf, kuota rombel, validasi residu Dapodik, SPP, dan dokumen kepegawaian.',
         allowedTabs: [
             'overview',
             'manage-users',
@@ -75,11 +75,11 @@ export const ROLE_CONFIGS: Record<RoleType, RoleConfig> = {
             'documents',
             'incidents',
         ],
-        overviewTitle: 'Pusat Administrasi & Operasional Sekolah Terpadu',
+        overviewTitle: 'Pusat Operasional & Administrasi Sekolah',
         overviewSubtitle:
-            'Kelola akun staf, pantau kuota rombel, verifikasi residu Dapodik, rekonsiliasi SPP, dan dokumen kepegawaian guru.',
+            'Kelola akun GTK, verifikasi residu Dapodik, rekonsiliasi SPP, dan berkas kepegawaian.',
         overviewPrinciple:
-            'Prinsip Operator: Tata Kelola Akun → Validasi Residu Dapodik → Rekonsiliasi SPP → Kepatuhan Dokumen GTK.',
+            'Tata Kelola Akun → Validasi Dapodik → Rekonsiliasi SPP',
         tabOverrides: {
             overview: { title: 'Ikhtisar Operasional' },
             'manage-users': {
@@ -103,7 +103,7 @@ export const ROLE_CONFIGS: Record<RoleType, RoleConfig> = {
         userEmail: 'walikelas@sekolah.sch.id',
         avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&q=80',
         roleDesc:
-            'Tampilan khusus pemantauan anak wali: pantau presensi rombel binaan, tindak lanjuti poin pelanggaran dari Guru BK, pembinaan anak wali, kontak orang tua, dan rujukan kendala ke Guru BK.',
+            'Pemantauan anak wali: presensi rombel, pendampingan karakter, kontak orang tua, dan rujukan ke BK.',
         allowedTabs: [
             'overview',
             'class-monitoring',
@@ -115,9 +115,9 @@ export const ROLE_CONFIGS: Record<RoleType, RoleConfig> = {
         overviewTitle:
             'Monitoring & Pembinaan Siswa Anak Wali',
         overviewSubtitle:
-            'Wali Kelas • Pemantauan Perkembangan, Kedisiplinan & Kesejahteraan Rombel Binaan.',
+            'Pantau presensi, perkembangan karakter, dan kesejahteraan rombel binaan.',
         overviewPrinciple:
-            'Prinsip Wali Kelas: Pantau Presensi Anak Wali → Dampingi Disiplin & Karakter → Komunikasi Ortu → Koordinasi Guru BK.',
+            'Presensi Anak Wali → Dampingi Disiplin → Koordinasi BK & Ortu',
         tabOverrides: {
             overview: { title: 'Ikhtisar Anak Wali' },
             'class-monitoring': { title: 'Siswa Anak Wali' },
@@ -132,12 +132,12 @@ export const ROLE_CONFIGS: Record<RoleType, RoleConfig> = {
         title: 'Guru Mata Pelajaran',
         shortTitle: 'Guru Mapel',
         badge: 'Pendidik & Pengampu',
-        scopeBadge: 'Modul Ajar & Siswa yang Diajar',
+        scopeBadge: 'Modul Ajar & Capaian Murid',
         userName: 'Siti Aminah, M.Pd',
         userEmail: 'guru@sekolah.sch.id',
         avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=150&q=80',
         roleDesc:
-            'Akses pendidik mata pelajaran: kelola dan unggah Modul Ajar Kurikulum Merdeka, pra-audit AI mandiri, monitoring murid yang diajar lintas rombel, serta evaluasi capaian asesmen pembelajaran.',
+            'Modul Ajar Kurikulum Merdeka, pra-audit AI mandiri, dan monitoring capaian belajar murid.',
         allowedTabs: [
             'overview',
             'documents',
@@ -145,11 +145,11 @@ export const ROLE_CONFIGS: Record<RoleType, RoleConfig> = {
             'reports',
         ],
         overviewTitle:
-            'Pusat Modul Ajar & Monitoring Murid yang Diajar',
+            'Pusat Modul Ajar & Capaian Belajar Murid',
         overviewSubtitle:
-            'Guru Mata Pelajaran • Modul Ajar Kurikulum Merdeka, Pra-Audit AI & Pemantauan Murid.',
+            'Kelola Modul Ajar Kurikulum Merdeka, pra-audit AI, dan evaluasi ketuntasan murid.',
         overviewPrinciple:
-            'Prinsip Guru: Susun Modul Ajar Berdiferensiasi → Pra-Audit AI Mandiri → Pantau Siswa yang Diajar → Evaluasi Asesmen Formatif.',
+            'Modul Ajar Berdiferensiasi → Pra-Audit AI → Evaluasi Capaian Belajar',
         tabOverrides: {
             overview: { title: 'Ikhtisar Pengajaran' },
             documents: { title: 'Modul Ajar Guru', badge: 'AI Audit' },
@@ -162,12 +162,12 @@ export const ROLE_CONFIGS: Record<RoleType, RoleConfig> = {
         title: 'Bendahara Sekolah',
         shortTitle: 'Bendahara',
         badge: 'Keuangan & SPP',
-        scopeBadge: 'Khusus Keuangan & SPP',
+        scopeBadge: 'Keuangan & SPP Sekolah',
         userName: 'Ahmad Suhendra, S.E.',
         userEmail: 'bendahara@sekolah.sch.id',
         avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80',
         roleDesc:
-            'Akses sistem mencakup pengelolaan keuangan sekolah: pembayaran SPP, analisis AI arus kas, Buku Kas Umum (BKU), dan pengingat tagihan santun ke orang tua.',
+            'Pengelolaan keuangan sekolah: penerimaan SPP, AI analisis arus kas, dan buku kas umum.',
         allowedTabs: [
             'payments',
             'ai-finance',
@@ -175,11 +175,11 @@ export const ROLE_CONFIGS: Record<RoleType, RoleConfig> = {
             'finance-reminder',
         ],
         overviewTitle:
-            'Pusat Kendali Keuangan Sekolah & Rekonsiliasi SPP',
+            'Pusat Keuangan Sekolah & Rekonsiliasi SPP',
         overviewSubtitle:
-            'Bendahara Sekolah • Pengelolaan Kas, Analisis AI Finansial & Rekapitulasi SPP.',
+            'Monitoring kas SPP, rekonsiliasi penerimaan, dan pengingat tagihan santun.',
         overviewPrinciple:
-            'Prinsip Keuangan: Pantau Jatuh Tempo → Analisis AI Arus Kas → Rekonsiliasi Kas Masuk → Pembukuan BKU.',
+            'Jatuh Tempo SPP → Rekonsiliasi Kas Masuk → Pembukuan Kas Umum',
         tabOverrides: {
             payments: {
                 title: 'Pembayaran & SPP',
@@ -200,12 +200,12 @@ export const ROLE_CONFIGS: Record<RoleType, RoleConfig> = {
         title: 'Guru BK',
         shortTitle: 'Guru BK',
         badge: 'Layanan Bimbingan Konseling',
-        scopeBadge: 'Pemantauan Rombel & Konseling Kasus',
+        scopeBadge: 'Konseling & Mitigasi Siswa',
         userName: 'Guru BK',
         userEmail: 'gurubk@sekolah.sch.id',
         avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&q=80',
         roleDesc:
-            'Akses memantau seluruh rombel yang ditambahkan Operator, menambahkan data siswa, memberikan poin pelanggaran ke wali kelas, serta menindaklanjuti rujukan kendala.',
+            'Layanan bimbingan konseling: tindak lanjut rujukan wali kelas, konseling siswa, dan mitigasi risiko.',
         allowedTabs: [
             'overview',
             'class-monitoring',
@@ -218,11 +218,11 @@ export const ROLE_CONFIGS: Record<RoleType, RoleConfig> = {
             'documents',
         ],
         overviewTitle:
-            'Layanan konseling, pemantauan rombel lintas kelas & rujukan kendala siswa',
+            'Layanan Konseling & Penanganan Siswa',
         overviewSubtitle:
-            'Guru BK • Pemantauan Rombel Lintas Kelas, Pencatatan Poin Kedisiplinan & Tindak Lanjut Rujukan.',
+            'Tindak lanjuti rujukan wali kelas, sesi konseling terarah, dan mediasi orang tua.',
         overviewPrinciple:
-            'Prinsip BK: Pantau Rombel → Input Data Siswa & Poin Kedisiplinan → Koordinasi Wali Kelas → Intervensi Solutif.',
+            'Rujukan Masuk → Sesi Konseling Terarah → Intervensi Solutif',
         tabOverrides: {
             overview: { title: 'Ikhtisar Konseling' },
             'class-monitoring': { title: 'Kondisi Kelas & Siswa' },
@@ -258,7 +258,7 @@ export const ROLE_SWITCHER_OPTIONS: RoleSwitcherOption[] = [
         title: 'Operator Sekolah',
         personName: 'Operator Sekolah',
         scope: 'Administrasi & Operasional',
-        description: 'Kelola akun GTK, kuota rombel, Dapodik, SPP & kesiapsiagaan sekolah.',
+        description: 'Kelola akun GTK, kuota rombel, Dapodik, dan SPP.',
         badge: 'Admin & Ops',
         directUrl: '/operator',
     },
@@ -268,7 +268,7 @@ export const ROLE_SWITCHER_OPTIONS: RoleSwitcherOption[] = [
         title: 'Guru Mata Pelajaran',
         personName: 'Siti Aminah, M.Pd',
         scope: 'Guru Pengampu & Kejuruan',
-        description: 'Modul ajar Kurikulum Merdeka, pra-audit AI mandiri & monitoring murid yang diajar.',
+        description: 'Modul ajar Kurikulum Merdeka, pra-audit AI, dan capaian murid.',
         badge: 'Guru Mapel',
         directUrl: '/guru',
     },
@@ -278,7 +278,7 @@ export const ROLE_SWITCHER_OPTIONS: RoleSwitcherOption[] = [
         title: 'Wali Kelas XI RPL 2',
         personName: 'Ratna Dewi, S.Pd',
         scope: 'Khusus Pemantauan Anak Wali XI RPL 2',
-        description: 'Pantau anak wali, absensi rombel, poin BK, dampingi pembinaan & kontak ortu.',
+        description: 'Pantau anak wali, absensi, pembinaan karakter, dan kontak ortu.',
         badge: 'Anak Wali',
         directUrl: '/wali-kelas',
     },
@@ -288,7 +288,7 @@ export const ROLE_SWITCHER_OPTIONS: RoleSwitcherOption[] = [
         title: 'Wali Kelas X TKJ 1',
         personName: 'Budi Santoso, S.Kom',
         scope: 'Khusus Pemantauan Anak Wali X TKJ 1',
-        description: 'Pantau anak wali rombel X TKJ 1, poin pelanggaran BK & pembinaan kelas.',
+        description: 'Pantau presensi rombel X TKJ 1 dan koordinasi pembinaan.',
         badge: 'Anak Wali',
         directUrl: '/wali-kelas/tkj',
     },
@@ -298,7 +298,7 @@ export const ROLE_SWITCHER_OPTIONS: RoleSwitcherOption[] = [
         title: 'Guru BK',
         personName: 'Dra. Hj. Nurjanah, M.Pd',
         scope: 'Konseling & Kedisiplinan',
-        description: 'Lihat semua rombel, input siswa, catat poin disiplin, konseling & mitigasi ATS.',
+        description: 'Konseling siswa, tindak lanjut rujukan, dan mitigasi ATS.',
         badge: 'BK & Kasus',
         directUrl: '/guru-bk',
     },
@@ -307,8 +307,8 @@ export const ROLE_SWITCHER_OPTIONS: RoleSwitcherOption[] = [
         email: 'kepsek@sekolah.sch.id',
         title: 'Kepala Sekolah',
         personName: 'Drs. H. Mulyadi, M.Pd',
-        scope: 'Monitoring Perkembangan Sekolah',
-        description: 'Dashboard monitoring eksekutif: supervisi mutu rombel, kedisiplinan, GTK & keuangan.',
+        scope: 'Supervisi & Mutu Sekolah',
+        description: 'Supervisi mutu rombel, kedisiplinan, GTK, dan keuangan.',
         badge: 'Eksekutif',
         directUrl: '/kepala-sekolah',
     },
@@ -317,8 +317,8 @@ export const ROLE_SWITCHER_OPTIONS: RoleSwitcherOption[] = [
         email: 'bendahara@sekolah.sch.id',
         title: 'Bendahara Sekolah',
         personName: 'Ahmad Suhendra, S.E.',
-        scope: 'Khusus Keuangan & SPP',
-        description: 'Monitoring kas SPP, penerbitan tagihan, verifikasi bukti bayar transfer, dan rekonsiliasi kas.',
+        scope: 'Keuangan & SPP',
+        description: 'Penerimaan SPP, buku kas umum, dan reminder tagihan ortu.',
         badge: 'Keuangan',
         directUrl: '/bendahara',
     },
