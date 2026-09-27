@@ -87,4 +87,20 @@ class Student extends Model
     {
         return $this->hasMany(StudentReport::class);
     }
+
+    /**
+     * @return HasMany<SubjectGrade, $this>
+     */
+    public function subjectGrades(): HasMany
+    {
+        return $this->hasMany(SubjectGrade::class);
+    }
+
+    /**
+     * @return HasMany<HomeroomJournal, $this>
+     */
+    public function homeroomJournals(): HasMany
+    {
+        return $this->hasMany(HomeroomJournal::class);
+    }
 }

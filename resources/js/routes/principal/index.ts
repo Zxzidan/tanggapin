@@ -2,7 +2,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFo
 import approvalsF41aa7 from './approvals'
 /**
 * @see \App\Http\Controllers\DashboardController::supervision
- * @see app/Http/Controllers/DashboardController.php:591
+ * @see app/Http/Controllers/DashboardController.php:593
  * @route '/supervisi-akademik'
  */
 export const supervision = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -17,7 +17,7 @@ supervision.definition = {
 
 /**
 * @see \App\Http\Controllers\DashboardController::supervision
- * @see app/Http/Controllers/DashboardController.php:591
+ * @see app/Http/Controllers/DashboardController.php:593
  * @route '/supervisi-akademik'
  */
 supervision.url = (options?: RouteQueryOptions) => {
@@ -26,7 +26,7 @@ supervision.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\DashboardController::supervision
- * @see app/Http/Controllers/DashboardController.php:591
+ * @see app/Http/Controllers/DashboardController.php:593
  * @route '/supervisi-akademik'
  */
 supervision.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +35,7 @@ supervision.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\DashboardController::supervision
- * @see app/Http/Controllers/DashboardController.php:591
+ * @see app/Http/Controllers/DashboardController.php:593
  * @route '/supervisi-akademik'
  */
 supervision.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -45,7 +45,7 @@ supervision.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\DashboardController::supervision
- * @see app/Http/Controllers/DashboardController.php:591
+ * @see app/Http/Controllers/DashboardController.php:593
  * @route '/supervisi-akademik'
  */
     const supervisionForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -55,7 +55,7 @@ supervision.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\DashboardController::supervision
- * @see app/Http/Controllers/DashboardController.php:591
+ * @see app/Http/Controllers/DashboardController.php:593
  * @route '/supervisi-akademik'
  */
         supervisionForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -64,7 +64,7 @@ supervision.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\DashboardController::supervision
- * @see app/Http/Controllers/DashboardController.php:591
+ * @see app/Http/Controllers/DashboardController.php:593
  * @route '/supervisi-akademik'
  */
         supervisionForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -80,7 +80,7 @@ supervision.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     supervision.form = supervisionForm
 /**
 * @see \App\Http\Controllers\DashboardController::evaluation
- * @see app/Http/Controllers/DashboardController.php:616
+ * @see app/Http/Controllers/DashboardController.php:618
  * @route '/evaluasi-sekolah'
  */
 export const evaluation = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -95,7 +95,7 @@ evaluation.definition = {
 
 /**
 * @see \App\Http\Controllers\DashboardController::evaluation
- * @see app/Http/Controllers/DashboardController.php:616
+ * @see app/Http/Controllers/DashboardController.php:618
  * @route '/evaluasi-sekolah'
  */
 evaluation.url = (options?: RouteQueryOptions) => {
@@ -104,7 +104,7 @@ evaluation.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\DashboardController::evaluation
- * @see app/Http/Controllers/DashboardController.php:616
+ * @see app/Http/Controllers/DashboardController.php:618
  * @route '/evaluasi-sekolah'
  */
 evaluation.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -113,7 +113,7 @@ evaluation.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\DashboardController::evaluation
- * @see app/Http/Controllers/DashboardController.php:616
+ * @see app/Http/Controllers/DashboardController.php:618
  * @route '/evaluasi-sekolah'
  */
 evaluation.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -123,7 +123,7 @@ evaluation.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\DashboardController::evaluation
- * @see app/Http/Controllers/DashboardController.php:616
+ * @see app/Http/Controllers/DashboardController.php:618
  * @route '/evaluasi-sekolah'
  */
     const evaluationForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -133,7 +133,7 @@ evaluation.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\DashboardController::evaluation
- * @see app/Http/Controllers/DashboardController.php:616
+ * @see app/Http/Controllers/DashboardController.php:618
  * @route '/evaluasi-sekolah'
  */
         evaluationForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -142,7 +142,7 @@ evaluation.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\DashboardController::evaluation
- * @see app/Http/Controllers/DashboardController.php:616
+ * @see app/Http/Controllers/DashboardController.php:618
  * @route '/evaluasi-sekolah'
  */
         evaluationForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -158,7 +158,7 @@ evaluation.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     evaluation.form = evaluationForm
 /**
 * @see \App\Http\Controllers\DashboardController::approvals
- * @see app/Http/Controllers/DashboardController.php:633
+ * @see app/Http/Controllers/DashboardController.php:635
  * @route '/persetujuan-sekolah'
  */
 export const approvals = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -173,7 +173,7 @@ approvals.definition = {
 
 /**
 * @see \App\Http\Controllers\DashboardController::approvals
- * @see app/Http/Controllers/DashboardController.php:633
+ * @see app/Http/Controllers/DashboardController.php:635
  * @route '/persetujuan-sekolah'
  */
 approvals.url = (options?: RouteQueryOptions) => {
@@ -182,7 +182,7 @@ approvals.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\DashboardController::approvals
- * @see app/Http/Controllers/DashboardController.php:633
+ * @see app/Http/Controllers/DashboardController.php:635
  * @route '/persetujuan-sekolah'
  */
 approvals.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -191,7 +191,7 @@ approvals.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\DashboardController::approvals
- * @see app/Http/Controllers/DashboardController.php:633
+ * @see app/Http/Controllers/DashboardController.php:635
  * @route '/persetujuan-sekolah'
  */
 approvals.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -201,7 +201,7 @@ approvals.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\DashboardController::approvals
- * @see app/Http/Controllers/DashboardController.php:633
+ * @see app/Http/Controllers/DashboardController.php:635
  * @route '/persetujuan-sekolah'
  */
     const approvalsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -211,7 +211,7 @@ approvals.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\DashboardController::approvals
- * @see app/Http/Controllers/DashboardController.php:633
+ * @see app/Http/Controllers/DashboardController.php:635
  * @route '/persetujuan-sekolah'
  */
         approvalsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -220,7 +220,7 @@ approvals.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\DashboardController::approvals
- * @see app/Http/Controllers/DashboardController.php:633
+ * @see app/Http/Controllers/DashboardController.php:635
  * @route '/persetujuan-sekolah'
  */
         approvalsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

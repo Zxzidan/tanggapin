@@ -23,18 +23,24 @@ class SchoolSetting extends Model
      */
     public static function current(): self
     {
-        return Cache::remember('school_setting_singleton', 60, function () {
-            return self::firstOrCreate(
-                ['id' => 1],
-                [
-                    'school_name' => 'SMK Negeri Terpadu Tanggapin',
-                    'npsn' => '20219876',
-                    'subscription_plan' => 'unggulan',
-                    'max_classes' => 35,
-                    'academic_year' => '2025/2026 Ganjil',
-                ]
-            );
-        });
+        $cached = Cache::get('school_setting_singleton');
+        if ($cached instanceof self) {
+            return $cached;
+        }
+
+        $setting = self::firstOrCreate(
+            ['id' => 1],
+            [
+                'school_name' => 'SMK Negeri Terpadu Tanggapin',
+                'npsn' => '20219876',
+                'subscription_plan' => 'unggulan',
+                'max_classes' => 35,
+                'academic_year' => '2025/2026 Ganjil',
+            ]
+        );
+        Cache::put('school_setting_singleton', $setting, 60);
+
+        return $setting;
     }
 
     /**

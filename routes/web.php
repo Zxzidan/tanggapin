@@ -87,6 +87,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('student-reports/{report}/send', [DashboardController::class, 'sendReportToParent'])->name('student-reports.send');
     Route::post('payments', [DashboardController::class, 'storePayment'])->name('payments.store');
     Route::post('payments/{payment}/verify', [DashboardController::class, 'verifyPayment'])->name('payments.verify');
+    Route::post('student-grades', [DashboardController::class, 'storeSubjectGrade'])->name('student-grades.store');
+    Route::post('homeroom-journals', [DashboardController::class, 'storeHomeroomJournal'])->name('homeroom-journals.store');
+    Route::post('parent-invitations', [DashboardController::class, 'storeParentInvitation'])->name('parent-invitations.store');
 });
 
 require __DIR__.'/settings.php';

@@ -1,8 +1,8 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../wayfinder'
 /**
 * @see \App\Http\Controllers\DashboardController::store
- * @see app/Http/Controllers/DashboardController.php:1622
- * @route '/parent-communications'
+ * @see app/Http/Controllers/DashboardController.php:1891
+ * @route '/homeroom-journals'
  */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(options),
@@ -11,13 +11,13 @@ export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => (
 
 store.definition = {
     methods: ["post"],
-    url: '/parent-communications',
+    url: '/homeroom-journals',
 } satisfies RouteDefinition<["post"]>
 
 /**
 * @see \App\Http\Controllers\DashboardController::store
- * @see app/Http/Controllers/DashboardController.php:1622
- * @route '/parent-communications'
+ * @see app/Http/Controllers/DashboardController.php:1891
+ * @route '/homeroom-journals'
  */
 store.url = (options?: RouteQueryOptions) => {
     return store.definition.url + queryParams(options)
@@ -25,8 +25,8 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\DashboardController::store
- * @see app/Http/Controllers/DashboardController.php:1622
- * @route '/parent-communications'
+ * @see app/Http/Controllers/DashboardController.php:1891
+ * @route '/homeroom-journals'
  */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(options),
@@ -35,8 +35,8 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
     /**
 * @see \App\Http\Controllers\DashboardController::store
- * @see app/Http/Controllers/DashboardController.php:1622
- * @route '/parent-communications'
+ * @see app/Http/Controllers/DashboardController.php:1891
+ * @route '/homeroom-journals'
  */
     const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: store.url(options),
@@ -45,8 +45,8 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
             /**
 * @see \App\Http\Controllers\DashboardController::store
- * @see app/Http/Controllers/DashboardController.php:1622
- * @route '/parent-communications'
+ * @see app/Http/Controllers/DashboardController.php:1891
+ * @route '/homeroom-journals'
  */
         storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: store.url(options),
@@ -54,8 +54,8 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
         })
     
     store.form = storeForm
-const parentCommunications = {
+const homeroomJournals = {
     store: Object.assign(store, store),
 }
 
-export default parentCommunications
+export default homeroomJournals

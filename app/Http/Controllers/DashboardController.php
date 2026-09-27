@@ -7,6 +7,7 @@ use App\Models\CaseTimeline;
 use App\Models\DapodikIssue;
 use App\Models\DisciplineRecord;
 use App\Models\Followup;
+use App\Models\HomeroomJournal;
 use App\Models\Incident;
 use App\Models\IncidentChecklist;
 use App\Models\ParentCommunication;
@@ -16,6 +17,7 @@ use App\Models\SchoolPayment;
 use App\Models\Student;
 use App\Models\StudentCase;
 use App\Models\StudentReport;
+use App\Models\SubjectGrade;
 use App\Models\TeacherDocument;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
@@ -750,7 +752,13 @@ class DashboardController extends Controller
         }
 
         $user = auth()->user();
-        $studentQuery = Student::with(['schoolClass', 'reports' => fn ($q) => $q->latest()]);
+        $studentQuery = Student::with([
+            'schoolClass',
+            'reports' => fn ($q) => $q->latest(),
+            'subjectGrades',
+            'homeroomJournals' => fn ($q) => $q->latest(),
+            'disciplineRecords',
+        ]);
 
         // Scoping for Wali Kelas: only students in their assigned class
         if ($user && $user->role === 'wali_kelas' && $user->school_class_id) {
@@ -761,33 +769,66 @@ class DashboardController extends Controller
             ->map(function (Student $s): array {
                 $latestReport = $s->reports->first();
 
+                // Look for stored SubjectGrade for PPLG-401 or first available
+                $dbGrade = $s->subjectGrades->firstWhere('subject_code', 'PPLG-401') ?? $s->subjectGrades->first();
+
                 $seed = crc32($s->nisn ?? (string) $s->id);
                 $att = (int) $s->attendance_rate;
                 $isHigh = $att >= 90 && $s->risk_level === 'low';
                 $isLow = $att < 80 || $s->risk_level === 'high';
 
-                $tp1Score = $isHigh ? (90 + ($seed % 7)) : ($isLow ? (68 + ($seed % 6)) : (80 + ($seed % 7)));
-                $tp2Score = $isHigh ? (88 + ($seed % 7)) : ($isLow ? (64 + ($seed % 7)) : (77 + ($seed % 6)));
-                $tp3Score = $isHigh ? (87 + ($seed % 8)) : ($isLow ? (62 + ($seed % 8)) : (79 + ($seed % 7)));
+                $tp1Score = $dbGrade ? $dbGrade->tp1_score : ($isHigh ? (90 + ($seed % 7)) : ($isLow ? (68 + ($seed % 6)) : (80 + ($seed % 7))));
+                $tp2Score = $dbGrade ? $dbGrade->tp2_score : ($isHigh ? (88 + ($seed % 7)) : ($isLow ? (64 + ($seed % 7)) : (77 + ($seed % 6))));
+                $tp3Score = $dbGrade ? $dbGrade->tp3_score : ($isHigh ? (87 + ($seed % 8)) : ($isLow ? (62 + ($seed % 8)) : (79 + ($seed % 7))));
 
-                $formative = (int) round(($tp1Score + $tp2Score) / 2);
-                $summative = (int) round(($tp2Score + $tp3Score) / 2);
-                $finalScore = (int) round(($formative * 0.4) + ($summative * 0.6));
-                $predicate = $finalScore >= 88 ? 'A (Sangat Baik)' : ($finalScore >= 75 ? 'B (Baik)' : 'C (Perlu Bimbingan)');
+                $formative = $dbGrade ? $dbGrade->formative_score : (int) round(($tp1Score + $tp2Score) / 2);
+                $summative = $dbGrade ? $dbGrade->summative_score : (int) round(($tp2Score + $tp3Score) / 2);
+                $finalScore = $dbGrade ? $dbGrade->final_score : (int) round(($formative * 0.4) + ($summative * 0.6));
+                $predicate = $dbGrade ? $dbGrade->predicate : ($finalScore >= 88 ? 'A (Sangat Baik)' : ($finalScore >= 75 ? 'B (Baik)' : 'C (Perlu Bimbingan)'));
 
-                $tp1Status = $tp1Score >= 88 ? 'Tercapai Optimal' : ($tp1Score >= 75 ? 'Tercapai' : 'Perlu Bimbingan');
-                $tp2Status = $tp2Score >= 88 ? 'Tercapai Optimal' : ($tp2Score >= 75 ? 'Tercapai' : 'Perlu Bimbingan');
-                $tp3Status = $tp3Score >= 88 ? 'Tercapai Optimal' : ($tp3Score >= 75 ? 'Tercapai' : 'Perlu Bimbingan');
+                $tp1Status = $dbGrade ? $dbGrade->tp1_status : ($tp1Score >= 88 ? 'Tercapai Optimal' : ($tp1Score >= 75 ? 'Tercapai' : 'Perlu Bimbingan'));
+                $tp2Status = $dbGrade ? $dbGrade->tp2_status : ($tp2Score >= 88 ? 'Tercapai Optimal' : ($tp2Score >= 75 ? 'Tercapai' : 'Perlu Bimbingan'));
+                $tp3Status = $dbGrade ? $dbGrade->tp3_status : ($tp3Score >= 88 ? 'Tercapai Optimal' : ($tp3Score >= 75 ? 'Tercapai' : 'Perlu Bimbingan'));
+
+                $attitude = [
+                    'bernalarKritis' => $dbGrade && $dbGrade->attitude_critical ? $dbGrade->attitude_critical : ($isHigh
+                        ? 'Sangat Baik — Mampu menganalisis akar masalah bug sistem dan menawarkan solusi arsitektur efisien.'
+                        : ($isLow ? 'Cukup — Membutuhkan bimbingan intensif saat memecahkan runtime error bertingkat.' : 'Baik — Mandiri dalam menelusuri pesan galat dasar dan melakukan debugging terbimbing.')),
+                    'kemandirian' => $dbGrade && $dbGrade->attitude_independence ? $dbGrade->attitude_independence : ($isHigh
+                        ? 'Sangat Baik — Menyelesaikan tantangan praktikum mandiri sebelum batas waktu dengan kode terstruktur rapi.'
+                        : ($isLow ? 'Perlu Pendampingan — Kerap menunda penuntasan jobsheet praktikum akibat kurangnya disiplin waktu.' : 'Baik — Menuntaskan lembar kerja lab tepat waktu dengan kepatuhan sintaks baik.')),
+                    'gotongRoyong' => $dbGrade && $dbGrade->attitude_cooperation ? $dbGrade->attitude_cooperation : ($isHigh
+                        ? 'Sangat Baik — Menjadi motor penggerak kelompok dan aktif membantu rekan yang mengalami kendala teknis.'
+                        : ($isLow ? 'Cukup — Cenderung pasif dan membutuhkan dorongan untuk berinteraksi dalam diskusi tim.' : 'Baik — Bekerja sama dengan harmonis dan membagi peran tugas proyek secara adil.')),
+                    'catatanObservasi' => $dbGrade && $dbGrade->teacher_notes ? $dbGrade->teacher_notes : ($isHigh
+                        ? "Ananda {$s->name} menunjukkan passion tinggi di bidang software engineering, teliti, dan memiliki etika komunikasi santun."
+                        : ($isLow ? "Ananda {$s->name} memiliki potensi teknis terpendam, namun perlu perbaikan konsistensi kehadiran dan disiplin lab." : "Ananda {$s->name} konsisten menunjukkan minat positif dan antusias saat eksplorasi antarmuka web.")),
+                ];
+
+                $aiAnalysis = $dbGrade && ! empty($dbGrade->ai_analysis) ? $dbGrade->ai_analysis : [
+                    'competencyDiagnosis' => $isHigh
+                        ? 'Siswa menguasai kompetensi front-end dan API integration melampaui rata-rata kelas. Memiliki kepekaan tinggi terhadap clean code dan UX.'
+                        : ($isLow ? 'Terindikasi learning loss pada kompetensi asinkron (TP.2) akibat jam praktik yang terlewat. Membutuhkan penguatan fundamental JavaScript & API handling.' : 'Pemahaman konsep komponen dan data-flow sudah tuntas. Perlu pemantapan pada aspek edge-case error handling dan validasi form kompleks.'),
+                    'differentiationPlan' => $isHigh
+                        ? 'Fasilitasi dengan proyek pengayaan (Enrichment Track): integrasi WebSocket real-time dan arsitektur State tersentralisasi.'
+                        : ($isLow ? 'Fasilitasi dengan klinik remedial intensif (Scaffolding Track): berikan starter-kit code sederhana dan lembar panduan bertahap.' : 'Berikan studi kasus mini-project mandiri dengan kompleksitas moderat untuk mengasah kemandirian problem-solving.'),
+                    'remedialFocus' => $isLow ? 'Remedial Terarah: Penanganan response JSON dan integrasi Token Autentikasi.' : null,
+                    'readinessScore' => $isHigh ? (92 + ($seed % 5)) : ($isLow ? (65 + ($seed % 7)) : (81 + ($seed % 7))),
+                    'readinessStatus' => $isHigh ? 'Sangat Siap — Standar Portofolio Industri' : ($isLow ? 'Butuh Remedial & Penguatan Lab' : 'Siap — Memenuhi Standar Kompetensi'),
+                    'recommendedActivities' => $isHigh
+                        ? ['Penyusunan Portofolio Proyek Web Skala Penuh', 'Peer-Tutor Pendampingan Lab']
+                        : ($isLow ? ['Klinik Remedial 1-on-1 Pasca Pembelajaran', 'Latihan Mandiri Modul Ringkas Berulang'] : ['Eksplorasi Framework Lanjutan', 'Uji Coba Mini-Project Berpasangan']),
+                ];
 
                 $subjectAssessment = [
-                    'subjectName' => 'Pemrograman Web & Perangkat Bergerak',
-                    'subjectCode' => 'PPLG-401',
-                    'teacherName' => 'Siti Aminah, M.Pd',
+                    'subjectName' => $dbGrade ? $dbGrade->subject_name : 'Pemrograman Web & Perangkat Bergerak',
+                    'subjectCode' => $dbGrade ? $dbGrade->subject_code : 'PPLG-401',
+                    'teacherName' => $dbGrade ? $dbGrade->teacher_name : 'Siti Aminah, M.Pd',
                     'formativeScore' => $formative,
                     'summativeScore' => $summative,
                     'finalScore' => $finalScore,
                     'predicate' => $predicate,
-                    'kkm' => 75,
+                    'kkm' => $dbGrade ? (int) $dbGrade->kkm : 75,
                     'learningObjectives' => [
                         [
                             'code' => 'TP.1',
@@ -808,35 +849,82 @@ class DashboardController extends Controller
                             'status' => $tp3Status,
                         ],
                     ],
-                    'attitude' => [
-                        'bernalarKritis' => $isHigh
-                            ? 'Sangat Baik — Mampu menganalisis akar masalah bug sistem dan menawarkan solusi arsitektur efisien.'
-                            : ($isLow ? 'Cukup — Membutuhkan bimbingan intensif saat memecahkan runtime error bertingkat.' : 'Baik — Mandiri dalam menelusuri pesan galat dasar dan melakukan debugging terbimbing.'),
-                        'kemandirian' => $isHigh
-                            ? 'Sangat Baik — Menyelesaikan tantangan praktikum mandiri sebelum batas waktu dengan kode terstruktur rapi.'
-                            : ($isLow ? 'Perlu Pendampingan — Kerap menunda penuntasan jobsheet praktikum akibat kurangnya disiplin waktu.' : 'Baik — Menuntaskan lembar kerja lab tepat waktu dengan kepatuhan sintaks baik.'),
-                        'gotongRoyong' => $isHigh
-                            ? 'Sangat Baik — Menjadi motor penggerak kelompok dan aktif membantu rekan yang mengalami kendala teknis.'
-                            : ($isLow ? 'Cukup — Cenderung pasif dan membutuhkan dorongan untuk berinteraksi dalam diskusi tim.' : 'Baik — Bekerja sama dengan harmonis dan membagi peran tugas proyek secara adil.'),
-                        'catatanObservasi' => $isHigh
-                            ? "Ananda {$s->name} menunjukkan passion tinggi di bidang software engineering, teliti, dan memiliki etika komunikasi santun."
-                            : ($isLow ? "Ananda {$s->name} memiliki potensi teknis terpendam, namun perlu perbaikan konsistensi kehadiran dan disiplin lab." : "Ananda {$s->name} konsisten menunjukkan minat positif dan antusias saat eksplorasi antarmuka web."),
-                    ],
-                    'aiAnalysis' => [
-                        'competencyDiagnosis' => $isHigh
-                            ? 'Siswa menguasai kompetensi front-end dan API integration melampaui rata-rata kelas. Memiliki kepekaan tinggi terhadap clean code dan UX.'
-                            : ($isLow ? 'Terindikasi learning loss pada kompetensi asinkron (TP.2) akibat jam praktik yang terlewat. Membutuhkan penguatan fundamental JavaScript & API handling.' : 'Pemahaman konsep komponen dan data-flow sudah tuntas. Perlu pemantapan pada aspek edge-case error handling dan validasi form kompleks.'),
-                        'differentiationPlan' => $isHigh
-                            ? 'Fasilitasi dengan proyek pengayaan (Enrichment Track): integrasi WebSocket real-time dan arsitektur State tersentralisasi.'
-                            : ($isLow ? 'Fasilitasi dengan klinik remedial intensif (Scaffolding Track): berikan starter-kit code sederhana dan lembar panduan bertahap.' : 'Berikan studi kasus mini-project mandiri dengan kompleksitas moderat untuk mengasah kemandirian problem-solving.'),
-                        'remedialFocus' => $isLow ? 'Remedial Terarah: Penanganan response JSON dan integrasi Token Autentikasi.' : null,
-                        'readinessScore' => $isHigh ? (92 + ($seed % 5)) : ($isLow ? (65 + ($seed % 7)) : (81 + ($seed % 7))),
-                        'readinessStatus' => $isHigh ? 'Sangat Siap — Standar Portofolio Industri' : ($isLow ? 'Butuh Remedial & Penguatan Lab' : 'Siap — Memenuhi Standar Kompetensi'),
-                        'recommendedActivities' => $isHigh
-                            ? ['Penyusunan Portofolio Proyek Web Skala Penuh', 'Peer-Tutor Pendampingan Lab']
-                            : ($isLow ? ['Klinik Remedial 1-on-1 Pasca Pembelajaran', 'Latihan Mandiri Modul Ringkas Berulang'] : ['Eksplorasi Framework Lanjutan', 'Uji Coba Mini-Project Berpasangan']),
-                    ],
+                    'attitude' => $attitude,
+                    'aiAnalysis' => $aiAnalysis,
                 ];
+
+                // Map all subject grades for this student (crucial for Wali Kelas view)
+                $allSubjectGrades = $s->subjectGrades->map(function (SubjectGrade $sg): array {
+                    return [
+                        'id' => (string) $sg->id,
+                        'subjectCode' => $sg->subject_code,
+                        'subjectName' => $sg->subject_name,
+                        'teacherName' => $sg->teacher_name,
+                        'kkm' => (int) $sg->kkm,
+                        'formativeScore' => (int) $sg->formative_score,
+                        'summativeScore' => (int) $sg->summative_score,
+                        'finalScore' => (int) $sg->final_score,
+                        'predicate' => $sg->predicate,
+                        'isPassing' => (int) $sg->final_score >= (int) $sg->kkm,
+                        'notes' => $sg->teacher_notes,
+                    ];
+                })->values()->toArray();
+
+                // If student has no DB subject grades yet, provide default subject assessment as first entry
+                if (empty($allSubjectGrades)) {
+                    $allSubjectGrades = [
+                        [
+                            'id' => 'temp-1',
+                            'subjectCode' => $subjectAssessment['subjectCode'],
+                            'subjectName' => $subjectAssessment['subjectName'],
+                            'teacherName' => $subjectAssessment['teacherName'],
+                            'kkm' => $subjectAssessment['kkm'],
+                            'formativeScore' => $subjectAssessment['formativeScore'],
+                            'summativeScore' => $subjectAssessment['summativeScore'],
+                            'finalScore' => $subjectAssessment['finalScore'],
+                            'predicate' => $subjectAssessment['predicate'],
+                            'isPassing' => $subjectAssessment['finalScore'] >= $subjectAssessment['kkm'],
+                            'notes' => $subjectAssessment['attitude']['catatanObservasi'],
+                        ],
+                    ];
+                }
+
+                $avgScore = round(collect($allSubjectGrades)->avg('finalScore') ?? $finalScore, 1);
+                $failingCount = collect($allSubjectGrades)->where('isPassing', false)->count();
+
+                // Homeroom Promotion Readiness Evaluation (Wali Kelas Extra Feature)
+                $totalDisciplinePoints = (int) $s->disciplineRecords->sum('points');
+                $isAttMet = $att >= 85;
+                $isGradesMet = $failingCount <= 1;
+                $isDisciplineMet = $totalDisciplinePoints <= 45;
+
+                $promotionStatus = ($isAttMet && $isGradesMet && $isDisciplineMet)
+                    ? 'Layak Naik Kelas'
+                    : (($failingCount <= 2 && $att >= 80) ? 'Naik Kelas Bersyarat' : 'Berisiko Tinggal Kelas');
+
+                $promotionScore = (int) round(($att * 0.4) + ($avgScore * 0.4) + (max(0, 100 - $totalDisciplinePoints) * 0.2));
+
+                $promotionRecommendation = match ($promotionStatus) {
+                    'Layak Naik Kelas' => "Ananda {$s->name} memenuhi seluruh kriteria ketuntasan akademik, presensi ({$att}%), dan disiplin sekolah dengan sangat baik. Direkomendasikan naik kelas.",
+                    'Naik Kelas Bersyarat' => "Terdapat {$failingCount} mata pelajaran di bawah KKM 75 atau presensi {$att}%. Diwajibkan menuntaskan kontrak remedial dan pemantauan wali kelas sebelum rapat pleno.",
+                    default => "Status kritis: Presensi di bawah 80% ({$att}%) atau terdapat {$failingCount} mapel belum tuntas. Diperlukan konferensi kasus darurat bersama orang tua dan Guru BK.",
+                };
+
+                // Homeroom counseling journals
+                $homeroomJournals = $s->homeroomJournals->map(function (HomeroomJournal $hj): array {
+                    return [
+                        'id' => (string) $hj->id,
+                        'journalDate' => $hj->journal_date->format('Y-m-d'),
+                        'category' => $hj->category,
+                        'title' => $hj->title,
+                        'issueDescription' => $hj->issue_description,
+                        'counselingApproach' => $hj->counseling_approach,
+                        'studentCommitment' => $hj->student_commitment,
+                        'status' => $hj->status,
+                        'parentNotifiedAt' => $hj->parent_notified_at,
+                        'teacherName' => $hj->homeroom_teacher_name,
+                    ];
+                })->values()->toArray();
 
                 return [
                     'id' => (string) $s->id,
@@ -851,6 +939,18 @@ class DashboardController extends Controller
                     'hasReport' => $latestReport !== null,
                     'reportStatus' => $latestReport?->status ?? 'none',
                     'subjectAssessment' => $subjectAssessment,
+                    'allSubjectGrades' => $allSubjectGrades,
+                    'academicAverage' => $avgScore,
+                    'failingSubjectCount' => $failingCount,
+                    'promotionEvaluation' => [
+                        'status' => $promotionStatus,
+                        'score' => $promotionScore,
+                        'isAttendanceMet' => $isAttMet,
+                        'isGradesMet' => $isGradesMet,
+                        'isDisciplineMet' => $isDisciplineMet,
+                        'recommendationNote' => $promotionRecommendation,
+                    ],
+                    'homeroomJournals' => $homeroomJournals,
                     'latestReport' => $latestReport ? [
                         'id' => (string) $latestReport->id,
                         'reportCode' => $latestReport->report_code,
@@ -887,9 +987,42 @@ class DashboardController extends Controller
             'confirmedByParents' => (clone $scopedReportQuery)->where('acknowledgement_status', 'like', '%Sudah%')->count(),
         ];
 
+        $homeroomJournalsList = HomeroomJournal::with('student')
+            ->when($user && $user->role === 'wali_kelas' && $user->school_class_id, function ($q) use ($user) {
+                $q->where('school_class_id', $user->school_class_id);
+            })
+            ->latest('journal_date')
+            ->take(20)
+            ->get()
+            ->map(fn ($hj) => [
+                'id' => (string) $hj->id,
+                'studentId' => (string) $hj->student_id,
+                'studentName' => $hj->student->name ?? '-',
+                'journalDate' => $hj->journal_date->format('d M Y'),
+                'category' => $hj->category,
+                'title' => $hj->title,
+                'issueDescription' => $hj->issue_description,
+                'counselingApproach' => $hj->counseling_approach,
+                'studentCommitment' => $hj->student_commitment,
+                'status' => $hj->status,
+                'parentNotifiedAt' => $hj->parent_notified_at,
+                'teacherName' => $hj->homeroom_teacher_name,
+            ])
+            ->toArray();
+
+        $availableSubjects = [
+            ['code' => 'PPLG-401', 'name' => 'Pemrograman Web & Perangkat Bergerak', 'teacher' => 'Siti Aminah, M.Pd'],
+            ['code' => 'PPLG-402', 'name' => 'Basis Data & SQL Terapan', 'teacher' => 'Hendra Wijaya, S.Kom'],
+            ['code' => 'PPLG-403', 'name' => 'Pemodelan Perangkat Lunak & OOP', 'teacher' => 'Budi Santoso, S.Kom'],
+            ['code' => 'UMUM-101', 'name' => 'Bahasa Inggris Komunikasi Kejuruan', 'teacher' => 'Dian Permatasari, M.Pd'],
+            ['code' => 'UMUM-102', 'name' => 'Matematika Terapan & Logika Komputasi', 'teacher' => 'Ir. Bambang S., M.T.'],
+        ];
+
         return Inertia::render('rapor-siswa', [
             'students' => $students,
             'stats' => $stats,
+            'homeroomJournalsList' => $homeroomJournalsList,
+            'availableSubjects' => $availableSubjects,
         ]);
     }
 
@@ -1664,5 +1797,176 @@ class DashboardController extends Controller
         ]);
 
         return back()->with('success', "Rekonsiliasi tagihan {$payment->invoice_no} berhasil diverifikasi Lunas!");
+    }
+
+    /**
+     * Store or update subject grade input by Guru Mapel.
+     */
+    public function storeSubjectGrade(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'student_id' => ['required', 'exists:students,id'],
+            'subject_code' => ['required', 'string', 'max:50'],
+            'subject_name' => ['required', 'string', 'max:150'],
+            'teacher_name' => ['nullable', 'string', 'max:150'],
+            'kkm' => ['nullable', 'integer', 'min:50', 'max:100'],
+            'formative_score' => ['required', 'integer', 'min:0', 'max:100'],
+            'summative_score' => ['required', 'integer', 'min:0', 'max:100'],
+            'tp1_score' => ['required', 'integer', 'min:0', 'max:100'],
+            'tp2_score' => ['required', 'integer', 'min:0', 'max:100'],
+            'tp3_score' => ['required', 'integer', 'min:0', 'max:100'],
+            'attitude_critical' => ['nullable', 'string'],
+            'attitude_independence' => ['nullable', 'string'],
+            'attitude_cooperation' => ['nullable', 'string'],
+            'teacher_notes' => ['nullable', 'string'],
+        ]);
+
+        $student = Student::findOrFail($validated['student_id']);
+        $formative = (int) $validated['formative_score'];
+        $summative = (int) $validated['summative_score'];
+        $finalScore = (int) round(($formative * 0.4) + ($summative * 0.6));
+        $predicate = $finalScore >= 88 ? 'A (Sangat Baik)' : ($finalScore >= 75 ? 'B (Baik)' : 'C (Perlu Bimbingan)');
+
+        $tp1Score = (int) $validated['tp1_score'];
+        $tp2Score = (int) $validated['tp2_score'];
+        $tp3Score = (int) $validated['tp3_score'];
+
+        $tp1Status = $tp1Score >= 88 ? 'Tercapai Optimal' : ($tp1Score >= 75 ? 'Tercapai' : 'Perlu Bimbingan');
+        $tp2Status = $tp2Score >= 88 ? 'Tercapai Optimal' : ($tp2Score >= 75 ? 'Tercapai' : 'Perlu Bimbingan');
+        $tp3Status = $tp3Score >= 88 ? 'Tercapai Optimal' : ($tp3Score >= 75 ? 'Tercapai' : 'Perlu Bimbingan');
+
+        $isHigh = $finalScore >= 88;
+        $isLow = $finalScore < 75;
+
+        $aiAnalysis = [
+            'competencyDiagnosis' => $isHigh
+                ? "Siswa menguasai kompetensi materi {$validated['subject_name']} melampaui rata-rata kelas. Memiliki kepekaan analisis tinggi dan hasil praktikum rapi."
+                : ($isLow ? "Terindikasi tantangan belajar pada kompetensi materi {$validated['subject_name']}. Membutuhkan penguatan materi praktikum dan remedial terarah." : "Penguasaan kompetensi dasar {$validated['subject_name']} sudah tuntas dan stabil. Perlu pemantapan pada studi kasus lanjutan."),
+            'differentiationPlan' => $isHigh
+                ? 'Fasilitasi dengan Enrichment Track: tantangan proyek mandiri berbasis standar industri dan penugasan sebagai peer-tutor.'
+                : ($isLow ? 'Fasilitasi dengan Scaffolding Track: klinik remedial intensif tatap muka 1-on-1 dengan jobsheet bertahap.' : 'Berikan mini-project mandiri terarah untuk melatih fleksibilitas pemecahan masalah teknis.'),
+            'remedialFocus' => $isLow ? "Remedial fokus pada TP yang bernilai di bawah KKM 75 (Target: {$validated['subject_code']})." : null,
+            'readinessScore' => min(100, max(50, $finalScore + 4)),
+            'readinessStatus' => $isHigh ? 'Sangat Siap — Standar Portofolio Industri' : ($isLow ? 'Butuh Remedial & Penguatan Lab' : 'Siap Kompeten — Memenuhi Standar'),
+            'recommendedActivities' => $isHigh
+                ? ['Penyusunan Portofolio Proyek Mandiri', 'Peer-Tutor Pendampingan Lab']
+                : ($isLow ? ['Klinik Remedial 1-on-1 Pasca KBM', 'Latihan Mandiri Modul Ringkas'] : ['Eksplorasi Studi Kasus Lanjutan', 'Uji Coba Mini-Project Berpasangan']),
+        ];
+
+        SubjectGrade::updateOrCreate(
+            [
+                'student_id' => $student->id,
+                'subject_code' => $validated['subject_code'],
+            ],
+            [
+                'teacher_id' => auth()->id(),
+                'academic_period' => '2025/2026 Ganjil',
+                'subject_name' => $validated['subject_name'],
+                'teacher_name' => $validated['teacher_name'] ?? (auth()->user()->name ?? 'Guru Pengampu'),
+                'kkm' => $validated['kkm'] ?? 75,
+                'formative_score' => $formative,
+                'summative_score' => $summative,
+                'final_score' => $finalScore,
+                'predicate' => $predicate,
+                'tp1_score' => $tp1Score,
+                'tp2_score' => $tp2Score,
+                'tp3_score' => $tp3Score,
+                'tp1_status' => $tp1Status,
+                'tp2_status' => $tp2Status,
+                'tp3_status' => $tp3Status,
+                'attitude_critical' => $validated['attitude_critical'] ?? 'Baik — Mampu menganalisis logika KBM dengan positif.',
+                'attitude_independence' => $validated['attitude_independence'] ?? 'Baik — Mandiri dalam menuntaskan jobsheet praktikum.',
+                'attitude_cooperation' => $validated['attitude_cooperation'] ?? 'Baik — Kolaboratif dalam penugasan tim.',
+                'teacher_notes' => $validated['teacher_notes'] ?? "Perkembangan belajar ananda {$student->name} berjalan dengan baik.",
+                'ai_analysis' => $aiAnalysis,
+            ]
+        );
+
+        return back()->with('success', "Nilai {$validated['subject_name']} ananda {$student->name} berhasil disimpan dan Analisis AI diferensiasi telah diperbarui!");
+    }
+
+    /**
+     * Store new homeroom journal entry (Wali Kelas).
+     */
+    public function storeHomeroomJournal(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'student_id' => ['required', 'exists:students,id'],
+            'category' => ['required', 'string', 'max:100'],
+            'title' => ['required', 'string', 'max:255'],
+            'issue_description' => ['required', 'string'],
+            'counseling_approach' => ['required', 'string'],
+            'student_commitment' => ['required', 'string'],
+            'status' => ['required', 'string', 'in:Sedang Dipantau,Tuntas Berkembang,Dirujuk ke Guru BK'],
+            'notify_parent' => ['nullable', 'boolean'],
+        ]);
+
+        $student = Student::with('schoolClass')->findOrFail($validated['student_id']);
+        $user = auth()->user();
+
+        HomeroomJournal::create([
+            'student_id' => $student->id,
+            'school_class_id' => $student->school_class_id,
+            'user_id' => $user?->id,
+            'homeroom_teacher_name' => $user?->name ?? 'Wali Kelas',
+            'journal_date' => now()->toDateString(),
+            'category' => $validated['category'],
+            'title' => $validated['title'],
+            'issue_description' => $validated['issue_description'],
+            'counseling_approach' => $validated['counseling_approach'],
+            'student_commitment' => $validated['student_commitment'],
+            'status' => $validated['status'],
+            'parent_notified_at' => ! empty($validated['notify_parent']) ? now()->format('d M H:i') : null,
+        ]);
+
+        if (! empty($validated['notify_parent'])) {
+            ParentCommunication::create([
+                'student_id' => $student->id,
+                'sender_name' => $user?->name ?? 'Wali Kelas',
+                'parent_name' => $student->parent_name,
+                'category' => 'Pembinaan Wali Kelas',
+                'message' => "Yth. Bapak/Ibu {$student->parent_name}, Wali Kelas telah melaksanakan pembinaan pendampingan untuk Ananda {$student->name} terkait {$validated['title']}. Catatan tindak lanjut telah didokumentasikan di Buku Jurnal Wali Kelas. Terima kasih atas dukungan Bapak/Ibu.",
+                'status' => 'Terkirim via WhatsApp & Tanggapin App',
+                'acknowledgement' => 'Menunggu Respon',
+                'sent_at' => now()->format('d M H:i'),
+            ]);
+        }
+
+        return back()->with('success', "Catatan Jurnal Pembinaan untuk {$student->name} berhasil didokumentasikan di Buku Jurnal Wali Kelas!");
+    }
+
+    /**
+     * Issue official parent conference / consultation invitation (Wali Kelas).
+     */
+    public function storeParentInvitation(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'student_id' => ['required', 'exists:students,id'],
+            'meeting_date' => ['required', 'string'],
+            'meeting_time' => ['required', 'string'],
+            'agenda' => ['required', 'string'],
+            'location' => ['nullable', 'string'],
+            'notes' => ['nullable', 'string'],
+        ]);
+
+        $student = Student::with('schoolClass')->findOrFail($validated['student_id']);
+        $user = auth()->user();
+        $location = $validated['location'] ?? 'Ruang Bimbingan / Kelas';
+
+        $invitationCode = 'UND-'.now()->format('Ymd').'-'.str_pad((string) $student->id, 3, '0', STR_PAD_LEFT);
+        $message = "SURAT UNDANGAN KONSULTASI ORANG TUA ({$invitationCode})\n\nKepada Yth. Bapak/Ibu Orang Tua/Wali dari Ananda {$student->name} (Kelas {$student->schoolClass?->name})\n\nMengharap kehadiran Bapak/Ibu pada:\nHari/Tanggal: {$validated['meeting_date']}\nWaktu: {$validated['meeting_time']} WIB\nTempat: {$location}\nAgenda: {$validated['agenda']}\n\nCatatan: {$validated['notes']}\n\nHormat kami,\n{$user?->name} (Wali Kelas)";
+
+        ParentCommunication::create([
+            'student_id' => $student->id,
+            'sender_name' => $user?->name ?? 'Wali Kelas',
+            'parent_name' => $student->parent_name,
+            'category' => 'Undangan Konsultasi Orang Tua',
+            'message' => $message,
+            'status' => 'Terkirim via WhatsApp Resmi',
+            'acknowledgement' => 'Menunggu Konfirmasi Kehadiran',
+            'sent_at' => now()->format('d M H:i'),
+        ]);
+
+        return back()->with('success', "Surat Undangan Konsultasi {$invitationCode} untuk Orang Tua {$student->name} berhasil diterbitkan dan siap dikirim via WhatsApp!");
     }
 }

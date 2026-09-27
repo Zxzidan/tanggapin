@@ -266,6 +266,44 @@ export interface SubjectAssessmentItem {
     aiAnalysis: SubjectAiAnalysis;
 }
 
+export interface AllSubjectGradeItem {
+    id: string;
+    subjectCode: string;
+    subjectName: string;
+    teacherName: string;
+    kkm: number;
+    formativeScore: number;
+    summativeScore: number;
+    finalScore: number;
+    predicate: string;
+    isPassing: boolean;
+    notes?: string | null;
+}
+
+export interface PromotionEvaluation {
+    status: 'Layak Naik Kelas' | 'Naik Kelas Bersyarat' | 'Berisiko Tinggal Kelas';
+    score: number;
+    isAttendanceMet: boolean;
+    isGradesMet: boolean;
+    isDisciplineMet: boolean;
+    recommendationNote: string;
+}
+
+export interface HomeroomJournalItem {
+    id: string;
+    studentId?: string;
+    studentName?: string;
+    journalDate: string;
+    category: string;
+    title: string;
+    issueDescription: string;
+    counselingApproach: string;
+    studentCommitment: string;
+    status: 'Sedang Dipantau' | 'Tuntas Berkembang' | 'Dirujuk ke Guru BK';
+    parentNotifiedAt?: string | null;
+    teacherName: string;
+}
+
 export interface StudentForReportItem {
     id: string;
     name: string;
@@ -280,4 +318,9 @@ export interface StudentForReportItem {
     reportStatus: 'none' | 'draft' | 'generated' | 'sent';
     latestReport: StudentReportItem | null;
     subjectAssessment?: SubjectAssessmentItem;
+    allSubjectGrades?: AllSubjectGradeItem[];
+    academicAverage?: number;
+    failingSubjectCount?: number;
+    promotionEvaluation?: PromotionEvaluation;
+    homeroomJournals?: HomeroomJournalItem[];
 }
