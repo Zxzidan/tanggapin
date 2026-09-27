@@ -74,6 +74,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('cases/{studentCase}/handle-bk', [DashboardController::class, 'handleReferralByBk'])->name('cases.handle-bk');
     Route::post('student-reports/generate', [DashboardController::class, 'generateAiReport'])->name('student-reports.generate');
     Route::post('student-reports/{report}/send', [DashboardController::class, 'sendReportToParent'])->name('student-reports.send');
+    Route::post('payments', [DashboardController::class, 'storePayment'])->name('payments.store');
+    Route::post('payments/{payment}/verify', [DashboardController::class, 'verifyPayment'])->name('payments.verify');
 });
 
 require __DIR__.'/settings.php';

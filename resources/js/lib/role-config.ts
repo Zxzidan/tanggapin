@@ -128,28 +128,23 @@ export const ROLE_CONFIGS: Record<RoleType, RoleConfig> = {
         title: 'Bendahara Sekolah',
         shortTitle: 'Bendahara',
         badge: 'Keuangan & SPP',
-        scopeBadge: 'Disesuaikan — Keuangan & SPP',
-        userName: 'Bendahara Sekolah',
+        scopeBadge: 'Khusus Keuangan & SPP',
+        userName: 'Ahmad Suhendra, S.E.',
         userEmail: 'bendahara@sekolah.sch.id',
         avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80',
         roleDesc:
-            'Tampilan disesuaikan khusus pengelolaan kas SPP, verifikasi bukti transfer, dan reminder tagihan ortu.',
-        allowedTabs: ['overview', 'payments', 'communication', 'early-warning'],
+            'Akses sistem difokuskan khusus pada modul Keuangan & SPP: pencatatan kas masuk, verifikasi bukti transfer bank, dan rekonsiliasi tagihan siswa.',
+        allowedTabs: ['payments'],
         overviewTitle:
-            'Kelola penerimaan kas SPP, bukti transfer dan administrasi biaya',
+            'Pusat Kendali Keuangan Sekolah & Rekonsiliasi SPP',
         overviewSubtitle:
-            'Bendahara Sekolah • Rekapitulasi Pembayaran SPP dan Administrasi Sekolah.',
+            'Bendahara Sekolah • Pengelolaan Kas, Verifikasi Pembayaran & Rekapitulasi SPP.',
         overviewPrinciple:
-            'Prinsip Bendahara: Pantau Jatuh Tempo → Verifikasi Bukti Bayar → Kirim Reminder WhatsApp → Catat Kas.',
+            'Prinsip Keuangan: Pantau Jatuh Tempo → Verifikasi Bukti Bayar → Rekonsiliasi Kas Masuk → Catat Pembukuan.',
         tabOverrides: {
-            overview: { title: 'Ikhtisar Keuangan' },
             payments: {
-                title: 'Keuangan SPP',
+                title: 'Pembayaran & SPP',
             },
-            communication: {
-                title: 'Reminder Ortu',
-            },
-            'early-warning': { title: 'Kendala Biaya' },
         },
     },
     guru_bk: {
@@ -262,8 +257,8 @@ export const ROLE_SWITCHER_OPTIONS: RoleSwitcherOption[] = [
         email: 'bendahara@sekolah.sch.id',
         title: 'Bendahara Sekolah',
         personName: 'Ahmad Suhendra, S.E.',
-        scope: 'Keuangan & SPP',
-        description: 'Monitoring tagihan SPP, verifikasi bukti transfer & koordinasi dispensasi.',
+        scope: 'Khusus Keuangan & SPP',
+        description: 'Monitoring kas SPP, penerbitan tagihan, verifikasi bukti bayar transfer, dan rekonsiliasi kas.',
         badge: 'Keuangan',
         directUrl: '/bendahara',
     },

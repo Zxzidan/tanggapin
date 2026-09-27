@@ -2,6 +2,7 @@
 
 use App\Models\DisciplineRecord;
 use App\Models\SchoolClass;
+use App\Models\SchoolPayment;
 use App\Models\SchoolSetting;
 use App\Models\Student;
 use App\Models\StudentCase;
@@ -592,4 +593,49 @@ test('guru bk can handle referral reported by wali kelas and wali kelas dashboar
                 && str_contains($item['bkHandlingNotes'], 'Telah dilakukan konseling individu');
         }))
     );
+});
+
+test('bendahara is strictly scoped to finance and can manage school payments', function () {
+    $this->seed(TanggapinSeeder::class);
+
+    $bendahara = User::where('role', 'bendahara')->first();
+    $student = Student::first();
+
+    // 1. Bendahara attempting to visit non-financial routes is redirected to payments
+    $this->actingAs($bendahara)->get(route('dashboard'))->assertRedirect(route('payments'));
+    $this->actingAs($bendahara)->get(route('early-warning'))->assertRedirect(route('payments'));
+    $this->actingAs($bendahara)->get(route('kondisi-kelas'))->assertRedirect(route('payments'));
+    $this->actingAs($bendahara)->get(route('cases'))->assertRedirect(route('payments'));
+
+    // 2. Bendahara can access payments module with paymentList & students props
+    $paymentResponse = $this->actingAs($bendahara)->get(route('payments'));
+    $paymentResponse->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->component('pembayaran')
+            ->has('paymentList')
+            ->has('students')
+        );
+
+    // 3. Bendahara can store a new payment
+    $storeResponse = $this->actingAs($bendahara)->post(route('payments.store'), [
+        'student_id' => $student->id,
+        'type' => 'SPP Bulanan',
+        'amount' => 350000,
+        'due_date' => '10 Okt 2025',
+        'status' => 'Belum Bayar',
+    ]);
+    $storeResponse->assertSessionHas('success');
+    $this->assertDatabaseHas('school_payments', [
+        'student_id' => $student->id,
+        'amount' => 350000,
+        'status' => 'Belum Bayar',
+    ]);
+
+    // 4. Bendahara can verify payment as Lunas
+    $payment = SchoolPayment::where('student_id', $student->id)->where('status', 'Belum Bayar')->first();
+    $verifyResponse = $this->actingAs($bendahara)->post(route('payments.verify', $payment));
+    $verifyResponse->assertSessionHas('success');
+    $payment->refresh();
+    expect($payment->status)->toBe('Lunas');
+    expect($payment->paid_at)->not->toBeNull();
 });
