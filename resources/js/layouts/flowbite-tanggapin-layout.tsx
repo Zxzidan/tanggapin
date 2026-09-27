@@ -313,6 +313,11 @@ export default function FlowbiteTanggapinLayout({
                 sec.section === 'UTAMA'
             ) {
                 sectionTitle = 'SUPERVISI & MONITORING';
+            } else if (
+                (activeRoleConfig.id === 'wali_kelas' || activeRoleConfig.id === 'guru_bk') &&
+                sec.section === 'ADMINISTRASI & OPERASIONAL'
+            ) {
+                sectionTitle = 'PERANGKAT AJAR GURU';
             }
 
             return {

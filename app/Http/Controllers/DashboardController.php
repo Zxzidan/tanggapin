@@ -679,6 +679,31 @@ class DashboardController extends Controller
     }
 
     /**
+     * Simpan Perangkat Modul Ajar oleh Guru / Wali Kelas
+     */
+    public function storeTeacherDocument(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'title' => ['required', 'string', 'max:255'],
+            'category' => ['required', 'string', 'max:100'],
+            'period' => ['nullable', 'string', 'max:50'],
+        ]);
+
+        $teacherName = auth()->user()?->name ?? 'Guru Pengampu';
+
+        TeacherDocument::create([
+            'title' => $validated['title'],
+            'teacher_name' => $teacherName,
+            'category' => $validated['category'],
+            'period' => $validated['period'] ?? '2025/2026 Ganjil',
+            'status' => 'Menunggu Supervisi',
+            'file_size' => '2.4 MB',
+        ]);
+
+        return back()->with('success', 'Perangkat modul ajar berhasil diunggah dan diajukan ke Kepala Sekolah untuk disupervisi.');
+    }
+
+    /**
      * Modul 10: Respons Insiden & Kesiapsiagaan Sekolah
      */
     public function responsInsiden(): Response|RedirectResponse

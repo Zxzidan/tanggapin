@@ -1,8 +1,8 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../wayfinder'
 /**
 * @see \App\Http\Controllers\DashboardController::store
- * @see app/Http/Controllers/DashboardController.php:1333
- * @route '/followups'
+ * @see app/Http/Controllers/DashboardController.php:684
+ * @route '/dokumen-guru'
  */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(options),
@@ -11,13 +11,13 @@ export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => (
 
 store.definition = {
     methods: ["post"],
-    url: '/followups',
+    url: '/dokumen-guru',
 } satisfies RouteDefinition<["post"]>
 
 /**
 * @see \App\Http\Controllers\DashboardController::store
- * @see app/Http/Controllers/DashboardController.php:1333
- * @route '/followups'
+ * @see app/Http/Controllers/DashboardController.php:684
+ * @route '/dokumen-guru'
  */
 store.url = (options?: RouteQueryOptions) => {
     return store.definition.url + queryParams(options)
@@ -25,8 +25,8 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\DashboardController::store
- * @see app/Http/Controllers/DashboardController.php:1333
- * @route '/followups'
+ * @see app/Http/Controllers/DashboardController.php:684
+ * @route '/dokumen-guru'
  */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(options),
@@ -35,8 +35,8 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
     /**
 * @see \App\Http\Controllers\DashboardController::store
- * @see app/Http/Controllers/DashboardController.php:1333
- * @route '/followups'
+ * @see app/Http/Controllers/DashboardController.php:684
+ * @route '/dokumen-guru'
  */
     const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: store.url(options),
@@ -45,8 +45,8 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
             /**
 * @see \App\Http\Controllers\DashboardController::store
- * @see app/Http/Controllers/DashboardController.php:1333
- * @route '/followups'
+ * @see app/Http/Controllers/DashboardController.php:684
+ * @route '/dokumen-guru'
  */
         storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: store.url(options),
@@ -54,8 +54,8 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
         })
     
     store.form = storeForm
-const followups = {
+const documents = {
     store: Object.assign(store, store),
 }
 
-export default followups
+export default documents

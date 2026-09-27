@@ -56,6 +56,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('laporan-keuangan', [DashboardController::class, 'laporanKeuangan'])->name('finance.reports');
     Route::get('reminder-spp', [DashboardController::class, 'reminderSpp'])->name('finance.reminder');
     Route::get('dokumen-guru', [DashboardController::class, 'dokumenGuru'])->name('documents');
+    Route::post('dokumen-guru', [DashboardController::class, 'storeTeacherDocument'])->name('documents.store');
     Route::get('respons-insiden', [DashboardController::class, 'responsInsiden'])->name('incidents');
     Route::get('rapor-siswa', [DashboardController::class, 'raporSiswa'])->name('reports');
 
