@@ -796,6 +796,14 @@ export default function Dashboard({
                                 <>
                                     . Pusat administrasi sekolah, sinkronisasi Dapodik, verifikasi SPP, dan berkas GTK.
                                 </>
+                            ) : currentRole === 'guru' ? (
+                                <>
+                                    . Ruang kerja terfokus pada Modul Ajar Kurikulum Merdeka, Pra-Audit AI Mandiri dokumen ajar, serta pemantauan capaian belajar murid yang diajar.
+                                </>
+                            ) : currentRole === 'wali_kelas' ? (
+                                <>
+                                    . Khusus memantau perkembangan, absensi, poin kedisiplinan, rujukan ke Guru BK, dan komunikasi orang tua untuk peserta didik anak walinya.
+                                </>
                             ) : (
                                 <>
                                     . Terdeteksi{' '}
@@ -916,6 +924,210 @@ export default function Dashboard({
                             </div>
                             <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3 text-[11px] font-medium text-blue-600 dark:border-slate-800 dark:text-blue-400">
                                 <span>Verifikasi Berkas</span>
+                                <ArrowRight className="size-3 transition-transform group-hover:translate-x-0.5" />
+                            </div>
+                        </Link>
+                    </div>
+                ) : currentRole === 'guru' ? (
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                        {/* Metric 1: Modul Ajar Guru */}
+                        <Link
+                            href="/dokumen-guru"
+                            className="group flex flex-col justify-between rounded-xl border border-slate-200/80 bg-white p-5 transition-all hover:border-slate-300 hover:shadow-xs dark:border-slate-800 dark:bg-[#0b1120] dark:hover:border-slate-700"
+                        >
+                            <div>
+                                <div className="mb-2.5 flex items-center justify-between">
+                                    <span className="text-[11px] font-medium tracking-wide text-slate-500 uppercase">
+                                        Perangkat Ajar
+                                    </span>
+                                    <FileText className="size-4 text-slate-400 transition-colors group-hover:text-blue-600 dark:text-slate-500 dark:group-hover:text-blue-400" />
+                                </div>
+                                <div className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
+                                    {docList.length} Modul
+                                </div>
+                                <p className="mt-1 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
+                                    Modul Ajar, ATP, & Modul P5 Kurikulum Merdeka
+                                </p>
+                            </div>
+                            <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3 text-[11px] font-medium text-blue-600 dark:border-slate-800 dark:text-blue-400">
+                                <span>Kelola Modul Ajar</span>
+                                <ArrowRight className="size-3 transition-transform group-hover:translate-x-0.5" />
+                            </div>
+                        </Link>
+
+                        {/* Metric 2: Pra-Audit AI Mandiri */}
+                        <Link
+                            href="/dokumen-guru"
+                            className="group flex flex-col justify-between rounded-xl border border-slate-200/80 bg-white p-5 transition-all hover:border-slate-300 hover:shadow-xs dark:border-slate-800 dark:bg-[#0b1120] dark:hover:border-slate-700"
+                        >
+                            <div>
+                                <div className="mb-2.5 flex items-center justify-between">
+                                    <span className="text-[11px] font-medium tracking-wide text-slate-500 uppercase">
+                                        Pra-Audit AI Mandiri
+                                    </span>
+                                    <Sparkles className="size-4 text-blue-500 transition-colors group-hover:text-blue-600" />
+                                </div>
+                                <div className="text-2xl sm:text-3xl font-bold tracking-tight text-blue-600 dark:text-blue-400">
+                                    93 / 100
+                                </div>
+                                <p className="mt-1 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
+                                    Kesesuaian CP/ATP & Asesmen Formatif
+                                </p>
+                            </div>
+                            <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3 text-[11px] font-medium text-blue-600 dark:border-slate-800 dark:text-blue-400">
+                                <span>Uji Kesiapan Dokumen</span>
+                                <ArrowRight className="size-3 transition-transform group-hover:translate-x-0.5" />
+                            </div>
+                        </Link>
+
+                        {/* Metric 3: Murid yang Diajar */}
+                        <Link
+                            href="/kondisi-kelas"
+                            className="group flex flex-col justify-between rounded-xl border border-slate-200/80 bg-white p-5 transition-all hover:border-slate-300 hover:shadow-xs dark:border-slate-800 dark:bg-[#0b1120] dark:hover:border-slate-700"
+                        >
+                            <div>
+                                <div className="mb-2.5 flex items-center justify-between">
+                                    <span className="text-[11px] font-medium tracking-wide text-slate-500 uppercase">
+                                        Murid yang Diajar
+                                    </span>
+                                    <Users className="size-4 text-slate-400 transition-colors group-hover:text-blue-600 dark:text-slate-500 dark:group-hover:text-blue-400" />
+                                </div>
+                                <div className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
+                                    {totalStudentsInClasses || 108} Siswa
+                                </div>
+                                <p className="mt-1 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
+                                    Tersebar di {classList.length || 3} rombel lintas kelas
+                                </p>
+                            </div>
+                            <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3 text-[11px] font-medium text-blue-600 dark:border-slate-800 dark:text-blue-400">
+                                <span>Pantau Capaian Belajar</span>
+                                <ArrowRight className="size-3 transition-transform group-hover:translate-x-0.5" />
+                            </div>
+                        </Link>
+
+                        {/* Metric 4: Asesmen Formatif */}
+                        <Link
+                            href="/rapor-siswa"
+                            className="group flex flex-col justify-between rounded-xl border border-slate-200/80 bg-white p-5 transition-all hover:border-slate-300 hover:shadow-xs dark:border-slate-800 dark:bg-[#0b1120] dark:hover:border-slate-700"
+                        >
+                            <div>
+                                <div className="mb-2.5 flex items-center justify-between">
+                                    <span className="text-[11px] font-medium tracking-wide text-slate-500 uppercase">
+                                        Asesmen Formatif
+                                    </span>
+                                    <GraduationCap className="size-4 text-slate-400 transition-colors group-hover:text-blue-600 dark:text-slate-500 dark:group-hover:text-blue-400" />
+                                </div>
+                                <div className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
+                                    88.6%
+                                </div>
+                                <p className="mt-1 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
+                                    Ketuntasan Tujuan Pembelajaran (TP)
+                                </p>
+                            </div>
+                            <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3 text-[11px] font-medium text-blue-600 dark:border-slate-800 dark:text-blue-400">
+                                <span>Input & Evaluasi Capaian</span>
+                                <ArrowRight className="size-3 transition-transform group-hover:translate-x-0.5" />
+                            </div>
+                        </Link>
+                    </div>
+                ) : currentRole === 'wali_kelas' ? (
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                        {/* Metric 1: Anak Wali Butuh Perhatian */}
+                        <Link
+                            href="/early-warning"
+                            className="group flex flex-col justify-between rounded-xl border border-slate-200/80 bg-white p-5 transition-all hover:border-slate-300 hover:shadow-xs dark:border-slate-800 dark:bg-[#0b1120] dark:hover:border-slate-700"
+                        >
+                            <div>
+                                <div className="mb-2.5 flex items-center justify-between">
+                                    <span className="text-[11px] font-medium tracking-wide text-slate-500 uppercase">
+                                        Anak Wali Butuh Perhatian
+                                    </span>
+                                    <AlertTriangle className="size-4 text-slate-400 transition-colors group-hover:text-blue-600 dark:text-slate-500 dark:group-hover:text-blue-400" />
+                                </div>
+                                <div className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
+                                    {safeStats.studentsNeedingAttention} Siswa
+                                </div>
+                                <p className="mt-1 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
+                                    Sinyal presensi & ketertiban anak wali
+                                </p>
+                            </div>
+                            <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3 text-[11px] font-medium text-blue-600 dark:border-slate-800 dark:text-blue-400">
+                                <span>Tinjau Sinyal Anak Wali</span>
+                                <ArrowRight className="size-3 transition-transform group-hover:translate-x-0.5" />
+                            </div>
+                        </Link>
+
+                        {/* Metric 2: Poin BK Anak Wali */}
+                        <Link
+                            href="/kondisi-kelas"
+                            className="group flex flex-col justify-between rounded-xl border border-slate-200/80 bg-white p-5 transition-all hover:border-slate-300 hover:shadow-xs dark:border-slate-800 dark:bg-[#0b1120] dark:hover:border-slate-700"
+                        >
+                            <div>
+                                <div className="mb-2.5 flex items-center justify-between">
+                                    <span className="text-[11px] font-medium tracking-wide text-slate-500 uppercase">
+                                        Catatan Poin BK
+                                    </span>
+                                    <Scale className="size-4 text-slate-400 transition-colors group-hover:text-blue-600 dark:text-slate-500 dark:group-hover:text-blue-400" />
+                                </div>
+                                <div className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
+                                    {safeStats.activeCases} Poin
+                                </div>
+                                <p className="mt-1 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
+                                    Pelanggaran tercatat untuk ditindaklanjuti
+                                </p>
+                            </div>
+                            <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3 text-[11px] font-medium text-blue-600 dark:border-slate-800 dark:text-blue-400">
+                                <span>Lihat Poin Disiplin</span>
+                                <ArrowRight className="size-3 transition-transform group-hover:translate-x-0.5" />
+                            </div>
+                        </Link>
+
+                        {/* Metric 3: Rujukan ke Guru BK */}
+                        <Link
+                            href="/manajemen-kasus"
+                            className="group flex flex-col justify-between rounded-xl border border-slate-200/80 bg-white p-5 transition-all hover:border-slate-300 hover:shadow-xs dark:border-slate-800 dark:bg-[#0b1120] dark:hover:border-slate-700"
+                        >
+                            <div>
+                                <div className="mb-2.5 flex items-center justify-between">
+                                    <span className="text-[11px] font-medium tracking-wide text-slate-500 uppercase">
+                                        Rujukan ke BK
+                                    </span>
+                                    <ShieldAlert className="size-4 text-slate-400 transition-colors group-hover:text-blue-600 dark:text-slate-500 dark:group-hover:text-blue-400" />
+                                </div>
+                                <div className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
+                                    {safeStats.activeCases} Kasus
+                                </div>
+                                <p className="mt-1 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
+                                    Diteruskan ke konselor BK
+                                </p>
+                            </div>
+                            <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3 text-[11px] font-medium text-blue-600 dark:border-slate-800 dark:text-blue-400">
+                                <span>Alur Rujukan BK</span>
+                                <ArrowRight className="size-3 transition-transform group-hover:translate-x-0.5" />
+                            </div>
+                        </Link>
+
+                        {/* Metric 4: Presensi Kelas Binaan */}
+                        <Link
+                            href="/kondisi-kelas"
+                            className="group flex flex-col justify-between rounded-xl border border-slate-200/80 bg-white p-5 transition-all hover:border-slate-300 hover:shadow-xs dark:border-slate-800 dark:bg-[#0b1120] dark:hover:border-slate-700"
+                        >
+                            <div>
+                                <div className="mb-2.5 flex items-center justify-between">
+                                    <span className="text-[11px] font-medium tracking-wide text-slate-500 uppercase">
+                                        Presensi Anak Wali
+                                    </span>
+                                    <GraduationCap className="size-4 text-slate-400 transition-colors group-hover:text-blue-600 dark:text-slate-500 dark:group-hover:text-blue-400" />
+                                </div>
+                                <div className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
+                                    94.8%
+                                </div>
+                                <p className="mt-1 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
+                                    Kehadiran rombel binaan bulan ini
+                                </p>
+                            </div>
+                            <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3 text-[11px] font-medium text-blue-600 dark:border-slate-800 dark:text-blue-400">
+                                <span>Buka Presensi Anak Wali</span>
                                 <ArrowRight className="size-3 transition-transform group-hover:translate-x-0.5" />
                             </div>
                         </Link>

@@ -283,7 +283,7 @@ register.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     register.form = registerForm
 /**
 * @see \App\Http\Controllers\DashboardController::demoLogin
- * @see app/Http/Controllers/DashboardController.php:81
+ * @see app/Http/Controllers/DashboardController.php:89
  * @route '/demo-login'
  */
 export const demoLogin = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -298,7 +298,7 @@ demoLogin.definition = {
 
 /**
 * @see \App\Http\Controllers\DashboardController::demoLogin
- * @see app/Http/Controllers/DashboardController.php:81
+ * @see app/Http/Controllers/DashboardController.php:89
  * @route '/demo-login'
  */
 demoLogin.url = (options?: RouteQueryOptions) => {
@@ -307,7 +307,7 @@ demoLogin.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\DashboardController::demoLogin
- * @see app/Http/Controllers/DashboardController.php:81
+ * @see app/Http/Controllers/DashboardController.php:89
  * @route '/demo-login'
  */
 demoLogin.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -316,7 +316,7 @@ demoLogin.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\DashboardController::demoLogin
- * @see app/Http/Controllers/DashboardController.php:81
+ * @see app/Http/Controllers/DashboardController.php:89
  * @route '/demo-login'
  */
 demoLogin.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -326,7 +326,7 @@ demoLogin.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\DashboardController::demoLogin
- * @see app/Http/Controllers/DashboardController.php:81
+ * @see app/Http/Controllers/DashboardController.php:89
  * @route '/demo-login'
  */
     const demoLoginForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -336,7 +336,7 @@ demoLogin.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\DashboardController::demoLogin
- * @see app/Http/Controllers/DashboardController.php:81
+ * @see app/Http/Controllers/DashboardController.php:89
  * @route '/demo-login'
  */
         demoLoginForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -345,7 +345,7 @@ demoLogin.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\DashboardController::demoLogin
- * @see app/Http/Controllers/DashboardController.php:81
+ * @see app/Http/Controllers/DashboardController.php:89
  * @route '/demo-login'
  */
         demoLoginForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -361,7 +361,7 @@ demoLogin.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     demoLogin.form = demoLoginForm
 /**
 * @see \App\Http\Controllers\DashboardController::dashboard
- * @see app/Http/Controllers/DashboardController.php:173
+ * @see app/Http/Controllers/DashboardController.php:184
  * @route '/dashboard'
  */
 export const dashboard = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -376,7 +376,7 @@ dashboard.definition = {
 
 /**
 * @see \App\Http\Controllers\DashboardController::dashboard
- * @see app/Http/Controllers/DashboardController.php:173
+ * @see app/Http/Controllers/DashboardController.php:184
  * @route '/dashboard'
  */
 dashboard.url = (options?: RouteQueryOptions) => {
@@ -385,7 +385,7 @@ dashboard.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\DashboardController::dashboard
- * @see app/Http/Controllers/DashboardController.php:173
+ * @see app/Http/Controllers/DashboardController.php:184
  * @route '/dashboard'
  */
 dashboard.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -394,7 +394,7 @@ dashboard.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\DashboardController::dashboard
- * @see app/Http/Controllers/DashboardController.php:173
+ * @see app/Http/Controllers/DashboardController.php:184
  * @route '/dashboard'
  */
 dashboard.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -404,7 +404,7 @@ dashboard.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\DashboardController::dashboard
- * @see app/Http/Controllers/DashboardController.php:173
+ * @see app/Http/Controllers/DashboardController.php:184
  * @route '/dashboard'
  */
     const dashboardForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -414,7 +414,7 @@ dashboard.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\DashboardController::dashboard
- * @see app/Http/Controllers/DashboardController.php:173
+ * @see app/Http/Controllers/DashboardController.php:184
  * @route '/dashboard'
  */
         dashboardForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -423,7 +423,7 @@ dashboard.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\DashboardController::dashboard
- * @see app/Http/Controllers/DashboardController.php:173
+ * @see app/Http/Controllers/DashboardController.php:184
  * @route '/dashboard'
  */
         dashboardForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -439,7 +439,7 @@ dashboard.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     dashboard.form = dashboardForm
 /**
 * @see \App\Http\Controllers\DashboardController::earlyWarning
- * @see app/Http/Controllers/DashboardController.php:196
+ * @see app/Http/Controllers/DashboardController.php:207
  * @route '/early-warning'
  */
 export const earlyWarning = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -454,7 +454,7 @@ earlyWarning.definition = {
 
 /**
 * @see \App\Http\Controllers\DashboardController::earlyWarning
- * @see app/Http/Controllers/DashboardController.php:196
+ * @see app/Http/Controllers/DashboardController.php:207
  * @route '/early-warning'
  */
 earlyWarning.url = (options?: RouteQueryOptions) => {
@@ -463,7 +463,7 @@ earlyWarning.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\DashboardController::earlyWarning
- * @see app/Http/Controllers/DashboardController.php:196
+ * @see app/Http/Controllers/DashboardController.php:207
  * @route '/early-warning'
  */
 earlyWarning.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -472,7 +472,7 @@ earlyWarning.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\DashboardController::earlyWarning
- * @see app/Http/Controllers/DashboardController.php:196
+ * @see app/Http/Controllers/DashboardController.php:207
  * @route '/early-warning'
  */
 earlyWarning.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -482,7 +482,7 @@ earlyWarning.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\DashboardController::earlyWarning
- * @see app/Http/Controllers/DashboardController.php:196
+ * @see app/Http/Controllers/DashboardController.php:207
  * @route '/early-warning'
  */
     const earlyWarningForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -492,7 +492,7 @@ earlyWarning.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\DashboardController::earlyWarning
- * @see app/Http/Controllers/DashboardController.php:196
+ * @see app/Http/Controllers/DashboardController.php:207
  * @route '/early-warning'
  */
         earlyWarningForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -501,7 +501,7 @@ earlyWarning.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\DashboardController::earlyWarning
- * @see app/Http/Controllers/DashboardController.php:196
+ * @see app/Http/Controllers/DashboardController.php:207
  * @route '/early-warning'
  */
         earlyWarningForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -517,7 +517,7 @@ earlyWarning.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     earlyWarning.form = earlyWarningForm
 /**
 * @see \App\Http\Controllers\DashboardController::kondisiKelas
- * @see app/Http/Controllers/DashboardController.php:219
+ * @see app/Http/Controllers/DashboardController.php:230
  * @route '/kondisi-kelas'
  */
 export const kondisiKelas = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -532,7 +532,7 @@ kondisiKelas.definition = {
 
 /**
 * @see \App\Http\Controllers\DashboardController::kondisiKelas
- * @see app/Http/Controllers/DashboardController.php:219
+ * @see app/Http/Controllers/DashboardController.php:230
  * @route '/kondisi-kelas'
  */
 kondisiKelas.url = (options?: RouteQueryOptions) => {
@@ -541,7 +541,7 @@ kondisiKelas.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\DashboardController::kondisiKelas
- * @see app/Http/Controllers/DashboardController.php:219
+ * @see app/Http/Controllers/DashboardController.php:230
  * @route '/kondisi-kelas'
  */
 kondisiKelas.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -550,7 +550,7 @@ kondisiKelas.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\DashboardController::kondisiKelas
- * @see app/Http/Controllers/DashboardController.php:219
+ * @see app/Http/Controllers/DashboardController.php:230
  * @route '/kondisi-kelas'
  */
 kondisiKelas.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -560,7 +560,7 @@ kondisiKelas.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\DashboardController::kondisiKelas
- * @see app/Http/Controllers/DashboardController.php:219
+ * @see app/Http/Controllers/DashboardController.php:230
  * @route '/kondisi-kelas'
  */
     const kondisiKelasForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -570,7 +570,7 @@ kondisiKelas.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\DashboardController::kondisiKelas
- * @see app/Http/Controllers/DashboardController.php:219
+ * @see app/Http/Controllers/DashboardController.php:230
  * @route '/kondisi-kelas'
  */
         kondisiKelasForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -579,7 +579,7 @@ kondisiKelas.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\DashboardController::kondisiKelas
- * @see app/Http/Controllers/DashboardController.php:219
+ * @see app/Http/Controllers/DashboardController.php:230
  * @route '/kondisi-kelas'
  */
         kondisiKelasForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -595,7 +595,7 @@ kondisiKelas.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     kondisiKelas.form = kondisiKelasForm
 /**
 * @see \App\Http\Controllers\DashboardController::attributeScanner
- * @see app/Http/Controllers/DashboardController.php:251
+ * @see app/Http/Controllers/DashboardController.php:262
  * @route '/pemantau-atribut'
  */
 export const attributeScanner = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -610,7 +610,7 @@ attributeScanner.definition = {
 
 /**
 * @see \App\Http\Controllers\DashboardController::attributeScanner
- * @see app/Http/Controllers/DashboardController.php:251
+ * @see app/Http/Controllers/DashboardController.php:262
  * @route '/pemantau-atribut'
  */
 attributeScanner.url = (options?: RouteQueryOptions) => {
@@ -619,7 +619,7 @@ attributeScanner.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\DashboardController::attributeScanner
- * @see app/Http/Controllers/DashboardController.php:251
+ * @see app/Http/Controllers/DashboardController.php:262
  * @route '/pemantau-atribut'
  */
 attributeScanner.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -628,7 +628,7 @@ attributeScanner.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => 
 })
 /**
 * @see \App\Http\Controllers\DashboardController::attributeScanner
- * @see app/Http/Controllers/DashboardController.php:251
+ * @see app/Http/Controllers/DashboardController.php:262
  * @route '/pemantau-atribut'
  */
 attributeScanner.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -638,7 +638,7 @@ attributeScanner.head = (options?: RouteQueryOptions): RouteDefinition<'head'> =
 
     /**
 * @see \App\Http\Controllers\DashboardController::attributeScanner
- * @see app/Http/Controllers/DashboardController.php:251
+ * @see app/Http/Controllers/DashboardController.php:262
  * @route '/pemantau-atribut'
  */
     const attributeScannerForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -648,7 +648,7 @@ attributeScanner.head = (options?: RouteQueryOptions): RouteDefinition<'head'> =
 
             /**
 * @see \App\Http\Controllers\DashboardController::attributeScanner
- * @see app/Http/Controllers/DashboardController.php:251
+ * @see app/Http/Controllers/DashboardController.php:262
  * @route '/pemantau-atribut'
  */
         attributeScannerForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -657,7 +657,7 @@ attributeScanner.head = (options?: RouteQueryOptions): RouteDefinition<'head'> =
         })
             /**
 * @see \App\Http\Controllers\DashboardController::attributeScanner
- * @see app/Http/Controllers/DashboardController.php:251
+ * @see app/Http/Controllers/DashboardController.php:262
  * @route '/pemantau-atribut'
  */
         attributeScannerForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -673,7 +673,7 @@ attributeScanner.head = (options?: RouteQueryOptions): RouteDefinition<'head'> =
     attributeScanner.form = attributeScannerForm
 /**
 * @see \App\Http\Controllers\DashboardController::ats
- * @see app/Http/Controllers/DashboardController.php:387
+ * @see app/Http/Controllers/DashboardController.php:398
  * @route '/alur-ats'
  */
 export const ats = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -688,7 +688,7 @@ ats.definition = {
 
 /**
 * @see \App\Http\Controllers\DashboardController::ats
- * @see app/Http/Controllers/DashboardController.php:387
+ * @see app/Http/Controllers/DashboardController.php:398
  * @route '/alur-ats'
  */
 ats.url = (options?: RouteQueryOptions) => {
@@ -697,7 +697,7 @@ ats.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\DashboardController::ats
- * @see app/Http/Controllers/DashboardController.php:387
+ * @see app/Http/Controllers/DashboardController.php:398
  * @route '/alur-ats'
  */
 ats.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -706,7 +706,7 @@ ats.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\DashboardController::ats
- * @see app/Http/Controllers/DashboardController.php:387
+ * @see app/Http/Controllers/DashboardController.php:398
  * @route '/alur-ats'
  */
 ats.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -716,7 +716,7 @@ ats.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\DashboardController::ats
- * @see app/Http/Controllers/DashboardController.php:387
+ * @see app/Http/Controllers/DashboardController.php:398
  * @route '/alur-ats'
  */
     const atsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -726,7 +726,7 @@ ats.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\DashboardController::ats
- * @see app/Http/Controllers/DashboardController.php:387
+ * @see app/Http/Controllers/DashboardController.php:398
  * @route '/alur-ats'
  */
         atsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -735,7 +735,7 @@ ats.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\DashboardController::ats
- * @see app/Http/Controllers/DashboardController.php:387
+ * @see app/Http/Controllers/DashboardController.php:398
  * @route '/alur-ats'
  */
         atsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -751,7 +751,7 @@ ats.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     ats.form = atsForm
 /**
 * @see \App\Http\Controllers\DashboardController::cases
- * @see app/Http/Controllers/DashboardController.php:409
+ * @see app/Http/Controllers/DashboardController.php:420
  * @route '/manajemen-kasus'
  */
 export const cases = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -766,7 +766,7 @@ cases.definition = {
 
 /**
 * @see \App\Http\Controllers\DashboardController::cases
- * @see app/Http/Controllers/DashboardController.php:409
+ * @see app/Http/Controllers/DashboardController.php:420
  * @route '/manajemen-kasus'
  */
 cases.url = (options?: RouteQueryOptions) => {
@@ -775,7 +775,7 @@ cases.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\DashboardController::cases
- * @see app/Http/Controllers/DashboardController.php:409
+ * @see app/Http/Controllers/DashboardController.php:420
  * @route '/manajemen-kasus'
  */
 cases.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -784,7 +784,7 @@ cases.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\DashboardController::cases
- * @see app/Http/Controllers/DashboardController.php:409
+ * @see app/Http/Controllers/DashboardController.php:420
  * @route '/manajemen-kasus'
  */
 cases.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -794,7 +794,7 @@ cases.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\DashboardController::cases
- * @see app/Http/Controllers/DashboardController.php:409
+ * @see app/Http/Controllers/DashboardController.php:420
  * @route '/manajemen-kasus'
  */
     const casesForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -804,7 +804,7 @@ cases.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\DashboardController::cases
- * @see app/Http/Controllers/DashboardController.php:409
+ * @see app/Http/Controllers/DashboardController.php:420
  * @route '/manajemen-kasus'
  */
         casesForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -813,7 +813,7 @@ cases.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\DashboardController::cases
- * @see app/Http/Controllers/DashboardController.php:409
+ * @see app/Http/Controllers/DashboardController.php:420
  * @route '/manajemen-kasus'
  */
         casesForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -829,7 +829,7 @@ cases.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     cases.form = casesForm
 /**
 * @see \App\Http\Controllers\DashboardController::communication
- * @see app/Http/Controllers/DashboardController.php:447
+ * @see app/Http/Controllers/DashboardController.php:458
  * @route '/komunikasi-ortu'
  */
 export const communication = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -844,7 +844,7 @@ communication.definition = {
 
 /**
 * @see \App\Http\Controllers\DashboardController::communication
- * @see app/Http/Controllers/DashboardController.php:447
+ * @see app/Http/Controllers/DashboardController.php:458
  * @route '/komunikasi-ortu'
  */
 communication.url = (options?: RouteQueryOptions) => {
@@ -853,7 +853,7 @@ communication.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\DashboardController::communication
- * @see app/Http/Controllers/DashboardController.php:447
+ * @see app/Http/Controllers/DashboardController.php:458
  * @route '/komunikasi-ortu'
  */
 communication.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -862,7 +862,7 @@ communication.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\DashboardController::communication
- * @see app/Http/Controllers/DashboardController.php:447
+ * @see app/Http/Controllers/DashboardController.php:458
  * @route '/komunikasi-ortu'
  */
 communication.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -872,7 +872,7 @@ communication.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => (
 
     /**
 * @see \App\Http\Controllers\DashboardController::communication
- * @see app/Http/Controllers/DashboardController.php:447
+ * @see app/Http/Controllers/DashboardController.php:458
  * @route '/komunikasi-ortu'
  */
     const communicationForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -882,7 +882,7 @@ communication.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => (
 
             /**
 * @see \App\Http\Controllers\DashboardController::communication
- * @see app/Http/Controllers/DashboardController.php:447
+ * @see app/Http/Controllers/DashboardController.php:458
  * @route '/komunikasi-ortu'
  */
         communicationForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -891,7 +891,7 @@ communication.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => (
         })
             /**
 * @see \App\Http\Controllers\DashboardController::communication
- * @see app/Http/Controllers/DashboardController.php:447
+ * @see app/Http/Controllers/DashboardController.php:458
  * @route '/komunikasi-ortu'
  */
         communicationForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -907,7 +907,7 @@ communication.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => (
     communication.form = communicationForm
 /**
 * @see \App\Http\Controllers\DashboardController::dapodik
- * @see app/Http/Controllers/DashboardController.php:469
+ * @see app/Http/Controllers/DashboardController.php:480
  * @route '/dapodik'
  */
 export const dapodik = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -922,7 +922,7 @@ dapodik.definition = {
 
 /**
 * @see \App\Http\Controllers\DashboardController::dapodik
- * @see app/Http/Controllers/DashboardController.php:469
+ * @see app/Http/Controllers/DashboardController.php:480
  * @route '/dapodik'
  */
 dapodik.url = (options?: RouteQueryOptions) => {
@@ -931,7 +931,7 @@ dapodik.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\DashboardController::dapodik
- * @see app/Http/Controllers/DashboardController.php:469
+ * @see app/Http/Controllers/DashboardController.php:480
  * @route '/dapodik'
  */
 dapodik.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -940,7 +940,7 @@ dapodik.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\DashboardController::dapodik
- * @see app/Http/Controllers/DashboardController.php:469
+ * @see app/Http/Controllers/DashboardController.php:480
  * @route '/dapodik'
  */
 dapodik.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -950,7 +950,7 @@ dapodik.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\DashboardController::dapodik
- * @see app/Http/Controllers/DashboardController.php:469
+ * @see app/Http/Controllers/DashboardController.php:480
  * @route '/dapodik'
  */
     const dapodikForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -960,7 +960,7 @@ dapodik.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\DashboardController::dapodik
- * @see app/Http/Controllers/DashboardController.php:469
+ * @see app/Http/Controllers/DashboardController.php:480
  * @route '/dapodik'
  */
         dapodikForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -969,7 +969,7 @@ dapodik.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\DashboardController::dapodik
- * @see app/Http/Controllers/DashboardController.php:469
+ * @see app/Http/Controllers/DashboardController.php:480
  * @route '/dapodik'
  */
         dapodikForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -985,7 +985,7 @@ dapodik.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     dapodik.form = dapodikForm
 /**
 * @see \App\Http\Controllers\DashboardController::payments
- * @see app/Http/Controllers/DashboardController.php:487
+ * @see app/Http/Controllers/DashboardController.php:498
  * @route '/pembayaran'
  */
 export const payments = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -1000,7 +1000,7 @@ payments.definition = {
 
 /**
 * @see \App\Http\Controllers\DashboardController::payments
- * @see app/Http/Controllers/DashboardController.php:487
+ * @see app/Http/Controllers/DashboardController.php:498
  * @route '/pembayaran'
  */
 payments.url = (options?: RouteQueryOptions) => {
@@ -1009,7 +1009,7 @@ payments.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\DashboardController::payments
- * @see app/Http/Controllers/DashboardController.php:487
+ * @see app/Http/Controllers/DashboardController.php:498
  * @route '/pembayaran'
  */
 payments.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -1018,7 +1018,7 @@ payments.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\DashboardController::payments
- * @see app/Http/Controllers/DashboardController.php:487
+ * @see app/Http/Controllers/DashboardController.php:498
  * @route '/pembayaran'
  */
 payments.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -1028,7 +1028,7 @@ payments.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\DashboardController::payments
- * @see app/Http/Controllers/DashboardController.php:487
+ * @see app/Http/Controllers/DashboardController.php:498
  * @route '/pembayaran'
  */
     const paymentsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -1038,7 +1038,7 @@ payments.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\DashboardController::payments
- * @see app/Http/Controllers/DashboardController.php:487
+ * @see app/Http/Controllers/DashboardController.php:498
  * @route '/pembayaran'
  */
         paymentsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -1047,7 +1047,7 @@ payments.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\DashboardController::payments
- * @see app/Http/Controllers/DashboardController.php:487
+ * @see app/Http/Controllers/DashboardController.php:498
  * @route '/pembayaran'
  */
         paymentsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -1063,7 +1063,7 @@ payments.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     payments.form = paymentsForm
 /**
 * @see \App\Http\Controllers\DashboardController::documents
- * @see app/Http/Controllers/DashboardController.php:666
+ * @see app/Http/Controllers/DashboardController.php:677
  * @route '/dokumen-guru'
  */
 export const documents = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -1078,7 +1078,7 @@ documents.definition = {
 
 /**
 * @see \App\Http\Controllers\DashboardController::documents
- * @see app/Http/Controllers/DashboardController.php:666
+ * @see app/Http/Controllers/DashboardController.php:677
  * @route '/dokumen-guru'
  */
 documents.url = (options?: RouteQueryOptions) => {
@@ -1087,7 +1087,7 @@ documents.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\DashboardController::documents
- * @see app/Http/Controllers/DashboardController.php:666
+ * @see app/Http/Controllers/DashboardController.php:677
  * @route '/dokumen-guru'
  */
 documents.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -1096,7 +1096,7 @@ documents.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\DashboardController::documents
- * @see app/Http/Controllers/DashboardController.php:666
+ * @see app/Http/Controllers/DashboardController.php:677
  * @route '/dokumen-guru'
  */
 documents.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -1106,7 +1106,7 @@ documents.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\DashboardController::documents
- * @see app/Http/Controllers/DashboardController.php:666
+ * @see app/Http/Controllers/DashboardController.php:677
  * @route '/dokumen-guru'
  */
     const documentsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -1116,7 +1116,7 @@ documents.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\DashboardController::documents
- * @see app/Http/Controllers/DashboardController.php:666
+ * @see app/Http/Controllers/DashboardController.php:677
  * @route '/dokumen-guru'
  */
         documentsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -1125,7 +1125,7 @@ documents.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\DashboardController::documents
- * @see app/Http/Controllers/DashboardController.php:666
+ * @see app/Http/Controllers/DashboardController.php:677
  * @route '/dokumen-guru'
  */
         documentsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -1141,7 +1141,7 @@ documents.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     documents.form = documentsForm
 /**
 * @see \App\Http\Controllers\DashboardController::incidents
- * @see app/Http/Controllers/DashboardController.php:709
+ * @see app/Http/Controllers/DashboardController.php:720
  * @route '/respons-insiden'
  */
 export const incidents = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -1156,7 +1156,7 @@ incidents.definition = {
 
 /**
 * @see \App\Http\Controllers\DashboardController::incidents
- * @see app/Http/Controllers/DashboardController.php:709
+ * @see app/Http/Controllers/DashboardController.php:720
  * @route '/respons-insiden'
  */
 incidents.url = (options?: RouteQueryOptions) => {
@@ -1165,7 +1165,7 @@ incidents.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\DashboardController::incidents
- * @see app/Http/Controllers/DashboardController.php:709
+ * @see app/Http/Controllers/DashboardController.php:720
  * @route '/respons-insiden'
  */
 incidents.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -1174,7 +1174,7 @@ incidents.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\DashboardController::incidents
- * @see app/Http/Controllers/DashboardController.php:709
+ * @see app/Http/Controllers/DashboardController.php:720
  * @route '/respons-insiden'
  */
 incidents.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -1184,7 +1184,7 @@ incidents.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\DashboardController::incidents
- * @see app/Http/Controllers/DashboardController.php:709
+ * @see app/Http/Controllers/DashboardController.php:720
  * @route '/respons-insiden'
  */
     const incidentsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -1194,7 +1194,7 @@ incidents.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\DashboardController::incidents
- * @see app/Http/Controllers/DashboardController.php:709
+ * @see app/Http/Controllers/DashboardController.php:720
  * @route '/respons-insiden'
  */
         incidentsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -1203,7 +1203,7 @@ incidents.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\DashboardController::incidents
- * @see app/Http/Controllers/DashboardController.php:709
+ * @see app/Http/Controllers/DashboardController.php:720
  * @route '/respons-insiden'
  */
         incidentsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -1219,7 +1219,7 @@ incidents.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     incidents.form = incidentsForm
 /**
 * @see \App\Http\Controllers\DashboardController::reports
- * @see app/Http/Controllers/DashboardController.php:727
+ * @see app/Http/Controllers/DashboardController.php:738
  * @route '/rapor-siswa'
  */
 export const reports = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -1234,7 +1234,7 @@ reports.definition = {
 
 /**
 * @see \App\Http\Controllers\DashboardController::reports
- * @see app/Http/Controllers/DashboardController.php:727
+ * @see app/Http/Controllers/DashboardController.php:738
  * @route '/rapor-siswa'
  */
 reports.url = (options?: RouteQueryOptions) => {
@@ -1243,7 +1243,7 @@ reports.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\DashboardController::reports
- * @see app/Http/Controllers/DashboardController.php:727
+ * @see app/Http/Controllers/DashboardController.php:738
  * @route '/rapor-siswa'
  */
 reports.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -1252,7 +1252,7 @@ reports.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\DashboardController::reports
- * @see app/Http/Controllers/DashboardController.php:727
+ * @see app/Http/Controllers/DashboardController.php:738
  * @route '/rapor-siswa'
  */
 reports.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -1262,7 +1262,7 @@ reports.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\DashboardController::reports
- * @see app/Http/Controllers/DashboardController.php:727
+ * @see app/Http/Controllers/DashboardController.php:738
  * @route '/rapor-siswa'
  */
     const reportsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -1272,7 +1272,7 @@ reports.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\DashboardController::reports
- * @see app/Http/Controllers/DashboardController.php:727
+ * @see app/Http/Controllers/DashboardController.php:738
  * @route '/rapor-siswa'
  */
         reportsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -1281,7 +1281,7 @@ reports.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\DashboardController::reports
- * @see app/Http/Controllers/DashboardController.php:727
+ * @see app/Http/Controllers/DashboardController.php:738
  * @route '/rapor-siswa'
  */
         reportsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

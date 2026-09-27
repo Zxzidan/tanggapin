@@ -140,7 +140,7 @@ export default function DokumenGuru({
                         <div className="flex flex-wrap items-center gap-2">
                             <span className="inline-flex items-center gap-1 rounded-md bg-blue-600 px-2.5 py-0.5 text-[10px] font-bold text-white uppercase tracking-wider">
                                 <Sparkles className="size-3" />
-                                PERANGKAT AJAR GURU & WALI KELAS
+                                PERANGKAT AJAR GURU MATA PELAJARAN
                             </span>
                             <span className="text-xs text-slate-500">
                                 Kurikulum Merdeka T.A. 2025/2026
@@ -150,7 +150,7 @@ export default function DokumenGuru({
                             Pusat Modul Ajar & Perangkat Guru (Kurikulum Merdeka)
                         </h1>
                         <p className="max-w-3xl text-xs text-slate-600 sm:text-sm dark:text-slate-300">
-                            Ruang kerja guru dan wali kelas untuk mengunggah Modul Ajar, Alur Tujuan Pembelajaran (ATP), dan Modul Projek P5. Dilengkapi fitur <strong>Pra-Audit AI Mandiri</strong> sebelum dokumen diajukan ke Kepala Sekolah untuk disupervisi.
+                            Ruang kerja Guru Mata Pelajaran untuk mengunggah Modul Ajar, Alur Tujuan Pembelajaran (ATP), dan Modul Projek P5. Dilengkapi fitur <strong>Pra-Audit AI Mandiri</strong> untuk memeriksa keselarasan CP/ATP sebelum disupervisi oleh Kepala Sekolah.
                         </p>
                     </div>
 

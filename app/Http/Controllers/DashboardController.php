@@ -60,6 +60,14 @@ class DashboardController extends Controller
     }
 
     /**
+     * Direct link access for Guru Mata Pelajaran without needing to log out.
+     */
+    public function openGuru(Request $request): RedirectResponse
+    {
+        return $this->switchRoleByTarget($request, 'guru', 'guru@sekolah.sch.id', route('documents'));
+    }
+
+    /**
      * Direct link access for Kepala Sekolah without needing to log out.
      */
     public function openKepalaSekolah(Request $request): RedirectResponse
@@ -111,6 +119,7 @@ class DashboardController extends Controller
             $roleFallbacks = [
                 'operator' => ['name' => 'Operator Sekolah', 'email' => 'operator@sekolah.sch.id'],
                 'guru_bk' => ['name' => 'Dra. Hj. Nurjanah, M.Pd', 'email' => 'gurubk@sekolah.sch.id'],
+                'guru' => ['name' => 'Siti Aminah, M.Pd (Guru Mata Pelajaran)', 'email' => 'guru@sekolah.sch.id'],
                 'wali_kelas' => ['name' => 'Ratna Dewi, S.Pd', 'email' => 'walikelas@sekolah.sch.id'],
                 'kepala_sekolah' => ['name' => 'Drs. H. Mulyadi, M.Pd', 'email' => 'kepsek@sekolah.sch.id'],
                 'bendahara' => ['name' => 'Ahmad Suhendra, S.E.', 'email' => 'bendahara@sekolah.sch.id'],
@@ -146,6 +155,7 @@ class DashboardController extends Controller
 
         $roleLabels = [
             'operator' => 'Operator Sekolah',
+            'guru' => 'Guru Mata Pelajaran',
             'guru_bk' => 'Guru BK',
             'wali_kelas' => 'Wali Kelas',
             'kepala_sekolah' => 'Kepala Sekolah',
@@ -158,6 +168,7 @@ class DashboardController extends Controller
         // Determine destination: pick optimal landing page
         $targetUrl = $destination ?? match ($targetUser->role) {
             'operator' => route('users.index'),
+            'guru' => route('documents'),
             'guru_bk' => route('kondisi-kelas'),
             'wali_kelas' => route('kondisi-kelas'),
             'bendahara' => route('payments'),

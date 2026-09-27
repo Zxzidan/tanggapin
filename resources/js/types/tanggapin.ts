@@ -1,6 +1,7 @@
 export type RoleType =
     | 'kepala_sekolah'
     | 'wali_kelas'
+    | 'guru'
     | 'guru_bk'
     | 'bendahara'
     | 'operator';

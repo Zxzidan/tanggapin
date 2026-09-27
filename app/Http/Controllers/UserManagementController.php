@@ -87,7 +87,7 @@ class UserManagementController extends Controller
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
-            'role' => ['required', 'string', Rule::in(['wali_kelas', 'bendahara', 'kepala_sekolah', 'guru_bk'])],
+            'role' => ['required', 'string', Rule::in(['wali_kelas', 'guru', 'bendahara', 'kepala_sekolah', 'guru_bk'])],
             'school_class_id' => [
                 'nullable',
                 Rule::requiredIf(fn () => $request->input('role') === 'wali_kelas'),
@@ -95,7 +95,7 @@ class UserManagementController extends Controller
             ],
             'password' => ['nullable', 'string', 'min:8'],
         ], [
-            'role.in' => 'Peran yang valid: Wali Kelas, Bendahara, Kepala Sekolah, atau Guru BK.',
+            'role.in' => 'Peran yang valid: Guru Mata Pelajaran, Wali Kelas, Bendahara, Kepala Sekolah, atau Guru BK.',
             'school_class_id.required' => 'Wali Kelas wajib memilih rombongan belajar / kelas binaan.',
             'email.unique' => 'Alamat email ini sudah terdaftar di sistem.',
         ]);
@@ -120,6 +120,7 @@ class UserManagementController extends Controller
         }
 
         $roleLabels = [
+            'guru' => 'Guru Mata Pelajaran',
             'wali_kelas' => 'Wali Kelas',
             'bendahara' => 'Bendahara Sekolah',
             'kepala_sekolah' => 'Kepala Sekolah',
@@ -140,7 +141,7 @@ class UserManagementController extends Controller
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users', 'email')->ignore($user->id)],
-            'role' => ['required', 'string', Rule::in(['wali_kelas', 'bendahara', 'kepala_sekolah', 'guru_bk', 'operator'])],
+            'role' => ['required', 'string', Rule::in(['wali_kelas', 'guru', 'bendahara', 'kepala_sekolah', 'guru_bk', 'operator'])],
             'school_class_id' => [
                 'nullable',
                 Rule::requiredIf(fn () => $request->input('role') === 'wali_kelas'),

@@ -35,6 +35,7 @@ Route::get('/bk', fn () => redirect()->route('role.guru-bk'));
 Route::get('/wali-kelas', [DashboardController::class, 'openWaliKelas'])->name('role.wali-kelas');
 Route::get('/walikelas', fn () => redirect()->route('role.wali-kelas'));
 Route::get('/wali-kelas/tkj', [DashboardController::class, 'openWaliKelasTkj'])->name('role.wali-kelas-tkj');
+Route::get('/guru', [DashboardController::class, 'openGuru'])->name('role.guru');
 Route::get('/kepala-sekolah', [DashboardController::class, 'openKepalaSekolah'])->name('role.kepala-sekolah');
 Route::get('/kepsek', fn () => redirect()->route('role.kepala-sekolah'));
 Route::get('/bendahara', [DashboardController::class, 'openBendahara'])->name('role.bendahara');

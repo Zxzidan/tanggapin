@@ -134,7 +134,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     store.form = storeForm
 /**
 * @see \App\Http\Controllers\UserManagementController::update
- * @see app/Http/Controllers/UserManagementController.php:136
+ * @see app/Http/Controllers/UserManagementController.php:137
  * @route '/kelola-pengguna/{user}'
  */
 export const update = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -149,7 +149,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\UserManagementController::update
- * @see app/Http/Controllers/UserManagementController.php:136
+ * @see app/Http/Controllers/UserManagementController.php:137
  * @route '/kelola-pengguna/{user}'
  */
 update.url = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -182,7 +182,7 @@ update.url = (args: { user: number | { id: number } } | [user: number | { id: nu
 
 /**
 * @see \App\Http\Controllers\UserManagementController::update
- * @see app/Http/Controllers/UserManagementController.php:136
+ * @see app/Http/Controllers/UserManagementController.php:137
  * @route '/kelola-pengguna/{user}'
  */
 update.put = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -192,7 +192,7 @@ update.put = (args: { user: number | { id: number } } | [user: number | { id: nu
 
     /**
 * @see \App\Http\Controllers\UserManagementController::update
- * @see app/Http/Controllers/UserManagementController.php:136
+ * @see app/Http/Controllers/UserManagementController.php:137
  * @route '/kelola-pengguna/{user}'
  */
     const updateForm = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -207,7 +207,7 @@ update.put = (args: { user: number | { id: number } } | [user: number | { id: nu
 
             /**
 * @see \App\Http\Controllers\UserManagementController::update
- * @see app/Http/Controllers/UserManagementController.php:136
+ * @see app/Http/Controllers/UserManagementController.php:137
  * @route '/kelola-pengguna/{user}'
  */
         updateForm.put = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -223,7 +223,7 @@ update.put = (args: { user: number | { id: number } } | [user: number | { id: nu
     update.form = updateForm
 /**
 * @see \App\Http\Controllers\UserManagementController::destroy
- * @see app/Http/Controllers/UserManagementController.php:178
+ * @see app/Http/Controllers/UserManagementController.php:179
  * @route '/kelola-pengguna/{user}'
  */
 export const destroy = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -238,7 +238,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\UserManagementController::destroy
- * @see app/Http/Controllers/UserManagementController.php:178
+ * @see app/Http/Controllers/UserManagementController.php:179
  * @route '/kelola-pengguna/{user}'
  */
 destroy.url = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -271,7 +271,7 @@ destroy.url = (args: { user: number | { id: number } } | [user: number | { id: n
 
 /**
 * @see \App\Http\Controllers\UserManagementController::destroy
- * @see app/Http/Controllers/UserManagementController.php:178
+ * @see app/Http/Controllers/UserManagementController.php:179
  * @route '/kelola-pengguna/{user}'
  */
 destroy.delete = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -281,7 +281,7 @@ destroy.delete = (args: { user: number | { id: number } } | [user: number | { id
 
     /**
 * @see \App\Http\Controllers\UserManagementController::destroy
- * @see app/Http/Controllers/UserManagementController.php:178
+ * @see app/Http/Controllers/UserManagementController.php:179
  * @route '/kelola-pengguna/{user}'
  */
     const destroyForm = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -296,7 +296,7 @@ destroy.delete = (args: { user: number | { id: number } } | [user: number | { id
 
             /**
 * @see \App\Http\Controllers\UserManagementController::destroy
- * @see app/Http/Controllers/UserManagementController.php:178
+ * @see app/Http/Controllers/UserManagementController.php:179
  * @route '/kelola-pengguna/{user}'
  */
         destroyForm.delete = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -312,7 +312,7 @@ destroy.delete = (args: { user: number | { id: number } } | [user: number | { id
     destroy.form = destroyForm
 /**
 * @see \App\Http\Controllers\UserManagementController::storeClass
- * @see app/Http/Controllers/UserManagementController.php:195
+ * @see app/Http/Controllers/UserManagementController.php:196
  * @route '/kelola-pengguna/kelas'
  */
 export const storeClass = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -327,7 +327,7 @@ storeClass.definition = {
 
 /**
 * @see \App\Http\Controllers\UserManagementController::storeClass
- * @see app/Http/Controllers/UserManagementController.php:195
+ * @see app/Http/Controllers/UserManagementController.php:196
  * @route '/kelola-pengguna/kelas'
  */
 storeClass.url = (options?: RouteQueryOptions) => {
@@ -336,7 +336,7 @@ storeClass.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\UserManagementController::storeClass
- * @see app/Http/Controllers/UserManagementController.php:195
+ * @see app/Http/Controllers/UserManagementController.php:196
  * @route '/kelola-pengguna/kelas'
  */
 storeClass.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -346,7 +346,7 @@ storeClass.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
     /**
 * @see \App\Http\Controllers\UserManagementController::storeClass
- * @see app/Http/Controllers/UserManagementController.php:195
+ * @see app/Http/Controllers/UserManagementController.php:196
  * @route '/kelola-pengguna/kelas'
  */
     const storeClassForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -356,7 +356,7 @@ storeClass.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
             /**
 * @see \App\Http\Controllers\UserManagementController::storeClass
- * @see app/Http/Controllers/UserManagementController.php:195
+ * @see app/Http/Controllers/UserManagementController.php:196
  * @route '/kelola-pengguna/kelas'
  */
         storeClassForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -367,7 +367,7 @@ storeClass.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     storeClass.form = storeClassForm
 /**
 * @see \App\Http\Controllers\UserManagementController::updatePlan
- * @see app/Http/Controllers/UserManagementController.php:233
+ * @see app/Http/Controllers/UserManagementController.php:234
  * @route '/kelola-pengguna/paket'
  */
 export const updatePlan = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -382,7 +382,7 @@ updatePlan.definition = {
 
 /**
 * @see \App\Http\Controllers\UserManagementController::updatePlan
- * @see app/Http/Controllers/UserManagementController.php:233
+ * @see app/Http/Controllers/UserManagementController.php:234
  * @route '/kelola-pengguna/paket'
  */
 updatePlan.url = (options?: RouteQueryOptions) => {
@@ -391,7 +391,7 @@ updatePlan.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\UserManagementController::updatePlan
- * @see app/Http/Controllers/UserManagementController.php:233
+ * @see app/Http/Controllers/UserManagementController.php:234
  * @route '/kelola-pengguna/paket'
  */
 updatePlan.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -401,7 +401,7 @@ updatePlan.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
     /**
 * @see \App\Http\Controllers\UserManagementController::updatePlan
- * @see app/Http/Controllers/UserManagementController.php:233
+ * @see app/Http/Controllers/UserManagementController.php:234
  * @route '/kelola-pengguna/paket'
  */
     const updatePlanForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -411,7 +411,7 @@ updatePlan.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
             /**
 * @see \App\Http\Controllers\UserManagementController::updatePlan
- * @see app/Http/Controllers/UserManagementController.php:233
+ * @see app/Http/Controllers/UserManagementController.php:234
  * @route '/kelola-pengguna/paket'
  */
         updatePlanForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

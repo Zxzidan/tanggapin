@@ -73,6 +73,7 @@ export default function KondisiKelas({
         return 'wali_kelas';
     });
 
+    const isGuru = currentRole === 'guru';
     const isGuruBk = currentRole === 'guru_bk';
     const isWaliKelas = currentRole === 'wali_kelas';
     const isKepalaSekolah = currentRole === 'kepala_sekolah';
@@ -360,8 +361,10 @@ export default function KondisiKelas({
                                     {isGuruBk
                                         ? 'Kolaborasi BK & Wali Kelas'
                                         : isWaliKelas
-                                          ? 'Garis Depan Rombongan Belajar'
-                                          : 'Monitoring Terpadu Rombel'}
+                                          ? 'Garis Depan Pemantauan Anak Wali'
+                                          : isGuru
+                                            ? 'Murid yang Diajar (Lintas Rombel)'
+                                            : 'Monitoring Terpadu Rombel'}
                                 </span>
                                 <span className="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
                                     Operator Mengelola Rombel & Kuota
@@ -372,16 +375,20 @@ export default function KondisiKelas({
                                 {isGuruBk
                                     ? 'Pemantauan Rombel, Input Siswa & Poin Kedisiplinan'
                                     : isWaliKelas
-                                      ? 'Data Peserta Didik, Poin BK & Rujukan Kendala'
-                                      : 'Kondisi Kelas & Monitoring Peserta Didik'}
+                                      ? 'Data Peserta Didik Anak Wali, Poin BK & Rujukan Kendala'
+                                      : isGuru
+                                        ? 'Pemantauan Murid yang Diajar & Capaian Belajar'
+                                        : 'Kondisi Kelas & Monitoring Peserta Didik'}
                             </h1>
 
                             <p className="max-w-3xl text-xs leading-relaxed text-slate-600 sm:text-sm dark:text-slate-300">
                                 {isGuruBk
                                     ? 'Guru BK dapat melihat seluruh kelas yang ditambahkan Operator beserta wali kelasnya, menambahkan data siswa, serta mencatat poin pelanggaran yang otomatis masuk ke akun Wali Kelas untuk ditindaklanjuti.'
                                     : isWaliKelas
-                                      ? 'Wali Kelas memantau data siswa di kelas binaan, menindaklanjuti poin pelanggaran yang dicatat Guru BK, dan dapat meneruskan kendala khusus siswa ke Guru BK untuk penanganan mendalam.'
-                                      : 'Layar komprehensif mengintegrasikan data rombel resmi, data peserta didik, riwayat poin kedisiplinan restoratif, dan alur rujukan pendampingan.'}
+                                      ? 'Wali Kelas fokus memantau kondisi anak walinya, menindaklanjuti poin pelanggaran yang dicatat Guru BK, dan dapat meneruskan kendala khusus siswa ke Guru BK untuk penanganan mendalam.'
+                                      : isGuru
+                                        ? 'Guru Mata Pelajaran memantau perkembangan belajar, kehadiran, dan kedisiplinan murid-murid yang diajar di seluruh kelas yang diampu.'
+                                        : 'Layar komprehensif mengintegrasikan data rombel resmi, data peserta didik, riwayat poin kedisiplinan restoratif, dan alur rujukan pendampingan.'}
                             </p>
                         </div>
 
@@ -421,6 +428,16 @@ export default function KondisiKelas({
                                 </>
                             )}
 
+                            {isGuru && (
+                                <a
+                                    href="/dokumen-guru"
+                                    className="inline-flex items-center gap-1.5 rounded-lg bg-blue-700 px-4 py-2 text-xs font-semibold text-white shadow-xs transition-colors hover:bg-blue-800 active:scale-95"
+                                >
+                                    <FileText className="size-4" />
+                                    <span>Kelola Modul Ajar (Pra-Audit AI)</span>
+                                </a>
+                            )}
+
                             {isWaliKelas && (
                                 <button
                                     type="button"
@@ -432,7 +449,7 @@ export default function KondisiKelas({
                                     className="inline-flex items-center gap-1.5 rounded-lg bg-blue-700 px-4 py-2 text-xs font-semibold text-white shadow-xs transition-colors hover:bg-blue-800 active:scale-95"
                                 >
                                     <Send className="size-4" />
-                                    <span>Laporkan Kendala ke Guru BK</span>
+                                    <span>Laporkan Kendala Anak Wali ke Guru BK</span>
                                 </button>
                             )}
                         </div>

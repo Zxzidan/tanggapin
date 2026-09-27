@@ -314,10 +314,25 @@ export default function FlowbiteTanggapinLayout({
             ) {
                 sectionTitle = 'SUPERVISI & MONITORING';
             } else if (
-                (activeRoleConfig.id === 'wali_kelas' || activeRoleConfig.id === 'guru_bk') &&
+                activeRoleConfig.id === 'guru' &&
                 sec.section === 'ADMINISTRASI & OPERASIONAL'
             ) {
-                sectionTitle = 'PERANGKAT AJAR GURU';
+                sectionTitle = 'PERANGKAT & MODUL AJAR';
+            } else if (
+                activeRoleConfig.id === 'guru' &&
+                sec.section === 'EARLY WARNING & KELAS'
+            ) {
+                sectionTitle = 'MURID YANG DIAJAR';
+            } else if (
+                activeRoleConfig.id === 'wali_kelas' &&
+                sec.section === 'EARLY WARNING & KELAS'
+            ) {
+                sectionTitle = 'PEMANTAUAN ANAK WALI';
+            } else if (
+                activeRoleConfig.id === 'wali_kelas' &&
+                sec.section === 'KONSULTASI & KASUS'
+            ) {
+                sectionTitle = 'PENDAMPINGAN ANAK WALI';
             }
 
             return {

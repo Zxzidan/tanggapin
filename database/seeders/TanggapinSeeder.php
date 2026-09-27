@@ -95,6 +95,14 @@ class TanggapinSeeder extends Seeder
             'email_verified_at' => now(),
         ]);
 
+        User::updateOrCreate(['email' => 'guru@sekolah.sch.id'], [
+            'name' => 'Siti Aminah, M.Pd',
+            'role' => 'guru',
+            'password' => Hash::make('password'),
+            'raw_password' => 'password',
+            'email_verified_at' => now(),
+        ]);
+
         User::updateOrCreate(['email' => 'bendahara@sekolah.sch.id'], [
             'name' => 'Ahmad Suhendra, S.E.',
             'role' => 'bendahara',

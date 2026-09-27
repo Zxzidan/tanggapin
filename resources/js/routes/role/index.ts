@@ -312,8 +312,86 @@ waliKelasTkj.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     
     waliKelasTkj.form = waliKelasTkjForm
 /**
-* @see \App\Http\Controllers\DashboardController::kepalaSekolah
+* @see \App\Http\Controllers\DashboardController::guru
  * @see app/Http/Controllers/DashboardController.php:65
+ * @route '/guru'
+ */
+export const guru = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: guru.url(options),
+    method: 'get',
+})
+
+guru.definition = {
+    methods: ["get","head"],
+    url: '/guru',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\DashboardController::guru
+ * @see app/Http/Controllers/DashboardController.php:65
+ * @route '/guru'
+ */
+guru.url = (options?: RouteQueryOptions) => {
+    return guru.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\DashboardController::guru
+ * @see app/Http/Controllers/DashboardController.php:65
+ * @route '/guru'
+ */
+guru.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: guru.url(options),
+    method: 'get',
+})
+/**
+* @see \App\Http\Controllers\DashboardController::guru
+ * @see app/Http/Controllers/DashboardController.php:65
+ * @route '/guru'
+ */
+guru.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: guru.url(options),
+    method: 'head',
+})
+
+    /**
+* @see \App\Http\Controllers\DashboardController::guru
+ * @see app/Http/Controllers/DashboardController.php:65
+ * @route '/guru'
+ */
+    const guruForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        action: guru.url(options),
+        method: 'get',
+    })
+
+            /**
+* @see \App\Http\Controllers\DashboardController::guru
+ * @see app/Http/Controllers/DashboardController.php:65
+ * @route '/guru'
+ */
+        guruForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: guru.url(options),
+            method: 'get',
+        })
+            /**
+* @see \App\Http\Controllers\DashboardController::guru
+ * @see app/Http/Controllers/DashboardController.php:65
+ * @route '/guru'
+ */
+        guruForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: guru.url({
+                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                            _method: 'HEAD',
+                            ...(options?.query ?? options?.mergeQuery ?? {}),
+                        }
+                    }),
+            method: 'get',
+        })
+    
+    guru.form = guruForm
+/**
+* @see \App\Http\Controllers\DashboardController::kepalaSekolah
+ * @see app/Http/Controllers/DashboardController.php:73
  * @route '/kepala-sekolah'
  */
 export const kepalaSekolah = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -328,7 +406,7 @@ kepalaSekolah.definition = {
 
 /**
 * @see \App\Http\Controllers\DashboardController::kepalaSekolah
- * @see app/Http/Controllers/DashboardController.php:65
+ * @see app/Http/Controllers/DashboardController.php:73
  * @route '/kepala-sekolah'
  */
 kepalaSekolah.url = (options?: RouteQueryOptions) => {
@@ -337,7 +415,7 @@ kepalaSekolah.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\DashboardController::kepalaSekolah
- * @see app/Http/Controllers/DashboardController.php:65
+ * @see app/Http/Controllers/DashboardController.php:73
  * @route '/kepala-sekolah'
  */
 kepalaSekolah.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -346,7 +424,7 @@ kepalaSekolah.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\DashboardController::kepalaSekolah
- * @see app/Http/Controllers/DashboardController.php:65
+ * @see app/Http/Controllers/DashboardController.php:73
  * @route '/kepala-sekolah'
  */
 kepalaSekolah.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -356,7 +434,7 @@ kepalaSekolah.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => (
 
     /**
 * @see \App\Http\Controllers\DashboardController::kepalaSekolah
- * @see app/Http/Controllers/DashboardController.php:65
+ * @see app/Http/Controllers/DashboardController.php:73
  * @route '/kepala-sekolah'
  */
     const kepalaSekolahForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -366,7 +444,7 @@ kepalaSekolah.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => (
 
             /**
 * @see \App\Http\Controllers\DashboardController::kepalaSekolah
- * @see app/Http/Controllers/DashboardController.php:65
+ * @see app/Http/Controllers/DashboardController.php:73
  * @route '/kepala-sekolah'
  */
         kepalaSekolahForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -375,7 +453,7 @@ kepalaSekolah.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => (
         })
             /**
 * @see \App\Http\Controllers\DashboardController::kepalaSekolah
- * @see app/Http/Controllers/DashboardController.php:65
+ * @see app/Http/Controllers/DashboardController.php:73
  * @route '/kepala-sekolah'
  */
         kepalaSekolahForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -391,7 +469,7 @@ kepalaSekolah.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => (
     kepalaSekolah.form = kepalaSekolahForm
 /**
 * @see \App\Http\Controllers\DashboardController::bendahara
- * @see app/Http/Controllers/DashboardController.php:73
+ * @see app/Http/Controllers/DashboardController.php:81
  * @route '/bendahara'
  */
 export const bendahara = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -406,7 +484,7 @@ bendahara.definition = {
 
 /**
 * @see \App\Http\Controllers\DashboardController::bendahara
- * @see app/Http/Controllers/DashboardController.php:73
+ * @see app/Http/Controllers/DashboardController.php:81
  * @route '/bendahara'
  */
 bendahara.url = (options?: RouteQueryOptions) => {
@@ -415,7 +493,7 @@ bendahara.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\DashboardController::bendahara
- * @see app/Http/Controllers/DashboardController.php:73
+ * @see app/Http/Controllers/DashboardController.php:81
  * @route '/bendahara'
  */
 bendahara.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -424,7 +502,7 @@ bendahara.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\DashboardController::bendahara
- * @see app/Http/Controllers/DashboardController.php:73
+ * @see app/Http/Controllers/DashboardController.php:81
  * @route '/bendahara'
  */
 bendahara.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -434,7 +512,7 @@ bendahara.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\DashboardController::bendahara
- * @see app/Http/Controllers/DashboardController.php:73
+ * @see app/Http/Controllers/DashboardController.php:81
  * @route '/bendahara'
  */
     const bendaharaForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -444,7 +522,7 @@ bendahara.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\DashboardController::bendahara
- * @see app/Http/Controllers/DashboardController.php:73
+ * @see app/Http/Controllers/DashboardController.php:81
  * @route '/bendahara'
  */
         bendaharaForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -453,7 +531,7 @@ bendahara.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\DashboardController::bendahara
- * @see app/Http/Controllers/DashboardController.php:73
+ * @see app/Http/Controllers/DashboardController.php:81
  * @route '/bendahara'
  */
         bendaharaForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -469,7 +547,7 @@ bendahara.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     bendahara.form = bendaharaForm
 /**
 * @see \App\Http\Controllers\DashboardController::switchMethod
- * @see app/Http/Controllers/DashboardController.php:81
+ * @see app/Http/Controllers/DashboardController.php:89
  * @route '/switch-role'
  */
 export const switchMethod = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -484,7 +562,7 @@ switchMethod.definition = {
 
 /**
 * @see \App\Http\Controllers\DashboardController::switchMethod
- * @see app/Http/Controllers/DashboardController.php:81
+ * @see app/Http/Controllers/DashboardController.php:89
  * @route '/switch-role'
  */
 switchMethod.url = (options?: RouteQueryOptions) => {
@@ -493,7 +571,7 @@ switchMethod.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\DashboardController::switchMethod
- * @see app/Http/Controllers/DashboardController.php:81
+ * @see app/Http/Controllers/DashboardController.php:89
  * @route '/switch-role'
  */
 switchMethod.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -503,7 +581,7 @@ switchMethod.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
     /**
 * @see \App\Http\Controllers\DashboardController::switchMethod
- * @see app/Http/Controllers/DashboardController.php:81
+ * @see app/Http/Controllers/DashboardController.php:89
  * @route '/switch-role'
  */
     const switchMethodForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -513,7 +591,7 @@ switchMethod.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
             /**
 * @see \App\Http\Controllers\DashboardController::switchMethod
- * @see app/Http/Controllers/DashboardController.php:81
+ * @see app/Http/Controllers/DashboardController.php:89
  * @route '/switch-role'
  */
         switchMethodForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -527,6 +605,7 @@ const role = {
 guruBk: Object.assign(guruBk, guruBk),
 waliKelas: Object.assign(waliKelas, waliKelas),
 waliKelasTkj: Object.assign(waliKelasTkj, waliKelasTkj),
+guru: Object.assign(guru, guru),
 kepalaSekolah: Object.assign(kepalaSekolah, kepalaSekolah),
 bendahara: Object.assign(bendahara, bendahara),
 switch: Object.assign(switchMethod, switchMethod),

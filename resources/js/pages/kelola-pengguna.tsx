@@ -323,6 +323,12 @@ export default function KelolaPengguna({
                     className:
                         'border border-blue-200 bg-blue-50 text-blue-800 dark:border-blue-900 dark:bg-blue-950/70 dark:text-blue-300',
                 };
+            case 'guru':
+                return {
+                    label: 'Guru Mapel',
+                    className:
+                        'border border-indigo-200 bg-indigo-50 text-indigo-800 dark:border-indigo-900/60 dark:bg-indigo-950/60 dark:text-indigo-300',
+                };
             case 'wali_kelas':
                 return {
                     label: 'Wali Kelas',
@@ -565,6 +571,7 @@ export default function KelolaPengguna({
                             className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-medium text-slate-700 focus:border-blue-500 focus:outline-hidden focus:ring-1 focus:ring-blue-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
                         >
                             <option value="all">Semua Peran Akun</option>
+                            <option value="guru">Guru Mata Pelajaran</option>
                             <option value="wali_kelas">Wali Kelas</option>
                             <option value="guru_bk">Guru BK</option>
                             <option value="kepala_sekolah">Kepala Sekolah</option>
@@ -753,6 +760,9 @@ export default function KelolaPengguna({
                             <strong>Pendaftaran Mandiri Ditutup:</strong> Pengguna tidak dapat membuat akun sendiri secara bebas dari halaman login untuk mencegah kebocoran data siswa.
                         </li>
                         <li>
+                            <strong>Pemisahan Peran Guru & Wali Kelas:</strong> Guru difokuskan pada pengelolaan perangkat ajar / Modul Ajar (terintegrasi Audit AI mandiri) dan pemantauan capaian murid yang diajarnya di berbagai kelas. Sedangkan Wali Kelas dikhususkan untuk memantau kedisiplinan, absensi, kontak orang tua, dan pembinaan anak walinya.
+                        </li>
+                        <li>
                             <strong>Isolasi Data Wali Kelas:</strong> Pendidik yang memegang peran Wali Kelas hanya diperkenankan melihat, mencatat kedisiplinan, serta membuat dan mengirim rapor untuk peserta didik yang terdaftar di rombongan belajar binaannya.
                         </li>
                         <li>
@@ -826,6 +836,7 @@ export default function KelolaPengguna({
                                         }
                                         className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-xs text-slate-900 focus:border-blue-500 focus:outline-hidden dark:border-slate-700 dark:bg-slate-800 dark:text-white"
                                     >
+                                        <option value="guru">Guru Mata Pelajaran</option>
                                         <option value="wali_kelas">Wali Kelas</option>
                                         <option value="guru_bk">Guru BK</option>
                                         <option value="bendahara">Bendahara Sekolah</option>
@@ -972,6 +983,7 @@ export default function KelolaPengguna({
                                         }
                                         className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-xs text-slate-900 focus:border-blue-500 focus:outline-hidden dark:border-slate-700 dark:bg-slate-800 dark:text-white"
                                     >
+                                        <option value="guru">Guru Mata Pelajaran</option>
                                         <option value="wali_kelas">Wali Kelas</option>
                                         <option value="guru_bk">Guru BK</option>
                                         <option value="bendahara">Bendahara Sekolah</option>

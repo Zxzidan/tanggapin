@@ -683,3 +683,51 @@ test('kepala sekolah can access supervisi akademik, evaluasi sekolah, and perset
     ]);
     $dispositionResponse->assertSessionHas('status');
 });
+
+test('guru and wali kelas have separated roles and dedicated workspaces', function () {
+    $this->seed(TanggapinSeeder::class);
+
+    $guru = User::where('role', 'guru')->first();
+    expect($guru)->not->toBeNull();
+    expect($guru->email)->toBe('guru@sekolah.sch.id');
+
+    // 1. Guru accesses /guru and is directed to modul ajar (dokumen-guru)
+    $guruDirectResponse = $this->actingAs($guru)->get(route('role.guru'));
+    $guruDirectResponse->assertRedirect(route('documents'));
+
+    $guruDocPageResponse = $this->actingAs($guru)->get(route('documents'));
+    $guruDocPageResponse->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->component('dokumen-guru')
+            ->has('documents')
+        );
+
+    // 2. Guru can upload / submit a teaching module (Modul Ajar)
+    $uploadResponse = $this->actingAs($guru)->post(route('documents.store'), [
+        'title' => 'Modul Ajar Pemrograman Web - React & Laravel',
+        'category' => 'Perangkat Pembelajaran',
+        'period' => '2025/2026 Ganjil',
+    ]);
+    $uploadResponse->assertSessionHas('success');
+
+    // 3. Wali Kelas accesses /wali-kelas and is directed to homeroom monitoring (kondisi-kelas)
+    $waliKelas = User::where('role', 'wali_kelas')->first();
+    expect($waliKelas)->not->toBeNull();
+
+    $waliDirectResponse = $this->actingAs($waliKelas)->get(route('role.wali-kelas'));
+    $waliDirectResponse->assertRedirect(route('kondisi-kelas'));
+
+    // 4. Operator can create a new Guru Mapel account
+    $operator = User::where('role', 'operator')->first();
+    $createGuruResponse = $this->actingAs($operator)->post(route('users.store'), [
+        'name' => 'Ahmad Junaidi, S.Pd',
+        'email' => 'ahmad.guru@sekolah.sch.id',
+        'role' => 'guru',
+        'password' => 'password123',
+    ]);
+    $createGuruResponse->assertSessionHas('success');
+    $this->assertDatabaseHas('users', [
+        'email' => 'ahmad.guru@sekolah.sch.id',
+        'role' => 'guru',
+    ]);
+});

@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../wayfinder'
 /**
 * @see \App\Http\Controllers\DashboardController::disposition
- * @see app/Http/Controllers/DashboardController.php:651
+ * @see app/Http/Controllers/DashboardController.php:662
  * @route '/persetujuan-sekolah/disposisi'
  */
 export const disposition = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -16,7 +16,7 @@ disposition.definition = {
 
 /**
 * @see \App\Http\Controllers\DashboardController::disposition
- * @see app/Http/Controllers/DashboardController.php:651
+ * @see app/Http/Controllers/DashboardController.php:662
  * @route '/persetujuan-sekolah/disposisi'
  */
 disposition.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ disposition.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\DashboardController::disposition
- * @see app/Http/Controllers/DashboardController.php:651
+ * @see app/Http/Controllers/DashboardController.php:662
  * @route '/persetujuan-sekolah/disposisi'
  */
 disposition.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -35,7 +35,7 @@ disposition.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
     /**
 * @see \App\Http\Controllers\DashboardController::disposition
- * @see app/Http/Controllers/DashboardController.php:651
+ * @see app/Http/Controllers/DashboardController.php:662
  * @route '/persetujuan-sekolah/disposisi'
  */
     const dispositionForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -45,7 +45,7 @@ disposition.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
             /**
 * @see \App\Http\Controllers\DashboardController::disposition
- * @see app/Http/Controllers/DashboardController.php:651
+ * @see app/Http/Controllers/DashboardController.php:662
  * @route '/persetujuan-sekolah/disposisi'
  */
         dispositionForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

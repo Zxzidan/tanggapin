@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../wayfinder'
 /**
 * @see \App\Http\Controllers\DashboardController::store
- * @see app/Http/Controllers/DashboardController.php:684
+ * @see app/Http/Controllers/DashboardController.php:695
  * @route '/dokumen-guru'
  */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -16,7 +16,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\DashboardController::store
- * @see app/Http/Controllers/DashboardController.php:684
+ * @see app/Http/Controllers/DashboardController.php:695
  * @route '/dokumen-guru'
  */
 store.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\DashboardController::store
- * @see app/Http/Controllers/DashboardController.php:684
+ * @see app/Http/Controllers/DashboardController.php:695
  * @route '/dokumen-guru'
  */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -35,7 +35,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
     /**
 * @see \App\Http\Controllers\DashboardController::store
- * @see app/Http/Controllers/DashboardController.php:684
+ * @see app/Http/Controllers/DashboardController.php:695
  * @route '/dokumen-guru'
  */
     const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -45,7 +45,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
             /**
 * @see \App\Http\Controllers\DashboardController::store
- * @see app/Http/Controllers/DashboardController.php:684
+ * @see app/Http/Controllers/DashboardController.php:695
  * @route '/dokumen-guru'
  */
         storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
