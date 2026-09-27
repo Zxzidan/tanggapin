@@ -265,13 +265,41 @@ class TanggapinSeeder extends Seeder
             'status' => 'Menunggu Verifikasi',
         ]);
 
-        // 10. Single Teacher Document (Modul 08)
+        // 10. Teacher Documents (Modul 08 & Modul Supervisi GTK)
         TeacherDocument::updateOrCreate(['title' => 'Modul Ajar Pemrograman Web & Bergerak'], [
             'teacher_name' => 'Guru Kejuruan',
             'category' => 'Perangkat Pembelajaran',
             'period' => '2025/2026 Ganjil',
             'status' => 'Lengkap',
             'file_size' => '2.4 MB',
+        ]);
+        TeacherDocument::updateOrCreate(['title' => 'Alur Tujuan Pembelajaran (ATP) Matematika Terapan SMK'], [
+            'teacher_name' => 'Ratna Dewi, S.Pd',
+            'category' => 'Alur Tujuan Pembelajaran',
+            'period' => '2025/2026 Ganjil',
+            'status' => 'Lengkap',
+            'file_size' => '1.8 MB',
+        ]);
+        TeacherDocument::updateOrCreate(['title' => 'Modul Ajar Jaringan Komputer Dasar & Cloud Computing'], [
+            'teacher_name' => 'Budi Santoso, S.Kom',
+            'category' => 'Perangkat Pembelajaran',
+            'period' => '2025/2026 Ganjil',
+            'status' => 'Lengkap',
+            'file_size' => '3.1 MB',
+        ]);
+        TeacherDocument::updateOrCreate(['title' => 'Modul Projek Penguatan Profil Pelajar Pancasila (P5) - Kebekerjaan'], [
+            'teacher_name' => 'Dra. Hj. Nurjanah, M.Pd',
+            'category' => 'Modul Projek P5',
+            'period' => '2025/2026 Ganjil',
+            'status' => 'Lengkap',
+            'file_size' => '4.2 MB',
+        ]);
+        TeacherDocument::updateOrCreate(['title' => 'Rencana Pembelajaran Terbimbing & Diferensiasi Bahasa Inggris'], [
+            'teacher_name' => 'Siti Aminah, M.Pd',
+            'category' => 'Perangkat Pembelajaran',
+            'period' => '2025/2026 Ganjil',
+            'status' => 'Menunggu Supervisi',
+            'file_size' => '1.5 MB',
         ]);
 
         // 11. Single Dapodik Issue (Modul 09)

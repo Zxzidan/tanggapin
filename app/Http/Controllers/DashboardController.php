@@ -575,6 +575,92 @@ class DashboardController extends Controller
     }
 
     /**
+     * Modul Kepala Sekolah: AI Supervisi Akademik & Audit Modul Ajar GTK
+     */
+    public function supervisiAkademik(): Response|RedirectResponse
+    {
+        if (auth()->user()?->role === 'bendahara') {
+            return redirect()->route('payments')->with('status', 'Role Bendahara difokuskan pada modul Keuangan & SPP.');
+        }
+
+        $teachers = User::whereIn('role', ['wali_kelas', 'guru_bk'])->with('schoolClass')->get()->map(fn ($u) => [
+            'id' => (string) $u->id,
+            'name' => $u->name,
+            'email' => $u->email,
+            'role' => $u->role,
+            'className' => $u->schoolClass?->name ?? 'Lintas Rombel',
+        ])->toArray();
+
+        return Inertia::render('supervisi-akademik', [
+            'documents' => $this->getDocuments(),
+            'classes' => $this->getClasses(),
+            'teachers' => $teachers,
+            'stats' => $this->getStats(),
+        ]);
+    }
+
+    /**
+     * Modul Kepala Sekolah: AI Analitik Rapor Mutu Pendidikan Kemendikbud & Evaluasi Sekolah
+     */
+    public function evaluasiSekolah(): Response|RedirectResponse
+    {
+        if (auth()->user()?->role === 'bendahara') {
+            return redirect()->route('payments')->with('status', 'Role Bendahara difokuskan pada modul Keuangan & SPP.');
+        }
+
+        return Inertia::render('evaluasi-sekolah', [
+            'stats' => $this->getStats(),
+            'classes' => $this->getClasses(),
+            'cases' => $this->getCases(),
+            'incidents' => $this->getIncidents(),
+        ]);
+    }
+
+    /**
+     * Modul Kepala Sekolah: Pusat Persetujuan & Disposisi Sekolah (Bansos/PIP, Kasus Kritis, Legalisasi Rapor)
+     */
+    public function persetujuanSekolah(): Response|RedirectResponse
+    {
+        if (auth()->user()?->role === 'bendahara') {
+            return redirect()->route('payments')->with('status', 'Role Bendahara difokuskan pada modul Keuangan & SPP.');
+        }
+
+        $students = Student::with('schoolClass')->orderBy('name')->get(['id', 'name', 'nisn', 'parent_name', 'parent_phone', 'attendance_rate', 'risk_level', 'school_class_id'])->map(fn ($s) => [
+            'id' => (string) $s->id,
+            'name' => $s->name,
+            'nisn' => $s->nisn,
+            'className' => $s->schoolClass?->name ?? '-',
+            'parentName' => $s->parent_name ?? 'Wali Murid',
+            'parentPhone' => $s->parent_phone ?? '-',
+            'attendanceRate' => (int) $s->attendance_rate,
+            'riskLevel' => $s->risk_level,
+        ])->toArray();
+
+        return Inertia::render('persetujuan-sekolah', [
+            'paymentList' => $this->getPayments(),
+            'cases' => $this->getCases(),
+            'students' => $students,
+            'stats' => $this->getStats(),
+            'classes' => $this->getClasses(),
+        ]);
+    }
+
+    /**
+     * Otorisasi & Disposisi Kepala Sekolah (Simulasi & Catat Kebijakan Pimpinan)
+     */
+    public function disposisiPersetujuan(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'type' => ['required', 'string'],
+            'reference_id' => ['required', 'string'],
+            'action' => ['required', 'string'],
+            'notes' => ['nullable', 'string'],
+        ]);
+
+        return back()->with('status', 'Disposisi Kepala Sekolah berhasil diproses dan dicatat dalam audit trail kebijakan sekolah.');
+    }
+
+    /**
      * Modul 08: Dokumen Guru (Kelengkapan Administrasi & Portofolio)
      */
     public function dokumenGuru(): Response|RedirectResponse

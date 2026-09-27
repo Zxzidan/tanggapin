@@ -59,6 +59,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('respons-insiden', [DashboardController::class, 'responsInsiden'])->name('incidents');
     Route::get('rapor-siswa', [DashboardController::class, 'raporSiswa'])->name('reports');
 
+    // Modul Kepala Sekolah (Supervisi Eksekutif, AI Evaluasi Mutu, Persetujuan)
+    Route::get('supervisi-akademik', [DashboardController::class, 'supervisiAkademik'])->name('principal.supervision');
+    Route::get('evaluasi-sekolah', [DashboardController::class, 'evaluasiSekolah'])->name('principal.evaluation');
+    Route::get('persetujuan-sekolah', [DashboardController::class, 'persetujuanSekolah'])->name('principal.approvals');
+    Route::post('persetujuan-sekolah/disposisi', [DashboardController::class, 'disposisiPersetujuan'])->name('principal.approvals.disposition');
+
     // Operator Staff & Class Quota Management
     Route::get('kelola-pengguna', [UserManagementController::class, 'index'])->name('users.index');
     Route::post('kelola-pengguna', [UserManagementController::class, 'store'])->name('users.store');

@@ -24,6 +24,7 @@ import {
     Settings,
     Shield,
     ShieldAlert,
+    ShieldCheck,
     Siren,
     Sparkles,
     Sun,
@@ -164,6 +165,24 @@ export default function FlowbiteTanggapinLayout({
                     title: 'Ikhtisar',
                     icon: Home,
                     href: '/dashboard',
+                },
+                {
+                    id: 'academic-supervision',
+                    title: 'AI Supervisi GTK',
+                    icon: Sparkles,
+                    href: '/supervisi-akademik',
+                },
+                {
+                    id: 'school-evaluation',
+                    title: 'AI Rapor Mutu',
+                    icon: BarChart3,
+                    href: '/evaluasi-sekolah',
+                },
+                {
+                    id: 'executive-approvals',
+                    title: 'Pusat Persetujuan',
+                    icon: ShieldCheck,
+                    href: '/persetujuan-sekolah',
                 },
             ],
         },
@@ -392,10 +411,39 @@ export default function FlowbiteTanggapinLayout({
         },
     ];
 
+    const kepalaSekolahSearchResults = [
+        {
+            type: 'Supervisi AI GTK',
+            name: 'Audit Modul Ajar Kurikulum Merdeka',
+            desc: 'Analisis kepatuhan diferensiasi & asesmen formatif ajar',
+            href: '/supervisi-akademik',
+        },
+        {
+            type: 'Evaluasi Mutu',
+            name: 'Rapor Pendidikan Kemendikbud 5 Dimensi',
+            desc: 'Analisis mutu literasi, numerasi & iklim keamanan sekolah',
+            href: '/evaluasi-sekolah',
+        },
+        {
+            type: 'Persetujuan Eksekutif',
+            name: 'Disposisi Bansos SPP & Kasus Kritis BK',
+            desc: 'Otorisasi legalitas dispensasi & panggilan mediasi orang tua',
+            href: '/persetujuan-sekolah',
+        },
+        {
+            type: 'Monitoring Rombel',
+            name: 'Perkembangan Rombel XI RPL 2 & X TKJ 1',
+            desc: 'Presensi rata-rata rombel 91.5% • Kondusif',
+            href: '/dashboard',
+        },
+    ];
+
     const poolSearchResults =
         activeRoleConfig.id === 'bendahara'
             ? bendaharaSearchResults
-            : defaultSearchResults;
+            : activeRoleConfig.id === 'kepala_sekolah'
+              ? kepalaSekolahSearchResults
+              : defaultSearchResults;
 
     const searchResults = poolSearchResults.filter(
         (item) =>
@@ -587,7 +635,32 @@ export default function FlowbiteTanggapinLayout({
                                             </Link>
                                         </div>
                                     ) : activeRoleConfig.id === 'kepala_sekolah' ? (
-                                        <div className="absolute right-0 z-50 mt-2 w-60 animate-in rounded-xl border border-slate-200 bg-white py-1 text-xs shadow-xl zoom-in-95 fade-in dark:border-slate-700 dark:bg-[#111c30]">
+                                        <div className="absolute right-0 z-50 mt-2 w-64 animate-in rounded-xl border border-slate-200 bg-white py-1.5 text-xs shadow-xl zoom-in-95 fade-in dark:border-slate-700 dark:bg-[#111c30]">
+                                            <Link
+                                                href="/supervisi-akademik"
+                                                onClick={() => setIsQuickActionOpen(false)}
+                                                className="flex w-full items-center gap-2 px-3 py-2 text-left text-slate-700 transition-colors hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
+                                            >
+                                                <Sparkles className="size-3.5 text-blue-600 dark:text-blue-400" />
+                                                <span>AI Supervisi Akademik & GTK</span>
+                                            </Link>
+                                            <Link
+                                                href="/evaluasi-sekolah"
+                                                onClick={() => setIsQuickActionOpen(false)}
+                                                className="flex w-full items-center gap-2 px-3 py-2 text-left text-slate-700 transition-colors hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
+                                            >
+                                                <BarChart3 className="size-3.5 text-blue-600 dark:text-blue-400" />
+                                                <span>AI Evaluasi Rapor Mutu</span>
+                                            </Link>
+                                            <Link
+                                                href="/persetujuan-sekolah"
+                                                onClick={() => setIsQuickActionOpen(false)}
+                                                className="flex w-full items-center gap-2 px-3 py-2 text-left text-slate-700 transition-colors hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
+                                            >
+                                                <ShieldCheck className="size-3.5 text-emerald-600 dark:text-emerald-400" />
+                                                <span>Pusat Persetujuan & Disposisi</span>
+                                            </Link>
+                                            <div className="my-1 border-t border-slate-200 dark:border-slate-800" />
                                             <button
                                                 type="button"
                                                 onClick={() => {
@@ -596,7 +669,7 @@ export default function FlowbiteTanggapinLayout({
                                                 }}
                                                 className="flex w-full items-center gap-2 px-3 py-2 text-left text-slate-700 transition-colors hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
                                             >
-                                                <Printer className="size-3.5 text-blue-700 dark:text-blue-400" />
+                                                <Printer className="size-3.5 text-slate-500" />
                                                 <span>Cetak Laporan Supervisi</span>
                                             </button>
                                             <button
@@ -607,17 +680,9 @@ export default function FlowbiteTanggapinLayout({
                                                 }}
                                                 className="flex w-full items-center gap-2 px-3 py-2 text-left text-slate-700 transition-colors hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
                                             >
-                                                <RefreshCw className="size-3.5 text-emerald-600 dark:text-emerald-400" />
+                                                <RefreshCw className="size-3.5 text-slate-500" />
                                                 <span>Refresh Data Monitoring</span>
                                             </button>
-                                            <Link
-                                                href="/dashboard"
-                                                onClick={() => setIsQuickActionOpen(false)}
-                                                className="flex w-full items-center gap-2 px-3 py-2 text-left text-slate-700 transition-colors hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
-                                            >
-                                                <BarChart3 className="size-3.5 text-slate-500" />
-                                                <span>Ikhtisar Perkembangan</span>
-                                            </Link>
                                         </div>
                                     ) : (
                                         <div className="absolute right-0 z-50 mt-2 w-56 animate-in rounded-xl border border-slate-200 bg-white py-1 text-xs shadow-xl zoom-in-95 fade-in dark:border-slate-700 dark:bg-[#111c30]">

@@ -29,7 +29,12 @@ export const ROLE_CONFIGS: Record<RoleType, RoleConfig> = {
         avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80',
         roleDesc:
             'Akses dashboard monitoring eksekutif untuk memantau perkembangan sekolah secara menyeluruh: kesehatan rombel, kedisiplinan siswa, kinerja GTK, dan akuntabilitas keuangan.',
-        allowedTabs: ['overview'],
+        allowedTabs: [
+            'overview',
+            'academic-supervision',
+            'school-evaluation',
+            'executive-approvals',
+        ],
         overviewTitle: 'Dashboard Monitoring Perkembangan Sekolah',
         overviewSubtitle:
             'Supervisi Eksekutif Kepala Sekolah • Pantau indikator mutu, perkembangan kelas, kedisiplinan, dan akuntabilitas sekolah.',
@@ -37,6 +42,18 @@ export const ROLE_CONFIGS: Record<RoleType, RoleConfig> = {
             'Prinsip Kepala Sekolah: Pantau Indikator Mutu → Evaluasi Kinerja GTK → Berikan Arahan Manajerial → Dorong Peningkatan Mutu.',
         tabOverrides: {
             overview: { title: 'Dashboard Monitoring' },
+            'academic-supervision': {
+                title: 'AI Supervisi GTK',
+                badge: 'AI Kurikulum',
+            },
+            'school-evaluation': {
+                title: 'AI Rapor Mutu',
+                badge: 'Kemendikbud',
+            },
+            'executive-approvals': {
+                title: 'Pusat Persetujuan',
+                badge: 'Otorisasi',
+            },
         },
     },
     operator: {

@@ -222,15 +222,36 @@ export default function Dashboard({
                                 </p>
                             </div>
 
-                            {/* Action Buttons for Kepala Sekolah */}
-                            <div className="flex shrink-0 flex-wrap items-center gap-2.5 self-start lg:self-center">
+                            {/* Action Buttons & Fast Links for Kepala Sekolah */}
+                            <div className="flex shrink-0 flex-wrap items-center gap-2 self-start lg:self-center">
+                                <Link
+                                    href="/supervisi-akademik"
+                                    className="inline-flex items-center gap-1.5 rounded-lg bg-blue-50 px-3 py-2 text-xs font-semibold text-blue-700 transition-colors hover:bg-blue-100 dark:bg-blue-950/60 dark:text-blue-300 dark:hover:bg-blue-900/60"
+                                >
+                                    <Sparkles className="size-3.5" />
+                                    <span>AI Supervisi GTK</span>
+                                </Link>
+                                <Link
+                                    href="/evaluasi-sekolah"
+                                    className="inline-flex items-center gap-1.5 rounded-lg bg-blue-50 px-3 py-2 text-xs font-semibold text-blue-700 transition-colors hover:bg-blue-100 dark:bg-blue-950/60 dark:text-blue-300 dark:hover:bg-blue-900/60"
+                                >
+                                    <BarChart3 className="size-3.5" />
+                                    <span>AI Rapor Mutu</span>
+                                </Link>
+                                <Link
+                                    href="/persetujuan-sekolah"
+                                    className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-700 transition-colors hover:bg-emerald-100 dark:bg-emerald-950/60 dark:text-emerald-300 dark:hover:bg-emerald-900/60"
+                                >
+                                    <ShieldCheck className="size-3.5" />
+                                    <span>Persetujuan</span>
+                                </Link>
                                 <button
                                     type="button"
                                     onClick={() => window.print()}
-                                    className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-3.5 py-2 text-xs font-semibold text-white shadow-xs transition-all hover:bg-blue-700 active:scale-95 cursor-pointer"
+                                    className="inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-3 py-2 text-xs font-semibold text-white shadow-xs transition-all hover:bg-blue-700 active:scale-95 cursor-pointer"
                                 >
-                                    <Printer className="size-4" />
-                                    <span>Cetak Laporan Supervisi</span>
+                                    <Printer className="size-3.5" />
+                                    <span>Cetak Supervisi</span>
                                 </button>
                                 <button
                                     type="button"
@@ -238,7 +259,7 @@ export default function Dashboard({
                                     className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-medium text-slate-700 transition-colors hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700 cursor-pointer"
                                 >
                                     <RefreshCw className="size-3.5 text-slate-500" />
-                                    <span>Muat Ulang Data</span>
+                                    <span>Muat Ulang</span>
                                 </button>
                             </div>
                         </div>

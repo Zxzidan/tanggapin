@@ -639,3 +639,47 @@ test('bendahara is strictly scoped to finance and can manage school payments', f
     expect($payment->status)->toBe('Lunas');
     expect($payment->paid_at)->not->toBeNull();
 });
+
+test('kepala sekolah can access supervisi akademik, evaluasi sekolah, and persetujuan sekolah modules', function () {
+    $this->seed(TanggapinSeeder::class);
+
+    $kepsek = User::where('role', 'kepala_sekolah')->first();
+
+    // 1. Supervisi Akademik
+    $supervisionResponse = $this->actingAs($kepsek)->get(route('principal.supervision'));
+    $supervisionResponse->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->component('supervisi-akademik')
+            ->has('documents')
+            ->has('teachers')
+            ->has('classes')
+        );
+
+    // 2. Evaluasi Sekolah (Rapor Mutu)
+    $evalResponse = $this->actingAs($kepsek)->get(route('principal.evaluation'));
+    $evalResponse->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->component('evaluasi-sekolah')
+            ->has('stats')
+            ->has('classes')
+        );
+
+    // 3. Pusat Persetujuan & Disposisi
+    $approvalResponse = $this->actingAs($kepsek)->get(route('principal.approvals'));
+    $approvalResponse->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->component('persetujuan-sekolah')
+            ->has('paymentList')
+            ->has('cases')
+            ->has('students')
+        );
+
+    // 4. Disposisi Persetujuan Action
+    $dispositionResponse = $this->actingAs($kepsek)->post(route('principal.approvals.disposition'), [
+        'type' => 'dispensasi',
+        'reference_id' => 'DSP-001',
+        'action' => 'approve',
+        'notes' => 'Disetujui potongan 50% afirmasi SKTM.',
+    ]);
+    $dispositionResponse->assertSessionHas('status');
+});
