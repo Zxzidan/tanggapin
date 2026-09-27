@@ -170,8 +170,12 @@ class DashboardController extends Controller
     /**
      * Display the Tanggapin operational dashboard (Ikhtisar & Tindakan).
      */
-    public function index(Request $request): Response
+    public function index(Request $request): Response|RedirectResponse
     {
+        if (auth()->user()?->role === 'bendahara') {
+            return redirect()->route('payments');
+        }
+
         return Inertia::render('dashboard', [
             'stats' => $this->getStats(),
             'priorityFeed' => $this->getPriorityFeed(),
@@ -195,6 +199,10 @@ class DashboardController extends Controller
             return redirect()->route('users.index')->with('status', 'Akses khusus Wali Kelas & Guru BK. Role Operator difokuskan pada modul Administrasi & Operasional Sekolah.');
         }
 
+        if (auth()->user()?->role === 'bendahara') {
+            return redirect()->route('payments')->with('status', 'Role Bendahara difokuskan pada modul Keuangan & SPP.');
+        }
+
         return Inertia::render('early-warning', [
             'stats' => $this->getStats(),
             'priorityFeed' => $this->getPriorityFeed(),
@@ -208,6 +216,10 @@ class DashboardController extends Controller
     {
         if (auth()->user()?->role === 'operator') {
             return redirect()->route('users.index')->with('status', 'Akses khusus Wali Kelas & Guru BK. Role Operator difokuskan pada modul Administrasi & Operasional Sekolah.');
+        }
+
+        if (auth()->user()?->role === 'bendahara') {
+            return redirect()->route('payments')->with('status', 'Role Bendahara difokuskan pada modul Keuangan & SPP.');
         }
 
         return Inertia::render('kondisi-kelas', [
@@ -233,6 +245,10 @@ class DashboardController extends Controller
         $user = auth()->user();
         if ($user && $user->role === 'operator') {
             return redirect()->route('users.index')->with('status', 'Akses khusus Guru BK, Wali Kelas & Kepala Sekolah.');
+        }
+
+        if ($user && $user->role === 'bendahara') {
+            return redirect()->route('payments')->with('status', 'Role Bendahara difokuskan pada modul Keuangan & SPP.');
         }
 
         $studentQuery = Student::with(['schoolClass', 'disciplineRecords'])->orderBy('name');
@@ -362,6 +378,10 @@ class DashboardController extends Controller
             return redirect()->route('users.index')->with('status', 'Akses khusus Guru BK. Role Operator difokuskan pada modul Administrasi & Operasional Sekolah.');
         }
 
+        if (auth()->user()?->role === 'bendahara') {
+            return redirect()->route('payments')->with('status', 'Role Bendahara difokuskan pada modul Keuangan & SPP.');
+        }
+
         return Inertia::render('alur-ats', [
             'atsList' => $this->getAtsList(),
         ]);
@@ -374,6 +394,10 @@ class DashboardController extends Controller
     {
         if (auth()->user()?->role === 'operator') {
             return redirect()->route('users.index')->with('status', 'Akses khusus Guru BK, Wali Kelas & Pimpinan. Role Operator difokuskan pada modul Administrasi & Operasional Sekolah.');
+        }
+
+        if (auth()->user()?->role === 'bendahara') {
+            return redirect()->route('payments')->with('status', 'Role Bendahara difokuskan pada modul Keuangan & SPP.');
         }
 
         $user = auth()->user();
@@ -406,6 +430,10 @@ class DashboardController extends Controller
             return redirect()->route('users.index')->with('status', 'Akses khusus Wali Kelas & Guru BK. Role Operator difokuskan pada modul Administrasi & Operasional Sekolah.');
         }
 
+        if (auth()->user()?->role === 'bendahara') {
+            return redirect()->route('payments')->with('status', 'Role Bendahara difokuskan pada modul Keuangan & SPP.');
+        }
+
         return Inertia::render('komunikasi-ortu', [
             'parentUpdates' => $this->getParentUpdates(),
         ]);
@@ -414,8 +442,12 @@ class DashboardController extends Controller
     /**
      * Modul 09: Cek Data Dapodik (Anomali Operator)
      */
-    public function dapodik(): Response
+    public function dapodik(): Response|RedirectResponse
     {
+        if (auth()->user()?->role === 'bendahara') {
+            return redirect()->route('payments')->with('status', 'Role Bendahara difokuskan pada modul Keuangan & SPP.');
+        }
+
         return Inertia::render('dapodik', [
             'dapodikIssues' => $this->getDapodikIssues(),
         ]);
@@ -426,16 +458,28 @@ class DashboardController extends Controller
      */
     public function pembayaran(): Response
     {
+        $students = Student::with('schoolClass')->orderBy('name')->get(['id', 'name', 'nisn', 'school_class_id'])->map(fn ($s) => [
+            'id' => (string) $s->id,
+            'name' => $s->name,
+            'nisn' => $s->nisn,
+            'className' => $s->schoolClass?->name ?? '-',
+        ])->toArray();
+
         return Inertia::render('pembayaran', [
             'paymentList' => $this->getPayments(),
+            'students' => $students,
         ]);
     }
 
     /**
      * Modul 08: Dokumen Guru (Kelengkapan Administrasi & Portofolio)
      */
-    public function dokumenGuru(): Response
+    public function dokumenGuru(): Response|RedirectResponse
     {
+        if (auth()->user()?->role === 'bendahara') {
+            return redirect()->route('payments')->with('status', 'Role Bendahara difokuskan pada modul Keuangan & SPP.');
+        }
+
         return Inertia::render('dokumen-guru', [
             'documents' => $this->getDocuments(),
         ]);
@@ -444,8 +488,12 @@ class DashboardController extends Controller
     /**
      * Modul 10: Respons Insiden & Kesiapsiagaan Sekolah
      */
-    public function responsInsiden(): Response
+    public function responsInsiden(): Response|RedirectResponse
     {
+        if (auth()->user()?->role === 'bendahara') {
+            return redirect()->route('payments')->with('status', 'Role Bendahara difokuskan pada modul Keuangan & SPP.');
+        }
+
         return Inertia::render('respons-insiden', [
             'incidents' => $this->getIncidents(),
         ]);
@@ -458,6 +506,10 @@ class DashboardController extends Controller
     {
         if (auth()->user()?->role === 'operator') {
             return redirect()->route('users.index')->with('status', 'Akses khusus Wali Kelas. Role Operator difokuskan pada modul Administrasi & Operasional Sekolah.');
+        }
+
+        if (auth()->user()?->role === 'bendahara') {
+            return redirect()->route('payments')->with('status', 'Role Bendahara difokuskan pada modul Keuangan & SPP.');
         }
 
         $user = auth()->user();
@@ -1256,5 +1308,46 @@ class DashboardController extends Controller
         ]);
 
         return back()->with('success', "Rapor {$report->report_code} berhasil dikirim ke WhatsApp Orang Tua ({$student->parent_phone}) dan bukti tanda terima telah tercatat!");
+    }
+
+    /**
+     * Store new school payment / invoice record (Bendahara).
+     */
+    public function storePayment(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'student_id' => ['required', 'exists:students,id'],
+            'type' => ['required', 'string', 'max:100'],
+            'amount' => ['required', 'integer', 'min:1000'],
+            'due_date' => ['required', 'string', 'max:50'],
+            'status' => ['required', 'string', 'in:Belum Bayar,Menunggu Verifikasi,Terlambat,Lunas'],
+        ]);
+
+        $invoiceNo = 'INV-'.now()->format('Ym').'-'.str_pad((string) (SchoolPayment::count() + 1), 4, '0', STR_PAD_LEFT);
+
+        SchoolPayment::create([
+            'invoice_no' => $invoiceNo,
+            'student_id' => $validated['student_id'],
+            'type' => $validated['type'],
+            'amount' => $validated['amount'],
+            'due_date' => $validated['due_date'],
+            'status' => $validated['status'],
+            'paid_at' => $validated['status'] === 'Lunas' ? now()->format('Y-m-d H:i') : null,
+        ]);
+
+        return back()->with('success', "Tagihan {$invoiceNo} berhasil dicatat & masuk ke pembukuan kas!");
+    }
+
+    /**
+     * Reconcile / verify school payment as Lunas (Bendahara).
+     */
+    public function verifyPayment(SchoolPayment $payment): RedirectResponse
+    {
+        $payment->update([
+            'status' => 'Lunas',
+            'paid_at' => now()->format('Y-m-d H:i'),
+        ]);
+
+        return back()->with('success', "Rekonsiliasi tagihan {$payment->invoice_no} berhasil diverifikasi Lunas!");
     }
 }

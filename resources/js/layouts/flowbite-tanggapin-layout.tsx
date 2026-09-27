@@ -6,6 +6,7 @@ import {
     Check,
     CheckCircle2,
     ChevronDown,
+    Clock,
     FileText,
     GraduationCap,
     HeartPulse,
@@ -261,20 +262,29 @@ export default function FlowbiteTanggapinLayout({
 
     // Filter navigation sections based on active role permissions
     const visibleNavSections = allNavSections
-        .map((sec) => ({
-            ...sec,
-            items: sec.items
-                .filter((item) =>
-                    activeRoleConfig.allowedTabs.includes(item.id),
-                )
-                .map((item) => {
-                    const override = activeRoleConfig.tabOverrides?.[item.id];
-                    return {
-                        ...item,
-                        title: override?.title || item.title,
-                    };
-                }),
-        }))
+        .map((sec) => {
+            const sectionTitle =
+                activeRoleConfig.id === 'bendahara' &&
+                sec.section === 'ADMINISTRASI & OPERASIONAL'
+                    ? 'KEUANGAN & SPP SEKOLAH'
+                    : sec.section;
+
+            return {
+                section: sectionTitle,
+                items: sec.items
+                    .filter((item) =>
+                        activeRoleConfig.allowedTabs.includes(item.id),
+                    )
+                    .map((item) => {
+                        const override =
+                            activeRoleConfig.tabOverrides?.[item.id];
+                        return {
+                            ...item,
+                            title: override?.title || item.title,
+                        };
+                    }),
+            };
+        })
         .filter((sec) => sec.items.length > 0);
 
     const isRouteActive = (item: { id: string; href: string }) => {
@@ -289,7 +299,7 @@ export default function FlowbiteTanggapinLayout({
         );
     };
 
-    const searchResults = [
+    const defaultSearchResults = [
         {
             type: 'Siswa Berisiko',
             name: 'Brian Aditya — XI RPL 2',
@@ -326,7 +336,41 @@ export default function FlowbiteTanggapinLayout({
             desc: 'Generate evaluasi naratif AI & kirim WhatsApp orang tua',
             href: '/rapor-siswa',
         },
-    ].filter(
+    ];
+
+    const bendaharaSearchResults = [
+        {
+            type: 'Tagihan SPP',
+            name: 'Doni Pratama — X TKJ 1',
+            desc: 'Jatuh tempo 10 Sep 2025 • Rp 350.000 (Terlambat)',
+            href: '/pembayaran',
+        },
+        {
+            type: 'Verifikasi Bank',
+            name: 'Brian Aditya — XI RPL 2',
+            desc: 'Transfer BSI Rp 350.000 • Butuh Validasi Kas',
+            href: '/pembayaran',
+        },
+        {
+            type: 'Lunas',
+            name: 'Citra Lestari — XI RPL 2',
+            desc: 'SPP Bulan Ini • Rp 350.000 (Terverifikasi Lunas)',
+            href: '/pembayaran',
+        },
+        {
+            type: 'Uang Praktik',
+            name: 'Ahmad Fauzi — X TKJ 1',
+            desc: 'Biaya Praktik Semester Ganjil • Rp 500.000',
+            href: '/pembayaran',
+        },
+    ];
+
+    const poolSearchResults =
+        activeRoleConfig.id === 'bendahara'
+            ? bendaharaSearchResults
+            : defaultSearchResults;
+
+    const searchResults = poolSearchResults.filter(
         (item) =>
             searchQuery.trim() !== '' &&
             (item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -394,7 +438,11 @@ export default function FlowbiteTanggapinLayout({
                                         )
                                     }
                                     className="block w-full rounded-lg border border-slate-200 bg-slate-50/80 p-2 ps-9 text-xs text-slate-900 placeholder:text-slate-400 transition-colors focus:border-blue-600 focus:bg-white focus:ring-2 focus:ring-blue-600/15 focus:outline-hidden dark:border-slate-700/80 dark:bg-slate-800/60 dark:text-white dark:focus:bg-slate-800"
-                                    placeholder="Cari siswa, kasus, kelas, tagihan SPP, NISN..."
+                                    placeholder={
+                                        activeRoleConfig.id === 'bendahara'
+                                            ? 'Cari tagihan SPP, nama siswa, invoice...'
+                                            : 'Cari siswa, kasus, kelas, tagihan SPP, NISN...'
+                                    }
                                 />
                                 {searchQuery && (
                                     <button
@@ -468,90 +516,119 @@ export default function FlowbiteTanggapinLayout({
                                 </button>
 
                                 {isQuickActionOpen && (
-                                    <div className="absolute right-0 z-50 mt-2 w-56 animate-in rounded-xl border border-slate-200 bg-white py-1 text-xs shadow-xl zoom-in-95 fade-in dark:border-slate-700 dark:bg-[#111c30]">
-                                        <button
-                                            type="button"
-                                            onClick={() => {
-                                                setIsQuickActionOpen(false);
-                                                if (onTriggerActionModal) {
-                                                    onTriggerActionModal(
-                                                        'followup',
-                                                    );
-                                                } else {
-                                                    openFollowupModal();
+                                    activeRoleConfig.id === 'bendahara' ? (
+                                        <div className="absolute right-0 z-50 mt-2 w-56 animate-in rounded-xl border border-slate-200 bg-white py-1 text-xs shadow-xl zoom-in-95 fade-in dark:border-slate-700 dark:bg-[#111c30]">
+                                            <Link
+                                                href="/pembayaran"
+                                                onClick={() => setIsQuickActionOpen(false)}
+                                                className="flex w-full items-center gap-2 px-3 py-2 text-left text-slate-700 transition-colors hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
+                                            >
+                                                <WalletCards className="size-3.5 text-blue-700 dark:text-blue-400" />
+                                                <span>Rekonsiliasi Kas & SPP</span>
+                                            </Link>
+                                            <Link
+                                                href="/pembayaran"
+                                                onClick={() => setIsQuickActionOpen(false)}
+                                                className="flex w-full items-center gap-2 px-3 py-2 text-left text-slate-700 transition-colors hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
+                                            >
+                                                <CheckCircle2 className="size-3.5 text-blue-700 dark:text-blue-400" />
+                                                <span>Verifikasi Bukti Transfer</span>
+                                            </Link>
+                                            <Link
+                                                href="/pembayaran"
+                                                onClick={() => setIsQuickActionOpen(false)}
+                                                className="flex w-full items-center gap-2 px-3 py-2 text-left text-slate-700 transition-colors hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
+                                            >
+                                                <Clock className="size-3.5 text-slate-500" />
+                                                <span>Pantau Tagihan Terlambat</span>
+                                            </Link>
+                                        </div>
+                                    ) : (
+                                        <div className="absolute right-0 z-50 mt-2 w-56 animate-in rounded-xl border border-slate-200 bg-white py-1 text-xs shadow-xl zoom-in-95 fade-in dark:border-slate-700 dark:bg-[#111c30]">
+                                            <button
+                                                type="button"
+                                                onClick={() => {
+                                                    setIsQuickActionOpen(false);
+                                                    if (onTriggerActionModal) {
+                                                        onTriggerActionModal(
+                                                            'followup',
+                                                        );
+                                                    } else {
+                                                        openFollowupModal();
+                                                    }
+                                                }}
+                                                className="flex w-full items-center gap-2 px-3 py-2 text-left text-slate-700 transition-colors hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
+                                            >
+                                                <UserCheck className="size-3.5 text-blue-700 dark:text-blue-400" />
+                                                <span>Buat Follow-up Siswa</span>
+                                            </button>
+                                            <button
+                                                type="button"
+                                                onClick={() => {
+                                                    setIsQuickActionOpen(false);
+                                                    if (onTriggerActionModal) {
+                                                        onTriggerActionModal(
+                                                            'parent_contact',
+                                                        );
+                                                    } else {
+                                                        openParentContactModal();
+                                                    }
+                                                }}
+                                                className="flex w-full items-center gap-2 px-3 py-2 text-left text-slate-700 transition-colors hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
+                                            >
+                                                <PhoneCall className="size-3.5 text-slate-500" />
+                                                <span>Hubungi Orang Tua</span>
+                                            </button>
+                                            <button
+                                                type="button"
+                                                onClick={() => {
+                                                    setIsQuickActionOpen(false);
+                                                    if (onTriggerActionModal) {
+                                                        onTriggerActionModal(
+                                                            'discipline',
+                                                        );
+                                                    } else {
+                                                        openDisciplineModal();
+                                                    }
+                                                }}
+                                                className="flex w-full items-center gap-2 px-3 py-2 text-left text-slate-700 transition-colors hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
+                                            >
+                                                <Scale className="size-3.5 text-slate-500" />
+                                                <span>
+                                                    Catat Pelanggaran & Poin
+                                                </span>
+                                            </button>
+                                            <button
+                                                type="button"
+                                                onClick={() => {
+                                                    setIsQuickActionOpen(false);
+                                                    if (onTriggerActionModal) {
+                                                        onTriggerActionModal(
+                                                            'new_case',
+                                                        );
+                                                    } else {
+                                                        openNewCaseModal();
+                                                    }
+                                                }}
+                                                className="flex w-full items-center gap-2 px-3 py-2 text-left text-slate-700 transition-colors hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
+                                            >
+                                                <ShieldAlert className="size-3.5 text-blue-700 dark:text-blue-400" />
+                                                <span>Eskalasi ke Kasus BK</span>
+                                            </button>
+                                            <Link
+                                                href="/respons-insiden"
+                                                onClick={() =>
+                                                    setIsQuickActionOpen(false)
                                                 }
-                                            }}
-                                            className="flex w-full items-center gap-2 px-3 py-2 text-left text-slate-700 transition-colors hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
-                                        >
-                                            <UserCheck className="size-3.5 text-blue-700 dark:text-blue-400" />
-                                            <span>Buat Follow-up Siswa</span>
-                                        </button>
-                                        <button
-                                            type="button"
-                                            onClick={() => {
-                                                setIsQuickActionOpen(false);
-                                                if (onTriggerActionModal) {
-                                                    onTriggerActionModal(
-                                                        'parent_contact',
-                                                    );
-                                                } else {
-                                                    openParentContactModal();
-                                                }
-                                            }}
-                                            className="flex w-full items-center gap-2 px-3 py-2 text-left text-slate-700 transition-colors hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
-                                        >
-                                            <PhoneCall className="size-3.5 text-slate-500" />
-                                            <span>Hubungi Orang Tua</span>
-                                        </button>
-                                        <button
-                                            type="button"
-                                            onClick={() => {
-                                                setIsQuickActionOpen(false);
-                                                if (onTriggerActionModal) {
-                                                    onTriggerActionModal(
-                                                        'discipline',
-                                                    );
-                                                } else {
-                                                    openDisciplineModal();
-                                                }
-                                            }}
-                                            className="flex w-full items-center gap-2 px-3 py-2 text-left text-slate-700 transition-colors hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
-                                        >
-                                            <Scale className="size-3.5 text-slate-500" />
-                                            <span>
-                                                Catat Pelanggaran & Poin
-                                            </span>
-                                        </button>
-                                        <button
-                                            type="button"
-                                            onClick={() => {
-                                                setIsQuickActionOpen(false);
-                                                if (onTriggerActionModal) {
-                                                    onTriggerActionModal(
-                                                        'new_case',
-                                                    );
-                                                } else {
-                                                    openNewCaseModal();
-                                                }
-                                            }}
-                                            className="flex w-full items-center gap-2 px-3 py-2 text-left text-slate-700 transition-colors hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
-                                        >
-                                            <ShieldAlert className="size-3.5 text-blue-700 dark:text-blue-400" />
-                                            <span>Eskalasi ke Kasus BK</span>
-                                        </button>
-                                        <Link
-                                            href="/respons-insiden"
-                                            onClick={() =>
-                                                setIsQuickActionOpen(false)
-                                            }
-                                            className="flex w-full items-center gap-2 border-t border-slate-100 px-3 py-2 text-left text-slate-700 transition-colors hover:bg-slate-100 dark:border-slate-800 dark:text-slate-200 dark:hover:bg-slate-800"
-                                        >
-                                            <Siren className="size-3.5 text-blue-700 dark:text-blue-400" />
-                                            <span>
-                                                Laporkan Situasi Darurat
-                                            </span>
-                                        </Link>
-                                    </div>
+                                                className="flex w-full items-center gap-2 border-t border-slate-100 px-3 py-2 text-left text-slate-700 transition-colors hover:bg-slate-100 dark:border-slate-800 dark:text-slate-200 dark:hover:bg-slate-800"
+                                            >
+                                                <Siren className="size-3.5 text-blue-700 dark:text-blue-400" />
+                                                <span>
+                                                    Laporkan Situasi Darurat
+                                                </span>
+                                            </Link>
+                                        </div>
+                                    )
                                 )}
                             </div>
 
@@ -575,76 +652,123 @@ export default function FlowbiteTanggapinLayout({
                                     <div className="absolute right-0 z-50 mt-1.5 w-80 animate-in rounded-xl border border-slate-200/90 bg-white p-3 text-xs shadow-lg zoom-in-95 fade-in dark:border-slate-800 dark:bg-[#0f172a]">
                                         <div className="mb-2 flex items-center justify-between border-b border-slate-100 pb-2 dark:border-slate-800">
                                             <span className="font-semibold text-slate-900 dark:text-white">
-                                                Pemberitahuan Sistem
+                                                {activeRoleConfig.id === 'bendahara' ? 'Pemberitahuan Kas SPP' : 'Pemberitahuan Sistem'}
                                             </span>
                                             <span className="rounded border border-blue-200 bg-blue-50 px-1.5 py-0.5 text-[10px] font-semibold text-blue-700 dark:border-blue-900/60 dark:bg-blue-950 dark:text-blue-300">
                                                 3 Baru
                                             </span>
                                         </div>
-                                        <div className="space-y-1">
-                                            <Link
-                                                href="/early-warning"
-                                                onClick={() =>
-                                                    setIsNotificationOpen(false)
-                                                }
-                                                className="block cursor-pointer rounded-lg border border-transparent p-2 transition-colors hover:bg-slate-50 dark:hover:bg-slate-800/60"
-                                            >
-                                                <div className="flex items-center gap-1.5 text-[11px] font-semibold text-slate-900 dark:text-white">
-                                                    <AlertTriangle className="size-3 text-blue-600 dark:text-blue-400" />
-                                                    <span>
-                                                        Sinyal Absensi Kritis
-                                                    </span>
-                                                    <span className="ms-auto text-[10px] text-slate-400">
-                                                        10m lalu
-                                                    </span>
-                                                </div>
-                                                <p className="mt-1 text-[11px] text-slate-600 dark:text-slate-300">
-                                                    Siswa tidak hadir 4 hari
-                                                    terakhir. Perlu follow-up
-                                                    wali kelas.
-                                                </p>
-                                            </Link>
-                                            <Link
-                                                href="/manajemen-kasus"
-                                                onClick={() =>
-                                                    setIsNotificationOpen(false)
-                                                }
-                                                className="block cursor-pointer rounded-lg border border-transparent p-2 transition-colors hover:bg-slate-50 dark:hover:bg-slate-800/60"
-                                            >
-                                                <div className="flex items-center gap-1.5 text-[11px] font-semibold text-slate-900 dark:text-white">
-                                                    <ShieldAlert className="size-3 text-blue-600 dark:text-blue-400" />
-                                                    <span>Kasus Selesai</span>
-                                                    <span className="ms-auto text-[10px] text-slate-400">
-                                                        1j lalu
-                                                    </span>
-                                                </div>
-                                                <p className="mt-1 text-[11px] text-slate-600 dark:text-slate-300">
-                                                    Kasus KS-2025-003 telah
-                                                    menyelesaikan konseling sesi
-                                                    2 bersama Guru BK.
-                                                </p>
-                                            </Link>
-                                            <Link
-                                                href="/dapodik"
-                                                onClick={() =>
-                                                    setIsNotificationOpen(false)
-                                                }
-                                                className="block cursor-pointer rounded-lg border border-transparent p-2 transition-colors hover:bg-slate-50 dark:hover:bg-slate-800/60"
-                                            >
-                                                <div className="flex items-center gap-1.5 text-[11px] font-semibold text-slate-900 dark:text-white">
-                                                    <CheckCircle2 className="size-3 text-blue-600 dark:text-blue-400" />
-                                                    <span>Residu Dapodik</span>
-                                                    <span className="ms-auto text-[10px] text-slate-400">
-                                                        3j lalu
-                                                    </span>
-                                                </div>
-                                                <p className="mt-1 text-[11px] text-slate-600 dark:text-slate-300">
-                                                    7 anomali data siswa
-                                                    membutuhkan perbaikan
-                                                    sebelum jadwal cut-off.
-                                                </p>
-                                            </Link>
-                                        </div>
+                                        {activeRoleConfig.id === 'bendahara' ? (
+                                            <div className="space-y-1">
+                                                <Link
+                                                    href="/pembayaran"
+                                                    onClick={() => setIsNotificationOpen(false)}
+                                                    className="block cursor-pointer rounded-lg border border-transparent p-2 transition-colors hover:bg-slate-50 dark:hover:bg-slate-800/60"
+                                                >
+                                                    <div className="flex items-center gap-1.5 text-[11px] font-semibold text-slate-900 dark:text-white">
+                                                        <Clock className="size-3 text-blue-600 dark:text-blue-400" />
+                                                        <span>Tagihan SPP Jatuh Tempo</span>
+                                                        <span className="ms-auto text-[10px] text-slate-400">10m lalu</span>
+                                                    </div>
+                                                    <p className="mt-1 text-[11px] text-slate-600 dark:text-slate-300">
+                                                        Terdapat tagihan siswa yang telah melewati tanggal jatuh tempo bulan ini.
+                                                    </p>
+                                                </Link>
+                                                <Link
+                                                    href="/pembayaran"
+                                                    onClick={() => setIsNotificationOpen(false)}
+                                                    className="block cursor-pointer rounded-lg border border-transparent p-2 transition-colors hover:bg-slate-50 dark:hover:bg-slate-800/60"
+                                                >
+                                                    <div className="flex items-center gap-1.5 text-[11px] font-semibold text-slate-900 dark:text-white">
+                                                        <WalletCards className="size-3 text-blue-600 dark:text-blue-400" />
+                                                        <span>Bukti Transfer Bank Masuk</span>
+                                                        <span className="ms-auto text-[10px] text-slate-400">1j lalu</span>
+                                                    </div>
+                                                    <p className="mt-1 text-[11px] text-slate-600 dark:text-slate-300">
+                                                        Transfer siswa menunggu verifikasi mutasi rekening kas bendahara.
+                                                    </p>
+                                                </Link>
+                                                <Link
+                                                    href="/pembayaran"
+                                                    onClick={() => setIsNotificationOpen(false)}
+                                                    className="block cursor-pointer rounded-lg border border-transparent p-2 transition-colors hover:bg-slate-50 dark:hover:bg-slate-800/60"
+                                                >
+                                                    <div className="flex items-center gap-1.5 text-[11px] font-semibold text-slate-900 dark:text-white">
+                                                        <CheckCircle2 className="size-3 text-blue-600 dark:text-blue-400" />
+                                                        <span>Rekonsiliasi Kas Lunas</span>
+                                                        <span className="ms-auto text-[10px] text-slate-400">2j lalu</span>
+                                                    </div>
+                                                    <p className="mt-1 text-[11px] text-slate-600 dark:text-slate-300">
+                                                        Pembayaran SPP atas nama Citra Lestari telah tercatat lunas di sistem kas.
+                                                    </p>
+                                                </Link>
+                                            </div>
+                                        ) : (
+                                            <div className="space-y-1">
+                                                <Link
+                                                    href="/early-warning"
+                                                    onClick={() =>
+                                                        setIsNotificationOpen(false)
+                                                    }
+                                                    className="block cursor-pointer rounded-lg border border-transparent p-2 transition-colors hover:bg-slate-50 dark:hover:bg-slate-800/60"
+                                                >
+                                                    <div className="flex items-center gap-1.5 text-[11px] font-semibold text-slate-900 dark:text-white">
+                                                        <AlertTriangle className="size-3 text-blue-600 dark:text-blue-400" />
+                                                        <span>
+                                                            Sinyal Absensi Kritis
+                                                        </span>
+                                                        <span className="ms-auto text-[10px] text-slate-400">
+                                                            10m lalu
+                                                        </span>
+                                                    </div>
+                                                    <p className="mt-1 text-[11px] text-slate-600 dark:text-slate-300">
+                                                        Siswa tidak hadir 4 hari
+                                                        terakhir. Perlu follow-up
+                                                        wali kelas.
+                                                    </p>
+                                                </Link>
+                                                <Link
+                                                    href="/manajemen-kasus"
+                                                    onClick={() =>
+                                                        setIsNotificationOpen(false)
+                                                    }
+                                                    className="block cursor-pointer rounded-lg border border-transparent p-2 transition-colors hover:bg-slate-50 dark:hover:bg-slate-800/60"
+                                                >
+                                                    <div className="flex items-center gap-1.5 text-[11px] font-semibold text-slate-900 dark:text-white">
+                                                        <ShieldAlert className="size-3 text-blue-600 dark:text-blue-400" />
+                                                        <span>Kasus Selesai</span>
+                                                        <span className="ms-auto text-[10px] text-slate-400">
+                                                            1j lalu
+                                                        </span>
+                                                    </div>
+                                                    <p className="mt-1 text-[11px] text-slate-600 dark:text-slate-300">
+                                                        Kasus KS-2025-003 telah
+                                                        menyelesaikan konseling sesi
+                                                        2 bersama Guru BK.
+                                                    </p>
+                                                </Link>
+                                                <Link
+                                                    href="/dapodik"
+                                                    onClick={() =>
+                                                        setIsNotificationOpen(false)
+                                                    }
+                                                    className="block cursor-pointer rounded-lg border border-transparent p-2 transition-colors hover:bg-slate-50 dark:hover:bg-slate-800/60"
+                                                >
+                                                    <div className="flex items-center gap-1.5 text-[11px] font-semibold text-slate-900 dark:text-white">
+                                                        <CheckCircle2 className="size-3 text-blue-600 dark:text-blue-400" />
+                                                        <span>Residu Dapodik</span>
+                                                        <span className="ms-auto text-[10px] text-slate-400">
+                                                            3j lalu
+                                                        </span>
+                                                    </div>
+                                                    <p className="mt-1 text-[11px] text-slate-600 dark:text-slate-300">
+                                                        7 anomali data siswa
+                                                        membutuhkan perbaikan
+                                                        sebelum jadwal cut-off.
+                                                    </p>
+                                                </Link>
+                                            </div>
+                                        )}
                                     </div>
                                 )}
                             </div>
@@ -705,14 +829,23 @@ export default function FlowbiteTanggapinLayout({
                                         <ul className="space-y-0.5 p-1.5 text-xs font-medium text-slate-700 dark:text-slate-300">
                                             <li>
                                                 <Link
-                                                    href="/dashboard"
+                                                    href={activeRoleConfig.id === 'bendahara' ? '/pembayaran' : '/dashboard'}
                                                     onClick={() =>
                                                         setIsUserMenuOpen(false)
                                                     }
                                                     className="inline-flex w-full items-center rounded-lg p-2 transition-colors hover:bg-slate-100 dark:hover:bg-slate-800"
                                                 >
-                                                    <Home className="me-2 size-3.5 text-slate-400" />
-                                                    <span>Dashboard Utama</span>
+                                                    {activeRoleConfig.id === 'bendahara' ? (
+                                                        <>
+                                                            <WalletCards className="me-2 size-3.5 text-slate-400" />
+                                                            <span>Modul Keuangan & SPP</span>
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            <Home className="me-2 size-3.5 text-slate-400" />
+                                                            <span>Dashboard Utama</span>
+                                                        </>
+                                                    )}
                                                 </Link>
                                             </li>
                                             <li>
