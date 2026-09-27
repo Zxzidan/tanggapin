@@ -2,6 +2,7 @@ import { Link, router, usePage } from '@inertiajs/react';
 import {
     AlertTriangle,
     Bell,
+    BarChart3,
     Camera,
     Check,
     CheckCircle2,
@@ -16,6 +17,7 @@ import {
     Moon,
     PhoneCall,
     Plus,
+    Printer,
     RefreshCw,
     Scale,
     Search,
@@ -263,11 +265,18 @@ export default function FlowbiteTanggapinLayout({
     // Filter navigation sections based on active role permissions
     const visibleNavSections = allNavSections
         .map((sec) => {
-            const sectionTitle =
+            let sectionTitle = sec.section;
+            if (
                 activeRoleConfig.id === 'bendahara' &&
                 sec.section === 'ADMINISTRASI & OPERASIONAL'
-                    ? 'KEUANGAN & SPP SEKOLAH'
-                    : sec.section;
+            ) {
+                sectionTitle = 'KEUANGAN & SPP SEKOLAH';
+            } else if (
+                activeRoleConfig.id === 'kepala_sekolah' &&
+                sec.section === 'UTAMA'
+            ) {
+                sectionTitle = 'SUPERVISI & MONITORING';
+            }
 
             return {
                 section: sectionTitle,
@@ -510,8 +519,16 @@ export default function FlowbiteTanggapinLayout({
                                     }
                                     className="hidden items-center gap-1.5 rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-medium text-white shadow-xs transition-colors hover:bg-blue-700 active:scale-95 sm:inline-flex"
                                 >
-                                    <Plus className="size-3.5" />
-                                    <span>Tindakan</span>
+                                    {activeRoleConfig.id === 'kepala_sekolah' ? (
+                                        <Printer className="size-3.5" />
+                                    ) : (
+                                        <Plus className="size-3.5" />
+                                    )}
+                                    <span>
+                                        {activeRoleConfig.id === 'kepala_sekolah'
+                                            ? 'Supervisi'
+                                            : 'Tindakan'}
+                                    </span>
                                     <ChevronDown className="size-3 opacity-75" />
                                 </button>
 
@@ -541,6 +558,39 @@ export default function FlowbiteTanggapinLayout({
                                             >
                                                 <Clock className="size-3.5 text-slate-500" />
                                                 <span>Pantau Tagihan Terlambat</span>
+                                            </Link>
+                                        </div>
+                                    ) : activeRoleConfig.id === 'kepala_sekolah' ? (
+                                        <div className="absolute right-0 z-50 mt-2 w-60 animate-in rounded-xl border border-slate-200 bg-white py-1 text-xs shadow-xl zoom-in-95 fade-in dark:border-slate-700 dark:bg-[#111c30]">
+                                            <button
+                                                type="button"
+                                                onClick={() => {
+                                                    setIsQuickActionOpen(false);
+                                                    window.print();
+                                                }}
+                                                className="flex w-full items-center gap-2 px-3 py-2 text-left text-slate-700 transition-colors hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
+                                            >
+                                                <Printer className="size-3.5 text-blue-700 dark:text-blue-400" />
+                                                <span>Cetak Laporan Supervisi</span>
+                                            </button>
+                                            <button
+                                                type="button"
+                                                onClick={() => {
+                                                    setIsQuickActionOpen(false);
+                                                    window.location.reload();
+                                                }}
+                                                className="flex w-full items-center gap-2 px-3 py-2 text-left text-slate-700 transition-colors hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
+                                            >
+                                                <RefreshCw className="size-3.5 text-emerald-600 dark:text-emerald-400" />
+                                                <span>Refresh Data Monitoring</span>
+                                            </button>
+                                            <Link
+                                                href="/dashboard"
+                                                onClick={() => setIsQuickActionOpen(false)}
+                                                className="flex w-full items-center gap-2 px-3 py-2 text-left text-slate-700 transition-colors hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
+                                            >
+                                                <BarChart3 className="size-3.5 text-slate-500" />
+                                                <span>Ikhtisar Perkembangan</span>
                                             </Link>
                                         </div>
                                     ) : (

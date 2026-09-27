@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../wayfinder'
 /**
 * @see \App\Http\Controllers\DashboardController::store
- * @see app/Http/Controllers/DashboardController.php:1316
+ * @see app/Http/Controllers/DashboardController.php:1359
  * @route '/payments'
  */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -16,7 +16,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\DashboardController::store
- * @see app/Http/Controllers/DashboardController.php:1316
+ * @see app/Http/Controllers/DashboardController.php:1359
  * @route '/payments'
  */
 store.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\DashboardController::store
- * @see app/Http/Controllers/DashboardController.php:1316
+ * @see app/Http/Controllers/DashboardController.php:1359
  * @route '/payments'
  */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -35,7 +35,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
     /**
 * @see \App\Http\Controllers\DashboardController::store
- * @see app/Http/Controllers/DashboardController.php:1316
+ * @see app/Http/Controllers/DashboardController.php:1359
  * @route '/payments'
  */
     const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -45,7 +45,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
             /**
 * @see \App\Http\Controllers\DashboardController::store
- * @see app/Http/Controllers/DashboardController.php:1316
+ * @see app/Http/Controllers/DashboardController.php:1359
  * @route '/payments'
  */
         storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -56,7 +56,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     store.form = storeForm
 /**
 * @see \App\Http\Controllers\DashboardController::verify
- * @see app/Http/Controllers/DashboardController.php:1344
+ * @see app/Http/Controllers/DashboardController.php:1387
  * @route '/payments/{payment}/verify'
  */
 export const verify = (args: { payment: number | { id: number } } | [payment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -71,7 +71,7 @@ verify.definition = {
 
 /**
 * @see \App\Http\Controllers\DashboardController::verify
- * @see app/Http/Controllers/DashboardController.php:1344
+ * @see app/Http/Controllers/DashboardController.php:1387
  * @route '/payments/{payment}/verify'
  */
 verify.url = (args: { payment: number | { id: number } } | [payment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -104,7 +104,7 @@ verify.url = (args: { payment: number | { id: number } } | [payment: number | { 
 
 /**
 * @see \App\Http\Controllers\DashboardController::verify
- * @see app/Http/Controllers/DashboardController.php:1344
+ * @see app/Http/Controllers/DashboardController.php:1387
  * @route '/payments/{payment}/verify'
  */
 verify.post = (args: { payment: number | { id: number } } | [payment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -114,7 +114,7 @@ verify.post = (args: { payment: number | { id: number } } | [payment: number | {
 
     /**
 * @see \App\Http\Controllers\DashboardController::verify
- * @see app/Http/Controllers/DashboardController.php:1344
+ * @see app/Http/Controllers/DashboardController.php:1387
  * @route '/payments/{payment}/verify'
  */
     const verifyForm = (args: { payment: number | { id: number } } | [payment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -124,7 +124,7 @@ verify.post = (args: { payment: number | { id: number } } | [payment: number | {
 
             /**
 * @see \App\Http\Controllers\DashboardController::verify
- * @see app/Http/Controllers/DashboardController.php:1344
+ * @see app/Http/Controllers/DashboardController.php:1387
  * @route '/payments/{payment}/verify'
  */
         verifyForm.post = (args: { payment: number | { id: number } } | [payment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

@@ -203,6 +203,10 @@ class DashboardController extends Controller
             return redirect()->route('payments')->with('status', 'Role Bendahara difokuskan pada modul Keuangan & SPP.');
         }
 
+        if (auth()->user()?->role === 'kepala_sekolah') {
+            return redirect()->route('dashboard')->with('status', 'Role Kepala Sekolah difokuskan pada Dashboard Monitoring Eksekutif Sekolah.');
+        }
+
         return Inertia::render('early-warning', [
             'stats' => $this->getStats(),
             'priorityFeed' => $this->getPriorityFeed(),
@@ -220,6 +224,10 @@ class DashboardController extends Controller
 
         if (auth()->user()?->role === 'bendahara') {
             return redirect()->route('payments')->with('status', 'Role Bendahara difokuskan pada modul Keuangan & SPP.');
+        }
+
+        if (auth()->user()?->role === 'kepala_sekolah') {
+            return redirect()->route('dashboard')->with('status', 'Role Kepala Sekolah difokuskan pada Dashboard Monitoring Eksekutif Sekolah.');
         }
 
         return Inertia::render('kondisi-kelas', [
@@ -249,6 +257,10 @@ class DashboardController extends Controller
 
         if ($user && $user->role === 'bendahara') {
             return redirect()->route('payments')->with('status', 'Role Bendahara difokuskan pada modul Keuangan & SPP.');
+        }
+
+        if ($user && $user->role === 'kepala_sekolah') {
+            return redirect()->route('dashboard')->with('status', 'Role Kepala Sekolah difokuskan pada Dashboard Monitoring Eksekutif Sekolah.');
         }
 
         $studentQuery = Student::with(['schoolClass', 'disciplineRecords'])->orderBy('name');
@@ -382,6 +394,10 @@ class DashboardController extends Controller
             return redirect()->route('payments')->with('status', 'Role Bendahara difokuskan pada modul Keuangan & SPP.');
         }
 
+        if (auth()->user()?->role === 'kepala_sekolah') {
+            return redirect()->route('dashboard')->with('status', 'Role Kepala Sekolah difokuskan pada Dashboard Monitoring Eksekutif Sekolah.');
+        }
+
         return Inertia::render('alur-ats', [
             'atsList' => $this->getAtsList(),
         ]);
@@ -398,6 +414,10 @@ class DashboardController extends Controller
 
         if (auth()->user()?->role === 'bendahara') {
             return redirect()->route('payments')->with('status', 'Role Bendahara difokuskan pada modul Keuangan & SPP.');
+        }
+
+        if (auth()->user()?->role === 'kepala_sekolah') {
+            return redirect()->route('dashboard')->with('status', 'Role Kepala Sekolah difokuskan pada Dashboard Monitoring Eksekutif Sekolah.');
         }
 
         $user = auth()->user();
@@ -434,6 +454,10 @@ class DashboardController extends Controller
             return redirect()->route('payments')->with('status', 'Role Bendahara difokuskan pada modul Keuangan & SPP.');
         }
 
+        if (auth()->user()?->role === 'kepala_sekolah') {
+            return redirect()->route('dashboard')->with('status', 'Role Kepala Sekolah difokuskan pada Dashboard Monitoring Eksekutif Sekolah.');
+        }
+
         return Inertia::render('komunikasi-ortu', [
             'parentUpdates' => $this->getParentUpdates(),
         ]);
@@ -448,6 +472,10 @@ class DashboardController extends Controller
             return redirect()->route('payments')->with('status', 'Role Bendahara difokuskan pada modul Keuangan & SPP.');
         }
 
+        if (auth()->user()?->role === 'kepala_sekolah') {
+            return redirect()->route('dashboard')->with('status', 'Role Kepala Sekolah difokuskan pada Dashboard Monitoring Eksekutif Sekolah.');
+        }
+
         return Inertia::render('dapodik', [
             'dapodikIssues' => $this->getDapodikIssues(),
         ]);
@@ -456,8 +484,11 @@ class DashboardController extends Controller
     /**
      * Modul 07: Pembayaran & SPP (Rekonsiliasi Bendahara)
      */
-    public function pembayaran(): Response
+    public function pembayaran(): Response|RedirectResponse
     {
+        if (auth()->user()?->role === 'kepala_sekolah') {
+            return redirect()->route('dashboard')->with('status', 'Role Kepala Sekolah difokuskan pada Dashboard Monitoring Eksekutif Sekolah.');
+        }
         $students = Student::with('schoolClass')->orderBy('name')->get(['id', 'name', 'nisn', 'school_class_id'])->map(fn ($s) => [
             'id' => (string) $s->id,
             'name' => $s->name,
@@ -480,6 +511,10 @@ class DashboardController extends Controller
             return redirect()->route('payments')->with('status', 'Role Bendahara difokuskan pada modul Keuangan & SPP.');
         }
 
+        if (auth()->user()?->role === 'kepala_sekolah') {
+            return redirect()->route('dashboard')->with('status', 'Role Kepala Sekolah difokuskan pada Dashboard Monitoring Eksekutif Sekolah.');
+        }
+
         return Inertia::render('dokumen-guru', [
             'documents' => $this->getDocuments(),
         ]);
@@ -492,6 +527,10 @@ class DashboardController extends Controller
     {
         if (auth()->user()?->role === 'bendahara') {
             return redirect()->route('payments')->with('status', 'Role Bendahara difokuskan pada modul Keuangan & SPP.');
+        }
+
+        if (auth()->user()?->role === 'kepala_sekolah') {
+            return redirect()->route('dashboard')->with('status', 'Role Kepala Sekolah difokuskan pada Dashboard Monitoring Eksekutif Sekolah.');
         }
 
         return Inertia::render('respons-insiden', [
@@ -510,6 +549,10 @@ class DashboardController extends Controller
 
         if (auth()->user()?->role === 'bendahara') {
             return redirect()->route('payments')->with('status', 'Role Bendahara difokuskan pada modul Keuangan & SPP.');
+        }
+
+        if (auth()->user()?->role === 'kepala_sekolah') {
+            return redirect()->route('dashboard')->with('status', 'Role Kepala Sekolah difokuskan pada Dashboard Monitoring Eksekutif Sekolah.');
         }
 
         $user = auth()->user();
